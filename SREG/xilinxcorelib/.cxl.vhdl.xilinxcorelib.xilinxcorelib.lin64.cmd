@@ -1,0 +1,1 @@
+/opt/cadence/INCISIVE151/tools.lnx86/bin/ncvhdl -MESSAGES -v93 -RELAX -NOLOG -CDSLIB cds.lib -HDLVAR hdl.var -work xilinxcorelib -f /media/design/fpga/SREG/xilinxcorelib/.cxl.vhdl.xilinxcorelib.xilinxcorelib.lin64.cmf

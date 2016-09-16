@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "secureip" -o "/media/design/fpga/projects/SREG_CONTROL/SREG_CORE_isim_beh.exe" -prj "/media/design/fpga/projects/SREG_CONTROL/SREG_CORE_beh.prj" "SREG_CORE" 

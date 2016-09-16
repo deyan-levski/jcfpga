@@ -1,0 +1,6 @@
+/opt/cadence/INCISIVE151/tools.lnx86/bin/ncvhdl -MESSAGES -v93 -RELAX -NOLOG -CDSLIB cds.lib -HDLVAR hdl.var -work unisim -f /media/design/fpga/SREG/unisim/.cxl.vhdl.unisim.unisim.lin64.cmf
+/opt/cadence/INCISIVE151/tools.lnx86/bin/ncvhdl -MESSAGES -v93 -RELAX -NOLOG -CDSLIB cds.lib -HDLVAR hdl.var -work unimacro -f /media/design/fpga/SREG/unimacro/.cxl.vhdl.unimacro.unimacro.lin64.cmf
+/opt/cadence/INCISIVE151/tools.lnx86/bin/ncvhdl -MESSAGES -v93 -RELAX -NOLOG -CDSLIB cds.lib -HDLVAR hdl.var -work unisim -f /media/design/fpga/SREG/unisim/.cxl.vhdl.secureip_vhdl_unisim.unisim.lin64.cmf
+/opt/cadence/INCISIVE151/tools.lnx86/bin/ncvhdl -MESSAGES -v93 -RELAX -NOLOG -CDSLIB cds.lib -HDLVAR hdl.var -work simprim -f /media/design/fpga/SREG/simprim/.cxl.vhdl.simprim.simprim.lin64.cmf
+/opt/cadence/INCISIVE151/tools.lnx86/bin/ncvhdl -MESSAGES -v93 -RELAX -NOLOG -CDSLIB cds.lib -HDLVAR hdl.var -work simprim -f /media/design/fpga/SREG/simprim/.cxl.vhdl.secureip_vhdl_simprim.simprim.lin64.cmf
+/opt/cadence/INCISIVE151/tools.lnx86/bin/ncvhdl -MESSAGES -v93 -RELAX -NOLOG -CDSLIB cds.lib -HDLVAR hdl.var -work xilinxcorelib -f /media/design/fpga/SREG/xilinxcorelib/.cxl.vhdl.xilinxcorelib.xilinxcorelib.lin64.cmf

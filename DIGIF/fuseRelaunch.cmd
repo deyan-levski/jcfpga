@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "secureip" -o "/media/design/fpga/projects/DIGIF/DIGIF_isim_beh.exe" -prj "/media/design/fpga/projects/DIGIF/DIGIF_beh.prj" "work.DIGIF" 

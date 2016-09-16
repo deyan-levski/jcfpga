@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "secureip" -o "/media/design/fpga/SEQUENCER/sequencer_isim_beh.exe" -prj "/media/design/fpga/SEQUENCER/sequencer_beh.prj" "sequencer" 
