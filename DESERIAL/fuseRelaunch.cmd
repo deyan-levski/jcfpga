@@ -1,1 +1,1 @@
--intstyle "ise" -incremental -lib "secureip" -o "/media/design/fpga/projects/DESERIAL/DESERIAL_TB_isim_beh.exe" -prj "/media/design/fpga/projects/DESERIAL/DESERIAL_TB_beh.prj" "work.DESERIAL_TB" 
+-intstyle "ise" -incremental -lib "secureip" -o "/media/data/git/jcfpga/DESERIAL/DESERIAL_TB_isim_beh.exe" -prj "/media/data/git/jcfpga/DESERIAL/DESERIAL_TB_beh.prj" "work.DESERIAL_TB" 
