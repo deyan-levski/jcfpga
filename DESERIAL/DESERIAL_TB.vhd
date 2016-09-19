@@ -32,6 +32,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity DESERIAL_TB is
     Port ( CLOCK : in  STD_LOGIC;
            RESET : in  STD_LOGIC;
+    	   RESET_DIGIF : in STD_LOGIC;
     	   DATA_PAR_CLK : out STD_LOGIC;
            DATA_PAR : out  STD_LOGIC_VECTOR (11 downto 0));
 
@@ -78,7 +79,7 @@ begin
 	DIGIF_INST: DIGIF
 	port map (
 	   d_digif_sck 		=> CLOCK, -- d_digif_sck,
-           d_digif_rst		=> RESET, -- d_digif_rst,
+           d_digif_rst		=> RESET_DIGIF, -- d_digif_rst,
            d_digif_msb_data 	=> d_digif_msb_data,
            d_digif_lsb_data 	=> d_digif_lsb_data
 	);

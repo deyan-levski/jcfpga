@@ -29,6 +29,7 @@ end DIGIF;
 architecture Behavioral of DIGIF is
 
 	signal PREAMBLE : STD_LOGIC_VECTOR(5 downto 0);
+
 	signal DATA0 	: STD_LOGIC_VECTOR(11 downto 0);
 	signal DATA1	: STD_LOGIC_VECTOR(11 downto 0);
 
@@ -36,6 +37,7 @@ architecture Behavioral of DIGIF is
 	signal LSB_SDA_RISE : STD_LOGIC;
 	signal MSB_SDA_FALL : STD_LOGIC;
 	signal LSB_SDA_FALL : STD_LOGIC;
+	signal EDGE_FLAG : STD_LOGIC;
 
 -- shared	variable txbuf_m : STD_LOGIC_VECTOR(5 downto 0);
 -- shared	variable txbuf_l : STD_LOGIC_VECTOR(5 downto 0);
@@ -47,9 +49,9 @@ begin
 --| Alternate transmission with two data words |
 --|--------------------------------------------|
 
-	PREAMBLE <= "101011";
-	DATA0	 <= "101010101010"; --"010010001011";
-	DATA1	 <= "111101000110"; --"111101000110";
+	PREAMBLE <= "110100";	    --"001011" LSB FIRST LSB--->MSB
+	DATA0	 <= "010101010101"; --"101010101010" LSB FIRST LSB--->MSB
+	DATA1	 <= "011000101111"; --"111101000110" LSB FIRST LSB--->MSB
 
 
 
@@ -68,40 +70,59 @@ begin
 
 		if (d_digif_rst = '1') then
 
+			EDGE_FLAG <= '1';
+
 			txbuf_m := DATA0(11 downto 6);
 			txbuf_l := DATA0(5 downto 0);
 
-			MSB_SDA_RISE <= preamble_var(5);
-			MSB_SDA_RISE <= preamble_var(5);
+-- 			if RISE_EDGE_FLAG = '1' then
+-- 			MSB_SDA_RISE <= preamble_var(4);
+-- 			LSB_SDA_RISE <= preamble_var(4);
+-- 			else
+-- 			MSB_SDA_RISE <= preamble_var(5);
+-- 			LSB_SDA_RISE <= preamble_var(5);
+-- 			end if;
 
-			preamble_var (5 downto 1) := preamble_var (4 downto 0);
+			case EDGE_FLAG is
+			when '1' =>   MSB_SDA_RISE <= preamble_var(4); LSB_SDA_RISE <= preamble_var(4);
+			when '0' =>   MSB_SDA_RISE <= preamble_var(5); LSB_SDA_RISE <= preamble_var(5);
+			when others => MSB_SDA_RISE <= 'X'; LSB_SDA_RISE <= 'X';
+			end case;
+
+			preamble_var (5 downto 2) := preamble_var (3 downto 0);
 			sck_counter := 0;
 
 			preamble_counter := preamble_counter + 1;
 
-			if preamble_counter = 6 then
-			preamble_var := PREAMBLE;
+			if preamble_counter = 3 then
+			preamble_var := PREAMBLE(5 downto 0);
 			preamble_counter := 0;
 			end if;
 
-		end if;
+		 else
+			
+			EDGE_FLAG <= '0';
 
-			MSB_SDA_RISE <= txbuf_m(5);
-			LSB_SDA_RISE <= txbuf_l(5);
+			preamble_var := PREAMBLE;			 
 
-			txbuf_m(5 downto 1) := txbuf_m(4 downto 0);
-			txbuf_l(5 downto 1) := txbuf_l(4 downto 0);
+			MSB_SDA_RISE <= txbuf_m(4);
+			LSB_SDA_RISE <= txbuf_l(4);
+
+			txbuf_m(5 downto 2) := txbuf_m(3 downto 0);
+			txbuf_l(5 downto 2) := txbuf_l(3 downto 0);
 
 			sck_counter := sck_counter + 1;	
 
-			if sck_counter = 6 then
+			if sck_counter = 3 then
 			txbuf_m:= DATA1(11 downto 6);
 			txbuf_l:= DATA1(5 downto 0);
-			elsif sck_counter = 12 then
+			elsif sck_counter = 6 then
 			txbuf_m:= DATA0(11 downto 6);
 			txbuf_l:= DATA0(5 downto 0);
 			sck_counter := 0;
 			end if;
+
+		end if;
 
 
 	end if;
@@ -123,51 +144,86 @@ begin
 
 		if (d_digif_rst = '1') then
 
+	--		EDGE_FLAG <= '1';
+
 			txbuf_m := DATA0(11 downto 6);
 			txbuf_l := DATA0(5 downto 0);
 
-			MSB_SDA_FALL <= preamble_var(5);
-			LSB_SDA_FALL <= preamble_var(5);
+			--if FALL_EDGE_FLAG = '1' then
+			--MSB_SDA_RISE <= preamble_var(4);
+			--LSB_SDA_RISE <= preamble_var(4);
+			--else
+			--MSB_SDA_RISE <= preamble_var(5);
+			--LSB_SDA_RISE <= preamble_var(5);
+			--end if;
 
-			preamble_var (5 downto 1) := preamble_var (4 downto 0);
+			case EDGE_FLAG is
+			when '1' =>   MSB_SDA_RISE <= preamble_var(5); LSB_SDA_RISE <= preamble_var(5);
+			when '0' =>   MSB_SDA_RISE <= preamble_var(4); LSB_SDA_RISE <= preamble_var(4);
+			when others => MSB_SDA_RISE <= 'X'; LSB_SDA_RISE <= 'X';
+			end case;
+
+
+
+			preamble_var (5 downto 2) := preamble_var (3 downto 0);
 			sck_counter := 0;
 
 			preamble_counter := preamble_counter + 1;
 
-			if preamble_counter = 6 then
-			preamble_var := PREAMBLE;
+			if preamble_counter = 3 then
+			preamble_var := PREAMBLE; --(0) & PREAMBLE(5 downto 1);
 			preamble_counter := 0;
 			end if;
 
-		end if;
+		else
+			--EDGE_FLAG <= '0';
+
+			preamble_var := PREAMBLE;
 
 			MSB_SDA_FALL <= txbuf_m(5);
 			LSB_SDA_FALL <= txbuf_l(5);
 
-			txbuf_m(5 downto 1) := txbuf_m(4 downto 0);
-			txbuf_l(5 downto 1) := txbuf_l(4 downto 0);
+			txbuf_m(5 downto 2) := txbuf_m(3 downto 0);
+			txbuf_l(5 downto 2) := txbuf_l(3 downto 0);
 
 			sck_counter := sck_counter + 1;	
 
-			if sck_counter = 6 then
+			if sck_counter = 3 then
 			txbuf_m:= DATA1(11 downto 6);
 			txbuf_l:= DATA1(5 downto 0);
-			elsif sck_counter = 12 then
+			elsif sck_counter = 6 then
 			txbuf_m:= DATA0(11 downto 6);
 			txbuf_l:= DATA0(5 downto 0);
 			sck_counter := 0;
 			end if;
 
+		end if;
 
 	end if;
 
 	end process;
 
 
+--	syncprocess:	process(d_digif_sck, d_digif_rst)
 
 
---	d_digif_msb_data <= MSB_SDA_RISE xnor MSB_SDA_FALL;
---	d_digif_lsb_data <= LSB_SDA_RISE xnor LSB_SDA_FALL;
+-- 	begin
+-- 
+-- 		if d_digif_rst = '1' and d_digif_sck = '1' then
+-- 		d_digif_msb_data <=  MSB_SDA_RISE;
+-- 		elsif d_digif_rst = '1' and d_digif_sck = '0' then
+-- 		d_digif_msb_data <=  MSB_SDA_FALL;
+-- 		end if;
+-- 
+-- 	end process;
+
+
+--d_digif_msb_data <= MSB_SDA_FALL when d_digif_sck = '0' else MSB_SDA_RISE when d_digif_sck = '1' else '0';
+d_digif_msb_data <= MSB_SDA_FALL when d_digif_sck = '0' else MSB_SDA_RISE; -- when d_digif_sck = '1' else '0';
+d_digif_lsb_data <= LSB_SDA_FALL when d_digif_sck = '0' else LSB_SDA_RISE; -- when d_digif_sck = '1' else '0';
+
+--	d_digif_msb_data <= MSB_SDA_RISE xor MSB_SDA_FALL;
+--	d_digif_lsb_data <= LSB_SDA_RISE xor LSB_SDA_FALL;
 
 end Behavioral;
 
