@@ -37,7 +37,8 @@ architecture Behavioral of DIGIF is
 	signal LSB_SDA_RISE : STD_LOGIC;
 	signal MSB_SDA_FALL : STD_LOGIC;
 	signal LSB_SDA_FALL : STD_LOGIC;
-	signal EDGE_FLAG : STD_LOGIC;
+	signal F_EDGE_FLAG : STD_LOGIC;
+	signal R_EDGE_FLAG : STD_LOGIC;
 
 -- shared	variable txbuf_m : STD_LOGIC_VECTOR(5 downto 0);
 -- shared	variable txbuf_l : STD_LOGIC_VECTOR(5 downto 0);
@@ -70,24 +71,23 @@ begin
 
 		if (d_digif_rst = '1') then
 
-			EDGE_FLAG <= '1';
+			if F_EDGE_FLAG = '1' then
+			R_EDGE_FLAG <= '0';
+			else	
+			R_EDGE_FLAG <= '1';
+			end if;
 
 			txbuf_m := DATA0(11 downto 6);
 			txbuf_l := DATA0(5 downto 0);
 
--- 			if RISE_EDGE_FLAG = '1' then
--- 			MSB_SDA_RISE <= preamble_var(4);
--- 			LSB_SDA_RISE <= preamble_var(4);
--- 			else
--- 			MSB_SDA_RISE <= preamble_var(5);
--- 			LSB_SDA_RISE <= preamble_var(5);
--- 			end if;
-
-			case EDGE_FLAG is
-			when '1' =>   MSB_SDA_RISE <= preamble_var(4); LSB_SDA_RISE <= preamble_var(4);
-			when '0' =>   MSB_SDA_RISE <= preamble_var(5); LSB_SDA_RISE <= preamble_var(5);
-			when others => MSB_SDA_RISE <= 'X'; LSB_SDA_RISE <= 'X';
-			end case;
+ 			if (F_EDGE_FLAG = '1') then
+ 			MSB_SDA_RISE <= preamble_var(4);
+ 			LSB_SDA_RISE <= preamble_var(4);
+			end if;
+			if (F_EDGE_FLAG = '0') then
+ 			MSB_SDA_RISE <= preamble_var(5);
+ 			LSB_SDA_RISE <= preamble_var(5);
+ 			end if;
 
 			preamble_var (5 downto 2) := preamble_var (3 downto 0);
 			sck_counter := 0;
@@ -100,8 +100,8 @@ begin
 			end if;
 
 		 else
-			
-			EDGE_FLAG <= '0';
+		
+			R_EDGE_FLAG <= '0';
 
 			preamble_var := PREAMBLE;			 
 
@@ -144,26 +144,23 @@ begin
 
 		if (d_digif_rst = '1') then
 
-	--		EDGE_FLAG <= '1';
+			if R_EDGE_FLAG = '1' then
+			F_EDGE_FLAG <= '0';
+			else	
+			F_EDGE_FLAG <= '1';
+			end if;
 
 			txbuf_m := DATA0(11 downto 6);
 			txbuf_l := DATA0(5 downto 0);
 
-			--if FALL_EDGE_FLAG = '1' then
-			--MSB_SDA_RISE <= preamble_var(4);
-			--LSB_SDA_RISE <= preamble_var(4);
-			--else
-			--MSB_SDA_RISE <= preamble_var(5);
-			--LSB_SDA_RISE <= preamble_var(5);
-			--end if;
-
-			case EDGE_FLAG is
-			when '1' =>   MSB_SDA_RISE <= preamble_var(5); LSB_SDA_RISE <= preamble_var(5);
-			when '0' =>   MSB_SDA_RISE <= preamble_var(4); LSB_SDA_RISE <= preamble_var(4);
-			when others => MSB_SDA_RISE <= 'X'; LSB_SDA_RISE <= 'X';
-			end case;
-
-
+			if (F_EDGE_FLAG = '1') then
+			MSB_SDA_FALL <= preamble_var(5);
+			LSB_SDA_FALL <= preamble_var(5);
+			end if;
+			if (F_EDGE_FLAG = '0') then
+			MSB_SDA_FALL <= preamble_var(4);
+			LSB_SDA_FALL <= preamble_var(4);
+			end if;
 
 			preamble_var (5 downto 2) := preamble_var (3 downto 0);
 			sck_counter := 0;
@@ -176,7 +173,7 @@ begin
 			end if;
 
 		else
-			--EDGE_FLAG <= '0';
+			F_EDGE_FLAG <= '0';
 
 			preamble_var := PREAMBLE;
 
