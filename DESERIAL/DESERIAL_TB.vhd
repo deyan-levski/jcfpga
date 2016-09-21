@@ -56,6 +56,7 @@ architecture Behavioral of DESERIAL_TB is
 	   port ( 
 	   CLOCK 		: in  STD_LOGIC;
            RESET		: in  STD_LOGIC;
+	   d_digif_rst		: in  STD_LOGIC;
            d_digif_msb_data 	: in  STD_LOGIC;
            d_digif_lsb_data	: in  STD_LOGIC;
 	   DESERIALIZED_DATA_CLK: inout STD_LOGIC;
@@ -88,6 +89,7 @@ begin
 	port map (
 	   CLOCK 		=> CLOCK_90, 
            RESET 		=> RESET,
+	   d_digif_rst		=> RESET_DIGIF,
            d_digif_msb_data 	=> d_digif_msb_data,
            d_digif_lsb_data 	=> d_digif_lsb_data,
 	   DESERIALIZED_DATA_CLK => DATA_PAR_CLK,
