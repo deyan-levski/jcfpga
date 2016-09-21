@@ -29,17 +29,16 @@ end DIGIF;
 architecture Behavioral of DIGIF is
 
 	signal PREAMBLE : STD_LOGIC_VECTOR(5 downto 0);
+
 	signal DATA0 	: STD_LOGIC_VECTOR(11 downto 0);
 	signal DATA1	: STD_LOGIC_VECTOR(11 downto 0);
 
---	signal MSB_SDA_RISE : STD_LOGIC;
---	signal LSB_SDA_RISE : STD_LOGIC;
---	signal MSB_SDA_FALL : STD_LOGIC;
---	signal LSB_SDA_FALL : STD_LOGIC;
-
--- shared	variable txbuf_m : STD_LOGIC_VECTOR(5 downto 0);
--- shared	variable txbuf_l : STD_LOGIC_VECTOR(5 downto 0);
--- shared  variable sck_counter :integer range 0 to 31 := 0;
+	signal MSB_SDA_RISE : STD_LOGIC;	-- MSB serial data output on rising edge process
+	signal LSB_SDA_RISE : STD_LOGIC;	-- LSB serial data output on rising edge process
+	signal MSB_SDA_FALL : STD_LOGIC;	-- MSB serial data output on falling edge process
+	signal LSB_SDA_FALL : STD_LOGIC;	-- LSB serial data output on falling edge process
+	signal F_EDGE_FLAG : STD_LOGIC;		-- goes high when reset is encountered (high) on falling edge process	
+	signal R_EDGE_FLAG : STD_LOGIC;		-- goes high when reset is encountered (high) on rising edge process
 
 begin
 
@@ -47,63 +46,144 @@ begin
 --| Alternate transmission with two data words |
 --|--------------------------------------------|
 
-	PREAMBLE <= "101011";
-	DATA0	 <= "101010101010"; --"010010001011";
-	DATA1	 <= "101010101010"; --"111101000110";
+	PREAMBLE <= "110100";	    --"001011" LSB FIRST LSB--->MSB		-- mirrored word
+	DATA0	 <= "010101010101"; --"101010101010" LSB FIRST LSB--->MSB	-- mirrored word
+	DATA1	 <= "011000101111"; --"111101000110" LSB FIRST LSB--->MSB	-- mirrored word
 
 
-	process(d_digif_sck, d_digif_rst)
+rising_edge_process : process(d_digif_sck, d_digif_rst)
+
+	variable txbuf_m : STD_LOGIC_VECTOR(5 downto 0);	-- tx buffer msb
+	variable txbuf_l : STD_LOGIC_VECTOR(5 downto 0);	-- tx buffer lsb
+	variable preamble_counter :integer range 0 to 8 :=0;	-- counter for preamble pattern
+	variable preamble_var :std_logic_vector (5 downto 0);	-- preamble buffer
+	variable sck_counter :integer range 0 to 31 := 0;	-- sck clock counter used for data shifting
+
+	begin
+
+	if rising_edge(d_digif_sck) then			-- on rising edge
+
+		if (d_digif_rst = '1') then			-- if reset is high
+
+			if F_EDGE_FLAG = '1' then		-- if reset was encountered high on falling edge process 
+				R_EDGE_FLAG <= '0';		-- then rising edge encounter flag = '0'
+			else					-- else reset was enountered high in this process (rising edge)
+			R_EDGE_FLAG <= '1';			-- set rising edge encounter flag to '1'
+			end if;
+
+			txbuf_m := DATA0(11 downto 6);		-- load data word to buffers
+			txbuf_l := DATA0(5 downto 0);
+			sck_counter := 0;			-- prepare clock counter for data shifting
+
+			if (F_EDGE_FLAG = '1') then		-- if reset falling edge encounter then
+ 			MSB_SDA_RISE <= preamble_var(4);	-- we tap from preamble 4 (MSB-1)
+ 			LSB_SDA_RISE <= preamble_var(4);
+			end if;
+			if (F_EDGE_FLAG = '0') then		-- if not then
+ 			MSB_SDA_RISE <= preamble_var(5);	-- we tap from preamble 5 (MSB)
+ 			LSB_SDA_RISE <= preamble_var(5);
+ 			end if;
+
+			preamble_var (5 downto 2) := preamble_var (3 downto 0);		-- shift left x2 (because there is another shift in falling edge process)
+
+			preamble_counter := preamble_counter + 1;	-- increment preamble counter
+
+			if preamble_counter = 3 then			-- done 3 shift operations?
+			preamble_var := PREAMBLE(5 downto 0);		-- load preamble to buffer again
+			preamble_counter := 0;				-- reset preamble counter
+			end if;
+
+		 else
+		
+			R_EDGE_FLAG <= '0';			-- reset flags
+			preamble_var := PREAMBLE;		-- load preamble to buffer
+			preamble_counter := 0;			-- reset preamble counter
+
+			MSB_SDA_RISE <= txbuf_m(4);		-- tap MSB-1 to output
+			LSB_SDA_RISE <= txbuf_l(4);
+
+			txbuf_m(5 downto 2) := txbuf_m(3 downto 0);	-- shift left x2
+			txbuf_l(5 downto 2) := txbuf_l(3 downto 0);
+
+			sck_counter := sck_counter + 1;			-- increment data shift counter
+
+			if sck_counter = 3 then				-- if three shifts done, load new word
+			txbuf_m:= DATA1(11 downto 6);
+			txbuf_l:= DATA1(5 downto 0);
+			elsif sck_counter = 6 then			-- if another three shifts done, load another word
+			txbuf_m:= DATA0(11 downto 6);
+			txbuf_l:= DATA0(5 downto 0);
+			sck_counter := 0;				-- reset counter
+			end if;
+
+		end if;
+
+
+	end if;
+
+	end process;
+
+
+	falling_edge_process : process(d_digif_sck, d_digif_rst)	-- falling edge process; almost identical to rising edge process
 
 	variable txbuf_m : STD_LOGIC_VECTOR(5 downto 0);
 	variable txbuf_l : STD_LOGIC_VECTOR(5 downto 0);
 	variable preamble_counter :integer range 0 to 31 :=0;
 	variable preamble_var :std_logic_vector (5 downto 0);
-	variable preamble_flag : std_logic;
 	variable sck_counter :integer range 0 to 31 := 0;
 
 	begin
 
-		if rising_edge(d_digif_sck) then
+	if falling_edge(d_digif_sck) then
 
 		if (d_digif_rst = '1') then
 
-			if preamble_flag = '0' then
-			preamble_var := PREAMBLE;
-			preamble_flag := '1';
+			if R_EDGE_FLAG = '1' then
+			F_EDGE_FLAG <= '0';
+			else	
+			F_EDGE_FLAG <= '1';
 			end if;
 
 			txbuf_m := DATA0(11 downto 6);
 			txbuf_l := DATA0(5 downto 0);
 
-			d_digif_msb_data <= preamble_var(5);
-			d_digif_lsb_data <= preamble_var(5);
+			if (F_EDGE_FLAG = '1') then
+			MSB_SDA_FALL <= preamble_var(5);
+			LSB_SDA_FALL <= preamble_var(5);
+			end if;
+			if (F_EDGE_FLAG = '0') then
+			MSB_SDA_FALL <= preamble_var(4);
+			LSB_SDA_FALL <= preamble_var(4);
+			end if;
 
-			preamble_var (5 downto 1) := preamble_var (4 downto 0);
+			preamble_var (5 downto 2) := preamble_var (3 downto 0);
 			sck_counter := 0;
 
 			preamble_counter := preamble_counter + 1;
 
-			if preamble_counter = 6 then
+			if preamble_counter = 3 then
 			preamble_var := PREAMBLE;
 			preamble_counter := 0;
 			end if;
 
 		else
-		
-			preamble_flag := '0';
+			F_EDGE_FLAG <= '0';
 
-			d_digif_msb_data <= txbuf_m(5);
-			d_digif_lsb_data <= txbuf_l(5);
+			preamble_var := PREAMBLE;
+			preamble_counter := 0;
 
-			txbuf_m(5 downto 1) := txbuf_m(4 downto 0);
-			txbuf_l(5 downto 1) := txbuf_l(4 downto 0);
+			MSB_SDA_FALL <= txbuf_m(5);
+			LSB_SDA_FALL <= txbuf_l(5);
+
+			txbuf_m(5 downto 2) := txbuf_m(3 downto 0);
+			txbuf_l(5 downto 2) := txbuf_l(3 downto 0);
 
 			sck_counter := sck_counter + 1;	
 
-			if sck_counter = 6 then
+			if sck_counter = 3 then
 			txbuf_m:= DATA1(11 downto 6);
 			txbuf_l:= DATA1(5 downto 0);
-			elsif sck_counter = 12 then
+			elsif sck_counter = 6 then
 			txbuf_m:= DATA0(11 downto 6);
 			txbuf_l:= DATA0(5 downto 0);
 			sck_counter := 0;
@@ -111,190 +191,12 @@ begin
 
 		end if;
 
-		elsif falling_edge(d_digif_sck) then
-
-		if (d_digif_rst = '1') then
-
-			if preamble_flag = '0' then
-			preamble_var := PREAMBLE;
-			preamble_flag := '1';
-			end if;
-
-			txbuf_m := DATA0(11 downto 6);
-			txbuf_l := DATA0(5 downto 0);
-
-			d_digif_msb_data <= preamble_var(5);
-			d_digif_lsb_data <= preamble_var(5);
-
-			preamble_var (5 downto 1) := preamble_var (4 downto 0);
-			sck_counter := 0;
-
-			preamble_counter := preamble_counter + 1;
-
-			if preamble_counter = 6 then
-			preamble_var := PREAMBLE;
-			preamble_counter := 0;
-			end if;
-
-		else
-
-			preamble_flag := '0';
-
-			d_digif_msb_data <= txbuf_m(5);
-			d_digif_lsb_data <= txbuf_l(5);
-
-			txbuf_m(5 downto 1) := txbuf_m(4 downto 0);
-			txbuf_l(5 downto 1) := txbuf_l(4 downto 0);
-
-			sck_counter := sck_counter + 1;	
-
-			if sck_counter = 6 then
-			txbuf_m:= DATA1(11 downto 6);
-			txbuf_l:= DATA1(5 downto 0);
-			elsif sck_counter = 12 then
-			txbuf_m:= DATA0(11 downto 6);
-			txbuf_l:= DATA0(5 downto 0);
-			sck_counter := 0;
-			end if;
-
-		end if;
-
-		end if;
+	end if;
 
 	end process;
 
-
-
---	process(d_digif_sck)
---	
---	variable txbuf_m_rise : STD_LOGIC_VECTOR(5 downto 0);
---	variable txbuf_l_rise : STD_LOGIC_VECTOR(5 downto 0);
---	variable preamble_counter :integer range 0 to 31 :=0;
---	variable preamble_var :std_logic_vector (5 downto 0);
---	variable sck_counter :integer range 0 to 31 := 0;
---	
---	begin
---	
---	
---	if (d_digif_sck'event and d_digif_sck = '1') then	-- DDR
---	
---		if (d_digif_rst = '1') then
---			txbuf_m_rise := DATA0(11 downto 6);
---			txbuf_l_rise := DATA0(5 downto 0);
---	
---			preamble_counter := preamble_counter + 1;
---	
---			MSB_SDA_RISE <= preamble_var(5);
---			LSB_SDA_RISE <= preamble_var(5);
---	
---			preamble_var (5 downto 1) := preamble_var (4 downto 0);
---			sck_counter := 0;
---	
---			if preamble_counter = 3 then
---			preamble_var := PREAMBLE;
---			preamble_counter := 0;
---			end if;
---		else
---			if txbuf_m_rise(5) = '1' then
---			d_digif_msb_data <= '1';
---			else 
---			d_digif_msb_data <= '0';
---			end if;
---			if txbuf_l_rise(5) = '1' then
---			d_digif_lsb_data <= '1';
---			else 
---			d_digif_lsb_data <= '0';
---			end if;
---	
---			MSB_SDA_RISE <= txbuf_m_rise(5);
---			LSB_SDA_RISE <= txbuf_l_rise(5);
---	
---			txbuf_m_rise(5 downto 2) := txbuf_m_rise(3 downto 0);
---			txbuf_l_rise(5 downto 2) := txbuf_l_rise(3 downto 0);
---	
---			sck_counter := sck_counter + 1;	
---	
---			if sck_counter = 3 then
---			txbuf_m_rise:= DATA1(11 downto 6);
---			txbuf_l_rise:= DATA1(5 downto 0);
---			elsif sck_counter = 6 then
---			txbuf_m_rise:= DATA0(11 downto 6);
---			txbuf_l_rise:= DATA0(5 downto 0);
---			sck_counter := 0;
---			end if;
---	
---		end if;
---	
---	end if;
---	
---	end process;
---	
---	process(d_digif_sck)
---	
---	variable txbuf_m_fall : STD_LOGIC_VECTOR(5 downto 0);
---	variable txbuf_l_fall : STD_LOGIC_VECTOR(5 downto 0);
---	variable preamble_counter :integer range 0 to 31 :=0;
---	variable preamble_var :std_logic_vector (5 downto 0);
---	variable sck_counter :integer range 0 to 31 := 0;
---	
---	begin
---	
---	if (d_digif_sck'event and d_digif_sck = '0') then
---	
---		if (d_digif_rst = '1') then
---			txbuf_m_fall:= DATA0(11 downto 6);
---			txbuf_l_fall:= DATA0(5 downto 0);
---	
---			preamble_counter := preamble_counter + 1;
---	
---			MSB_SDA_FALL <= preamble_var(5);
---			LSB_SDA_FALL <= preamble_var(5);
---	
---			preamble_var (5 downto 1) := preamble_var (4 downto 0);
---			sck_counter := 0;
---	
---			if preamble_counter = 3 then
---			preamble_var := PREAMBLE;
---			preamble_counter := 0;
---			end if;
---	
---		else
---			if txbuf_m_fall(5) = '1' then
---			d_digif_msb_data <= '1';
---			else 
---			d_digif_msb_data <= '0';
---			end if;
---			if txbuf_l_fall(5) = '1' then
---			d_digif_lsb_data <= '1';
---			else 
---			d_digif_lsb_data <= '0';
---			end if;
---	
---			MSB_SDA_FALL <= txbuf_m_fall(5);
---			LSB_SDA_FALL <= txbuf_l_fall(5);
---			
---			txbuf_m_fall(5 downto 2) := txbuf_m_fall(3 downto 0);
---			txbuf_l_fall(5 downto 2) := txbuf_l_fall(3 downto 0);
---	
---			sck_counter := sck_counter + 1;	
---	
---			if sck_counter = 3 then
---			txbuf_m_fall:= DATA1(11 downto 6);
---			txbuf_l_fall:= DATA1(5 downto 0);
---			elsif sck_counter = 6 then
---			txbuf_m_fall:= DATA0(11 downto 6);
---			txbuf_l_fall:= DATA0(5 downto 0);
---			sck_counter := 0;
---			end if;
---	
---		end if;
---	
---	end if;
---	
---	end process;
-
---	d_digif_msb_data <= MSB_SDA_RISE xnor MSB_SDA_FALL;
---	d_digif_lsb_data <= LSB_SDA_RISE xnor LSB_SDA_FALL;
+	d_digif_msb_data <= MSB_SDA_FALL when d_digif_sck = '0' else MSB_SDA_RISE; -- combine outputs from the two processes
+	d_digif_lsb_data <= LSB_SDA_FALL when d_digif_sck = '0' else LSB_SDA_RISE; -- might be glitchy, but should not be an issue because the deserializer clock strobes the data in the middle of the eye opening i.e. plenty of time for glitch to disappear
 
 end Behavioral;
 

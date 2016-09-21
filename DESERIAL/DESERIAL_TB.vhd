@@ -33,7 +33,7 @@ entity DESERIAL_TB is
     Port ( CLOCK : in  STD_LOGIC;
            RESET : in  STD_LOGIC;
     	   RESET_DIGIF : in STD_LOGIC;
-    	   DATA_PAR_CLK : out STD_LOGIC;
+    	   DATA_PAR_CLK : inout STD_LOGIC;
            DATA_PAR : out  STD_LOGIC_VECTOR (11 downto 0));
 
 end DESERIAL_TB;
@@ -58,7 +58,7 @@ architecture Behavioral of DESERIAL_TB is
            RESET		: in  STD_LOGIC;
            d_digif_msb_data 	: in  STD_LOGIC;
            d_digif_lsb_data	: in  STD_LOGIC;
-	   DESERIALIZED_DATA_CLK: out STD_LOGIC;
+	   DESERIALIZED_DATA_CLK: inout STD_LOGIC;
            DESERIALIZED_DATA 	: out  STD_LOGIC_VECTOR (11 downto 0)
    	   );
 
