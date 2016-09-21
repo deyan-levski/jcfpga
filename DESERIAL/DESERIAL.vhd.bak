@@ -47,14 +47,17 @@ architecture Behavioral of DESERIAL is
 -- 	signal DESER_LSB_BUF_FALL		: STD_LOGIC_VECTOR (2 downto 0);
 	signal F_EDGE_FLAG : STD_LOGIC;		-- goes high when reset is encountered (high) on falling edge process	
 	signal R_EDGE_FLAG : STD_LOGIC;		-- goes high when reset is encountered (high) on rising edge process
+
+	signal DESERIALIZED_DATA_RE		: STD_LOGIC_VECTOR (11 downto 0);
+	signal DESERIALIZED_DATA_FE		: STD_LOGIC_VECTOR (11 downto 0);
+
 begin
 
 	PREAMBLE <=  "001011"; -- mirrored check
 
 deserialization_rising_edge : process(CLOCK, RESET)
 
-	variable sync 				: STD_LOGIC;
-	variable cnt 				: integer range 0 to 8 := 0;
+	variable cnt 					: integer range 0 to 8 := 0;
 	variable DESER_MSB_BUF_R			: STD_LOGIC_VECTOR (2 downto 0);
 	variable DESER_LSB_BUF_R			: STD_LOGIC_VECTOR (2 downto 0);
 	begin
@@ -62,12 +65,8 @@ deserialization_rising_edge : process(CLOCK, RESET)
 		
 		if RESET = '1' then
 			cnt := 0;			-- one clock cycle gibberish
-			sync := '0';
---			DESERIALIZED_DATA_INT(11 downto 0) <= (others => '0');
-			DESERIALIZED_DATA_CLOCK_RISE <= '1';
-
+			DESERIALIZED_DATA_CLOCK_RISE <= '0';
 			R_EDGE_FLAG <= '0';			-- reset flags			
-
 		else
 
 			if F_EDGE_FLAG = '1' then		-- if reset was encountered high on falling edge process 
@@ -76,10 +75,10 @@ deserialization_rising_edge : process(CLOCK, RESET)
 			R_EDGE_FLAG <= '1';			-- set rising edge encounter flag to '1'
 			end if;
 
-			DESER_MSB_BUF_R(0) := d_digif_msb_data;
 			DESER_MSB_BUF_R(2 downto 1) := DESER_MSB_BUF_R(1 downto 0);
-			DESER_LSB_BUF_R(0) := d_digif_lsb_data;
+			DESER_MSB_BUF_R(0) := d_digif_msb_data;
 			DESER_LSB_BUF_R(2 downto 1) := DESER_LSB_BUF_R(1 downto 0);
+			DESER_LSB_BUF_R(0) := d_digif_lsb_data;
 		
 			DESERIALIZED_DATA_INT(11) <= DESER_MSB_BUF_R(2);
 			DESERIALIZED_DATA_INT(9)  <= DESER_MSB_BUF_R(1);
@@ -103,7 +102,6 @@ deserialization_rising_edge : process(CLOCK, RESET)
 deserialization_falling_edge : process(CLOCK, RESET)
 
 	variable cnt 				: INTEGER range 0 to 8 := 0;
-	variable sync 				: STD_LOGIC;
 	variable DESER_MSB_BUF_F		: STD_LOGIC_VECTOR (2 downto 0);
 	variable DESER_LSB_BUF_F		: STD_LOGIC_VECTOR (2 downto 0);
 
@@ -112,12 +110,8 @@ deserialization_falling_edge : process(CLOCK, RESET)
 
 		if RESET = '1' then
 			cnt := 0;			-- one clock cycle gibberish
-			sync := '0';
---			DESERIALIZED_DATA_INT(11 downto 0) <= (others => '0');
-			DESERIALIZED_DATA_CLOCK_FALL <= '1';
-
+			DESERIALIZED_DATA_CLOCK_FALL <= '0';
 			F_EDGE_FLAG <= '0';			
-
 		else
 			if R_EDGE_FLAG = '1' then
 			F_EDGE_FLAG <= '0';
@@ -125,10 +119,10 @@ deserialization_falling_edge : process(CLOCK, RESET)
 			F_EDGE_FLAG <= '1';
 			end if;
 
-			DESER_MSB_BUF_F(0) := d_digif_msb_data;
 			DESER_MSB_BUF_F(2 downto 1) := DESER_MSB_BUF_F(1 downto 0);
-			DESER_LSB_BUF_F(0) := d_digif_lsb_data;
+			DESER_MSB_BUF_F(0) := d_digif_msb_data;
 			DESER_LSB_BUF_F(2 downto 1) := DESER_LSB_BUF_F(1 downto 0);
+			DESER_LSB_BUF_F(0) := d_digif_lsb_data;
 
  			DESERIALIZED_DATA_INT(10) <= DESER_MSB_BUF_F(2);
  			DESERIALIZED_DATA_INT(8)  <= DESER_MSB_BUF_F(1);
@@ -165,34 +159,13 @@ deserialization_falling_edge : process(CLOCK, RESET)
 --  
 --  	end process;
 
-	strobeprocess : process(DESERIALIZED_DATA_CLK)
-
-	begin 
-		if falling_edge(DESERIALIZED_DATA_CLK) then 
---		DESERIALIZED_DATA <= DESERIALIZED_DATA_INT;
-
-
- -- 		if DESERIALIZED_DATA_INT = "100101100101" then
- -- 		DESERIALIZED_DATA <= DESERIALIZED_DATA_INT(10 downto 0) & DESERIALIZED_DATA_INT(11);
- -- 		sync_sll_1 <= '1';
- -- 		elsif DESERIALIZED_DATA_INT = "110010110010" then
- --  		DESERIALIZED_DATA <= DESERIALIZED_DATA_INT(9 downto 0) & DESERIALIZED_DATA_INT(11 downto 10);
---		elsif DESERIALIZED_DATA_INT = "011010011010" then
-
-  --		sync_sll_2 <= '1';
---		else
-		DESERIALIZED_DATA <= DESERIALIZED_DATA_DEMUX;
---		end if;
-
-		end if;
-	end process;
-
 DESERIALIZED_DATA_DEMUX(11) <= DESERIALIZED_DATA_INT(10) when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(11);
 DESERIALIZED_DATA_DEMUX(10) <= DESERIALIZED_DATA_INT(11) when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(10);
 DESERIALIZED_DATA_DEMUX(9)  <= DESERIALIZED_DATA_INT(8)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(9);
 DESERIALIZED_DATA_DEMUX(8)  <= DESERIALIZED_DATA_INT(9)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(8);
 DESERIALIZED_DATA_DEMUX(7)  <= DESERIALIZED_DATA_INT(6)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(7);
 DESERIALIZED_DATA_DEMUX(6)  <= DESERIALIZED_DATA_INT(7)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(6);
+
 DESERIALIZED_DATA_DEMUX(5)  <= DESERIALIZED_DATA_INT(4)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(5);
 DESERIALIZED_DATA_DEMUX(4)  <= DESERIALIZED_DATA_INT(5)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(4);
 DESERIALIZED_DATA_DEMUX(3)  <= DESERIALIZED_DATA_INT(2)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(3);
@@ -201,8 +174,34 @@ DESERIALIZED_DATA_DEMUX(1)  <= DESERIALIZED_DATA_INT(0)  when F_EDGE_FLAG = '1' 
 DESERIALIZED_DATA_DEMUX(0)  <= DESERIALIZED_DATA_INT(1)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(0);
 
 
+	strobeprocess_re : process(DESERIALIZED_DATA_CLK)
 
-	DESERIALIZED_DATA_CLK <= DESERIALIZED_DATA_CLOCK_RISE when R_EDGE_FLAG = '1' else DESERIALIZED_DATA_CLOCK_FALL when F_EDGE_FLAG = '1' else '0';
+	begin 
+		if rising_edge(DESERIALIZED_DATA_CLK) then 
+
+		DESERIALIZED_DATA_RE <= DESERIALIZED_DATA_DEMUX;
+
+		end if;
+
+	end process;
+
+	strobeprocess_fe : process(DESERIALIZED_DATA_CLK)
+
+	begin 
+		if falling_edge(DESERIALIZED_DATA_CLK) then 
+
+		DESERIALIZED_DATA_FE <= DESERIALIZED_DATA_DEMUX;
+
+		end if;
+
+	end process;
+
+	DESERIALIZED_DATA <= DESERIALIZED_DATA_RE when DESERIALIZED_DATA_CLK = '1' else DESERIALIZED_DATA_FE when DESERIALIZED_DATA_CLK = '0';
+
+
+
+
+	DESERIALIZED_DATA_CLK <= DESERIALIZED_DATA_CLOCK_RISE or DESERIALIZED_DATA_CLOCK_FALL; -- when R_EDGE_FLAG = '0' else DESERIALIZED_DATA_CLOCK_FALL; --when F_EDGE_FLAG = '1' else '0';
 
 end Behavioral;
 
