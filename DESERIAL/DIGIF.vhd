@@ -68,7 +68,7 @@ rising_edge_process : process(d_digif_sck, d_digif_rst)
 			if F_EDGE_FLAG = '1' then		-- if reset was encountered high on falling edge process 
 				R_EDGE_FLAG <= '0';		-- then rising edge encounter flag = '0'
 			else					-- else reset was enountered high in this process (rising edge)
-			R_EDGE_FLAG <= '1';			-- set rising edge encounter flag to '1'
+				R_EDGE_FLAG <= '1';			-- set rising edge encounter flag to '1'
 			end if;
 
 			txbuf_m := DATA0(11 downto 6);		-- load data word to buffers

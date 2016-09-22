@@ -36,6 +36,11 @@ architecture Behavioral of DESERIAL is
 
 	signal DESERIALIZED_DATA_INT		: STD_LOGIC_VECTOR (11 downto 0);
 	signal DESERIALIZED_DATA_DEMUX		: STD_LOGIC_VECTOR (11 downto 0);
+	signal DESERIALIZED_DATA_DESHIFT	: STD_LOGIC_VECTOR (11 downto 0);
+	signal DESERIALIZED_DATA_DESHIFT_RISE	: STD_LOGIC_VECTOR (11 downto 0);
+	signal DESERIALIZED_DATA_DESHIFT_FALL	: STD_LOGIC_VECTOR (11 downto 0);
+	signal DESERIALIZED_DATA_DESHIFTED	: STD_LOGIC_VECTOR (11 downto 0);
+
 
 	signal DESERIALIZED_DATA_CLOCK_FALL	: STD_LOGIC;
 	signal DESERIALIZED_DATA_CLOCK_RISE	: STD_LOGIC;
@@ -59,7 +64,7 @@ architecture Behavioral of DESERIAL is
 	signal LOCK				: STD_LOGIC;
 	signal LOCK_RISE			: STD_LOGIC;
 	signal LOCK_FALL			: STD_LOGIC;
-	signal CLOCK_DIV_REG			: STD_LOGIC_VECTOR (2 downto 0);
+	signal CLOCK_DIV			: STD_LOGIC;
 
 begin
 
@@ -78,6 +83,14 @@ deserialization_rising_edge : process(CLOCK, RESET)
 			cnt := 0;			-- one clock cycle gibberish
 			DESERIALIZED_DATA_CLOCK_RISE <= '0';
 			R_EDGE_FLAG <= '0';			-- reset flags			
+			DESERIALIZED_DATA_INT(11) <= '0';
+			DESERIALIZED_DATA_INT(9)  <= '0';
+			DESERIALIZED_DATA_INT(7)  <= '0';
+			DESERIALIZED_DATA_INT(5)  <= '0';
+			DESERIALIZED_DATA_INT(3)  <= '0';
+			DESERIALIZED_DATA_INT(1)  <= '0';
+			DESER_MSB_BUF_R := "000";
+			DESER_LSB_BUF_R := "000";
 
 		else
 			if F_EDGE_FLAG = '1' then		-- if reset was encountered high on falling edge process 
@@ -123,6 +136,15 @@ deserialization_falling_edge : process(CLOCK, RESET)
 			cnt := 0;			-- one clock cycle gibberish
 			DESERIALIZED_DATA_CLOCK_FALL <= '0';
 			F_EDGE_FLAG <= '0';			
+ 			DESERIALIZED_DATA_INT(10) <= '0';
+ 			DESERIALIZED_DATA_INT(8)  <= '0';
+ 			DESERIALIZED_DATA_INT(6)  <= '0';
+ 			DESERIALIZED_DATA_INT(4)  <= '0';
+ 			DESERIALIZED_DATA_INT(2)  <= '0';
+ 			DESERIALIZED_DATA_INT(0)  <= '0';
+			DESER_MSB_BUF_F := "000";
+			DESER_LSB_BUF_F := "000";
+
 		else
 			if R_EDGE_FLAG = '1' then
 			F_EDGE_FLAG <= '0';
@@ -154,19 +176,19 @@ deserialization_falling_edge : process(CLOCK, RESET)
 	end if; 
 	end process;
 
-DESERIALIZED_DATA_DEMUX(11) <= DESERIALIZED_DATA_INT(10) when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(11);
-DESERIALIZED_DATA_DEMUX(10) <= DESERIALIZED_DATA_INT(11) when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(10);
-DESERIALIZED_DATA_DEMUX(9)  <= DESERIALIZED_DATA_INT(8)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(9);
-DESERIALIZED_DATA_DEMUX(8)  <= DESERIALIZED_DATA_INT(9)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(8);
-DESERIALIZED_DATA_DEMUX(7)  <= DESERIALIZED_DATA_INT(6)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(7);
-DESERIALIZED_DATA_DEMUX(6)  <= DESERIALIZED_DATA_INT(7)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(6);
+	DESERIALIZED_DATA_DEMUX(11) <= DESERIALIZED_DATA_INT(10) when F_EDGE_FLAG = '1' else '0' when RESET = '1' else DESERIALIZED_DATA_INT(11);
+	DESERIALIZED_DATA_DEMUX(10) <= DESERIALIZED_DATA_INT(11) when F_EDGE_FLAG = '1' else '0' when RESET = '1' else DESERIALIZED_DATA_INT(10);
+	DESERIALIZED_DATA_DEMUX(9)  <= DESERIALIZED_DATA_INT(8)  when F_EDGE_FLAG = '1' else '0' when RESET = '1' else DESERIALIZED_DATA_INT(9);
+	DESERIALIZED_DATA_DEMUX(8)  <= DESERIALIZED_DATA_INT(9)  when F_EDGE_FLAG = '1' else '0' when RESET = '1' else DESERIALIZED_DATA_INT(8);
+	DESERIALIZED_DATA_DEMUX(7)  <= DESERIALIZED_DATA_INT(6)  when F_EDGE_FLAG = '1' else '0' when RESET = '1' else DESERIALIZED_DATA_INT(7);
+	DESERIALIZED_DATA_DEMUX(6)  <= DESERIALIZED_DATA_INT(7)  when F_EDGE_FLAG = '1' else '0' when RESET = '1' else DESERIALIZED_DATA_INT(6);
 
-DESERIALIZED_DATA_DEMUX(5)  <= DESERIALIZED_DATA_INT(4)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(5);
-DESERIALIZED_DATA_DEMUX(4)  <= DESERIALIZED_DATA_INT(5)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(4);
-DESERIALIZED_DATA_DEMUX(3)  <= DESERIALIZED_DATA_INT(2)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(3);
-DESERIALIZED_DATA_DEMUX(2)  <= DESERIALIZED_DATA_INT(3)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(2);
-DESERIALIZED_DATA_DEMUX(1)  <= DESERIALIZED_DATA_INT(0)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(1);
-DESERIALIZED_DATA_DEMUX(0)  <= DESERIALIZED_DATA_INT(1)  when F_EDGE_FLAG = '1' else DESERIALIZED_DATA_INT(0);
+	DESERIALIZED_DATA_DEMUX(5)  <= DESERIALIZED_DATA_INT(4)  when F_EDGE_FLAG = '1' else '0' when RESET = '1' else DESERIALIZED_DATA_INT(5);
+	DESERIALIZED_DATA_DEMUX(4)  <= DESERIALIZED_DATA_INT(5)  when F_EDGE_FLAG = '1' else '0' when RESET = '1' else DESERIALIZED_DATA_INT(4);
+	DESERIALIZED_DATA_DEMUX(3)  <= DESERIALIZED_DATA_INT(2)  when F_EDGE_FLAG = '1' else '0' when RESET = '1' else DESERIALIZED_DATA_INT(3);
+	DESERIALIZED_DATA_DEMUX(2)  <= DESERIALIZED_DATA_INT(3)  when F_EDGE_FLAG = '1' else '0' when RESET = '1' else DESERIALIZED_DATA_INT(2);
+	DESERIALIZED_DATA_DEMUX(1)  <= DESERIALIZED_DATA_INT(0)  when F_EDGE_FLAG = '1' else '0' when RESET = '1' else DESERIALIZED_DATA_INT(1);
+	DESERIALIZED_DATA_DEMUX(0)  <= DESERIALIZED_DATA_INT(1)  when F_EDGE_FLAG = '1' else '0' when RESET = '1' else DESERIALIZED_DATA_INT(0);
 
 
 -- 	|--------------------------|
@@ -179,7 +201,6 @@ DESERIALIZED_DATA_DEMUX(0)  <= DESERIALIZED_DATA_INT(1)  when F_EDGE_FLAG = '1' 
 		if RESET = '1' then
 		SHIFT_RISE <= "000";
 		LOCK_RISE <= '0';
-
 		elsif rising_edge(CLOCK) and LOCK = '0' and d_digif_rst = '1' then
 
 		if DESERIALIZED_DATA_DEMUX = "110100110100" then
@@ -204,6 +225,8 @@ DESERIALIZED_DATA_DEMUX(0)  <= DESERIALIZED_DATA_INT(1)  when F_EDGE_FLAG = '1' 
 			SHIFT_RISE <= "000";
 			LOCK_RISE <= '0';
 		end if;
+		elsif rising_edge(CLOCK) then
+			DESERIALIZED_DATA_DESHIFT_RISE <= DESERIALIZED_DATA_DEMUX;
 	end if;
 	end process;
 
@@ -244,24 +267,54 @@ DESERIALIZED_DATA_DEMUX(0)  <= DESERIALIZED_DATA_INT(1)  when F_EDGE_FLAG = '1' 
 			LOCK_FALL  <= '0';
 		end if;
 
+		elsif falling_edge(CLOCK) then
+			DESERIALIZED_DATA_DESHIFT_FALL <= DESERIALIZED_DATA_DEMUX;
 	end if;
 	end process;
 
 	LOCK <= LOCK_RISE or LOCK_FALL;
 	SHIFT <= SHIFT_RISE when LOCK_RISE = '1' else SHIFT_FALL when LOCK_FALL = '1' else "000" when LOCK = '0';
 
-	
-        clockdiv : process (CLOCK, RESET)
+	DESERIALIZED_DATA_DESHIFT <= DESERIALIZED_DATA_DESHIFT_RISE when LOCK_RISE = '1' else DESERIALIZED_DATA_DESHIFT_FALL when LOCK_FALL = '1';
 
+	DESERIALIZED_DATA_DESHIFTED <=
+					DESERIALIZED_DATA_DESHIFT when SHIFT = "000" else
+					DESERIALIZED_DATA_DESHIFT(10 downto 0) & DESERIALIZED_DATA_DESHIFT(11) when SHIFT = "001" else
+					DESERIALIZED_DATA_DESHIFT(9 downto 0)  & DESERIALIZED_DATA_DESHIFT(11 downto 10) when SHIFT = "010" else
+					DESERIALIZED_DATA_DESHIFT(8 downto 0)  & DESERIALIZED_DATA_DESHIFT(11 downto 9 ) when SHIFT = "011" else
+					DESERIALIZED_DATA_DESHIFT(7 downto 0)  & DESERIALIZED_DATA_DESHIFT(11 downto 8 ) when SHIFT = "100" else
+					DESERIALIZED_DATA_DESHIFT(6 downto 0)  & DESERIALIZED_DATA_DESHIFT(11 downto 7 ) when SHIFT = "101" else
+					DESERIALIZED_DATA_DESHIFT;
+
+	
+        clockdiv : process (CLOCK, RESET, LOCK)
+	variable lock_old : STD_LOGIC;
+	variable cnt : integer range 0 to 7 := 0;
         begin
                 if RESET = '1' then
-                        CLOCK_DIV_REG <= (others => '0');
-                elsif (CLOCK'event AND CLOCK = '1') then
-                        CLOCK_DIV_REG <= CLOCK_DIV_REG + 1;
+                        CLOCK_DIV <= '0';
+			lock_old := '0';
+			cnt := 0;
+                elsif (CLOCK'event AND CLOCK = '0') or ((CLOCK'event AND CLOCK = '0') AND (LOCK'event AND LOCK = '1')) then
+			if LOCK /= lock_old and lock_old = '0' then
+			CLOCK_DIV <= '1';
+			cnt := 0;
+			lock_old := '1';
+		elsif LOCK = '1' and lock_old = '1' then
+				 cnt := cnt + 1;
+
+				 if cnt = 3 then
+				CLOCK_DIV <= not CLOCK_DIV;
+				cnt := 0;
+				end if;
+
+
+			lock_old := LOCK;
+			end if;
                 end if;
         end process;  
 
-        DESERIALIZED_DATA_CLK <= CLOCK_DIV_REG(2);
+        DESERIALIZED_DATA_CLK <= CLOCK_DIV;
 
 -- 	|----------------------------|
 -- 	| Strobe process rising edge |
@@ -272,7 +325,7 @@ DESERIALIZED_DATA_DEMUX(0)  <= DESERIALIZED_DATA_INT(1)  when F_EDGE_FLAG = '1' 
 	begin 
 		if rising_edge(DESERIALIZED_DATA_CLK) then 
 
-		DESERIALIZED_DATA_RE <= DESERIALIZED_DATA_DEMUX;
+		DESERIALIZED_DATA_RE <= DESERIALIZED_DATA_DESHIFT;
 
 		end if;
 
@@ -287,7 +340,7 @@ DESERIALIZED_DATA_DEMUX(0)  <= DESERIALIZED_DATA_INT(1)  when F_EDGE_FLAG = '1' 
 	begin 
 		if falling_edge(DESERIALIZED_DATA_CLK) then 
 
-		DESERIALIZED_DATA_FE <= DESERIALIZED_DATA_DEMUX;
+		DESERIALIZED_DATA_FE <= DESERIALIZED_DATA_DESHIFT;
 
 		end if;
 
