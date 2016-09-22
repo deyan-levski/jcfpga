@@ -72,8 +72,6 @@ begin
 
 deserialization_rising_edge : process(CLOCK, RESET)
 
-	variable cnt 					: integer range 0 to 7 := 0;
-
 	variable DESER_MSB_BUF_R			: STD_LOGIC_VECTOR (2 downto 0);
 	variable DESER_LSB_BUF_R			: STD_LOGIC_VECTOR (2 downto 0);
 	variable digif_rst_flag 		: STD_LOGIC;
@@ -82,7 +80,6 @@ deserialization_rising_edge : process(CLOCK, RESET)
 	if rising_edge(CLOCK) then
 		
 		if RESET = '1' then
-			cnt := 0;			-- one clock cycle gibberish
 			DESERIALIZED_DATA_CLOCK_RISE <= '0';
 			R_EDGE_FLAG <= '0';			-- reset flags			
 			DESERIALIZED_DATA_INT(11) <= '0';
@@ -106,18 +103,10 @@ deserialization_rising_edge : process(CLOCK, RESET)
 			DESER_LSB_BUF_R(2 downto 1) := DESER_LSB_BUF_R(1 downto 0);
 			DESER_LSB_BUF_R(0) := d_digif_lsb_data;
 		
-			if cnt = 3 then 
-				DESERIALIZED_DATA_CLOCK_RISE <= not DESERIALIZED_DATA_CLOCK_RISE; -- toggle (rising edge) in middle of DESERIALIZED_DATA
-			cnt := 0;
-			end if;
-
-		cnt := cnt + 1;
-
 			if d_digif_rst = '1' and digif_rst_flag = '0' then
 			DESER_MSB_BUF_R := "000";
 			DESER_LSB_BUF_R := "000";
 			digif_rst_flag := '1';
-			cnt := 0;
 			elsif d_digif_rst = '0' then
 			digif_rst_flag := '0';
 			end if;
@@ -136,7 +125,6 @@ deserialization_rising_edge : process(CLOCK, RESET)
 
 deserialization_falling_edge : process(CLOCK, RESET)
 
-	variable cnt 				: INTEGER range 0 to 7 := 0;
 	variable DESER_MSB_BUF_F		: STD_LOGIC_VECTOR (2 downto 0);
 	variable DESER_LSB_BUF_F		: STD_LOGIC_VECTOR (2 downto 0);
 	variable digif_rst_flag 		: STD_LOGIC;
@@ -144,7 +132,6 @@ deserialization_falling_edge : process(CLOCK, RESET)
 	if falling_edge(CLOCK) then
 
 		if RESET = '1' then
-			cnt := 0;			-- one clock cycle gibberish
 			DESERIALIZED_DATA_CLOCK_FALL <= '0';
 			F_EDGE_FLAG <= '0';			
  			DESERIALIZED_DATA_INT(10) <= '0';
@@ -168,18 +155,10 @@ deserialization_falling_edge : process(CLOCK, RESET)
 			DESER_LSB_BUF_F(2 downto 1) := DESER_LSB_BUF_F(1 downto 0);
 			DESER_LSB_BUF_F(0) := d_digif_lsb_data;
 
-			if cnt = 3 then 
-				DESERIALIZED_DATA_CLOCK_FALL <= not DESERIALIZED_DATA_CLOCK_FALL; -- toggle (rising edge) in middle of DESERIALIZED_DATA
-			cnt := 0;
-			end if;
-
-		cnt := cnt + 1;
-
 			if d_digif_rst = '1' and digif_rst_flag = '0' then
 			DESER_MSB_BUF_F := "000";
 			DESER_LSB_BUF_F := "000";
 			digif_rst_flag := '1';
-			cnt := 0;
 			elsif d_digif_rst = '0' then
 			digif_rst_flag := '0';
 			end if;
@@ -319,12 +298,14 @@ deserialization_falling_edge : process(CLOCK, RESET)
 	
         clockdiv : process (CLOCK, LOCK)
 	variable lock_old : STD_LOGIC;
+
 	variable cnt : integer range 0 to 7 := 0;
         begin
                 if LOCK = '0' then
                         CLOCK_DIV <= '0';
 			cnt := 0;
 			lock_old := '0';
+
                 elsif (CLOCK'event AND CLOCK = '0') and LOCK = '1' then
 
 			if lock_old = '0' then
