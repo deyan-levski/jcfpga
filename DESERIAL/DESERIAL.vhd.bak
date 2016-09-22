@@ -76,6 +76,8 @@ deserialization_rising_edge : process(CLOCK, RESET)
 
 	variable DESER_MSB_BUF_R			: STD_LOGIC_VECTOR (2 downto 0);
 	variable DESER_LSB_BUF_R			: STD_LOGIC_VECTOR (2 downto 0);
+	variable digif_rst_flag 		: STD_LOGIC;
+
 	begin
 	if rising_edge(CLOCK) then
 		
@@ -91,7 +93,7 @@ deserialization_rising_edge : process(CLOCK, RESET)
 			DESERIALIZED_DATA_INT(1)  <= '0';
 			DESER_MSB_BUF_R := "000";
 			DESER_LSB_BUF_R := "000";
-
+			digif_rst_flag := '0';
 		else
 			if F_EDGE_FLAG = '1' then		-- if reset was encountered high on falling edge process 
 				R_EDGE_FLAG <= '0';		-- then rising edge encounter flag = '0'
@@ -104,19 +106,28 @@ deserialization_rising_edge : process(CLOCK, RESET)
 			DESER_LSB_BUF_R(2 downto 1) := DESER_LSB_BUF_R(1 downto 0);
 			DESER_LSB_BUF_R(0) := d_digif_lsb_data;
 		
-			DESERIALIZED_DATA_INT(11) <= DESER_MSB_BUF_R(2);
-			DESERIALIZED_DATA_INT(9)  <= DESER_MSB_BUF_R(1);
-			DESERIALIZED_DATA_INT(7)  <= DESER_MSB_BUF_R(0);
-			DESERIALIZED_DATA_INT(5)  <= DESER_LSB_BUF_R(2);
-			DESERIALIZED_DATA_INT(3)  <= DESER_LSB_BUF_R(1);
-			DESERIALIZED_DATA_INT(1)  <= DESER_LSB_BUF_R(0);
-
 			if cnt = 3 then 
 				DESERIALIZED_DATA_CLOCK_RISE <= not DESERIALIZED_DATA_CLOCK_RISE; -- toggle (rising edge) in middle of DESERIALIZED_DATA
 			cnt := 0;
 			end if;
 
 		cnt := cnt + 1;
+
+			if d_digif_rst = '1' and digif_rst_flag = '0' then
+			DESER_MSB_BUF_R := "000";
+			DESER_LSB_BUF_R := "000";
+			digif_rst_flag := '1';
+			cnt := 0;
+			elsif d_digif_rst = '0' then
+			digif_rst_flag := '0';
+			end if;
+
+			DESERIALIZED_DATA_INT(11) <= DESER_MSB_BUF_R(2);
+			DESERIALIZED_DATA_INT(9)  <= DESER_MSB_BUF_R(1);
+			DESERIALIZED_DATA_INT(7)  <= DESER_MSB_BUF_R(0);
+			DESERIALIZED_DATA_INT(5)  <= DESER_LSB_BUF_R(2);
+			DESERIALIZED_DATA_INT(3)  <= DESER_LSB_BUF_R(1);
+			DESERIALIZED_DATA_INT(1)  <= DESER_LSB_BUF_R(0);
 
 		end if;
 
@@ -128,7 +139,7 @@ deserialization_falling_edge : process(CLOCK, RESET)
 	variable cnt 				: INTEGER range 0 to 7 := 0;
 	variable DESER_MSB_BUF_F		: STD_LOGIC_VECTOR (2 downto 0);
 	variable DESER_LSB_BUF_F		: STD_LOGIC_VECTOR (2 downto 0);
-
+	variable digif_rst_flag 		: STD_LOGIC;
 	begin
 	if falling_edge(CLOCK) then
 
@@ -144,7 +155,7 @@ deserialization_falling_edge : process(CLOCK, RESET)
  			DESERIALIZED_DATA_INT(0)  <= '0';
 			DESER_MSB_BUF_F := "000";
 			DESER_LSB_BUF_F := "000";
-
+			digif_rst_flag := '0';
 		else
 			if R_EDGE_FLAG = '1' then
 			F_EDGE_FLAG <= '0';
@@ -157,19 +168,28 @@ deserialization_falling_edge : process(CLOCK, RESET)
 			DESER_LSB_BUF_F(2 downto 1) := DESER_LSB_BUF_F(1 downto 0);
 			DESER_LSB_BUF_F(0) := d_digif_lsb_data;
 
- 			DESERIALIZED_DATA_INT(10) <= DESER_MSB_BUF_F(2);
- 			DESERIALIZED_DATA_INT(8)  <= DESER_MSB_BUF_F(1);
- 			DESERIALIZED_DATA_INT(6)  <= DESER_MSB_BUF_F(0);
- 			DESERIALIZED_DATA_INT(4)  <= DESER_LSB_BUF_F(2);
- 			DESERIALIZED_DATA_INT(2)  <= DESER_LSB_BUF_F(1);
- 			DESERIALIZED_DATA_INT(0)  <= DESER_LSB_BUF_F(0);
-
 			if cnt = 3 then 
 				DESERIALIZED_DATA_CLOCK_FALL <= not DESERIALIZED_DATA_CLOCK_FALL; -- toggle (rising edge) in middle of DESERIALIZED_DATA
 			cnt := 0;
 			end if;
 
 		cnt := cnt + 1;
+
+			if d_digif_rst = '1' and digif_rst_flag = '0' then
+			DESER_MSB_BUF_F := "000";
+			DESER_LSB_BUF_F := "000";
+			digif_rst_flag := '1';
+			cnt := 0;
+			elsif d_digif_rst = '0' then
+			digif_rst_flag := '0';
+			end if;
+
+ 			DESERIALIZED_DATA_INT(10) <= DESER_MSB_BUF_F(2);
+ 			DESERIALIZED_DATA_INT(8)  <= DESER_MSB_BUF_F(1);
+ 			DESERIALIZED_DATA_INT(6)  <= DESER_MSB_BUF_F(0);
+ 			DESERIALIZED_DATA_INT(4)  <= DESER_LSB_BUF_F(2);
+ 			DESERIALIZED_DATA_INT(2)  <= DESER_LSB_BUF_F(1);
+ 			DESERIALIZED_DATA_INT(0)  <= DESER_LSB_BUF_F(0);
 
 		end if;
 		
@@ -196,37 +216,42 @@ deserialization_falling_edge : process(CLOCK, RESET)
 -- 	|--------------------------|
 
 	syncprocess_re : process(CLOCK, RESET)
+		variable digif_rst_old : std_logic;
 	begin
 
 		if RESET = '1' then
 		SHIFT_RISE <= "000";
 		LOCK_RISE <= '0';
+		elsif rising_edge(CLOCK) and (d_digif_rst /= digif_rst_old and d_digif_rst = '1') then
+			LOCK_RISE <= '0';
+			digif_rst_old := d_digif_rst;
 		elsif rising_edge(CLOCK) and LOCK = '0' and d_digif_rst = '1' then
 
-		if DESERIALIZED_DATA_DEMUX = "110100110100" then
-			SHIFT_RISE <= "000";
-			LOCK_RISE <= '1';
-		elsif DESERIALIZED_DATA_DEMUX = "011010011010" then
-			SHIFT_RISE <= "001";
-			LOCK_RISE <= '1';
-		elsif DESERIALIZED_DATA_DEMUX = "001101001101" then
-			SHIFT_RISE <= "010";
-			LOCK_RISE <= '1';
-		elsif DESERIALIZED_DATA_DEMUX = "100110100110" then
-			SHIFT_RISE <= "011";
-			LOCK_RISE <= '1';
-		elsif DESERIALIZED_DATA_DEMUX = "010011010011" then
-			SHIFT_RISE <= "100";
-			LOCK_RISE <= '1';
-		elsif DESERIALIZED_DATA_DEMUX = "101001101001" then
-			SHIFT_RISE <= "101";
-			LOCK_RISE <= '1';
+ 		if DESERIALIZED_DATA_DEMUX = "110100110100" then
+ 			SHIFT_RISE <= "000";
+ 			LOCK_RISE <= '1';
+ 		elsif DESERIALIZED_DATA_DEMUX = "011010011010" then
+ 			SHIFT_RISE <= "001";
+ 			LOCK_RISE <= '1';
+-- 		elsif DESERIALIZED_DATA_DEMUX = "001101001101" then
+-- 			SHIFT_RISE <= "010";
+-- 			LOCK_RISE <= '1';
+-- 		elsif DESERIALIZED_DATA_DEMUX = "100110100110" then
+-- 			SHIFT_RISE <= "011";
+-- 			LOCK_RISE <= '1';
+-- 		elsif DESERIALIZED_DATA_DEMUX = "010011010011" then
+-- 			SHIFT_RISE <= "100";
+-- 			LOCK_RISE <= '1';
+-- 		elsif DESERIALIZED_DATA_DEMUX = "101001101001" then
+-- 			SHIFT_RISE <= "101";
+-- 			LOCK_RISE <= '1';
 		else
 			SHIFT_RISE <= "000";
 			LOCK_RISE <= '0';
 		end if;
 		elsif rising_edge(CLOCK) then
 			DESERIALIZED_DATA_DESHIFT_RISE <= DESERIALIZED_DATA_DEMUX;
+			digif_rst_old := d_digif_rst;
 	end if;
 	end process;
 
@@ -236,32 +261,37 @@ deserialization_falling_edge : process(CLOCK, RESET)
 -- 	|---------------------------|
 
 	syncprocess_fe : process(CLOCK, RESET)
+		variable digif_rst_old : std_logic;
 	begin
 
 		if RESET = '1' then
 		SHIFT_FALL <= "000";
 		LOCK_FALL <= '0';
 
+		elsif rising_edge(CLOCK) and (d_digif_rst /= digif_rst_old and d_digif_rst = '1') then
+			LOCK_FALL <= '0';
+			digif_rst_old := d_digif_rst;
+
 		elsif falling_edge(CLOCK) and LOCK = '0' and d_digif_rst = '1' then
 
 		if DESERIALIZED_DATA_DEMUX = "110100110100" then
 			SHIFT_FALL <= "000";
 			LOCK_FALL  <= '1';
-		elsif DESERIALIZED_DATA_DEMUX = "011010011010" then
-			SHIFT_FALL <= "001";
-			LOCK_FALL  <= '1';
-		elsif DESERIALIZED_DATA_DEMUX = "001101001101" then
-			SHIFT_FALL <= "010";
-			LOCK_FALL  <= '1';
-		elsif DESERIALIZED_DATA_DEMUX = "100110100110" then
-			SHIFT_FALL <= "011";
-			LOCK_FALL  <= '1';
-		elsif DESERIALIZED_DATA_DEMUX = "010011010011" then
-			SHIFT_FALL <= "100";
-			LOCK_FALL  <= '1';
-		elsif DESERIALIZED_DATA_DEMUX = "101001101001" then
-			SHIFT_FALL <= "101";
-			LOCK_FALL  <= '1';
+ 		elsif DESERIALIZED_DATA_DEMUX = "011010011010" then
+ 			SHIFT_FALL <= "001";
+ 			LOCK_FALL  <= '1';
+-- 		elsif DESERIALIZED_DATA_DEMUX = "001101001101" then
+-- 			SHIFT_FALL <= "010";
+-- 			LOCK_FALL  <= '1';
+-- 		elsif DESERIALIZED_DATA_DEMUX = "100110100110" then
+-- 			SHIFT_FALL <= "011";
+-- 			LOCK_FALL  <= '1';
+-- 		elsif DESERIALIZED_DATA_DEMUX = "010011010011" then
+-- 			SHIFT_FALL <= "100";
+-- 			LOCK_FALL  <= '1';
+-- 		elsif DESERIALIZED_DATA_DEMUX = "101001101001" then
+-- 			SHIFT_FALL <= "101";
+-- 			LOCK_FALL  <= '1';
 		else
 			SHIFT_FALL <= "000";
 			LOCK_FALL  <= '0';
@@ -325,7 +355,7 @@ deserialization_falling_edge : process(CLOCK, RESET)
 	begin 
 		if rising_edge(DESERIALIZED_DATA_CLK) then 
 
-		DESERIALIZED_DATA_RE <= DESERIALIZED_DATA_DESHIFT;
+		DESERIALIZED_DATA_RE <= DESERIALIZED_DATA_DESHIFTED;
 
 		end if;
 
@@ -340,7 +370,7 @@ deserialization_falling_edge : process(CLOCK, RESET)
 	begin 
 		if falling_edge(DESERIALIZED_DATA_CLK) then 
 
-		DESERIALIZED_DATA_FE <= DESERIALIZED_DATA_DESHIFT;
+		DESERIALIZED_DATA_FE <= DESERIALIZED_DATA_DESHIFTED;
 
 		end if;
 
