@@ -68,7 +68,7 @@ architecture Behavioral of DESERIAL is
 
 begin
 
-	PREAMBLE <=  "001011"; -- mirrored check
+	PREAMBLE <=  "110100"; --"001011"; -- mirrored check
 
 deserialization_rising_edge : process(CLOCK, RESET)
 
@@ -227,12 +227,12 @@ deserialization_falling_edge : process(CLOCK, RESET)
 			digif_rst_old := d_digif_rst;
 		elsif rising_edge(CLOCK) and LOCK = '0' and d_digif_rst = '1' then
 
- 		if DESERIALIZED_DATA_DEMUX = "110100110100" then
+ 		if DESERIALIZED_DATA_DEMUX = PREAMBLE & PREAMBLE then
  			SHIFT_RISE <= "000";
  			LOCK_RISE <= '1';
---  		elsif DESERIALIZED_DATA_DEMUX = "011010011010" then
---  			SHIFT_RISE <= "001";
---  			LOCK_RISE <= '1';
+		elsif DESERIALIZED_DATA_DEMUX = PREAMBLE(0) & PREAMBLE(5 downto 0) & PREAMBLE(5 downto 1) then -- i.e. def. "011010011010"
+  			SHIFT_RISE <= "001";
+  			LOCK_RISE <= '1';
 -- 		elsif DESERIALIZED_DATA_DEMUX = "001101001101" then
 -- 			SHIFT_RISE <= "010";
 -- 			LOCK_RISE <= '1';
@@ -274,12 +274,12 @@ deserialization_falling_edge : process(CLOCK, RESET)
 
 		elsif falling_edge(CLOCK) and LOCK = '0' and d_digif_rst = '1' then
 
-		if DESERIALIZED_DATA_DEMUX = "110100110100" then
+		if DESERIALIZED_DATA_DEMUX = PREAMBLE & PREAMBLE then
 			SHIFT_FALL <= "000";
 			LOCK_FALL  <= '1';
--- 		elsif DESERIALIZED_DATA_DEMUX = "011010011010" then
--- 			SHIFT_FALL <= "001";
--- 			LOCK_FALL  <= '1';
+		elsif DESERIALIZED_DATA_DEMUX = PREAMBLE(0) & PREAMBLE(5 downto 0) & PREAMBLE(5 downto 1) then -- i.e. def. "011010011010"
+ 			SHIFT_FALL <= "001";
+ 			LOCK_FALL  <= '1';
 -- 		elsif DESERIALIZED_DATA_DEMUX = "001101001101" then
 -- 			SHIFT_FALL <= "010";
 -- 			LOCK_FALL  <= '1';
@@ -317,30 +317,28 @@ deserialization_falling_edge : process(CLOCK, RESET)
 					DESERIALIZED_DATA_DESHIFT;
 
 	
-        clockdiv : process (CLOCK, RESET, LOCK)
+        clockdiv : process (CLOCK, LOCK)
 	variable lock_old : STD_LOGIC;
 	variable cnt : integer range 0 to 7 := 0;
         begin
-                if RESET = '1' then
+                if LOCK = '0' then
                         CLOCK_DIV <= '0';
+			cnt := 0;
 			lock_old := '0';
-			cnt := 0;
-                elsif (CLOCK'event AND CLOCK = '0') or ((CLOCK'event AND CLOCK = '0') AND (LOCK'event AND LOCK = '1')) then
-			if LOCK /= lock_old and lock_old = '0' then
-			CLOCK_DIV <= '1';
-			cnt := 0;
+                elsif (CLOCK'event AND CLOCK = '0') and LOCK = '1' then
+
+			if lock_old = '0' then
+			CLOCK_DIV <= not CLOCK_DIV;
 			lock_old := '1';
-		elsif LOCK = '1' and lock_old = '1' then
-				 cnt := cnt + 1;
-
-				 if cnt = 3 then
-				CLOCK_DIV <= not CLOCK_DIV;
-				cnt := 0;
-				end if;
-
-
-			lock_old := LOCK;
 			end if;
+
+			cnt := cnt + 1;
+
+			if cnt = 4 then
+			CLOCK_DIV <= not CLOCK_DIV;
+			cnt := 1;
+			end if;
+
                 end if;
         end process;  
 
