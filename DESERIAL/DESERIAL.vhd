@@ -268,7 +268,7 @@ deserialization_falling_edge : process(CLOCK, RESET)
 		SHIFT_FALL <= "000";
 		LOCK_FALL <= '0';
 
-		elsif rising_edge(CLOCK) and (d_digif_rst /= digif_rst_old and d_digif_rst = '1') then
+		elsif falling_edge(CLOCK) and (d_digif_rst /= digif_rst_old and d_digif_rst = '1') then
 			LOCK_FALL <= '0';
 			digif_rst_old := d_digif_rst;
 
