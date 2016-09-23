@@ -57,7 +57,6 @@ architecture Behavioral of DESERIAL_TB is
 	   CLOCK 		: in  STD_LOGIC;
            RESET		: in  STD_LOGIC;
 	   d_digif_rst		: in  STD_LOGIC;
-	   d_digif_rst_o	: out STD_LOGIC;
            d_digif_msb_data 	: in  STD_LOGIC;
            d_digif_lsb_data	: in  STD_LOGIC;
 	   DESERIALIZED_DATA_CLK: inout STD_LOGIC;
@@ -72,6 +71,7 @@ architecture Behavioral of DESERIAL_TB is
 	signal d_digif_lsb_data : STD_LOGIC;
 	signal CLOCK_90		: STD_LOGIC;
 	signal RESET_DIGIF_O	: STD_LOGIC;
+	signal RESET_DIGIF_SYNCED: STD_LOGIC;
 
 begin
 
@@ -82,7 +82,7 @@ begin
 	DIGIF_INST: DIGIF
 	port map (
 	   d_digif_sck 		=> CLOCK, -- d_digif_sck,
-           d_digif_rst		=> RESET_DIGIF_O, -- d_digif_rst,
+           d_digif_rst		=> RESET_DIGIF_SYNCED, -- d_digif_rst,
            d_digif_msb_data 	=> d_digif_msb_data,
            d_digif_lsb_data 	=> d_digif_lsb_data
 	);
@@ -91,13 +91,19 @@ begin
 	port map (
 	   CLOCK 		=> CLOCK_90, 
            RESET 		=> RESET,
-	   d_digif_rst		=> RESET_DIGIF,
-	   d_digif_rst_o	=> RESET_DIGIF_O,
+	   d_digif_rst		=> RESET_DIGIF_SYNCED,
            d_digif_msb_data 	=> d_digif_msb_data,
            d_digif_lsb_data 	=> d_digif_lsb_data,
 	   DESERIALIZED_DATA_CLK => DATA_PAR_CLK,
            DESERIALIZED_DATA 	=> DATA_PAR
 	);
+
+ 	rstsync : process (CLOCK)
+ 	begin
+ 		if rising_edge(CLOCK) then
+ 			RESET_DIGIF_SYNCED <= RESET_DIGIF;
+ 		end if;
+ 	end process;
 
 	CLOCK_90 <= CLOCK after 1 ns;  -- MANUAL 90deg PHASE SHIFT (Tclk = 4ns)
 end Behavioral;

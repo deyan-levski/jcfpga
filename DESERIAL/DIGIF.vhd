@@ -48,11 +48,11 @@ begin
 	--|--------------------------------------------|
 
 	PREAMBLE <= "110100";	    --"001011" LSB FIRST LSB--->MSB		-- mirrored word
-	DATA0	 <= "100100000000"; --"100000000101"; --"010101010101"; --"101010101010" LSB FIRST LSB--->MSB	-- mirrored word
-	DATA1	 <= "100000000000"; --"100000001101"; --"011000101111"; --"111101000110" LSB FIRST LSB--->MSB	-- mirrored word
+	DATA0	 <= "000011000000"; --"100000000101"; --"010101010101"; --"101010101010" LSB FIRST LSB--->MSB	-- mirrored word
+	DATA1	 <= "000000000000"; --"100000001101"; --"011000101111"; --"111101000110" LSB FIRST LSB--->MSB	-- mirrored word
 
 
-	rising_edge_process : process(d_digif_sck, d_digif_rst)
+	rising_edge_process : process(d_digif_sck)
 
 		variable txbuf_m : STD_LOGIC_VECTOR(5 downto 0);	-- tx buffer msb
 		variable txbuf_l : STD_LOGIC_VECTOR(5 downto 0);	-- tx buffer lsb
@@ -138,7 +138,7 @@ begin
 	end process;
 
 
-	falling_edge_process : process(d_digif_sck, d_digif_rst)	-- falling edge process; almost identical to rising edge process
+	falling_edge_process : process(d_digif_sck)	-- falling edge process; almost identical to rising edge process
 
 		variable txbuf_m : STD_LOGIC_VECTOR(5 downto 0);
 		variable txbuf_l : STD_LOGIC_VECTOR(5 downto 0);
@@ -202,6 +202,7 @@ begin
 					MSB_SDA_FALL <= txbuf_m(4);	-- we tap from data 5 (MSB)
 					LSB_SDA_FALL <= txbuf_l(4);
 				end if;
+
 				txbuf_m(5 downto 2) := txbuf_m(3 downto 0);
 				txbuf_l(5 downto 2) := txbuf_l(3 downto 0);
 

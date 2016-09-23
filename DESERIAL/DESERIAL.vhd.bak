@@ -23,8 +23,7 @@ use IEEE.STD_LOGIC_UNSIGNED.all;
 entity DESERIAL is
     Port ( CLOCK : in  STD_LOGIC; -- also same as d_digif_sck
            RESET : in  STD_LOGIC; -- also same as d_digif_rst
-    	   d_digif_rst    : in  STD_LOGIC;
-    	   d_digif_rst_o  : out  STD_LOGIC;
+    	   d_digif_rst	    : in  STD_LOGIC;
            d_digif_msb_data : in  STD_LOGIC;
            d_digif_lsb_data : in  STD_LOGIC;
 	   DESERIALIZED_DATA_CLK : inout STD_LOGIC;
@@ -207,10 +206,10 @@ deserialization_falling_edge : process(CLOCK, RESET)
 			digif_rst_old := d_digif_rst;
 		elsif rising_edge(CLOCK) and LOCK = '0' and d_digif_rst = '1' then
 
--- 		if DESERIALIZED_DATA_DEMUX = PREAMBLE & PREAMBLE then
--- 			SHIFT_RISE <= "000";
--- 			LOCK_RISE <= '1';
-		if DESERIALIZED_DATA_DEMUX = PREAMBLE(0) & PREAMBLE(5 downto 0) & PREAMBLE(5 downto 1) then -- i.e. def. "011010011010"
+ 		if DESERIALIZED_DATA_DEMUX = PREAMBLE & PREAMBLE then
+ 			SHIFT_RISE <= "000";
+ 			LOCK_RISE <= '1';
+		elsif DESERIALIZED_DATA_DEMUX = PREAMBLE(0) & PREAMBLE(5 downto 0) & PREAMBLE(5 downto 1) then -- i.e. def. "011010011010"
   			SHIFT_RISE <= "001";
   			LOCK_RISE <= '1';
 -- 		elsif DESERIALIZED_DATA_DEMUX = "001101001101" then
@@ -254,10 +253,10 @@ deserialization_falling_edge : process(CLOCK, RESET)
 
 		elsif falling_edge(CLOCK) and LOCK = '0' and d_digif_rst = '1' then
 
---		if DESERIALIZED_DATA_DEMUX = PREAMBLE & PREAMBLE then
---			SHIFT_FALL <= "000";
---			LOCK_FALL  <= '1';
-		if DESERIALIZED_DATA_DEMUX = PREAMBLE(0) & PREAMBLE(5 downto 0) & PREAMBLE(5 downto 1) then -- i.e. def. "011010011010"
+		if DESERIALIZED_DATA_DEMUX = PREAMBLE & PREAMBLE then
+			SHIFT_FALL <= "000";
+			LOCK_FALL  <= '1';
+		elsif DESERIALIZED_DATA_DEMUX = PREAMBLE(0) & PREAMBLE(5 downto 0) & PREAMBLE(5 downto 1) then -- i.e. def. "011010011010"
  			SHIFT_FALL <= "001";
  			LOCK_FALL  <= '1';
 -- 		elsif DESERIALIZED_DATA_DEMUX = "001101001101" then
@@ -298,6 +297,7 @@ deserialization_falling_edge : process(CLOCK, RESET)
 
 	
         clockdiv : process (CLOCK, LOCK)
+	variable old_rst : STD_LOGIC;
 	variable lock_old : STD_LOGIC;
 	variable cnt : integer range 0 to 7 := 0;
         begin
@@ -307,6 +307,11 @@ deserialization_falling_edge : process(CLOCK, RESET)
 			lock_old := '0';
 
                 elsif (CLOCK'event AND CLOCK = '0') and LOCK = '1' then
+
+			if d_digif_rst /= old_rst and d_digif_rst = '0' then
+			CLOCK_DIV <= not CLOCK_DIV;
+			cnt := 2;
+			end if;
 
 			if lock_old = '0' then
 			CLOCK_DIV <= not CLOCK_DIV;
@@ -320,12 +325,19 @@ deserialization_falling_edge : process(CLOCK, RESET)
 			cnt := 1;
 			end if;
 
+			old_rst := d_digif_rst;
+
                 end if;
         end process;  
 
-        DESERIALIZED_DATA_CLK <= CLOCK_DIV;
+-- 	rstsync : process (CLOCK)
+-- 	begin
+-- 		if rising_edge(CLOCK) then
+-- 			d_digif_rst <= d_digif_rst_in;
+-- 		end if;
+-- 	end process;
 
-			d_digif_rst_o <= d_digif_rst;
+        DESERIALIZED_DATA_CLK <= CLOCK_DIV;
 
 -- 	|----------------------------|
 -- 	| Strobe process rising edge |
