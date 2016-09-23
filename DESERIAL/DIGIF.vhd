@@ -39,7 +39,8 @@ architecture Behavioral of DIGIF is
 	signal LSB_SDA_FALL : STD_LOGIC;	-- LSB serial data output on falling edge process
 	signal F_EDGE_FLAG : STD_LOGIC;		-- goes high when reset is encountered (high) on falling edge process	
 	signal R_EDGE_FLAG : STD_LOGIC;		-- goes high when reset is encountered (high) on rising edge process
-
+	signal F_EDGE_FLAG_DAT : STD_LOGIC;		-- goes high when reset is encountered (high) on falling edge process	
+	signal R_EDGE_FLAG_DAT : STD_LOGIC;		-- goes high when reset is encountered (high) on rising edge process
 begin
 
 --|--------------------------------------------|
@@ -93,14 +94,27 @@ rising_edge_process : process(d_digif_sck, d_digif_rst)
 			preamble_counter := 0;				-- reset preamble counter
 			end if;
 
+			R_EDGE_FLAG_DAT <= '0';
+
 		 else
-		
+			if F_EDGE_FLAG_DAT = '1' then		-- if reset was encountered high on falling edge process 
+				R_EDGE_FLAG_DAT <= '0';		-- then rising edge encounter flag = '0'
+			else					-- else reset was enountered high in this process (rising edge)
+				R_EDGE_FLAG_DAT <= '1';			-- set rising edge encounter flag to '1'
+			end if;	
+
 			R_EDGE_FLAG <= '0';			-- reset flags
 			preamble_var := PREAMBLE;		-- load preamble to buffer
 			preamble_counter := 0;			-- reset preamble counter
 
-			MSB_SDA_RISE <= txbuf_m(4);		-- tap MSB-1 to output
-			LSB_SDA_RISE <= txbuf_l(4);
+			if (F_EDGE_FLAG_DAT = '1') then		-- if reset falling edge encounter then
+ 			MSB_SDA_RISE <= txbuf_m(4);	-- we tap from preamble 4 (MSB-1)
+ 			LSB_SDA_RISE <= txbuf_l(4);
+			end if;
+			if (F_EDGE_FLAG_DAT = '0') then		-- if not then
+ 			MSB_SDA_RISE <= txbuf_m(5);	-- we tap from preamble 5 (MSB)
+ 			LSB_SDA_RISE <= txbuf_l(5);
+ 			end if;
 
 			txbuf_m(5 downto 2) := txbuf_m(3 downto 0);	-- shift left x2
 			txbuf_l(5 downto 2) := txbuf_l(3 downto 0);
@@ -166,15 +180,28 @@ rising_edge_process : process(d_digif_sck, d_digif_rst)
 			preamble_counter := 0;
 			end if;
 
+			F_EDGE_FLAG_DAT <= '0';
+
 		else
 			F_EDGE_FLAG <= '0';
+
+			if R_EDGE_FLAG_DAT = '1' then		-- if reset was encountered high on falling edge process 
+				F_EDGE_FLAG_DAT <= '0';		-- then rising edge encounter flag = '0'
+			else					-- else reset was enountered high in this process (rising edge)
+				F_EDGE_FLAG_DAT <= '1';			-- set rising edge encounter flag to '1'
+			end if;	
 
 			preamble_var := PREAMBLE;
 			preamble_counter := 0;
 
-			MSB_SDA_FALL <= txbuf_m(5);
-			LSB_SDA_FALL <= txbuf_l(5);
-
+			if (F_EDGE_FLAG_DAT = '1') then		-- if reset falling edge encounter then
+ 			MSB_SDA_FALL <= txbuf_m(5);	-- we tap from preamble 4 (MSB-1)
+ 			LSB_SDA_FALL <= txbuf_l(5);
+			end if;
+			if (F_EDGE_FLAG_DAT = '0') then		-- if not then
+ 			MSB_SDA_FALL <= txbuf_m(4);	-- we tap from preamble 5 (MSB)
+ 			LSB_SDA_FALL <= txbuf_l(4);
+ 			end if;
 			txbuf_m(5 downto 2) := txbuf_m(3 downto 0);
 			txbuf_l(5 downto 2) := txbuf_l(3 downto 0);
 
