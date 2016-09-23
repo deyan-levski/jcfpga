@@ -1,7 +1,7 @@
 --|-------------------------------------------------------------------|
 --| ADC Testchip DIGIF interface model                                |
 --|-------------------------------------------------------------------|
---| Version P1A - Deyan Levski, deyan.levski@eng.ox.ac.uk, 14.09.2016 |
+--| Version A - Deyan Levski, deyan.levski@eng.ox.ac.uk, 23.09.2016   |
 --|-------------------------------------------------------------------|
 --
 --| -+- | Implements a DDR 6:1 serializer |
