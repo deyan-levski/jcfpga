@@ -23,7 +23,8 @@ use IEEE.STD_LOGIC_UNSIGNED.all;
 entity DESERIAL is
     Port ( CLOCK : in  STD_LOGIC; -- also same as d_digif_sck
            RESET : in  STD_LOGIC; -- also same as d_digif_rst
-    	   d_digif_rst 	    : in  STD_LOGIC;
+    	   d_digif_rst    : in  STD_LOGIC;
+    	   d_digif_rst_o  : out  STD_LOGIC;
            d_digif_msb_data : in  STD_LOGIC;
            d_digif_lsb_data : in  STD_LOGIC;
 	   DESERIALIZED_DATA_CLK : inout STD_LOGIC;
@@ -298,7 +299,6 @@ deserialization_falling_edge : process(CLOCK, RESET)
 	
         clockdiv : process (CLOCK, LOCK)
 	variable lock_old : STD_LOGIC;
-
 	variable cnt : integer range 0 to 7 := 0;
         begin
                 if LOCK = '0' then
@@ -324,6 +324,8 @@ deserialization_falling_edge : process(CLOCK, RESET)
         end process;  
 
         DESERIALIZED_DATA_CLK <= CLOCK_DIV;
+
+			d_digif_rst_o <= d_digif_rst;
 
 -- 	|----------------------------|
 -- 	| Strobe process rising edge |
