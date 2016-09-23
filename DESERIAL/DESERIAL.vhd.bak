@@ -310,7 +310,7 @@ deserialization_falling_edge : process(CLOCK, RESET)
 
 			if d_digif_rst /= old_rst and d_digif_rst = '0' then
 			CLOCK_DIV <= not CLOCK_DIV;
-			cnt := 2;
+			cnt := 2;				---- controls bit slipping
 			end if;
 
 			if lock_old = '0' then
@@ -329,13 +329,6 @@ deserialization_falling_edge : process(CLOCK, RESET)
 
                 end if;
         end process;  
-
--- 	rstsync : process (CLOCK)
--- 	begin
--- 		if rising_edge(CLOCK) then
--- 			d_digif_rst <= d_digif_rst_in;
--- 		end if;
--- 	end process;
 
         DESERIALIZED_DATA_CLK <= CLOCK_DIV;
 

@@ -99,10 +99,11 @@ begin
 
  	rstsync : process (CLOCK)
  	begin
- 		if rising_edge(CLOCK) then
+		if falling_edge(CLOCK) then			--- change to rising edge for x1 bitslip, for rest of bitslips, use cnt variable in DESERIAL instance
  			RESET_DIGIF_SYNCED <= RESET_DIGIF;
  		end if;
  	end process;
+
 
 	CLOCK_90 <= CLOCK after 1 ns;  -- MANUAL 90deg PHASE SHIFT (Tclk = 4ns)
 end Behavioral;
