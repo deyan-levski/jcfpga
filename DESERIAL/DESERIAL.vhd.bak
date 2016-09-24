@@ -199,39 +199,42 @@ deserialization_falling_edge : process(CLOCK, RESET)					-- deserialization on r
 		SHIFT_RISE <= "000";
 		LOCK_RISE <= '0';
 
-		elsif rising_edge(CLOCK) and (d_digif_rst /= digif_rst_old and d_digif_rst = '1') then		-- if rising edge of d_digif_rst then preamble starts
-
-			LOCK_RISE <= '0';									-- reset LOCK_RISE flag
-			digif_rst_old := d_digif_rst;								-- update rst_old
-
-		elsif rising_edge(CLOCK) and LOCK = '0' and d_digif_rst = '1' then				-- if rising edge of d_digif_rst and LOCK has been reset then start searching
-
-			if DESERIALIZED_DATA_DEMUX = PREAMBLE & PREAMBLE then					-- if pattern original
- 			SHIFT_RISE <= "000";									-- no need to shift
- 			LOCK_RISE <= '1';									-- lock											
-			elsif DESERIALIZED_DATA_DEMUX = PREAMBLE(0) & PREAMBLE(5 downto 0) & PREAMBLE(5 downto 1) then  -- if pattern shifted with one
-				SHIFT_RISE <= "001";									-- shift left one bit
-				LOCK_RISE <= '1';									-- lock
---			elsif DESERIALIZED_DATA_DEMUX = "001101001101" then	-- two search patterns should be enough, keeping here the rest of the possible combinations, just in case
---				SHIFT_RISE <= "010";
---				LOCK_RISE <= '1';
---			elsif DESERIALIZED_DATA_DEMUX = "100110100110" then
---				SHIFT_RISE <= "011";
---				LOCK_RISE <= '1';
---			elsif DESERIALIZED_DATA_DEMUX = "010011010011" then
---				SHIFT_RISE <= "100";
---				LOCK_RISE <= '1';
---			elsif DESERIALIZED_DATA_DEMUX = "101001101001" then
---				SHIFT_RISE <= "101";
---				LOCK_RISE <= '1';
-			else											-- else no pattern is found
-				SHIFT_RISE <= "000";
-				LOCK_RISE <= '0';								-- so lock zero, and continue searching on next clock cycle
-			end if;
-
 		elsif rising_edge(CLOCK) then
+
+			if (d_digif_rst /= digif_rst_old and d_digif_rst = '1') then		-- if rising edge of d_digif_rst then preamble starts
+
+				LOCK_RISE <= '0';									-- reset LOCK_RISE flag
+				digif_rst_old := d_digif_rst;								-- update rst_old
+
+			elsif LOCK = '0' and d_digif_rst = '1' then				-- if rising edge of d_digif_rst and LOCK has been reset then start searching
+
+				if DESERIALIZED_DATA_DEMUX = PREAMBLE & PREAMBLE then					-- if pattern original
+	 			SHIFT_RISE <= "000";									-- no need to shift
+	 			LOCK_RISE <= '1';									-- lock											
+				elsif DESERIALIZED_DATA_DEMUX = PREAMBLE(0) & PREAMBLE(5 downto 0) & PREAMBLE(5 downto 1) then  -- if pattern shifted with one
+					SHIFT_RISE <= "001";									-- shift left one bit
+					LOCK_RISE <= '1';									-- lock
+--				elsif DESERIALIZED_DATA_DEMUX = "001101001101" then	-- two search patterns should be enough, keeping here the rest of the possible combinations, just in case
+--					SHIFT_RISE <= "010";
+--					LOCK_RISE <= '1';
+--				elsif DESERIALIZED_DATA_DEMUX = "100110100110" then
+--					SHIFT_RISE <= "011";
+--					LOCK_RISE <= '1';
+--				elsif DESERIALIZED_DATA_DEMUX = "010011010011" then
+--					SHIFT_RISE <= "100";
+--					LOCK_RISE <= '1';
+--				elsif DESERIALIZED_DATA_DEMUX = "101001101001" then
+--					SHIFT_RISE <= "101";
+--					LOCK_RISE <= '1';
+				else											-- else no pattern is found
+					SHIFT_RISE <= "000";
+					LOCK_RISE <= '0';								-- so lock zero, and continue searching on next clock cycle
+				end if;
+
+			else
 			DESERIALIZED_DATA_DESHIFT_RISE <= DESERIALIZED_DATA_DEMUX;				-- load DEMUX to DESHIFT //rise
 			digif_rst_old := d_digif_rst;								-- update rst_old
+			end if;
 		end if;
 	end process;
 
@@ -248,39 +251,42 @@ deserialization_falling_edge : process(CLOCK, RESET)					-- deserialization on r
 		SHIFT_FALL <= "000";
 		LOCK_FALL <= '0';
 
-		elsif falling_edge(CLOCK) and (d_digif_rst /= digif_rst_old and d_digif_rst = '1') then		-- if falling edge of d_digif_rst then preamble starts
+		elsif falling_edge(CLOCK) then
+		
+			if (d_digif_rst /= digif_rst_old and d_digif_rst = '1') then		-- if falling edge of d_digif_rst then preamble starts
 			
 			LOCK_FALL <= '0';									-- reset LOCK_RISE flag
 			digif_rst_old := d_digif_rst;								-- update rst_old
 
-		elsif falling_edge(CLOCK) and LOCK = '0' and d_digif_rst = '1' then				-- if falling edge of d_digif_rst and LOCK has been reset then start searching
+			elsif LOCK = '0' and d_digif_rst = '1' then				-- if falling edge of d_digif_rst and LOCK has been reset then start searching
 
-			if DESERIALIZED_DATA_DEMUX = PREAMBLE & PREAMBLE then					
-				SHIFT_FALL <= "000";
-				LOCK_FALL  <= '1';
-			elsif DESERIALIZED_DATA_DEMUX = PREAMBLE(0) & PREAMBLE(5 downto 0) & PREAMBLE(5 downto 1) then -- i.e. def. "011010011010"
-				SHIFT_FALL <= "001";
-				LOCK_FALL  <= '1';
---			elsif DESERIALIZED_DATA_DEMUX = "001101001101" then
---				SHIFT_FALL <= "010";
---				LOCK_FALL  <= '1';
---			elsif DESERIALIZED_DATA_DEMUX = "100110100110" then
---				SHIFT_FALL <= "011";
---				LOCK_FALL  <= '1';
---			elsif DESERIALIZED_DATA_DEMUX = "010011010011" then
---				SHIFT_FALL <= "100";
---				LOCK_FALL  <= '1';
---			elsif DESERIALIZED_DATA_DEMUX = "101001101001" then
---				SHIFT_FALL <= "101";
---				LOCK_FALL  <= '1';
+				if DESERIALIZED_DATA_DEMUX = PREAMBLE & PREAMBLE then					
+					SHIFT_FALL <= "000";
+					LOCK_FALL  <= '1';
+				elsif DESERIALIZED_DATA_DEMUX = PREAMBLE(0) & PREAMBLE(5 downto 0) & PREAMBLE(5 downto 1) then -- i.e. def. "011010011010"
+					SHIFT_FALL <= "001";
+					LOCK_FALL  <= '1';
+--				elsif DESERIALIZED_DATA_DEMUX = "001101001101" then
+--					SHIFT_FALL <= "010";
+--					LOCK_FALL  <= '1';
+--				elsif DESERIALIZED_DATA_DEMUX = "100110100110" then
+--					SHIFT_FALL <= "011";
+--					LOCK_FALL  <= '1';
+--				elsif DESERIALIZED_DATA_DEMUX = "010011010011" then
+--					SHIFT_FALL <= "100";
+--					LOCK_FALL  <= '1';
+--				elsif DESERIALIZED_DATA_DEMUX = "101001101001" then
+--					SHIFT_FALL <= "101";
+--					LOCK_FALL  <= '1';
+				else
+					SHIFT_FALL <= "000";
+					LOCK_FALL  <= '0';
+				end if;
+
 			else
-				SHIFT_FALL <= "000";
-				LOCK_FALL  <= '0';
-			end if;
-
-		elsif falling_edge(CLOCK) then
 			DESERIALIZED_DATA_DESHIFT_FALL <= DESERIALIZED_DATA_DEMUX; 				-- load DEMUX to DESHIFT //rise
 			digif_rst_old := d_digif_rst;								-- update rst_old
+			end if;
 		end if;
 	end process;
 

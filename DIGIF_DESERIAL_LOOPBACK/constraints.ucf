@@ -8,7 +8,8 @@ NET RESET                                       LOC = F5  | IOSTANDARD = LVCMOS3
 #PIN "PLL_250_INST/clkout2_buf.O" CLOCK_DEDICATED_ROUTE = FALSE;
 PIN "PLL_MODULE/clkout1_buf.O" CLOCK_DEDICATED_ROUTE = FALSE;
 PIN "PLL_MODULE/clkout2_buf.O" CLOCK_DEDICATED_ROUTE = FALSE;
-NET "d_digif_rst_i" CLOCK_DEDICATED_ROUTE = FALSE;
+NET "d_digif_sck_i_p" CLOCK_DEDICATED_ROUTE = FALSE;
+NET "d_digif_sck_i_n" CLOCK_DEDICATED_ROUTE = FALSE;
 
 ## SPI BUS
 NET d_digif_rst_o                                     LOC = T11 | IOSTANDARD = LVCMOS33;  
@@ -21,7 +22,7 @@ NET DATA_PAR_CLK                                     LOC = P11 | IOSTANDARD = LV
 
 NET DEBUG_PIN                                   LOC = V15  | IOSTANDARD=LVCMOS33;
 NET DEBUG_PIN_2                                   LOC = U15  | IOSTANDARD=LVCMOS33;
-NET DEBUG_PIN_3                                   LOC = N11  | IOSTANDARD=LVCMOS33;
+#NET DEBUG_PIN_3                                   LOC = N11  | IOSTANDARD=LVCMOS33;
 
 NET RESET_DIGIF					LOC = N4   | IOSTANDARD=LVCMOS33;
 
@@ -30,8 +31,22 @@ NET RESET_DIGIF					LOC = N4   | IOSTANDARD=LVCMOS33;
 #NET TX                                          LOC=B16  |  IOSTANDARD=LVCMOS33;
 
 ## Count Clock
-#NET d_digif_sck_o_p                                 LOC=T6   |  IOSTANDARD=LVDS_33;
-#NET d_digif_sck_o_n                                 LOC=V6   |  IOSTANDARD=LVDS_33;
+NET d_digif_sck_o_p                                 LOC=T6   |  IOSTANDARD=LVDS_33;
+NET d_digif_sck_o_n                                 LOC=V6   |  IOSTANDARD=LVDS_33;
+
+NET d_digif_msb_data_o_p		LOC = N6   |   IOSTANDARD = LVDS_33;
+NET d_digif_msb_data_o_n		LOC = P7   |   IOSTANDARD = LVDS_33;
+
+NET d_digif_msb_data_i_p		LOC = U5   |   IOSTANDARD = LVDS_33;
+NET d_digif_msb_data_i_n		LOC = V5   |   IOSTANDARD = LVDS_33;
+
+NET d_digif_lsb_data_o_p		LOC = U13   |   IOSTANDARD = LVDS_33;
+NET d_digif_lsb_data_o_n		LOC = V13   |   IOSTANDARD = LVDS_33;
+
+NET d_digif_lsb_data_i_p		LOC = M11   |   IOSTANDARD = LVDS_33;
+NET d_digif_lsb_data_i_n		LOC = N11   |   IOSTANDARD = LVDS_33;
+
+
 ## Counter Control
 NET DATA_PAR(0)                                  LOC = N10  | IOSTANDARD = LVCMOS33; 
 NET DATA_PAR(1)                                 LOC = T10  | IOSTANDARD = LVCMOS33; 
@@ -60,8 +75,8 @@ NET DATA_PAR(11)                                       LOC = V11 | IOSTANDARD = 
 #NET d_ref_vref_ramp_rst                         LOC = U16 | IOSTANDARD = LVCMOS33;
 #NET d_ref_vref_sh                               LOC = V13 | IOSTANDARD = LVCMOS33;
 #NET d_ref_vref_clamp_en                         LOC = U13 | IOSTANDARD = LVCMOS33;
-#NET d_digif_sck_i_n		                LOC = T7  | IOSTANDARD = LVDS_33;
-#NET d_digif_sck_i_p		                LOC = R7  | IOSTANDARD = LVDS_33;
+NET d_digif_sck_i_n		                LOC = T7  | IOSTANDARD = LVDS_33;
+NET d_digif_sck_i_p		                LOC = R7  | IOSTANDARD = LVDS_33;
 
 #NET d_digif_sck_i_p 	CLOCK_DEDICATED_ROUTE = FALSE;
 
