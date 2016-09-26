@@ -41,6 +41,7 @@ architecture Behavioral of DIGIF is
 	signal R_EDGE_FLAG : STD_LOGIC;			-- used for syncing preamble, goes high when reset is encountered (high) on rising edge process
 	signal F_EDGE_FLAG_DAT : STD_LOGIC;		-- used for syncing data, goes high when reset is encountered (high) on falling edge process	
 	signal R_EDGE_FLAG_DAT : STD_LOGIC;		-- used for syncing data, goes high when reset is encountered (high) on rising edge process
+
 begin
 
 	--|--------------------------------------------|
@@ -48,7 +49,7 @@ begin
 	--|--------------------------------------------|
 
 	PREAMBLE <= "110100";	    --"001011" LSB FIRST LSB--->MSB		-- mirrored word
-	DATA0	 <= "000000000011"; --"100000000101"; --"010101010101"; --"101010101010" LSB FIRST LSB--->MSB	-- mirrored word
+	DATA0	 <= "000000000101"; --"100000000101"; --"010101010101"; --"101010101010" LSB FIRST LSB--->MSB	-- mirrored word
 	DATA1	 <= "000000000000"; --"100000001101"; --"011000101111"; --"111101000110" LSB FIRST LSB--->MSB	-- mirrored word
 
 
@@ -59,7 +60,6 @@ begin
 		variable preamble_counter :integer range 0 to 8 :=0;	-- counter for preamble pattern
 		variable preamble_var :std_logic_vector (5 downto 0);	-- preamble buffer
 		variable sck_counter :integer range 0 to 31 := 0;	-- sck clock counter used for data shifting
-
 	begin
 
 		if rising_edge(d_digif_sck) then			-- on rising edge
@@ -68,6 +68,7 @@ begin
 
 				if F_EDGE_FLAG = '1' then		-- if reset was encountered high on falling edge process 
 					R_EDGE_FLAG <= '0';		-- then rising edge encounter flag = '0'
+
 				else					-- else reset was enountered high in this process (rising edge)
 					R_EDGE_FLAG <= '1';			-- set rising edge encounter flag to '1'
 				end if;
@@ -95,7 +96,6 @@ begin
 				end if;
 
 				R_EDGE_FLAG_DAT <= '0';			-- reset data flags
-
 			else
 				if F_EDGE_FLAG_DAT = '1' then		-- if reset was encountered low on falling edge process 
 					R_EDGE_FLAG_DAT <= '0';		-- then rising edge dat encounter flag = '0'
@@ -129,9 +129,7 @@ begin
 					txbuf_l:= DATA0(5 downto 0);
 					sck_counter := 0;				-- reset counter
 				end if;
-
 			end if;
-
 
 		end if;
 
@@ -218,7 +216,6 @@ begin
 				end if;
 
 			end if;
-
 		end if;
 
 	end process;

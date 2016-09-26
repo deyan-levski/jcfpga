@@ -81,12 +81,12 @@ port
  (-- Clock in ports
   CLK_IN1           : in     std_logic;
   -- Clock out ports
+  CLK_OUT0          : out    std_logic;
   CLK_OUT1          : out    std_logic;
   CLK_OUT2          : out    std_logic;
   CLK_OUT3          : out    std_logic;
   CLK_OUT4          : out    std_logic;
-  CLK_OUT5          : out    std_logic;
-  CLK_OUT6          : out    std_logic
+  CLK_OUT5          : out    std_logic
  );
 end PLL_50_100_150_200_250;
 
@@ -132,10 +132,10 @@ begin
     DIVCLK_DIVIDE        => 1,
     CLKFBOUT_MULT        => 5,
     CLKFBOUT_PHASE       => 0.000,
-    CLKOUT0_DIVIDE       => 10,
+    CLKOUT0_DIVIDE       => 50,
     CLKOUT0_PHASE        => 0.000,
     CLKOUT0_DUTY_CYCLE   => 0.500,
-    CLKOUT1_DIVIDE       => 10,
+    CLKOUT1_DIVIDE       => 50,
     CLKOUT1_PHASE        => 90.000,
     CLKOUT1_DUTY_CYCLE   => 0.500,
     CLKOUT2_DIVIDE       => 5,
@@ -177,34 +177,34 @@ begin
 
   clkout1_buf : BUFG
   port map
-   (O   => CLK_OUT1,
+   (O   => CLK_OUT0,
     I   => clkout0);
 
 
 
   clkout2_buf : BUFG
   port map
-   (O   => CLK_OUT2,
+   (O   => CLK_OUT1,
     I   => clkout1);
 
   clkout3_buf : BUFG
   port map
-   (O   => CLK_OUT3,
+   (O   => CLK_OUT2,
     I   => clkout2);
 
   clkout4_buf : BUFG
   port map
-   (O   => CLK_OUT4,
+   (O   => CLK_OUT3,
     I   => clkout3);
 
   clkout5_buf : BUFG
   port map
-   (O   => CLK_OUT5,
+   (O   => CLK_OUT4,
     I   => clkout4);
 
   clkout6_buf : BUFG
   port map
-   (O   => CLK_OUT6,
+   (O   => CLK_OUT5,
     I   => clkout5);
 
 end xilinx;

@@ -84,12 +84,12 @@ architecture Behavioral of DIGIF_DESERIAL_LOOPBACK is
 		 (-- Clock in ports
 		  CLK_IN1           : in     std_logic;
 		  -- Clock out ports
+		  CLK_OUT0          : out    std_logic;
 		  CLK_OUT1          : out    std_logic;
 		  CLK_OUT2          : out    std_logic;
 		  CLK_OUT3          : out    std_logic;
 		  CLK_OUT4          : out    std_logic;
-		  CLK_OUT5          : out    std_logic;
-		  CLK_OUT6          : out    std_logic
+		  CLK_OUT5          : out    std_logic
 		 );
 	end component;
 
@@ -105,12 +105,12 @@ begin
 		 (-- Clock in ports
 		  CLK_IN1           => CLOCK_IN,
 		  -- Clock out ports
-		  CLK_OUT1         => CLOCK,    -- 50 Mega 0 deg
-		  CLK_OUT2         => CLOCK_90, -- 50 Mega 90 deg
-		  CLK_OUT3         => open, 	-- 100 Mega 0 deg
-		  CLK_OUT4         => open,     -- 100 Mega 90 deg
-		  CLK_OUT5         => open,     -- 250 Mega 0 deg
-		  CLK_OUT6	   => open	-- 250 Mega 90 deg
+		  CLK_OUT0         => CLOCK,    -- 50 Mega 0 deg
+		  CLK_OUT1         => CLOCK_90, -- 50 Mega 90 deg
+		  CLK_OUT2         => open, 	-- 100 Mega 0 deg
+		  CLK_OUT3         => open,     -- 100 Mega 90 deg
+		  CLK_OUT4         => open,     -- 250 Mega 0 deg
+		  CLK_OUT5	   => open	-- 250 Mega 90 deg
 		 );
 
 --	|--------------------|
@@ -142,7 +142,7 @@ begin
 
  	rstsync : process (CLOCK)				-- reset sync
  	begin
-		if falling_edge(CLOCK) then			--- change to rising edge for x1 bitslip, for rest of bitslips, use cnt variable in DESERIAL instance, def falling
+		if rising_edge(CLOCK) then			--- change to rising edge for x1 bitslip, for rest of bitslips, use cnt variable in DESERIAL instance, def falling
  			RESET_DIGIF_SYNCED <= RESET_DIGIF;
  		end if;
  	end process;
@@ -249,8 +249,8 @@ begin
  	   IB 		=> d_digif_sck_i_n -- Diff_n buffer input (connect directly to top-level port)
  	);
 
-DEBUG_PIN   <= '0'; --d_digif_lsb_data_i;
-DEBUG_PIN_2 <= '0'; --CLOCK; --CLOCK;
+DEBUG_PIN   <= d_digif_lsb_data_i;
+DEBUG_PIN_2 <= d_digif_msb_data_i; --CLOCK;
 --DEBUG_PIN_3 <= '0'; --CLOCK_90;
 
 end Behavioral;
