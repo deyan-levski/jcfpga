@@ -45,6 +45,7 @@ architecture Behavioral of DESERIAL_TB is
 	   port ( 
 	   d_digif_sck 		: in  STD_LOGIC;
            d_digif_rst		: in  STD_LOGIC;
+	   RESET		: in  STD_LOGIC;
            d_digif_msb_data 	: out  STD_LOGIC;
            d_digif_lsb_data 	: out  STD_LOGIC
    	   );
@@ -82,6 +83,7 @@ begin
 	port map (
 	   d_digif_sck 		=> CLOCK, -- d_digif_sck,
            d_digif_rst		=> RESET_DIGIF_SYNCED, -- d_digif_rst,
+	   RESET		=> RESET,
            d_digif_msb_data 	=> d_digif_msb_data,
            d_digif_lsb_data 	=> d_digif_lsb_data
 	);
@@ -99,7 +101,7 @@ begin
 
  	rstsync : process (CLOCK)
  	begin
-		if falling_edge(CLOCK) then			--- change to rising edge for x1 bitslip, for rest of bitslips, use cnt variable in DESERIAL instance
+		if rising_edge(CLOCK) then			--- change to rising edge for x1 bitslip, for rest of bitslips, use cnt variable in DESERIAL instance
  			RESET_DIGIF_SYNCED <= RESET_DIGIF;
  		end if;
  	end process;

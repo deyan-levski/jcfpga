@@ -22,6 +22,7 @@ use IEEE.STD_LOGIC_1164.ALL;
 entity DIGIF is
 	Port ( d_digif_sck : in  STD_LOGIC;
 	       d_digif_rst : in  STD_LOGIC;
+	       RESET	   : in  STD_LOGIC;
 	       d_digif_msb_data : out  STD_LOGIC;
 	       d_digif_lsb_data : out  STD_LOGIC);
 end DIGIF;
@@ -41,6 +42,8 @@ architecture Behavioral of DIGIF is
 	signal R_EDGE_FLAG : STD_LOGIC;			-- used for syncing preamble, goes high when reset is encountered (high) on rising edge process
 	signal F_EDGE_FLAG_DAT : STD_LOGIC;		-- used for syncing data, goes high when reset is encountered (high) on falling edge process	
 	signal R_EDGE_FLAG_DAT : STD_LOGIC;		-- used for syncing data, goes high when reset is encountered (high) on rising edge process
+	signal mux_sck_rise : STD_LOGIC;
+	signal mux_sck_fall : STD_LOGIC;
 
 begin
 
@@ -60,11 +63,16 @@ begin
 		variable preamble_counter :integer range 0 to 8 :=0;	-- counter for preamble pattern
 		variable preamble_var :std_logic_vector (5 downto 0);	-- preamble buffer
 		variable sck_counter :integer range 0 to 31 := 0;	-- sck clock counter used for data shifting
+		variable sck_toggle : STD_LOGIC;
 	begin
 
 		if rising_edge(d_digif_sck) then			-- on rising edge
 
-			if (d_digif_rst = '1') then			-- if reset is high
+			if (RESET = '1') then
+
+				sck_toggle := '0';
+
+			elsif (d_digif_rst = '1') then			-- if reset is high
 
 				if F_EDGE_FLAG = '1' then		-- if reset was encountered high on falling edge process 
 					R_EDGE_FLAG <= '0';		-- then rising edge encounter flag = '0'
@@ -96,6 +104,8 @@ begin
 				end if;
 
 				R_EDGE_FLAG_DAT <= '0';			-- reset data flags
+				sck_toggle := not sck_toggle;
+				mux_sck_rise <= sck_toggle;
 			else
 				if F_EDGE_FLAG_DAT = '1' then		-- if reset was encountered low on falling edge process 
 					R_EDGE_FLAG_DAT <= '0';		-- then rising edge dat encounter flag = '0'
@@ -129,8 +139,11 @@ begin
 					txbuf_l:= DATA0(5 downto 0);
 					sck_counter := 0;				-- reset counter
 				end if;
-			end if;
 
+				sck_toggle := not sck_toggle;
+				mux_sck_rise <= sck_toggle;
+
+			end if;
 		end if;
 
 	end process;
@@ -143,12 +156,18 @@ begin
 		variable preamble_counter :integer range 0 to 31 :=0;
 		variable preamble_var :std_logic_vector (5 downto 0);
 		variable sck_counter :integer range 0 to 31 := 0;
+		variable sck_toggle : STD_LOGIC;
 
 	begin
 
+
 		if falling_edge(d_digif_sck) then
 
-			if (d_digif_rst = '1') then
+			if (RESET = '1') then
+
+				sck_toggle := '0';
+
+			elsif (d_digif_rst = '1') then
 
 				if R_EDGE_FLAG = '1' then
 					F_EDGE_FLAG <= '0';
@@ -179,6 +198,8 @@ begin
 				end if;
 
 				F_EDGE_FLAG_DAT <= '0';			-- reset data flags
+				sck_toggle := not sck_toggle;
+				mux_sck_fall <= sck_toggle;
 
 			else
 
@@ -214,14 +235,16 @@ begin
 					txbuf_l:= DATA0(5 downto 0);
 					sck_counter := 0;
 				end if;
+				sck_toggle := not sck_toggle;
+				mux_sck_fall <= sck_toggle;
 
 			end if;
 		end if;
 
 	end process;
 
-	d_digif_msb_data <= MSB_SDA_FALL when d_digif_sck = '0' else MSB_SDA_RISE; -- combine outputs from the two processes
-	d_digif_lsb_data <= LSB_SDA_FALL when d_digif_sck = '0' else LSB_SDA_RISE; -- might be glitchy, but should not be an issue because the deserializer clock strobes the data in the middle of the eye opening i.e. plenty of time for glitch to disappear
+	d_digif_msb_data <= MSB_SDA_FALL when (mux_sck_rise xor mux_sck_fall) = '0' else MSB_SDA_RISE; -- combine outputs from the two processes
+	d_digif_lsb_data <= LSB_SDA_FALL when (mux_sck_rise xor mux_sck_fall) = '0' else LSB_SDA_RISE; -- might be glitchy, but should not be an issue because the deserializer clock strobes the data in the middle of the eye opening i.e. plenty of time for glitch to disappear
 
 end Behavioral;
 
