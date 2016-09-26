@@ -22,13 +22,13 @@ entity DIGIF_DESERIAL_LOOPBACK is
 	   CLOCK_IN        : in  STD_LOGIC;
            RESET           : in  STD_LOGIC;
     	   RESET_DIGIF     : in STD_LOGIC;
-    	   DATA_PAR_CLK    : out STD_LOGIC;
+    	   DATA_PAR_CLK    : inout STD_LOGIC;
            DATA_PAR 	   : out  STD_LOGIC_VECTOR (11 downto 0);
 	   DEBUG_PIN	   : out STD_LOGIC;
     	   DEBUG_PIN_2	   : out STD_LOGIC;
     --	   DEBUG_PIN_3     : out STD_LOGIC;
     	   d_digif_rst_o   : out STD_LOGIC;
-    	   d_digif_rst_i   : out STD_LOGIC;
+    	   d_digif_rst_i   : in STD_LOGIC;
 	   d_digif_sck_o_p : out STD_LOGIC;
 	   d_digif_sck_o_n : out STD_LOGIC;
 	   d_digif_sck_i_p : in STD_LOGIC;
@@ -66,7 +66,7 @@ architecture Behavioral of DIGIF_DESERIAL_LOOPBACK is
 	   d_digif_rst		: in  STD_LOGIC;
            d_digif_msb_data 	: in  STD_LOGIC;
            d_digif_lsb_data	: in  STD_LOGIC;
-	   DESERIALIZED_DATA_CLK: out STD_LOGIC;
+	   DESERIALIZED_DATA_CLK: inout STD_LOGIC;
            DESERIALIZED_DATA 	: out  STD_LOGIC_VECTOR (11 downto 0)
    	   );
 
@@ -94,7 +94,8 @@ architecture Behavioral of DIGIF_DESERIAL_LOOPBACK is
 	end component;
 
 	signal CLOCK : STD_LOGIC;
-	signal CLOCK_120 : STD_LOGIC;
+	signal CLOCK_90 : STD_LOGIC;
+	signal CLOCK_OBUFDS : STD_LOGIC;
 	signal d_digif_sck_i : STD_LOGIC;
 
 begin
@@ -104,9 +105,9 @@ begin
 		 (-- Clock in ports
 		  CLK_IN1           => CLOCK_IN,
 		  -- Clock out ports
-		  CLK_OUT1          => CLOCK,    -- 50 Mega 0 deg
-		  CLK_OUT2         => CLOCK_120,    -- 50 Mega 90 deg
-		  CLK_OUT3         => open, -- 100 Mega 0 deg
+		  CLK_OUT1         => CLOCK,    -- 50 Mega 0 deg
+		  CLK_OUT2         => CLOCK_90, -- 50 Mega 90 deg
+		  CLK_OUT3         => open, 	-- 100 Mega 0 deg
 		  CLK_OUT4         => open,     -- 100 Mega 90 deg
 		  CLK_OUT5         => open,     -- 250 Mega 0 deg
 		  CLK_OUT6	   => open	-- 250 Mega 90 deg
@@ -130,7 +131,7 @@ begin
 
 	DESERIAL_INST: DESERIAL
 	port map (
-	   CLOCK 		=> CLOCK_120, 
+	   CLOCK 		=> CLOCK_90, 
            RESET 		=> RESET,
 	   d_digif_rst		=> d_digif_rst_i,
            d_digif_msb_data 	=> d_digif_msb_data_i,
@@ -139,9 +140,9 @@ begin
            DESERIALIZED_DATA 	=> DATA_PAR
 	);
 
- 	rstsync : process (CLOCK)
+ 	rstsync : process (CLOCK)				-- reset sync
  	begin
-		if falling_edge(CLOCK) then			--- change to rising edge for x1 bitslip, for rest of bitslips, use cnt variable in DESERIAL instance
+		if falling_edge(CLOCK) then			--- change to rising edge for x1 bitslip, for rest of bitslips, use cnt variable in DESERIAL instance, def falling
  			RESET_DIGIF_SYNCED <= RESET_DIGIF;
  		end if;
  	end process;
@@ -152,13 +153,29 @@ begin
 --	| DIGIF SERIALIZER LVDS CLOCK BUFFER OUT |
 --	|----------------------------------------|
 
+	ODDR2_LVDS_CLOC_BUFFER_OUT_inst : ODDR2
+	generic map(
+	   DDR_ALIGNMENT => "NONE", -- Sets output alignment to "NONE", "C0", "C1" 
+	   INIT => '0', -- Sets initial state of the Q output to '0' or '1'
+	   SRTYPE => "SYNC") -- Specifies "SYNC" or "ASYNC" set/reset
+	port map (
+	   Q => CLOCK_OBUFDS, -- 1-bit output data
+	   C0 => CLOCK, -- 1-bit clock input
+	   C1 => not CLOCK, -- 1-bit clock input
+	   CE => '1',   -- 1-bit clock enable input
+	   D0 => '0',   -- 1-bit data input (associated with C0)
+	   D1 => '1',   -- 1-bit data input (associated with C1)
+	   R => RESET,-- 1-bit reset input
+	   S => '0'     -- 1-bit set input
+	);
+
 	OBUFDS_DIGIF_SCK : OBUFDS
 	generic map (
 		IOSTANDARD => "LVDS_33")
 	port map (
 		O 	=> d_digif_sck_o_p,     -- Diff_p output (connect directly to top-level port)
-		OB 	=> d_digif_sck_o_n,    -- Diff_n output (connect directly to top-level port)
-		I 	=> CLOCK        -- Buffer input 
+		OB 	=> d_digif_sck_o_n,     -- Diff_n output (connect directly to top-level port)
+		I 	=> CLOCK_OBUFDS		-- Buffer input 
 	);
 
 --	|--------------------------------------|
@@ -188,7 +205,7 @@ begin
 	);
 
 --	|----------------------------------|
---	| DESERIALIZER MSB DATA BUFFER OUT |
+--	| DESERIALIZER MSB DATA BUFFER IN  |
 --	|----------------------------------|
 
  	IBUFDS_DIGIF_MSB_DATA : IBUFGDS
@@ -232,9 +249,9 @@ begin
  	   IB 		=> d_digif_sck_i_n -- Diff_n buffer input (connect directly to top-level port)
  	);
 
-DEBUG_PIN   <= d_digif_lsb_data_i;
-DEBUG_PIN_2 <= CLOCK; --CLOCK;
---DEBUG_PIN_3 <= CLOCK_120;
+DEBUG_PIN   <= '0'; --d_digif_lsb_data_i;
+DEBUG_PIN_2 <= '0'; --CLOCK; --CLOCK;
+--DEBUG_PIN_3 <= '0'; --CLOCK_90;
 
 end Behavioral;
 
