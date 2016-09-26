@@ -322,7 +322,7 @@ deserialization_falling_edge : process(CLOCK, RESET)					-- deserialization on r
 
 			if d_digif_rst /= old_rst and d_digif_rst = '0' then	-- check if d_digif_rst is falling down
 			CLOCK_DIV <= not CLOCK_DIV;				-- toggle clock
-			cnt := 3;						---- controls bit slipping, when incremented / decremented extra we catch-up or lag next clock toggling, def 2,
+			cnt := 2;						---- controls bit slipping, when incremented / decremented extra we catch-up or lag next clock toggling, def 2,
 			end if;							-- should be used in combination with rising/falling edge rstsync: process
 
 			if lock_old = '0' then			-- toggle CLOCK_DIV at the moment of locking

@@ -52,6 +52,7 @@ architecture Behavioral of DIGIF_DESERIAL_LOOPBACK is
 	   port ( 
 	   d_digif_sck 		: in  STD_LOGIC;
            d_digif_rst		: in  STD_LOGIC;
+	   RESET		: in  STD_LOGIC;
            d_digif_msb_data 	: out  STD_LOGIC;
            d_digif_lsb_data 	: out  STD_LOGIC
    	   );
@@ -96,19 +97,19 @@ architecture Behavioral of DIGIF_DESERIAL_LOOPBACK is
 	signal CLOCK : STD_LOGIC;
 	signal CLOCK_90 : STD_LOGIC;
 	signal CLOCK_OBUFDS : STD_LOGIC;
-	signal d_digif_sck_i : STD_LOGIC;
-
-begin
+  	signal d_digif_sck_i : STD_LOGIC;
+  
+  begin
 
 	PLL_MODULE: PLL_50_100_150_200_250
 		port map
 		 (-- Clock in ports
 		  CLK_IN1           => CLOCK_IN,
 		  -- Clock out ports
-		  CLK_OUT0         => CLOCK,    -- 50 Mega 0 deg
-		  CLK_OUT1         => CLOCK_90, -- 50 Mega 90 deg
-		  CLK_OUT2         => open, 	-- 100 Mega 0 deg
-		  CLK_OUT3         => open,     -- 100 Mega 90 deg
+		  CLK_OUT0         => open,    -- 50 Mega 0 deg
+		  CLK_OUT1         => open, -- 50 Mega 90 deg
+		  CLK_OUT2         => CLOCK, --open, 	-- 100 Mega 0 deg
+		  CLK_OUT3         => CLOCK_90, --open,     -- 100 Mega 90 deg
 		  CLK_OUT4         => open,     -- 250 Mega 0 deg
 		  CLK_OUT5	   => open	-- 250 Mega 90 deg
 		 );
@@ -121,6 +122,7 @@ begin
 	port map (
 	   d_digif_sck 		=> d_digif_sck_i, -- d_digif_sck,
            d_digif_rst		=> d_digif_rst_i, -- d_digif_rst,
+	   RESET		=> RESET,
            d_digif_msb_data 	=> d_digif_msb_data_o,
            d_digif_lsb_data 	=> d_digif_lsb_data_o
 	);
@@ -142,7 +144,7 @@ begin
 
  	rstsync : process (CLOCK)				-- reset sync
  	begin
-		if rising_edge(CLOCK) then			--- change to rising edge for x1 bitslip, for rest of bitslips, use cnt variable in DESERIAL instance, def falling
+		if falling_edge(CLOCK) then			--- change to rising edge for x1 bitslip, for rest of bitslips, use cnt variable in DESERIAL instance, def falling
  			RESET_DIGIF_SYNCED <= RESET_DIGIF;
  		end if;
  	end process;
@@ -248,6 +250,7 @@ begin
  	   I 		=> d_digif_sck_i_p,  -- Diff_p buffer input (connect directly to top-level port)
  	   IB 		=> d_digif_sck_i_n -- Diff_n buffer input (connect directly to top-level port)
  	);
+
 
 DEBUG_PIN   <= d_digif_lsb_data_i;
 DEBUG_PIN_2 <= d_digif_msb_data_i; --CLOCK;
