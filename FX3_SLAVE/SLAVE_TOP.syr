@@ -1,0 +1,458 @@
+Release 14.7 - xst P.20131013 (lin64)
+Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
+--> 
+Parameter TMPDIR set to xst/projnav.tmp
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.03 secs
+ 
+--> 
+Parameter xsthdpdir set to xst
+
+
+Total REAL time to Xst completion: 0.00 secs
+Total CPU time to Xst completion: 0.03 secs
+ 
+--> 
+Reading design: SLAVE_TOP.prj
+
+TABLE OF CONTENTS
+  1) Synthesis Options Summary
+  2) HDL Parsing
+  3) HDL Elaboration
+  4) HDL Synthesis
+       4.1) HDL Synthesis Report
+  5) Advanced HDL Synthesis
+       5.1) Advanced HDL Synthesis Report
+  6) Low Level Synthesis
+  7) Partition Report
+  8) Design Summary
+       8.1) Primitive and Black Box Usage
+       8.2) Device utilization summary
+       8.3) Partition Resource Summary
+       8.4) Timing Report
+            8.4.1) Clock Information
+            8.4.2) Asynchronous Control Signals Information
+            8.4.3) Timing Summary
+            8.4.4) Timing Details
+            8.4.5) Cross Clock Domains Report
+
+
+=========================================================================
+*                      Synthesis Options Summary                        *
+=========================================================================
+---- Source Parameters
+Input File Name                    : "SLAVE_TOP.prj"
+Ignore Synthesis Constraint File   : NO
+
+---- Target Parameters
+Output File Name                   : "SLAVE_TOP"
+Output Format                      : NGC
+Target Device                      : xc6slx45-3-fgg484
+
+---- Source Options
+Top Module Name                    : SLAVE_TOP
+Automatic FSM Extraction           : YES
+FSM Encoding Algorithm             : Auto
+Safe Implementation                : No
+FSM Style                          : LUT
+RAM Extraction                     : Yes
+RAM Style                          : Auto
+ROM Extraction                     : Yes
+Shift Register Extraction          : YES
+ROM Style                          : Auto
+Resource Sharing                   : YES
+Asynchronous To Synchronous        : NO
+Shift Register Minimum Size        : 2
+Use DSP Block                      : Auto
+Automatic Register Balancing       : No
+
+---- Target Options
+LUT Combining                      : Auto
+Reduce Control Sets                : Auto
+Add IO Buffers                     : YES
+Global Maximum Fanout              : 100000
+Add Generic Clock Buffer(BUFG)     : 16
+Register Duplication               : YES
+Optimize Instantiated Primitives   : NO
+Use Clock Enable                   : Auto
+Use Synchronous Set                : Auto
+Use Synchronous Reset              : Auto
+Pack IO Registers into IOBs        : Auto
+Equivalent register Removal        : YES
+
+---- General Options
+Optimization Goal                  : Speed
+Optimization Effort                : 1
+Power Reduction                    : NO
+Keep Hierarchy                     : No
+Netlist Hierarchy                  : As_Optimized
+RTL Output                         : Yes
+Global Optimization                : AllClockNets
+Read Cores                         : YES
+Write Timing Constraints           : NO
+Cross Clock Analysis               : NO
+Hierarchy Separator                : /
+Bus Delimiter                      : <>
+Case Specifier                     : Maintain
+Slice Utilization Ratio            : 100
+BRAM Utilization Ratio             : 100
+DSP48 Utilization Ratio            : 100
+Auto BRAM Packing                  : NO
+Slice Utilization Ratio Delta      : 5
+
+=========================================================================
+
+
+=========================================================================
+*                          HDL Parsing                                  *
+=========================================================================
+Parsing VHDL file "/media/data/git/jcfpga/FX3_SLAVE/slave_fifo_stream_write_to_fx3.vhd" into library work
+Parsing entity <slave_fifo_stream_write_to_fx3>.
+Parsing architecture <stream_write_to_fx3_arch> of entity <slave_fifo_stream_write_to_fx3>.
+Parsing VHDL file "/media/data/git/jcfpga/FX3_SLAVE/SLAVE_TOP.vhd" into library work
+Parsing entity <SLAVE_TOP>.
+Parsing architecture <Behavioral> of entity <slave_top>.
+WARNING:HDLCompiler:946 - "/media/data/git/jcfpga/FX3_SLAVE/SLAVE_TOP.vhd" Line 153: Actual for formal port reset is neither a static name nor a globally static expression
+
+=========================================================================
+*                            HDL Elaboration                            *
+=========================================================================
+
+Elaborating entity <SLAVE_TOP> (architecture <Behavioral>) with generics from library <work>.
+
+Elaborating entity <slave_fifo_stream_write_to_fx3> (architecture <stream_write_to_fx3_arch>) with generics from library <work>.
+INFO:HDLCompiler:679 - "/media/data/git/jcfpga/FX3_SLAVE/slave_fifo_stream_write_to_fx3.vhd" Line 120. Case statement is complete. others clause is never selected
+WARNING:HDLCompiler:92 - "/media/data/git/jcfpga/FX3_SLAVE/SLAVE_TOP.vhd" Line 179: clock100 should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/media/data/git/jcfpga/FX3_SLAVE/SLAVE_TOP.vhd" Line 193: data_stream_in should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/media/data/git/jcfpga/FX3_SLAVE/SLAVE_TOP.vhd" Line 213: data_out_get2 should be on the sensitivity list of the process
+WARNING:HDLCompiler:92 - "/media/data/git/jcfpga/FX3_SLAVE/SLAVE_TOP.vhd" Line 258: slwr_stream_in should be on the sensitivity list of the process
+WARNING:HDLCompiler:634 - "/media/data/git/jcfpga/FX3_SLAVE/SLAVE_TOP.vhd" Line 103: Net <address_get[1]> does not have a driver.
+
+=========================================================================
+*                           HDL Synthesis                               *
+=========================================================================
+WARNING:Xst:2972 - "/media/data/git/jcfpga/FX3_SLAVE/SLAVE_TOP.vhd" line 148. All outputs of instance <inst_stream_write_to_fx3> of block <slave_fifo_stream_write_to_fx3> are unconnected in block <SLAVE_TOP>. Underlying logic will be removed.
+
+Synthesizing Unit <SLAVE_TOP>.
+    Related source file is "/media/data/git/jcfpga/FX3_SLAVE/SLAVE_TOP.vhd".
+        SLIDE_BITS = 3
+        ADDRESS_BITS = 2
+        DATA_BITS = 16
+        PMODE_BITS = 2
+        LCD_BITS = 4
+WARNING:Xst:653 - Signal <address_get> is used but never assigned. This sourceless signal will be automatically connected to value GND.
+WARNING:Xst:2935 - Signal 'led_buffer_empty_show', unconnected in block 'SLAVE_TOP', is tied to its initial value (0).
+    Found 3-bit register for signal <current_mode>.
+    Found 2-bit register for signal <address>.
+    Found 1-bit register for signal <slwr>.
+    Found 1-bit register for signal <slcs>.
+    Found 16-bit register for signal <data_out_get2>.
+    Found 2-bit register for signal <current_state>.
+    Found 1-bit register for signal <flaga_get>.
+    Found 1-bit register for signal <flagb_get>.
+    Found 1-bit tristate buffer for signal <data<15>> created at line 211
+    Found 1-bit tristate buffer for signal <data<14>> created at line 211
+    Found 1-bit tristate buffer for signal <data<13>> created at line 211
+    Found 1-bit tristate buffer for signal <data<12>> created at line 211
+    Found 1-bit tristate buffer for signal <data<11>> created at line 211
+    Found 1-bit tristate buffer for signal <data<10>> created at line 211
+    Found 1-bit tristate buffer for signal <data<9>> created at line 211
+    Found 1-bit tristate buffer for signal <data<8>> created at line 211
+    Found 1-bit tristate buffer for signal <data<7>> created at line 211
+    Found 1-bit tristate buffer for signal <data<6>> created at line 211
+    Found 1-bit tristate buffer for signal <data<5>> created at line 211
+    Found 1-bit tristate buffer for signal <data<4>> created at line 211
+    Found 1-bit tristate buffer for signal <data<3>> created at line 211
+    Found 1-bit tristate buffer for signal <data<2>> created at line 211
+    Found 1-bit tristate buffer for signal <data<1>> created at line 211
+    Found 1-bit tristate buffer for signal <data<0>> created at line 211
+    WARNING:Xst:2404 -  FFs/Latches <slrd<0:0>> (without init value) have a constant value of 1 in block <SLAVE_TOP>.
+    WARNING:Xst:2404 -  FFs/Latches <sloe<0:0>> (without init value) have a constant value of 1 in block <SLAVE_TOP>.
+    WARNING:Xst:2404 -  FFs/Latches <pktend<0:0>> (without init value) have a constant value of 1 in block <SLAVE_TOP>.
+    Summary:
+	inferred   2 D-type flip-flop(s).
+	inferred  16 Tristate(s).
+Unit <SLAVE_TOP> synthesized.
+
+Synthesizing Unit <slave_fifo_stream_write_to_fx3>.
+    Related source file is "/media/data/git/jcfpga/FX3_SLAVE/slave_fifo_stream_write_to_fx3.vhd".
+        DATA_BITS = 16
+    Found 16-bit register for signal <data_stream_in_get>.
+    Found 2-bit register for signal <current_state>.
+    Summary:
+	inferred  18 D-type flip-flop(s).
+Unit <slave_fifo_stream_write_to_fx3> synthesized.
+
+=========================================================================
+HDL Synthesis Report
+
+Macro Statistics
+# Registers                                            : 1
+ 2-bit register                                        : 1
+# Tristates                                            : 16
+ 1-bit tristate buffer                                 : 16
+
+=========================================================================
+
+=========================================================================
+*                       Advanced HDL Synthesis                          *
+=========================================================================
+
+
+=========================================================================
+Advanced HDL Synthesis Report
+
+Macro Statistics
+# Registers                                            : 2
+ Flip-Flops                                            : 2
+
+=========================================================================
+
+=========================================================================
+*                         Low Level Synthesis                           *
+=========================================================================
+INFO:Xst:2261 - The FF/Latch <address_0> in Unit <SLAVE_TOP> is equivalent to the following FF/Latch, which will be removed : <address_1> 
+WARNING:Xst:3002 - This design contains one or more registers/latches that are directly
+   incompatible with the Spartan6 architecture. The two primary causes of this is
+   either a register or latch described with both an asynchronous set and
+   asynchronous reset, or a register or latch described with an asynchronous
+   set or reset which however has an initialization value of the opposite 
+   polarity (i.e. asynchronous reset with an initialization value of 1).
+    While this circuit can be built, it creates a sub-optimal implementation
+   in terms of area, power and performance. For a more optimal implementation
+   Xilinx highly recommends one of the following:
+
+          1) Remove either the set or reset from all registers and latches
+             if not needed for required functionality
+          2) Modify the code in order to produce a synchronous set
+             and/or reset (both is preferred)
+          3) Ensure all registers have the same initialization value as the
+             described asynchronous set or reset polarity
+          4) Use the -async_to_sync option to transform the asynchronous
+             set/reset to synchronous operation
+             (timing simulation highly recommended when using this option)
+
+  Please refer to http://www.xilinx.com search string "Spartan6 asynchronous set/reset" for more details.
+
+  List of register instances with asynchronous set or reset and opposite initialization value:
+    address_0 in unit <SLAVE_TOP>
+
+
+Optimizing unit <SLAVE_TOP> ...
+
+Mapping all equations...
+Building and optimizing final netlist ...
+Found area constraint ratio of 100 (+ 5) on block SLAVE_TOP, actual ratio is 0.
+WARNING:Xst:1426 - The value init of the FF/Latch address_0_LD hinder the constant cleaning in the block SLAVE_TOP.
+   You should achieve better results by setting this init to 1.
+
+Final Macro Processing ...
+
+=========================================================================
+Final Register Report
+
+Macro Statistics
+# Registers                                            : 1
+ Flip-Flops                                            : 1
+
+=========================================================================
+
+=========================================================================
+*                           Partition Report                            *
+=========================================================================
+
+Partition Implementation Status
+-------------------------------
+
+  No Partitions were found in this design.
+
+-------------------------------
+
+=========================================================================
+*                            Design Summary                             *
+=========================================================================
+
+Top Level Output File Name         : SLAVE_TOP.ngc
+
+Primitive and Black Box Usage:
+------------------------------
+# BELS                             : 3
+#      GND                         : 1
+#      LUT3                        : 1
+#      VCC                         : 1
+# FlipFlops/Latches                : 2
+#      FDP                         : 1
+#      LD                          : 1
+# Clock Buffers                    : 2
+#      BUFG                        : 2
+# IO Buffers                       : 27
+#      IBUF                        : 2
+#      OBUF                        : 9
+#      OBUFT                       : 16
+
+Device utilization summary:
+---------------------------
+
+Selected Device : 6slx45fgg484-3 
+
+
+Slice Logic Utilization: 
+ Number of Slice Registers:               2  out of  54576     0%  
+ Number of Slice LUTs:                    1  out of  27288     0%  
+    Number used as Logic:                 1  out of  27288     0%  
+
+Slice Logic Distribution: 
+ Number of LUT Flip Flop pairs used:      3
+   Number with an unused Flip Flop:       1  out of      3    33%  
+   Number with an unused LUT:             2  out of      3    66%  
+   Number of fully used LUT-FF pairs:     0  out of      3     0%  
+   Number of unique control sets:         2
+
+IO Utilization: 
+ Number of IOs:                          32
+ Number of bonded IOBs:                  27  out of    316     8%  
+
+Specific Feature Utilization:
+ Number of BUFG/BUFGCTRLs:                2  out of     16    12%  
+
+---------------------------
+Partition Resource Summary:
+---------------------------
+
+  No Partitions were found in this design.
+
+---------------------------
+
+
+=========================================================================
+Timing Report
+
+NOTE: THESE TIMING NUMBERS ARE ONLY A SYNTHESIS ESTIMATE.
+      FOR ACCURATE TIMING INFORMATION PLEASE REFER TO THE TRACE REPORT
+      GENERATED AFTER PLACE-and-ROUTE.
+
+Clock Information:
+------------------
+-----------------------------------+------------------------+-------+
+Clock Signal                       | Clock buffer(FF name)  | Load  |
+-----------------------------------+------------------------+-------+
+reset_from_slide                   | IBUF+BUFG              | 1     |
+clock                              | IBUF+BUFG              | 1     |
+-----------------------------------+------------------------+-------+
+
+Asynchronous Control Signals Information:
+----------------------------------------
+No asynchronous control signals found in this design
+
+Timing Summary:
+---------------
+Speed Grade: -3
+
+   Minimum period: No path found
+   Minimum input arrival time before clock: 2.231ns
+   Maximum output required time after clock: 4.698ns
+   Maximum combinational path delay: 4.372ns
+
+Timing Details:
+---------------
+All values displayed in nanoseconds (ns)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'clock'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              2.231ns (Levels of Logic = 1)
+  Source:            reset_from_slide (PAD)
+  Destination:       address_0_P_0 (FF)
+  Destination Clock: clock rising
+
+  Data Path: reset_from_slide to address_0_P_0
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             1   1.222   0.579  reset_from_slide_IBUF (reset_from_slide_IBUF)
+     FDP:PRE                   0.430          address_0_P_0
+    ----------------------------------------
+    Total                      2.231ns (1.652ns logic, 0.579ns route)
+                                       (74.1% logic, 25.9% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'reset_from_slide'
+  Total number of paths / destination ports: 2 / 2
+-------------------------------------------------------------------------
+Offset:              4.698ns (Levels of Logic = 2)
+  Source:            address_0_LD (LATCH)
+  Destination:       address<1> (PAD)
+  Source Clock:      reset_from_slide falling
+
+  Data Path: address_0_LD to address<1>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     LD:G->Q               1   0.498   0.808  address_0_LD (address_0_LD)
+     LUT3:I0->O            2   0.205   0.616  address_01 (address_0)
+     OBUF:I->O                 2.571          address_1_OBUF (address<1>)
+    ----------------------------------------
+    Total                      4.698ns (3.274ns logic, 1.424ns route)
+                                       (69.7% logic, 30.3% route)
+
+=========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'clock'
+  Total number of paths / destination ports: 2 / 2
+-------------------------------------------------------------------------
+Offset:              4.521ns (Levels of Logic = 2)
+  Source:            address_0_P_0 (FF)
+  Destination:       address<1> (PAD)
+  Source Clock:      clock rising
+
+  Data Path: address_0_P_0 to address<1>
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDP:C->Q              1   0.447   0.684  address_0_P_0 (address_0_P_0)
+     LUT3:I1->O            2   0.203   0.616  address_01 (address_0)
+     OBUF:I->O                 2.571          address_1_OBUF (address<1>)
+    ----------------------------------------
+    Total                      4.521ns (3.221ns logic, 1.300ns route)
+                                       (71.2% logic, 28.8% route)
+
+=========================================================================
+Timing constraint: Default path analysis
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Delay:               4.372ns (Levels of Logic = 2)
+  Source:            clock (PAD)
+  Destination:       clock100_out (PAD)
+
+  Data Path: clock to clock100_out
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             1   1.222   0.579  clock_IBUF (clock100_out_OBUF)
+     OBUF:I->O                 2.571          clock100_out_OBUF (clock100_out)
+    ----------------------------------------
+    Total                      4.372ns (3.793ns logic, 0.579ns route)
+                                       (86.8% logic, 13.2% route)
+
+=========================================================================
+
+Cross Clock Domains Report:
+--------------------------
+
+=========================================================================
+
+
+Total REAL time to Xst completion: 4.00 secs
+Total CPU time to Xst completion: 3.41 secs
+ 
+--> 
+
+
+Total memory usage is 385544 kilobytes
+
+Number of errors   :    0 (   0 filtered)
+Number of warnings :   14 (   0 filtered)
+Number of infos    :    1 (   0 filtered)
+
