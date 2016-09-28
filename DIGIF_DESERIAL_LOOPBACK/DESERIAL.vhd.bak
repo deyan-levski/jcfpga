@@ -214,9 +214,9 @@ deserialization_falling_edge : process(CLOCK, RESET)					-- deserialization on r
 				elsif DESERIALIZED_DATA_DEMUX = PREAMBLE(0) & PREAMBLE(5 downto 0) & PREAMBLE(5 downto 1) then  -- if pattern shifted with one
 					SHIFT_RISE <= "001";									-- shift left one bit
 					LOCK_RISE <= '1';									-- lock
---				elsif DESERIALIZED_DATA_DEMUX = "001101001101" then	-- two search patterns should be enough, keeping here the rest of the possible combinations, just in case
---					SHIFT_RISE <= "010";
---					LOCK_RISE <= '1';
+				elsif DESERIALIZED_DATA_DEMUX = "001101001101" then	-- two search patterns should be enough, keeping here the rest of the possible combinations, just in case
+					SHIFT_RISE <= "010";
+					LOCK_RISE <= '1';
 --				elsif DESERIALIZED_DATA_DEMUX = "100110100110" then
 --					SHIFT_RISE <= "011";
 --					LOCK_RISE <= '1';
@@ -266,9 +266,9 @@ deserialization_falling_edge : process(CLOCK, RESET)					-- deserialization on r
 				elsif DESERIALIZED_DATA_DEMUX = PREAMBLE(0) & PREAMBLE(5 downto 0) & PREAMBLE(5 downto 1) then -- i.e. def. "011010011010"
 					SHIFT_FALL <= "001";
 					LOCK_FALL  <= '1';
---				elsif DESERIALIZED_DATA_DEMUX = "001101001101" then
---					SHIFT_FALL <= "010";
---					LOCK_FALL  <= '1';
+				elsif DESERIALIZED_DATA_DEMUX = "001101001101" then
+					SHIFT_FALL <= "010";
+					LOCK_FALL  <= '1';
 --				elsif DESERIALIZED_DATA_DEMUX = "100110100110" then
 --					SHIFT_FALL <= "011";
 --					LOCK_FALL  <= '1';
@@ -298,7 +298,7 @@ deserialization_falling_edge : process(CLOCK, RESET)					-- deserialization on r
 	DESERIALIZED_DATA_DESHIFTED <=
 				DESERIALIZED_DATA_DESHIFT when SHIFT = "000" else									-- execute deshifting
 				DESERIALIZED_DATA_DESHIFT(10 downto 0) & DESERIALIZED_DATA_DESHIFT(11) when SHIFT = "001" else
-			--	DESERIALIZED_DATA_DESHIFT(9 downto 0)  & DESERIALIZED_DATA_DESHIFT(11 downto 10) when SHIFT = "010" else		-- keeping all possible combinations, just in case
+				DESERIALIZED_DATA_DESHIFT(9 downto 0)  & DESERIALIZED_DATA_DESHIFT(11 downto 10) when SHIFT = "010" else		-- keeping all possible combinations, just in case
 			--	DESERIALIZED_DATA_DESHIFT(8 downto 0)  & DESERIALIZED_DATA_DESHIFT(11 downto 9 ) when SHIFT = "011" else
 			--	DESERIALIZED_DATA_DESHIFT(7 downto 0)  & DESERIALIZED_DATA_DESHIFT(11 downto 8 ) when SHIFT = "100" else
 			--	DESERIALIZED_DATA_DESHIFT(6 downto 0)  & DESERIALIZED_DATA_DESHIFT(11 downto 7 ) when SHIFT = "101" else
@@ -323,6 +323,7 @@ deserialization_falling_edge : process(CLOCK, RESET)					-- deserialization on r
 			if d_digif_rst /= old_rst and d_digif_rst = '0' then	-- check if d_digif_rst is falling down
 			CLOCK_DIV <= not CLOCK_DIV;				-- toggle clock
 			cnt := 2;						---- controls bit slipping, when incremented / decremented extra we catch-up or lag next clock toggling, def 2,
+			old_rst := d_digif_rst;			-- update old_rst
 			end if;							-- should be used in combination with rising/falling edge rstsync: process
 
 			if lock_old = '0' then			-- toggle CLOCK_DIV at the moment of locking

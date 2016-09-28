@@ -27,7 +27,7 @@ entity DIGIF_DESERIAL_LOOPBACK is
 	   DEBUG_PIN	   : out STD_LOGIC;
     	   DEBUG_PIN_2	   : out STD_LOGIC;
     --	   DEBUG_PIN_3     : out STD_LOGIC;
-    	   d_digif_rst_o   : out STD_LOGIC;
+    	   d_digif_rst_o   : inout STD_LOGIC;
     	   d_digif_rst_i   : in STD_LOGIC;
 	   d_digif_sck_o_p : out STD_LOGIC;
 	   d_digif_sck_o_n : out STD_LOGIC;
@@ -79,7 +79,8 @@ architecture Behavioral of DIGIF_DESERIAL_LOOPBACK is
 	signal d_digif_lsb_data_o : STD_LOGIC;
 
 	signal RESET_DIGIF_SYNCED : STD_LOGIC;
-        
+       	signal RESET_DIGIF_SYNCED_DESER : STD_LOGIC;
+
 	component PLL_50_100_150_200_250 is
 		port
 		 (-- Clock in ports
@@ -106,8 +107,8 @@ architecture Behavioral of DIGIF_DESERIAL_LOOPBACK is
 		 (-- Clock in ports
 		  CLK_IN1           => CLOCK_IN,
 		  -- Clock out ports
-		  CLK_OUT0         => open,    -- 50 Mega 0 deg
-		  CLK_OUT1         => open, -- 50 Mega 90 deg
+		  CLK_OUT0         => open,-- 50 Mega 0 deg
+		  CLK_OUT1         => open,-- 50 Mega 90 deg
 		  CLK_OUT2         => CLOCK, --open, 	-- 100 Mega 0 deg
 		  CLK_OUT3         => CLOCK_90, --open,     -- 100 Mega 90 deg
 		  CLK_OUT4         => open,     -- 250 Mega 0 deg
@@ -135,7 +136,7 @@ architecture Behavioral of DIGIF_DESERIAL_LOOPBACK is
 	port map (
 	   CLOCK 		=> CLOCK_90, 
            RESET 		=> RESET,
-	   d_digif_rst		=> d_digif_rst_i,
+	   d_digif_rst		=> RESET_DIGIF_SYNCED_DESER,
            d_digif_msb_data 	=> d_digif_msb_data_i,
            d_digif_lsb_data 	=> d_digif_lsb_data_i,
 	   DESERIALIZED_DATA_CLK => DATA_PAR_CLK,
@@ -150,6 +151,7 @@ architecture Behavioral of DIGIF_DESERIAL_LOOPBACK is
  	end process;
 
 	d_digif_rst_o <= RESET_DIGIF_SYNCED;
+	RESET_DIGIF_SYNCED_DESER <= RESET_DIGIF_SYNCED;
 
 --	|----------------------------------------|
 --	| DIGIF SERIALIZER LVDS CLOCK BUFFER OUT |
