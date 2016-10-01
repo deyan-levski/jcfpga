@@ -1,22 +1,12 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date:    12:19:18 09/28/2016 
--- Design Name: 
--- Module Name:    SLAVE_TOP - Behavioral 
--- Project Name: 
--- Target Devices: 
--- Tool versions: 
--- Description: 
---
--- Dependencies: 
---
--- Revision: 
--- Revision 0.01 - File Created
--- Additional Comments: 
---
-----------------------------------------------------------------------------------
+-- |----------------------------------------------------------------------------|
+-- | FX3 SLAVE TOP MODULE                                                       |
+-- | -------------------------------------------------------------------------- |
+-- | Initial Version P1A, Deyan Levski, deyan.levski@eng.ox.ac.uk, 29.09.2016   |
+-- |----------------------------------------------------------------------------|
+-- |-+-|
+
+
+
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 
