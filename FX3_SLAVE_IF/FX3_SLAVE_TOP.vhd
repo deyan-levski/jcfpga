@@ -98,7 +98,17 @@ begin
 			 GPIFII_FLAGB           => GPIFII_FLAGB);
 
 	GPIFII_PCLK <= CLOCK;
-	LED <= '1';
+
+	process (RESET, CLOCK)
+	begin
+
+		if RESET = '1' then
+			LED <= '1';
+		else
+			LED <= '0';
+		end if;
+
+	end process;
 
 end Behavioral;
 

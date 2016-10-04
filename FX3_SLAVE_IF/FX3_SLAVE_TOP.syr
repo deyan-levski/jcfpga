@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.03 secs
+Total CPU time to Xst completion: 0.04 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.03 secs
+Total CPU time to Xst completion: 0.04 secs
  
 --> 
 Reading design: FX3_SLAVE_TOP.prj
@@ -462,7 +462,7 @@ Clock Information:
 Clock Signal                       | Clock buffer(FF name)       | Load  |
 -----------------------------------+-----------------------------+-------+
 GPIFII_ADDR_4_OBUF                 | NONE(FX3_SLAVE_INST/I_ODDR2)| 1     |
-LED_OBUF                           | NONE(FX3_SLAVE_INST/I_ODDR2)| 1     |
+GPIFII_PKTEND_N_OBUF               | NONE(FX3_SLAVE_INST/I_ODDR2)| 1     |
 CLOCK                              | IBUF+BUFG                   | 553   |
 -----------------------------------+-----------------------------+-------+
 INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
@@ -476,9 +476,9 @@ Timing Summary:
 Speed Grade: -3
 
    Minimum period: 4.364ns (Maximum Frequency: 229.163MHz)
-   Minimum input arrival time before clock: 2.335ns
+   Minimum input arrival time before clock: 2.366ns
    Maximum output required time after clock: 4.323ns
-   Maximum combinational path delay: 4.372ns
+   Maximum combinational path delay: 4.507ns
 
 Timing Details:
 ---------------
@@ -514,7 +514,7 @@ Delay:               4.364ns (Levels of Logic = 4)
 Timing constraint: Default OFFSET IN BEFORE for Clock 'CLOCK'
   Total number of paths / destination ports: 38 / 38
 -------------------------------------------------------------------------
-Offset:              2.335ns (Levels of Logic = 2)
+Offset:              2.366ns (Levels of Logic = 2)
   Source:            RESET (PAD)
   Destination:       FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg (FF)
   Destination Clock: CLOCK rising
@@ -523,12 +523,12 @@ Offset:              2.335ns (Levels of Logic = 2)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O             4   1.222   0.683  RESET_IBUF (RESET_IBUF)
+     IBUF:I->O             5   1.222   0.714  RESET_IBUF (LED_OBUF)
      begin scope: 'FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO:rst'
      FDP:PRE                   0.430          U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/wr_rst_asreg
     ----------------------------------------
-    Total                      2.335ns (1.652ns logic, 0.683ns route)
-                                       (70.8% logic, 29.2% route)
+    Total                      2.366ns (1.652ns logic, 0.714ns route)
+                                       (69.8% logic, 30.2% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK'
@@ -551,21 +551,21 @@ Offset:              4.323ns (Levels of Logic = 1)
 
 =========================================================================
 Timing constraint: Default path analysis
-  Total number of paths / destination ports: 1 / 1
+  Total number of paths / destination ports: 2 / 2
 -------------------------------------------------------------------------
-Delay:               4.372ns (Levels of Logic = 2)
-  Source:            CLOCK (PAD)
-  Destination:       GPIFII_PCLK (PAD)
+Delay:               4.507ns (Levels of Logic = 2)
+  Source:            RESET (PAD)
+  Destination:       LED (PAD)
 
-  Data Path: CLOCK to GPIFII_PCLK
+  Data Path: RESET to LED
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O             1   1.222   0.579  CLOCK_IBUF (GPIFII_PCLK_OBUF)
-     OBUF:I->O                 2.571          GPIFII_PCLK_OBUF (GPIFII_PCLK)
+     IBUF:I->O             5   1.222   0.714  RESET_IBUF (LED_OBUF)
+     OBUF:I->O                 2.571          LED_OBUF (LED)
     ----------------------------------------
-    Total                      4.372ns (3.793ns logic, 0.579ns route)
-                                       (86.8% logic, 13.2% route)
+    Total                      4.507ns (3.793ns logic, 0.714ns route)
+                                       (84.2% logic, 15.8% route)
 
 =========================================================================
 
@@ -583,13 +583,13 @@ CLOCK          |    4.364|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 6.00 secs
-Total CPU time to Xst completion: 6.23 secs
+Total REAL time to Xst completion: 7.00 secs
+Total CPU time to Xst completion: 6.24 secs
  
 --> 
 
 
-Total memory usage is 405348 kilobytes
+Total memory usage is 405396 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :   13 (   0 filtered)
