@@ -80,7 +80,6 @@ signal current_mode : std_logic_vector(2 downto 0):="111";
 -- Constants
 ----------------------------------------------------------------------------------
 constant MASTER_IDLE : std_logic_vector(2 downto 0):="111";
-constant LOOPBACK : std_logic_vector(2 downto 0):="001";
 constant STREAM_OUT : std_logic_vector(2 downto 0):="010";
 constant STREAM_IN : std_logic_vector(2 downto 0):="100";
 
@@ -294,23 +293,11 @@ process(current_state, current_mode) begin
    	next_state <= current_state;
     case current_state is
         when idle_state =>
---             if current_mode = LOOPBACK then
---                 next_state <= loopback_state;
             if current_mode = STREAM_OUT then 
                 next_state <= stream_read_from_fx3_state;
---             elsif current_mode = STREAM_IN then 
---                 next_state <= stream_write_to_fx3_state;
             else 
                 next_state <= idle_state;
             end if;
---         when loopback_state => 
---             if current_mode /= LOOPBACK then
---                 next_state <= idle_state;
---             end if;
---         when stream_read_from_fx3_state => 
---             if current_mode /= STREAM_OUT then
---                 next_state <= idle_state;
---             end if;
         when stream_write_to_fx3_state =>
            if current_mode /= STREAM_IN then
                 next_state <= idle_state;
