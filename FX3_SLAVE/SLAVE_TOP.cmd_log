@@ -39,3 +39,9 @@ map -intstyle ise -p xc6slx150-fgg484-3 -w -logic_opt off -ol high -t 1 -xt 0 -r
 par -w -intstyle ise -ol high -mt off SLAVE_TOP_map.ncd SLAVE_TOP.ncd SLAVE_TOP.pcf 
 trce -intstyle ise -v 3 -s 3 -n 3 -fastpaths -xml SLAVE_TOP.twx SLAVE_TOP.ncd -o SLAVE_TOP.twr SLAVE_TOP.pcf -ucf constraints.ucf 
 bitgen -intstyle ise -f SLAVE_TOP.ut SLAVE_TOP.ncd 
+xst -intstyle ise -ifn "/media/data/git/jcfpga/FX3_SLAVE/SLAVE_TOP.xst" -ofn "/media/data/git/jcfpga/FX3_SLAVE/SLAVE_TOP.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc constraints.ucf -p xc6slx150-fgg484-3 SLAVE_TOP.ngc SLAVE_TOP.ngd  
+map -intstyle ise -p xc6slx150-fgg484-3 -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -ir off -pr off -lc off -power off -o SLAVE_TOP_map.ncd SLAVE_TOP.ngd SLAVE_TOP.pcf 
+par -w -intstyle ise -ol high -mt off SLAVE_TOP_map.ncd SLAVE_TOP.ncd SLAVE_TOP.pcf 
+trce -intstyle ise -v 3 -s 3 -n 3 -fastpaths -xml SLAVE_TOP.twx SLAVE_TOP.ncd -o SLAVE_TOP.twr SLAVE_TOP.pcf -ucf constraints.ucf 
+bitgen -intstyle ise -f SLAVE_TOP.ut SLAVE_TOP.ncd 

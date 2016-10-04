@@ -319,6 +319,9 @@ process(current_state, current_mode) begin
             next_state <= idle_state;
     end case;
 end process;
+
+led_buffer_empty_show <= '1';
+
 ----------------------------------------------------------------------------------
 -- End Architecture
 ----------------------------------------------------------------------------------
