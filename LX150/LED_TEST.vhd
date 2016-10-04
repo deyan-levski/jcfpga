@@ -36,7 +36,7 @@ end LED_TEST;
 architecture Behavioral of LED_TEST is
 
 begin
-LED <= '1';
+LED <= '0';
 
 end Behavioral;
 
