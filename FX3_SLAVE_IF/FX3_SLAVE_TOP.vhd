@@ -77,7 +77,7 @@ begin
 			 FIFO_ENABLE            => (others => '1'),
     --fifo interfaces
 			 FIFO_WR_CLK		=> CLOCK,
-			 FIFO0_WRDAT_I		=> "01010101010101010101010101010101",
+			 FIFO0_WRDAT_I		=> "10101011110011011110111100000001",
 			 FIFO0_WREN_I		=> '1',
 			 FIFO0_FULL_O		=> open,
 			 FIFO_RD_CLK		=> CLOCK,
@@ -96,6 +96,7 @@ begin
 			 GPIFII_EPSWITCH        => GPIFII_EPSWITCH,
 			 GPIFII_FLAGA           => GPIFII_FLAGA,                                            -- Current thread DMA ready
 			 GPIFII_FLAGB           => GPIFII_FLAGB);
+
 	GPIFII_PCLK <= CLOCK;
 	LED <= '1';
 
