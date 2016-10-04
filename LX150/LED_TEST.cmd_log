@@ -10,3 +10,9 @@ map -intstyle ise -p xc6slx150-fgg484-3 -w -logic_opt off -ol high -t 1 -xt 0 -r
 par -w -intstyle ise -ol high -mt off LED_TEST_map.ncd LED_TEST.ncd LED_TEST.pcf 
 trce -intstyle ise -v 3 -s 3 -n 3 -fastpaths -xml LED_TEST.twx LED_TEST.ncd -o LED_TEST.twr LED_TEST.pcf -ucf constraints.ucf 
 bitgen -intstyle ise -f LED_TEST.ut LED_TEST.ncd 
+xst -intstyle ise -ifn "/media/data/git/jcfpga/LX150/LED_TEST.xst" -ofn "/media/data/git/jcfpga/LX150/LED_TEST.syr" 
+ngdbuild -intstyle ise -dd _ngo -nt timestamp -uc constraints.ucf -p xc6slx150-fgg484-3 LED_TEST.ngc LED_TEST.ngd  
+map -intstyle ise -p xc6slx150-fgg484-3 -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -ir off -pr off -lc off -power off -o LED_TEST_map.ncd LED_TEST.ngd LED_TEST.pcf 
+par -w -intstyle ise -ol high -mt off LED_TEST_map.ncd LED_TEST.ncd LED_TEST.pcf 
+trce -intstyle ise -v 3 -s 3 -n 3 -fastpaths -xml LED_TEST.twx LED_TEST.ncd -o LED_TEST.twr LED_TEST.pcf -ucf constraints.ucf 
+bitgen -intstyle ise -f LED_TEST.ut LED_TEST.ncd 
