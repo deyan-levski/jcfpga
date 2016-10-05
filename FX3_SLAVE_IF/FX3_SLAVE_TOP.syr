@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.03 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.03 secs
  
 --> 
 Reading design: FX3_SLAVE_TOP.prj
@@ -108,12 +108,18 @@ Slice Utilization Ratio Delta      : 5
 =========================================================================
 *                          HDL Parsing                                  *
 =========================================================================
+Parsing VHDL file "/media/data/git/jcfpga/FX3_SLAVE_IF/word2byte.vhd" into library work
+Parsing entity <word2byte>.
+Parsing architecture <word2byte_a> of entity <word2byte>.
 Parsing VHDL file "/media/data/git/jcfpga/FX3_SLAVE_IF/DATA_TO_GPIFII_FIFO.vhd" into library work
 Parsing entity <DATA_TO_GPIFII_FIFO>.
 Parsing architecture <DATA_TO_GPIFII_FIFO_a> of entity <data_to_gpifii_fifo>.
 Parsing VHDL file "/media/data/git/jcfpga/FX3_SLAVE_IF/DATA_FROM_GPIFII_FIFO.vhd" into library work
 Parsing entity <DATA_FROM_GPIFII_FIFO>.
 Parsing architecture <DATA_FROM_GPIFII_FIFO_a> of entity <data_from_gpifii_fifo>.
+Parsing VHDL file "/media/data/git/jcfpga/FX3_SLAVE_IF/image_out.vhd" into library work
+Parsing entity <IMAGE_OUT>.
+Parsing architecture <RTL> of entity <image_out>.
 Parsing VHDL file "/media/data/git/jcfpga/FX3_SLAVE_IF/fx3_slave_if.vhd" into library work
 Parsing entity <FX3_SLAVE_IF>.
 Parsing architecture <RTL> of entity <fx3_slave_if>.
@@ -137,16 +143,24 @@ WARNING:HDLCompiler:1127 - "/media/data/git/jcfpga/FX3_SLAVE_IF/fx3_slave_if.vhd
 WARNING:HDLCompiler:1127 - "/media/data/git/jcfpga/FX3_SLAVE_IF/fx3_slave_if.vhd" Line 310: Assignment to i_gpifii_epswitch ignored, since the identifier is never used
 WARNING:HDLCompiler:1127 - "/media/data/git/jcfpga/FX3_SLAVE_IF/fx3_slave_if.vhd" Line 366: Assignment to i_gpifii_dout1 ignored, since the identifier is never used
 
+Elaborating entity <IMAGE_OUT> (architecture <RTL>) with generics from library <work>.
+WARNING:HDLCompiler:746 - "/media/data/git/jcfpga/FX3_SLAVE_IF/image_out.vhd" Line 110: Range is empty (null range)
+
+Elaborating entity <word2byte> (architecture <word2byte_a>) from library <work>.
+
 =========================================================================
 *                           HDL Synthesis                               *
 =========================================================================
 
 Synthesizing Unit <FX3_SLAVE_TOP>.
     Related source file is "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd".
-INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 69: Output port <FIFO_RDDAT_O> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 69: Output port <FIFO0_FULL_O> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 69: Output port <FIFO_EMPTY_O> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 69: Output port <GPIFII_PCLK> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 100: Output port <FIFO_RDDAT_O> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 100: Output port <FIFO0_FULL_O> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 100: Output port <FIFO_EMPTY_O> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 100: Output port <GPIFII_PCLK> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 131: Output port <TX_FIFO_WRDAT> of the instance <IMAGE_OUT_INST> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 131: Output port <TX_FIFO_WREN> of the instance <IMAGE_OUT_INST> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 131: Output port <TEST> of the instance <IMAGE_OUT_INST> is unconnected or connected to loadless signal.
     Summary:
 	no macro.
 Unit <FX3_SLAVE_TOP> synthesized.
@@ -233,20 +247,71 @@ INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/fx3_slave_if.vhd" line 167:
 	inferred   1 Finite State Machine(s).
 Unit <FX3_SLAVE_IF> synthesized.
 
+Synthesizing Unit <IMAGE_OUT>.
+    Related source file is "/media/data/git/jcfpga/FX3_SLAVE_IF/image_out.vhd".
+        G_CLK_PERIOD_PS = 10000
+        G_DATA_WIDTH = 16
+        G_SENSOR_ID = "00000000"
+        G_HW_ID = "00000000"
+        G_FW_VERS = "00000000"
+INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/image_out.vhd" line 402: Output port <dout> of the instance <I_WORD2BYTE> is unconnected or connected to loadless signal.
+    Found 1-bit register for signal <I_TX_FIFO_WREN_WORD>.
+    Found 1-bit register for signal <I_TX_FIFO_WREN>.
+    Found 1-bit register for signal <I_TX_FIFO_WREN_1>.
+    Found 8-bit register for signal <I_FRAME_CNT>.
+    Found 7-bit register for signal <I_US_CNT>.
+    Found 32-bit register for signal <I_TIMESTAMP_CNT>.
+    Found 32-bit register for signal <I_TIMESTAMP_REG>.
+    Found 32-bit register for signal <I_TX_FIFO_WRDAT>.
+    Found 16-bit register for signal <I_TX_FIFO_WRDAT_WORD>.
+    Found 4-bit register for signal <I_PRESENT_STATE>.
+    Found finite state machine <FSM_1> for signal <I_PRESENT_STATE>.
+    -----------------------------------------------------------------------
+    | States             | 13                                             |
+    | Transitions        | 13                                             |
+    | Inputs             | 0                                              |
+    | Outputs            | 32                                             |
+    | Clock              | CLOCK (rising_edge)                            |
+    | Reset              | RESET (positive)                               |
+    | Reset type         | asynchronous                                   |
+    | Reset State        | idle                                           |
+    | Power Up State     | idle                                           |
+    | Encoding           | auto                                           |
+    | Implementation     | LUT                                            |
+    -----------------------------------------------------------------------
+    Found 8-bit adder for signal <I_FRAME_CNT[7]_GND_62_o_add_16_OUT> created at line 275.
+    Found 7-bit adder for signal <I_US_CNT[6]_GND_62_o_add_21_OUT> created at line 297.
+    Found 32-bit adder for signal <I_TIMESTAMP_CNT[31]_GND_62_o_add_25_OUT> created at line 313.
+    Summary:
+	inferred   3 Adder/Subtractor(s).
+	inferred 130 D-type flip-flop(s).
+	inferred   9 Multiplexer(s).
+	inferred   1 Finite State Machine(s).
+Unit <IMAGE_OUT> synthesized.
+
 =========================================================================
 HDL Synthesis Report
 
 Macro Statistics
-# Adders/Subtractors                                   : 1
+# Adders/Subtractors                                   : 4
  16-bit adder                                          : 1
-# Registers                                            : 17
- 1-bit register                                        : 13
- 16-bit register                                       : 1
- 32-bit register                                       : 2
+ 32-bit adder                                          : 1
+ 7-bit adder                                           : 1
+ 8-bit adder                                           : 1
+# Registers                                            : 26
+ 1-bit register                                        : 16
+ 16-bit register                                       : 2
+ 32-bit register                                       : 5
  5-bit register                                        : 1
+ 7-bit register                                        : 1
+ 8-bit register                                        : 1
+# Multiplexers                                         : 9
+ 16-bit 2-to-1 multiplexer                             : 7
+ 32-bit 2-to-1 multiplexer                             : 1
+ 7-bit 2-to-1 multiplexer                              : 1
 # Tristates                                            : 32
  1-bit tristate buffer                                 : 32
-# FSMs                                                 : 1
+# FSMs                                                 : 2
 
 =========================================================================
 
@@ -256,8 +321,10 @@ Macro Statistics
 
 Reading core <DATA_TO_GPIFII_FIFO.ngc>.
 Reading core <DATA_FROM_GPIFII_FIFO.ngc>.
+Reading core <word2byte.ngc>.
 Loading core <DATA_TO_GPIFII_FIFO> for timing and area information for instance <I0_DATA_TO_GPIFII_FIFO>.
 Loading core <DATA_FROM_GPIFII_FIFO> for timing and area information for instance <I_DATA_FROM_GPIFII_FIFO>.
+Loading core <word2byte> for timing and area information for instance <I_WORD2BYTE>.
 INFO:Xst:2261 - The FF/Latch <I_GPIFII_ADDR_2> in Unit <FX3_SLAVE_INST> is equivalent to the following 2 FFs/Latches, which will be removed : <I_GPIFII_ADDR_3> <I_GPIFII_ADDR_4> 
 WARNING:Xst:1426 - The value init of the FF/Latch I_GPIFII_SLCS_N hinder the constant cleaning in the block FX3_SLAVE_INST.
    You should achieve better results by setting this init to 0.
@@ -267,15 +334,27 @@ Synthesizing (advanced) Unit <FX3_SLAVE_IF>.
 The following registers are absorbed into counter <I_TX_CNT>: 1 register on signal <I_TX_CNT>.
 Unit <FX3_SLAVE_IF> synthesized (advanced).
 
+Synthesizing (advanced) Unit <IMAGE_OUT>.
+The following registers are absorbed into counter <I_FRAME_CNT>: 1 register on signal <I_FRAME_CNT>.
+The following registers are absorbed into counter <I_TIMESTAMP_CNT>: 1 register on signal <I_TIMESTAMP_CNT>.
+The following registers are absorbed into counter <I_US_CNT>: 1 register on signal <I_US_CNT>.
+Unit <IMAGE_OUT> synthesized (advanced).
+
 =========================================================================
 Advanced HDL Synthesis Report
 
 Macro Statistics
-# Counters                                             : 1
+# Counters                                             : 4
  16-bit up counter                                     : 1
-# Registers                                            : 82
- Flip-Flops                                            : 82
-# FSMs                                                 : 1
+ 32-bit up counter                                     : 1
+ 7-bit up counter                                      : 1
+ 8-bit up counter                                      : 1
+# Registers                                            : 165
+ Flip-Flops                                            : 165
+# Multiplexers                                         : 8
+ 16-bit 2-to-1 multiplexer                             : 7
+ 32-bit 2-to-1 multiplexer                             : 1
+# FSMs                                                 : 2
 
 =========================================================================
 
@@ -307,10 +386,72 @@ Optimizing FSM <FX3_SLAVE_INST/FSM_0> on signal <I_PRESENT_STATE[1:14]> with one
  terminate9    | 10000000000000
  terminate10   | 00000000100000
 ---------------------------------
+Analyzing FSM <MFsm> for best encoding.
+Optimizing FSM <IMAGE_OUT_INST/FSM_1> on signal <I_PRESENT_STATE[1:4]> with user encoding.
+---------------------------
+ State         | Encoding
+---------------------------
+ idle          | 0000
+ sync_id1      | 0001
+ sync_id2      | 0010
+ hl_sensor_id  | 0011
+ fcnt_bpp      | 0100
+ col_nbr       | 0101
+ row_nbr       | 0110
+ status        | 0111
+ hw_id_vers    | 1000
+ timestamp_msb | 1001
+ timestamp_lsb | 1010
+ image_data    | 1011
+ wait_cycle    | 1100
+---------------------------
 WARNING:Xst:1426 - The value init of the FF/Latch I_GPIFII_ADDR_0 hinder the constant cleaning in the block FX3_SLAVE_IF.
    You should achieve better results by setting this init to 1.
 
 Optimizing unit <FX3_SLAVE_TOP> ...
+
+Optimizing unit <IMAGE_OUT> ...
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_31> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_30> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_29> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_28> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_27> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_26> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_25> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_24> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_23> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_22> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_21> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_20> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_19> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_18> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_17> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_16> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_15> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_14> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_13> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_12> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_11> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_10> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_9> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_8> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_7> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_6> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_5> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_4> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_3> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_2> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_1> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WRDAT_0> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WREN_1> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:2677 - Node <IMAGE_OUT_INST/I_TX_FIFO_WREN> of sequential type is unconnected in block <FX3_SLAVE_TOP>.
+WARNING:Xst:1710 - FF/Latch <IMAGE_OUT_INST/I_FRAME_CNT_7> (without init value) has a constant value of 0 in block <FX3_SLAVE_TOP>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <IMAGE_OUT_INST/I_FRAME_CNT_6> (without init value) has a constant value of 0 in block <FX3_SLAVE_TOP>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <IMAGE_OUT_INST/I_FRAME_CNT_5> (without init value) has a constant value of 0 in block <FX3_SLAVE_TOP>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <IMAGE_OUT_INST/I_FRAME_CNT_4> (without init value) has a constant value of 0 in block <FX3_SLAVE_TOP>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <IMAGE_OUT_INST/I_FRAME_CNT_3> (without init value) has a constant value of 0 in block <FX3_SLAVE_TOP>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <IMAGE_OUT_INST/I_FRAME_CNT_2> (without init value) has a constant value of 0 in block <FX3_SLAVE_TOP>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <IMAGE_OUT_INST/I_FRAME_CNT_1> (without init value) has a constant value of 0 in block <FX3_SLAVE_TOP>. This FF/Latch will be trimmed during the optimization process.
 INFO:Xst:3203 - The FF/Latch <FX3_SLAVE_INST/I_GPIFII_SLWR_N> in Unit <FX3_SLAVE_TOP> is the opposite to the following FF/Latch, which will be removed : <FX3_SLAVE_INST/I_FIFO_RDEN1> 
 INFO:Xst:3203 - The FF/Latch <FX3_SLAVE_INST/I_GPIFII_OUTEN1> in Unit <FX3_SLAVE_TOP> is the opposite to the following FF/Latch, which will be removed : <FX3_SLAVE_INST/I_GPIFII_SLWR_N1> 
 INFO:Xst:3203 - The FF/Latch <FX3_SLAVE_INST/I_GPIFII_SLWR_N2> in Unit <FX3_SLAVE_TOP> is the opposite to the following FF/Latch, which will be removed : <FX3_SLAVE_INST/I_GPIFII_OUTEN2> 
@@ -327,6 +468,10 @@ INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/n
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <FX3_SLAVE_INST/I_DATA_FROM_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <FX3_SLAVE_INST/I_DATA_FROM_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/aempty_fwft_i> in Unit <FX3_SLAVE_INST/I_DATA_FROM_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/aempty_fwft_fb> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.rsts/ram_empty_i> in Unit <FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.rsts/ram_empty_fb_i> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
@@ -336,6 +481,10 @@ INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/n
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <FX3_SLAVE_INST/I_DATA_FROM_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <FX3_SLAVE_INST/I_DATA_FROM_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/aempty_fwft_i> in Unit <FX3_SLAVE_INST/I_DATA_FROM_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/aempty_fwft_fb> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
 
 Final Macro Processing ...
 
@@ -349,8 +498,8 @@ Unit <FX3_SLAVE_TOP> processed.
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 98
- Flip-Flops                                            : 98
+# Registers                                            : 191
+ Flip-Flops                                            : 191
 # Shift Registers                                      : 3
  2-bit shift register                                  : 1
  3-bit shift register                                  : 2
@@ -376,31 +525,31 @@ Top Level Output File Name         : FX3_SLAVE_TOP.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 684
-#      GND                         : 5
-#      INV                         : 17
-#      LUT1                        : 43
-#      LUT2                        : 112
-#      LUT3                        : 31
-#      LUT4                        : 109
-#      LUT5                        : 21
-#      LUT6                        : 98
-#      MUXCY                       : 143
+# BELS                             : 958
+#      GND                         : 6
+#      INV                         : 25
+#      LUT1                        : 74
+#      LUT2                        : 152
+#      LUT3                        : 45
+#      LUT4                        : 144
+#      LUT5                        : 37
+#      LUT6                        : 140
+#      MUXCY                       : 196
 #      MUXF7                       : 32
-#      VCC                         : 3
-#      XORCY                       : 70
-# FlipFlops/Latches                : 521
-#      FD                          : 88
-#      FDC                         : 225
-#      FDCE                        : 146
+#      VCC                         : 4
+#      XORCY                       : 103
+# FlipFlops/Latches                : 774
+#      FD                          : 92
+#      FDC                         : 323
+#      FDCE                        : 272
 #      FDE                         : 8
-#      FDP                         : 21
-#      FDPE                        : 8
+#      FDP                         : 36
+#      FDPE                        : 10
 #      FDR                         : 16
-#      FDRE                        : 8
+#      FDRE                        : 16
 #      ODDR2                       : 1
-# RAMS                             : 30
-#      RAMB16BWER                  : 30
+# RAMS                             : 31
+#      RAMB16BWER                  : 31
 # Shift Registers                  : 3
 #      SRLC16E                     : 3
 # Clock Buffers                    : 1
@@ -417,18 +566,18 @@ Selected Device : 6slx150fgg484-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:             520  out of  184304     0%  
- Number of Slice LUTs:                  434  out of  92152     0%  
-    Number used as Logic:               431  out of  92152     0%  
+ Number of Slice Registers:             773  out of  184304     0%  
+ Number of Slice LUTs:                  620  out of  92152     0%  
+    Number used as Logic:               617  out of  92152     0%  
     Number used as Memory:                3  out of  21680     0%  
        Number used as SRL:                3
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:    735
-   Number with an unused Flip Flop:     215  out of    735    29%  
-   Number with an unused LUT:           301  out of    735    40%  
-   Number of fully used LUT-FF pairs:   219  out of    735    29%  
-   Number of unique control sets:        36
+ Number of LUT Flip Flop pairs used:   1041
+   Number with an unused Flip Flop:     268  out of   1041    25%  
+   Number with an unused LUT:           421  out of   1041    40%  
+   Number of fully used LUT-FF pairs:   352  out of   1041    33%  
+   Number of unique control sets:        56
 
 IO Utilization: 
  Number of IOs:                          49
@@ -436,8 +585,8 @@ IO Utilization:
     IOB Flip Flops/Latches:               1
 
 Specific Feature Utilization:
- Number of Block RAM/FIFO:               30  out of    268    11%  
-    Number using Block RAM only:         30
+ Number of Block RAM/FIFO:               31  out of    268    11%  
+    Number using Block RAM only:         31
  Number of BUFG/BUFGCTRL/BUFHCEs:         1  out of     16     6%  
 
 ---------------------------
@@ -461,9 +610,9 @@ Clock Information:
 -----------------------------------+-----------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)       | Load  |
 -----------------------------------+-----------------------------+-------+
-GPIFII_ADDR_4_OBUF                 | NONE(FX3_SLAVE_INST/I_ODDR2)| 1     |
+IMAGE_OUT_INST/I_FRAME_CNT<1>      | NONE(FX3_SLAVE_INST/I_ODDR2)| 1     |
 GPIFII_PKTEND_N_OBUF               | NONE(FX3_SLAVE_INST/I_ODDR2)| 1     |
-CLOCK                              | IBUF+BUFG                   | 553   |
+CLOCK                              | IBUF+BUFG                   | 807   |
 -----------------------------------+-----------------------------+-------+
 INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
 
@@ -476,9 +625,9 @@ Timing Summary:
 Speed Grade: -3
 
    Minimum period: 4.364ns (Maximum Frequency: 229.163MHz)
-   Minimum input arrival time before clock: 2.366ns
+   Minimum input arrival time before clock: 3.539ns
    Maximum output required time after clock: 4.323ns
-   Maximum combinational path delay: 4.507ns
+   Maximum combinational path delay: 5.680ns
 
 Timing Details:
 ---------------
@@ -487,7 +636,7 @@ All values displayed in nanoseconds (ns)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'CLOCK'
   Clock period: 4.364ns (frequency: 229.163MHz)
-  Total number of paths / destination ports: 4620 / 1994
+  Total number of paths / destination ports: 6602 / 2571
 -------------------------------------------------------------------------
 Delay:               4.364ns (Levels of Logic = 4)
   Source:            FX3_SLAVE_INST/I_GPIFII_SLWR_N (FF)
@@ -512,23 +661,22 @@ Delay:               4.364ns (Levels of Logic = 4)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'CLOCK'
-  Total number of paths / destination ports: 38 / 38
+  Total number of paths / destination ports: 137 / 137
 -------------------------------------------------------------------------
-Offset:              2.366ns (Levels of Logic = 2)
+Offset:              3.539ns (Levels of Logic = 1)
   Source:            RESET (PAD)
-  Destination:       FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg (FF)
+  Destination:       IMAGE_OUT_INST/I_TIMESTAMP_CNT_31 (FF)
   Destination Clock: CLOCK rising
 
-  Data Path: RESET to FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/rd_rst_asreg
+  Data Path: RESET to IMAGE_OUT_INST/I_TIMESTAMP_CNT_31
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O             5   1.222   0.714  RESET_IBUF (LED_OBUF)
-     begin scope: 'FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO:rst'
-     FDP:PRE                   0.430          U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/wr_rst_asreg
+     IBUF:I->O           104   1.222   1.887  RESET_IBUF (LED_OBUF)
+     FDC:CLR                   0.430          IMAGE_OUT_INST/I_TX_FIFO_WREN_WORD
     ----------------------------------------
-    Total                      2.366ns (1.652ns logic, 0.714ns route)
-                                       (69.8% logic, 30.2% route)
+    Total                      3.539ns (1.652ns logic, 1.887ns route)
+                                       (46.7% logic, 53.3% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK'
@@ -553,7 +701,7 @@ Offset:              4.323ns (Levels of Logic = 1)
 Timing constraint: Default path analysis
   Total number of paths / destination ports: 2 / 2
 -------------------------------------------------------------------------
-Delay:               4.507ns (Levels of Logic = 2)
+Delay:               5.680ns (Levels of Logic = 2)
   Source:            RESET (PAD)
   Destination:       LED (PAD)
 
@@ -561,11 +709,11 @@ Delay:               4.507ns (Levels of Logic = 2)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O             5   1.222   0.714  RESET_IBUF (LED_OBUF)
+     IBUF:I->O           104   1.222   1.887  RESET_IBUF (LED_OBUF)
      OBUF:I->O                 2.571          LED_OBUF (LED)
     ----------------------------------------
-    Total                      4.507ns (3.793ns logic, 0.714ns route)
-                                       (84.2% logic, 15.8% route)
+    Total                      5.680ns (3.793ns logic, 1.887ns route)
+                                       (66.8% logic, 33.2% route)
 
 =========================================================================
 
@@ -583,15 +731,15 @@ CLOCK          |    4.364|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 7.00 secs
-Total CPU time to Xst completion: 6.24 secs
+Total REAL time to Xst completion: 8.00 secs
+Total CPU time to Xst completion: 6.82 secs
  
 --> 
 
 
-Total memory usage is 405396 kilobytes
+Total memory usage is 408056 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :   13 (   0 filtered)
-Number of infos    :   34 (   0 filtered)
+Number of warnings :   55 (   0 filtered)
+Number of infos    :   46 (   0 filtered)
 
