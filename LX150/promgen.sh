@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 #
 #|-----------------------------------|
 #| Generate Prom File for FX3 LOADER |
