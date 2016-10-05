@@ -95,6 +95,8 @@ architecture Behavioral of FX3_SLAVE_TOP is
 	signal		     TX_FIFO_WREN_O:		 std_logic;					 -- tx fifo write enable
 	signal		     TX_FIFO_WRDAT_O:		 std_logic_vector(31 downto 0);		 -- tx fifo write data
 
+	signal			FVAL_IN_SIG:		std_logic;
+	signal			LVAL_IN_SIG:		std_logic;
 begin
 
 	FX3_SLAVE_INST: FX3_SLAVE_IF
@@ -135,37 +137,42 @@ begin
 			    G_SENSOR_ID		=> x"00",
 			    G_HW_ID		=> x"00",
 			    G_FW_VERS		=> x"00")
-	    port map (
-		     -- system signals
-			     RESET			  => RESET,
-			     CLOCK			  => CLOCK,
-			     ENABLE			  => '1',
-		     -- status inputs
-			     STATUS_IN			  => "0101010101010101",
-			     NO_COLS			  => "0000010000000000",
-			     NO_ROWS			  => "0000000010000000",
-		     -- image data interface
-			     FVAL_IN			  => '1', 
-			     LVAL_IN			  => '1',
-			     DATA_IN			  => "0101010101010101",
-			     DATA_IN_EN			  => '1',
-		     -- fifo write interface
-			     TX_FIFO_WREN		  => TX_FIFO_WREN_O,
-			     TX_FIFO_WRDAT		  => TX_FIFO_WRDAT_O,
-			     TEST			  => open);
+	port map (
+			 -- system signals
+			 RESET			  => RESET,
+			 CLOCK			  => CLOCK,
+			 ENABLE			  => '1',
+			 -- status inputs
+			 STATUS_IN			  => "0101010101010101",
+			 NO_COLS			  => "0000010000000000",
+			 NO_ROWS			  => "0000000010000000",
+			 -- image data interface
+			 FVAL_IN			  => FVAL_IN_SIG, 
+			 LVAL_IN			  => LVAL_IN_SIG,
+			 DATA_IN			  => "0101010101010101",
+			 DATA_IN_EN			  => '1',
+			 -- fifo write interface
+			 TX_FIFO_WREN		  => TX_FIFO_WREN_O,
+			 TX_FIFO_WRDAT		  => TX_FIFO_WRDAT_O,
+			 TEST			  => open);
 
-	    GPIFII_PCLK <= CLOCK;
+	GPIFII_PCLK <= CLOCK;
 
-	    process (RESET, CLOCK) 
-	    begin
+	process (RESET, CLOCK) 
+	begin
 
-		    if RESET = '1' then
-			    LED <= '1';
-		    else
-			    LED <= '0';
-		    end if;
+		if RESET = '1' then
+			LED <= '1';
+			FVAL_IN_SIG <= '1';
+			LVAL_IN_SIG <= '1';
+		else
+			LED <= '0';
+			FVAL_IN_SIG <= '0';
+			LVAL_IN_SIG <= '0';
 
-	    end process;
+		end if;
+
+	end process;
 
 end Behavioral;
 

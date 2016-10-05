@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.03 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.03 secs
  
 --> 
 Reading design: FX3_SLAVE_TOP.prj
@@ -154,11 +154,11 @@ Elaborating entity <word2byte> (architecture <word2byte_a>) from library <work>.
 
 Synthesizing Unit <FX3_SLAVE_TOP>.
     Related source file is "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd".
-INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 100: Output port <FIFO_RDDAT_O> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 100: Output port <FIFO0_FULL_O> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 100: Output port <FIFO_EMPTY_O> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 100: Output port <GPIFII_PCLK> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 131: Output port <TEST> of the instance <IMAGE_OUT_INST> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 102: Output port <FIFO_RDDAT_O> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 102: Output port <FIFO0_FULL_O> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 102: Output port <FIFO_EMPTY_O> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 102: Output port <GPIFII_PCLK> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
+INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/FX3_SLAVE_TOP.vhd" line 133: Output port <TEST> of the instance <IMAGE_OUT_INST> is unconnected or connected to loadless signal.
     Summary:
 	no macro.
 Unit <FX3_SLAVE_TOP> synthesized.
@@ -266,9 +266,9 @@ INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/image_out.vhd" line 402: Ou
     Found finite state machine <FSM_1> for signal <I_PRESENT_STATE>.
     -----------------------------------------------------------------------
     | States             | 13                                             |
-    | Transitions        | 13                                             |
-    | Inputs             | 0                                              |
-    | Outputs            | 32                                             |
+    | Transitions        | 26                                             |
+    | Inputs             | 1                                              |
+    | Outputs            | 31                                             |
     | Clock              | CLOCK (rising_edge)                            |
     | Reset              | RESET (positive)                               |
     | Reset type         | asynchronous                                   |
@@ -283,7 +283,7 @@ INFO:Xst:3210 - "/media/data/git/jcfpga/FX3_SLAVE_IF/image_out.vhd" line 402: Ou
     Summary:
 	inferred   3 Adder/Subtractor(s).
 	inferred 130 D-type flip-flop(s).
-	inferred   9 Multiplexer(s).
+	inferred  13 Multiplexer(s).
 	inferred   1 Finite State Machine(s).
 Unit <IMAGE_OUT> synthesized.
 
@@ -303,7 +303,8 @@ Macro Statistics
  5-bit register                                        : 1
  7-bit register                                        : 1
  8-bit register                                        : 1
-# Multiplexers                                         : 9
+# Multiplexers                                         : 13
+ 1-bit 2-to-1 multiplexer                              : 4
  16-bit 2-to-1 multiplexer                             : 7
  32-bit 2-to-1 multiplexer                             : 1
  7-bit 2-to-1 multiplexer                              : 1
@@ -349,7 +350,8 @@ Macro Statistics
  8-bit up counter                                      : 1
 # Registers                                            : 165
  Flip-Flops                                            : 165
-# Multiplexers                                         : 8
+# Multiplexers                                         : 12
+ 1-bit 2-to-1 multiplexer                              : 4
  16-bit 2-to-1 multiplexer                             : 7
  32-bit 2-to-1 multiplexer                             : 1
 # FSMs                                                 : 2
@@ -409,13 +411,6 @@ WARNING:Xst:1426 - The value init of the FF/Latch I_GPIFII_ADDR_0 hinder the con
 Optimizing unit <FX3_SLAVE_TOP> ...
 
 Optimizing unit <IMAGE_OUT> ...
-WARNING:Xst:1710 - FF/Latch <IMAGE_OUT_INST/I_FRAME_CNT_7> (without init value) has a constant value of 0 in block <FX3_SLAVE_TOP>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <IMAGE_OUT_INST/I_FRAME_CNT_6> (without init value) has a constant value of 0 in block <FX3_SLAVE_TOP>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <IMAGE_OUT_INST/I_FRAME_CNT_5> (without init value) has a constant value of 0 in block <FX3_SLAVE_TOP>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <IMAGE_OUT_INST/I_FRAME_CNT_4> (without init value) has a constant value of 0 in block <FX3_SLAVE_TOP>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <IMAGE_OUT_INST/I_FRAME_CNT_3> (without init value) has a constant value of 0 in block <FX3_SLAVE_TOP>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <IMAGE_OUT_INST/I_FRAME_CNT_2> (without init value) has a constant value of 0 in block <FX3_SLAVE_TOP>. This FF/Latch will be trimmed during the optimization process.
-WARNING:Xst:1895 - Due to other FF/Latch trimming, FF/Latch <IMAGE_OUT_INST/I_FRAME_CNT_1> (without init value) has a constant value of 0 in block <FX3_SLAVE_TOP>. This FF/Latch will be trimmed during the optimization process.
 INFO:Xst:3203 - The FF/Latch <FX3_SLAVE_INST/I_GPIFII_SLWR_N> in Unit <FX3_SLAVE_TOP> is the opposite to the following FF/Latch, which will be removed : <FX3_SLAVE_INST/I_FIFO_RDEN1> 
 INFO:Xst:3203 - The FF/Latch <FX3_SLAVE_INST/I_GPIFII_OUTEN1> in Unit <FX3_SLAVE_TOP> is the opposite to the following FF/Latch, which will be removed : <FX3_SLAVE_INST/I_GPIFII_SLWR_N1> 
 INFO:Xst:3203 - The FF/Latch <FX3_SLAVE_INST/I_GPIFII_SLWR_N2> in Unit <FX3_SLAVE_TOP> is the opposite to the following FF/Latch, which will be removed : <FX3_SLAVE_INST/I_GPIFII_OUTEN2> 
@@ -462,8 +457,8 @@ Unit <FX3_SLAVE_TOP> processed.
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 225
- Flip-Flops                                            : 225
+# Registers                                            : 232
+ Flip-Flops                                            : 232
 # Shift Registers                                      : 3
  2-bit shift register                                  : 1
  3-bit shift register                                  : 2
@@ -489,23 +484,23 @@ Top Level Output File Name         : FX3_SLAVE_TOP.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 976
+# BELS                             : 1004
 #      GND                         : 6
-#      INV                         : 26
-#      LUT1                        : 74
+#      INV                         : 25
+#      LUT1                        : 81
 #      LUT2                        : 152
-#      LUT3                        : 45
-#      LUT4                        : 161
-#      LUT5                        : 37
+#      LUT3                        : 47
+#      LUT4                        : 158
+#      LUT5                        : 46
 #      LUT6                        : 140
-#      MUXCY                       : 196
+#      MUXCY                       : 203
 #      MUXF7                       : 32
 #      VCC                         : 4
-#      XORCY                       : 103
-# FlipFlops/Latches                : 808
+#      XORCY                       : 110
+# FlipFlops/Latches                : 815
 #      FD                          : 92
 #      FDC                         : 324
-#      FDCE                        : 305
+#      FDCE                        : 312
 #      FDE                         : 8
 #      FDP                         : 36
 #      FDPE                        : 10
@@ -530,18 +525,18 @@ Selected Device : 6slx150fgg484-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:             807  out of  184304     0%  
- Number of Slice LUTs:                  638  out of  92152     0%  
-    Number used as Logic:               635  out of  92152     0%  
+ Number of Slice Registers:             814  out of  184304     0%  
+ Number of Slice LUTs:                  652  out of  92152     0%  
+    Number used as Logic:               649  out of  92152     0%  
     Number used as Memory:                3  out of  21680     0%  
        Number used as SRL:                3
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:   1075
-   Number with an unused Flip Flop:     268  out of   1075    24%  
-   Number with an unused LUT:           437  out of   1075    40%  
-   Number of fully used LUT-FF pairs:   370  out of   1075    34%  
-   Number of unique control sets:        57
+ Number of LUT Flip Flop pairs used:   1089
+   Number with an unused Flip Flop:     275  out of   1089    25%  
+   Number with an unused LUT:           437  out of   1089    40%  
+   Number of fully used LUT-FF pairs:   377  out of   1089    34%  
+   Number of unique control sets:        58
 
 IO Utilization: 
  Number of IOs:                          49
@@ -574,9 +569,9 @@ Clock Information:
 -----------------------------------+-----------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)       | Load  |
 -----------------------------------+-----------------------------+-------+
-IMAGE_OUT_INST/I_FRAME_CNT<1>      | NONE(FX3_SLAVE_INST/I_ODDR2)| 1     |
+GPIFII_ADDR_4_OBUF                 | NONE(FX3_SLAVE_INST/I_ODDR2)| 1     |
 GPIFII_PKTEND_N_OBUF               | NONE(FX3_SLAVE_INST/I_ODDR2)| 1     |
-CLOCK                              | IBUF+BUFG                   | 841   |
+CLOCK                              | IBUF+BUFG                   | 848   |
 -----------------------------------+-----------------------------+-------+
 INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
 
@@ -589,9 +584,9 @@ Timing Summary:
 Speed Grade: -3
 
    Minimum period: 4.364ns (Maximum Frequency: 229.163MHz)
-   Minimum input arrival time before clock: 3.628ns
+   Minimum input arrival time before clock: 5.393ns
    Maximum output required time after clock: 4.323ns
-   Maximum combinational path delay: 5.769ns
+   Maximum combinational path delay: 5.803ns
 
 Timing Details:
 ---------------
@@ -600,7 +595,7 @@ All values displayed in nanoseconds (ns)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'CLOCK'
   Clock period: 4.364ns (frequency: 229.163MHz)
-  Total number of paths / destination ports: 7236 / 2859
+  Total number of paths / destination ports: 7320 / 2873
 -------------------------------------------------------------------------
 Delay:               4.364ns (Levels of Logic = 4)
   Source:            FX3_SLAVE_INST/I_GPIFII_SLWR_N (FF)
@@ -625,22 +620,23 @@ Delay:               4.364ns (Levels of Logic = 4)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'CLOCK'
-  Total number of paths / destination ports: 171 / 171
+  Total number of paths / destination ports: 216 / 216
 -------------------------------------------------------------------------
-Offset:              3.628ns (Levels of Logic = 1)
+Offset:              5.393ns (Levels of Logic = 2)
   Source:            RESET (PAD)
-  Destination:       IMAGE_OUT_INST/I_TIMESTAMP_CNT_31 (FF)
+  Destination:       IMAGE_OUT_INST/I_TX_FIFO_WRDAT_31 (FF)
   Destination Clock: CLOCK rising
 
-  Data Path: RESET to IMAGE_OUT_INST/I_TIMESTAMP_CNT_31
+  Data Path: RESET to IMAGE_OUT_INST/I_TX_FIFO_WRDAT_31
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O           138   1.222   1.976  RESET_IBUF (LED_OBUF)
-     FDCE:CLR                  0.430          IMAGE_OUT_INST/I_TX_FIFO_WREN
+     IBUF:I->O           152   1.222   2.355  RESET_IBUF (LED_OBUF)
+     LUT5:I0->O           32   0.203   1.291  IMAGE_OUT_INST/_n0122_inv2 (IMAGE_OUT_INST/_n0122_inv)
+     FDCE:CE                   0.322          IMAGE_OUT_INST/I_TX_FIFO_WRDAT_0
     ----------------------------------------
-    Total                      3.628ns (1.652ns logic, 1.976ns route)
-                                       (45.5% logic, 54.5% route)
+    Total                      5.393ns (1.747ns logic, 3.646ns route)
+                                       (32.4% logic, 67.6% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK'
@@ -665,7 +661,7 @@ Offset:              4.323ns (Levels of Logic = 1)
 Timing constraint: Default path analysis
   Total number of paths / destination ports: 2 / 2
 -------------------------------------------------------------------------
-Delay:               5.769ns (Levels of Logic = 2)
+Delay:               5.803ns (Levels of Logic = 2)
   Source:            RESET (PAD)
   Destination:       LED (PAD)
 
@@ -673,11 +669,11 @@ Delay:               5.769ns (Levels of Logic = 2)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O           138   1.222   1.976  RESET_IBUF (LED_OBUF)
+     IBUF:I->O           152   1.222   2.010  RESET_IBUF (LED_OBUF)
      OBUF:I->O                 2.571          LED_OBUF (LED)
     ----------------------------------------
-    Total                      5.769ns (3.793ns logic, 1.976ns route)
-                                       (65.7% logic, 34.3% route)
+    Total                      5.803ns (3.793ns logic, 2.010ns route)
+                                       (65.4% logic, 34.6% route)
 
 =========================================================================
 
@@ -695,15 +691,15 @@ CLOCK          |    4.364|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 6.00 secs
-Total CPU time to Xst completion: 6.89 secs
+Total REAL time to Xst completion: 7.00 secs
+Total CPU time to Xst completion: 7.11 secs
  
 --> 
 
 
-Total memory usage is 408076 kilobytes
+Total memory usage is 408072 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :   21 (   0 filtered)
+Number of warnings :   14 (   0 filtered)
 Number of infos    :   44 (   0 filtered)
 
