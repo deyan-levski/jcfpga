@@ -162,13 +162,13 @@ begin
 	begin
 
 		if RESET = '1' then
-			LED <= '1';
-			FVAL_IN_SIG <= '1';
-			LVAL_IN_SIG <= '1';
-		else
 			LED <= '0';
 			FVAL_IN_SIG <= '0';
 			LVAL_IN_SIG <= '0';
+		else
+			LED <= '1';
+			FVAL_IN_SIG <= '1';
+			LVAL_IN_SIG <= '1';
 
 		end if;
 
