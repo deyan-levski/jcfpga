@@ -108,8 +108,8 @@ begin
 			 FIFO_ENABLE		=> (others => '1'),
 			 --fifo interfaces
 			 FIFO_WR_CLK		=> CLOCK,
-			 FIFO0_WRDAT_I		=> "10101011110011011110111100000001",
-			 FIFO0_WREN_I		=> '1',
+			 FIFO0_WRDAT_I		=> TX_FIFO_WRDAT_O, --"10101011110011011110111100000001",
+			 FIFO0_WREN_I		=> TX_FIFO_WREN_O,
 			 FIFO0_FULL_O		=> open,
 			 FIFO_RD_CLK		=> CLOCK,
 			 FIFO_RDEN_I		=> '0',

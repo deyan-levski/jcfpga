@@ -108,8 +108,8 @@ begin
 			 FIFO_ENABLE		=> (others => '1'),
 			 --fifo interfaces
 			 FIFO_WR_CLK		=> CLOCK,
-			 FIFO0_WRDAT_I		=> "10101011110011011110111100000001",
-			 FIFO0_WREN_I		=> '1',
+			 FIFO0_WRDAT_I		=> TX_FIFO_WRDAT_O, --"10101011110011011110111100000001",
+			 FIFO0_WREN_I		=> TX_FIFO_WREN_O,
 			 FIFO0_FULL_O		=> open,
 			 FIFO_RD_CLK		=> CLOCK,
 			 FIFO_RDEN_I		=> '0',
@@ -130,29 +130,29 @@ begin
 
 	IMAGE_OUT_INST : IMAGE_OUT
 	generic map (
-			    G_CLK_PERIOD_PS:	=> 10000,
-			    G_DATA_WIDTH:	=> 16,
-			    G_SENSOR_ID:	=> x"00",
-			    G_HW_ID:		=> x"00",
-			    G_FW_VERS:		=> x"00")
+			    G_CLK_PERIOD_PS	=> 10000,
+			    G_DATA_WIDTH	=> 16,
+			    G_SENSOR_ID		=> x"00",
+			    G_HW_ID		=> x"00",
+			    G_FW_VERS		=> x"00")
 	    port map (
 		     -- system signals
-			     RESET:			  => RESET,
-			     CLOCK:			  => CLOCK,
-			     ENABLE:			  => '1',
+			     RESET			  => RESET,
+			     CLOCK			  => CLOCK,
+			     ENABLE			  => '1',
 		     -- status inputs
-			     STATUS_IN:			  => "0101010101010101",
-			     NO_COLS:			  => "0000010000000000",
-			     NO_ROWS:			  => "0000000010000000",
+			     STATUS_IN			  => "0101010101010101",
+			     NO_COLS			  => "0000010000000000",
+			     NO_ROWS			  => "0000000010000000",
 		     -- image data interface
-			     FVAL_IN:			  => '1', 
-			     LVAL_IN:			  => '1',
-			     DATA_IN:			  => "0101010101010101",
-			     DATA_IN_EN:		  => '1',
+			     FVAL_IN			  => '1', 
+			     LVAL_IN			  => '1',
+			     DATA_IN			  => "0101010101010101",
+			     DATA_IN_EN			  => '1',
 		     -- fifo write interface
-			     TX_FIFO_WREN:		  => TX_FIFO_WREN_O,
-			     TX_FIFO_WRDAT:		  => TX_FIFO_WRDAT_O,
-			     TEST:			  => open);
+			     TX_FIFO_WREN		  => TX_FIFO_WREN_O,
+			     TX_FIFO_WRDAT		  => TX_FIFO_WRDAT_O,
+			     TEST			  => open);
 
 	    GPIFII_PCLK <= CLOCK;
 
