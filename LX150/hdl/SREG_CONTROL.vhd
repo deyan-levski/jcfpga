@@ -29,6 +29,10 @@ entity SREG_CONTROL is
            SPI_SEN : inout  STD_LOGIC;
            SPI_SCK : inout  STD_LOGIC;
            SPI_SDA : inout  STD_LOGIC;
+	   SPI_DAC_SCK : inout STD_LOGIC;
+	   SPI_DAC_SDA : inout STD_LOGIC;
+	   SPI_DAC_A_SYNC : inout STD_LOGIC;
+	   SPI_DAC_B_SYNC : inout STD_LOGIC;
 
     	   DEBUG_PIN : out STD_LOGIC
 );
@@ -60,12 +64,28 @@ architecture Behavioral of SREG_CONTROL is
 		SPI_SCK 	: inout  STD_LOGIC;
 		SPI_SDA 	: inout  STD_LOGIC
 	);
-
 	end component;
 
-	signal SPI_DATA_BUFFER : std_logic_vector(95 downto 0);
+	component SPI_CORE is
+		port ( 
+		CLOCK 		: in  STD_LOGIC;
+		RESET 		: in  STD_LOGIC;
+		SPI_DATA 	: in  STD_LOGIC_VECTOR(31 downto 0);		-- SPI data
+		CSEL_I 		: in  STD_LOGIC;				-- low load DAC_A; high DAC_B
+		SPI_DATA_LOAD 	: in STD_LOGIC;					-- Load SPI data
+		SPI_SCK 	: inout  STD_LOGIC;				-- SPI clock
+		SPI_SDA 	: inout  STD_LOGIC;				-- SPI data
+		SYNC_DAC_A 	: out  STD_LOGIC;				-- controlled by CSEL_I
+		SYNC_DAC_B 	: out  STD_LOGIC);				-- controlled by CSEL_I
+	end component;
+
+	signal SPI_DATA_BUFFER : std_logic_vector(135 downto 0);
 	signal SPI_FLUSH : STD_LOGIC;
+	signal SPI_DAC_FLUSH : STD_LOGIC;
 	signal SPI_DATA : STD_LOGIC_VECTOR(95 downto 0);
+	signal SPI_DAC_DATA : STD_LOGIC_VECTOR(31 downto 0);
+	signal CSEL_I : STD_LOGIC;
+	signal INT_CONTROL_WORD : STD_LOGIC_VECTOR(7 downto 0);
 	signal RX_WORD : STD_LOGIC_VECTOR(7 downto 0);
 	signal RX_ACK  : STD_LOGIC;
 
@@ -84,6 +104,23 @@ begin
 		SPI_SCK => SPI_SCK,
 		SPI_SDA => SPI_SDA,
 		SPI_DATA_LOAD => SPI_FLUSH
+	);
+
+--|-----------------------------------|
+--| Instantiating SPI_CORE DAC Driver |
+--|-----------------------------------|
+
+	SPI_CORE_INST: SPI_CORE
+	port map (
+		CLOCK => CLOCK,
+		RESET => RESET,
+		SPI_DATA => SPI_DAC_DATA,	-- SPI data
+		CSEL_I => CSEL_I,		-- low load DAC_A; high DAC_B
+		SPI_DATA_LOAD => SPI_DAC_FLUSH,	-- Load SPI data
+		SPI_SCK    => SPI_DAC_SCK,	-- SPI clock
+		SPI_SDA    => SPI_DAC_SDA,	-- SPI data
+		SYNC_DAC_A => SPI_DAC_A_SYNC,	-- ship select DAC A
+		SYNC_DAC_B => SPI_DAC_B_SYNC	-- chip select DAC B
 	);
 
 --|---------------------------|
@@ -119,30 +156,34 @@ begin
 	
 		elsif (RX_ACK'event and RX_ACK = '1') then
 	
-			SPI_DATA_BUFFER(87 downto 0) <= SPI_DATA_BUFFER(95 downto 8);
-			SPI_DATA_BUFFER(95 downto 88) <= RX_WORD(7 downto 0);
+			SPI_DATA_BUFFER(127 downto 0) <= SPI_DATA_BUFFER(135 downto 8);
+			SPI_DATA_BUFFER(135 downto 128) <= RX_WORD(7 downto 0);
 
 			WORD_COUNTER := WORD_COUNTER + 1;
 		end if;
 
-		if WORD_COUNTER = 12 then
+		if WORD_COUNTER = 17 then
 			SPI_FLUSH <= '1';
+			SPI_DAC_FLUSH <= '1';
 		end if;
 
 		if RX_WORD = "10101010" then    -- reset word: 0xAA
-		SPI_FLUSH <= '0';
 		SPI_DATA_BUFFER <= (others => '0');
 		SPI_FLUSH <= '0';
+		SPI_DAC_FLUSH <= '0';
 		WORD_COUNTER := 0;
 		end if;
 
 	end if;
 
-			SPI_DATA  <= SPI_DATA_BUFFER;
+		SPI_DATA  	 <= SPI_DATA_BUFFER(95 downto 0);
+		SPI_DAC_DATA 	 <= SPI_DATA_BUFFER(127 downto 96);
+		INT_CONTROL_WORD <= SPI_DATA_BUFFER(135 downto 128);
+
+		CSEL_I <= INT_CONTROL_WORD(0); -- dac chip select tap
 
 	end process;
 
 DEBUG_PIN <= SPI_FLUSH;
 
 end Behavioral;
-

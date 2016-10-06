@@ -29,6 +29,10 @@ entity ADC_CTRL is
            SPI_SEN : inout  STD_LOGIC;
            SPI_SCK : inout  STD_LOGIC;
            SPI_SDA : inout  STD_LOGIC;
+	   SPI_DAC_SCK : inout STD_LOGIC;
+	   SPI_DAC_SDA : inout STD_LOGIC;
+	   SPI_DAC_A_SYNC : inout STD_LOGIC;
+	   SPI_DAC_B_SYNC : inout STD_LOGIC;
            DEBUG_PIN : out  STD_LOGIC;
     	   SYNC_CLOCK : out STD_LOGIC;
     	   COUNT_CLK_P : out STD_LOGIC;
@@ -91,7 +95,10 @@ architecture Behavioral of ADC_CTRL is
            	SPI_SEN : inout  STD_LOGIC;
            	SPI_SCK : inout  STD_LOGIC;
            	SPI_SDA : inout  STD_LOGIC;
-
+		SPI_DAC_SCK : inout STD_LOGIC;
+		SPI_DAC_SDA : inout STD_LOGIC;
+		SPI_DAC_A_SYNC : inout STD_LOGIC;
+		SPI_DAC_B_SYNC : inout STD_LOGIC;
     	   	DEBUG_PIN : out STD_LOGIC
 	);
 	end component;
@@ -197,6 +204,10 @@ begin
 	SPI_SEN => SPI_SEN,
 	SPI_SCK => SPI_SCK,
 	SPI_SDA => SPI_SDA,
+	SPI_DAC_SCK => SPI_DAC_SCK,
+	SPI_DAC_SDA => SPI_DAC_SDA,
+	SPI_DAC_A_SYNC => SPI_DAC_A_SYNC,
+	SPI_DAC_B_SYNC => SPI_DAC_B_SYNC,
 	DEBUG_PIN => DEBUG_PIN
 	);
 
