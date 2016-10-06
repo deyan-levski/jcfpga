@@ -177,13 +177,13 @@ begin
 
 	end if;
 
+	end process;
 		SPI_DATA  	 <= SPI_DATA_BUFFER(95 downto 0);
 		SPI_DAC_DATA 	 <= SPI_DATA_BUFFER(127 downto 96);
 		INT_CONTROL_WORD <= SPI_DATA_BUFFER(135 downto 128);
 
 		CSEL_I <= INT_CONTROL_WORD(0); -- dac chip select tap
 
-	end process;
 
 DEBUG_PIN <= SPI_FLUSH;
 
