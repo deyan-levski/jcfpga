@@ -142,7 +142,7 @@ begin
 --|-----------------------------------|
 
 	flushproecss : process (CLOCK)
-	variable WORD_COUNTER : integer range 0 to 15;
+	variable WORD_COUNTER : integer range 0 to 31;
 	begin
 	
 	
