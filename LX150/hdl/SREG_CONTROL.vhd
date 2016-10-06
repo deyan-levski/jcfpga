@@ -152,6 +152,7 @@ begin
 		if RESET = '1' then
 			SPI_DATA_BUFFER <= (others => '0');
 			SPI_FLUSH <= '0';
+			SPI_DAC_FLUSH <= '0';
 			WORD_COUNTER := 0;
 	
 		elsif (RX_ACK'event and RX_ACK = '1') then
