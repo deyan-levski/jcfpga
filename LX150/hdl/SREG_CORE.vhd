@@ -132,24 +132,6 @@ SPI_MASTER_RESET <= RESET or (not SPI_DATA_LOAD);
 
 end process;
 
---	spimaster_synchronous: process(CLOCK)
---	variable SPI_SCK_OLD : std_logic;
---	begin
---	
---	if (CLOCK'event and CLOCK = '1') then
---	
---		if SPI_MASTER_RESET = '1' then
---		SPI_DATA_TX(96 downto 0) <= '0' & SPI_DATA;
---		elsif (SPI_SCK_OLD /= SPI_SCK) and SPI_SCK = '0' then
---		SPI_DATA_TX(96 downto 1) <= SPI_DATA_TX(95 downto 0);
---		end if;	
---	
---	SPI_SCK_OLD := SPI_SCK;
---	end if;
---	
---	
---	end process;
-
 SPI_SDA <= SPI_DATA_TX(96);
 
 end Behavioral;

@@ -34,7 +34,7 @@ architecture Behavioral of FX3_SLAVE is
 
 	component FX3_SLAVE_IF is
 		generic (
-				G_WRDAT_W:		    positive:= 16);				    -- FIFO WRDAT width
+				G_WRDAT_W:		    positive:= 16);		-- FIFO WRDAT width
 		port ( 
 			     -- system signals
 			     RESET:			 in    std_logic;
@@ -66,11 +66,11 @@ architecture Behavioral of FX3_SLAVE is
 
 	component IMAGE_OUT is
 		generic (
-				G_CLK_PERIOD_PS:	    integer:=10000;				    -- clock period in picoseconds
-				G_DATA_WIDTH:		    integer:=16;				    -- number of DATA_IN bits
-				G_SENSOR_ID:		    std_logic_vector(7 downto 0):=x"00";	    -- sensor id
-				G_HW_ID:		    std_logic_vector(7 downto 0):=x"00";	    -- hardware id
-				G_FW_VERS:		    std_logic_vector(7 downto 0):=x"00");	    -- fpga firmware version
+				G_CLK_PERIOD_PS:	    integer:=10000;				 -- clock period in picoseconds
+				G_DATA_WIDTH:		    integer:=16;				 -- number of DATA_IN bits
+				G_SENSOR_ID:		    std_logic_vector(7 downto 0):=x"00";	 -- sensor id
+				G_HW_ID:		    std_logic_vector(7 downto 0):=x"00";	 -- hardware id
+				G_FW_VERS:		    std_logic_vector(7 downto 0):=x"00");	 -- fpga firmware version
 		port (
 			     -- system signals
 			     RESET:			 in  std_logic;					 -- asynchronous reset
@@ -93,7 +93,7 @@ architecture Behavioral of FX3_SLAVE is
 	end component IMAGE_OUT;
 
 	signal		     TX_FIFO_WREN_O:		 std_logic;					 -- tx fifo write enable
-	signal		     TX_FIFO_WRDAT_O:		 std_logic_vector(31 downto 0);		 -- tx fifo write data
+	signal		     TX_FIFO_WRDAT_O:		 std_logic_vector(31 downto 0);			 -- tx fifo write data
 
 	signal			FVAL_IN_SIG:		std_logic;
 	signal			LVAL_IN_SIG:		std_logic;
@@ -101,7 +101,7 @@ begin
 
 	FX3_SLAVE_INST: FX3_SLAVE_IF
 	generic map (
-			    G_WRDAT_W	=> 32)								-- FIFO WRDAT width
+			    G_WRDAT_W	=> 32)								 -- FIFO WRDAT width
 	port map (
 			 -- system signals
 			 RESET			=> RESET,

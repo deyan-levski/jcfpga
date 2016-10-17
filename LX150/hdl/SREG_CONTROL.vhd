@@ -1,16 +1,19 @@
---|--------------------------------------------------------------------------------------------------------|
---| ADC Testchip SREG control module:                                                                      |
---|--------------------------------------------------------------------------------------------------------|
---| Receives register data over UART, converts and retranslates back to ADC Teschip's custom SPI register. |
---| Control word structure: 0xAA - resets the SREG module (start byte) followed by 12 bytes SPI data       |
---| Example:                                                                                               |
---| 0xAA010f037623F15f5a6c7c2e31                                                                           |
---|--------------------------------------------------------------------------------------------------------|
---| Version P1A, Author: Deyan Levski, deyan.levski@eng.ox.ac.uk, 07.09.2016                               |
---|--------------------------------------------------------------------------------------------------------|
---|-+-|
---
---
+-- |--------------------------------------------------------------------------------------------------------|
+-- | ADC Testchip SREG control module. Includes VDAC SPI master                                             |
+-- |--------------------------------------------------------------------------------------------------------|
+-- | Receives register data over UART, converts and retranslates back to ADC Teschip's custom SPI register. |
+-- | Control word structure: 0xAA - resets the SREG module (start byte) followed by 12 bytes SPI data       |
+-- | Example:                                                                                               |
+-- | 0xAA010f037623F15f5a6c7c2e31                                                                           |
+-- |--------------------------------------------------------------------------------------------------------|
+-- | Version P1A, Author: Deyan Levski, deyan.levski@eng.ox.ac.uk, 07.09.2016                               |
+-- |--------------------------------------------------------------------------------------------------------|
+-- | Version A, Added VDAC SPI master, dl, 07.10.2016                                                       |
+-- |--------------------------------------------------------------------------------------------------------|
+-- |-+-|
+-- 
+-- 
+
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -137,9 +140,9 @@ begin
 		ack_flag => RX_ACK
 	);
 
---|-----------------------------------|
---| Interface b/w UART and SPI Driver |
---|-----------------------------------|
+--|------------------------------------|
+--| Interface b/w UART and SPI Drivers |
+--|------------------------------------|
 
 	flushproecss : process (CLOCK)
 	variable WORD_COUNTER : integer range 0 to 31;

@@ -1,24 +1,3 @@
---------------------------------------------------------------------------------
--- AWAIBA GmbH
---------------------------------------------------------------------------------
--- MODUL NAME:  FX3_SLAVE_IF
--- FILENAME:    fx3_slave_if.vhd
--- AUTHOR:      Michael Heil - Ing. Büro für FPGA-Logic-Design
---              email:  michael.heil@fpga-logic-design.de
---
--- CREATED:     23.01.2014
---------------------------------------------------------------------------------
--- DESCRIPTION: Interfaces to FX3's slave interface in 5-bit addessing mode
---              
---
---------------------------------------------------------------------------------
---
---------------------------------------------------------------------------------
--- REVISIONS:
--- DATE         VERSION    AUTHOR      DESCRIPTION
--- 04.02.2013   01         M. Heil     Initial version
---------------------------------------------------------------------------------
-
 library IEEE, UNISIM;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.NUMERIC_STD.ALL;
