@@ -3,8 +3,8 @@
 --------------------------------------------------------------------------------
 -- MODUL NAME:  IMAGE_OUT
 -- FILENAME:    image_out.vhd
--- AUTHOR:      Michael Heil - Ing. Büro für FPGA-Logic-Design
---              email:  michael.heil@fpga-logic-design.de
+-- AUTHOR:      
+--              
 --
 -- CREATED:     27.06.2012
 --------------------------------------------------------------------------------
@@ -51,7 +51,6 @@
 --------------------------------------------------------------------------------
 -- REVISIONS:
 -- DATE         VERSION    AUTHOR      DESCRIPTION
--- 12.04.2013   01         M. Heil     Initial version
 --------------------------------------------------------------------------------
 
 library IEEE;
