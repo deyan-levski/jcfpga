@@ -1,24 +1,24 @@
---|-----------------------------------------------------------------------------------------------------------------------|
---| ADC Testchip Main Sequencer                                                                                           |
---|-----------------------------------------------------------------------------------------------------------------------|
---| Version P1A - Initial version, Deyan Levski, deyan.levski@eng.ox.ac.uk, 07.01.2015                                    |
---|-----------------------------------------------------------------------------------------------------------------------|
---| Version P1A - Deyan Levski, deyan.levski@eng.ox.ac.uk, 17 Jan 2015                                                    |
---|-----------------------------------------------------------------------------------------------------------------------|
---| Version P2A - Improved timing for full code coverage conversion, Deyan Levski, deyan.levski@eng.ox.ac.uk, 05 Feb 2015 |
---|-----------------------------------------------------------------------------------------------------------------------|
---| Version P3A - Added some more signals for coefficient strobing, 22 Feb 2015                                           |
---|-----------------------------------------------------------------------------------------------------------------------|
---| Version P4A - Added memory addressing and readout signalling, 02 Mar 2015                                             |
---|-----------------------------------------------------------------------------------------------------------------------|
---| Version P5A to P9A - Lots of changes in-between, added SREG setting loader, 20 Jan 2016                               |
---|-----------------------------------------------------------------------------------------------------------------------|
---| Version P1B - Removed transport delays, now code synthesizable, DD, 07 Sep 2016                                       |
---|-----------------------------------------------------------------------------------------------------------------------|
+--|--------------------------------------------------------------------------------------------|
+--| ADC Testchip Main Sequencer                                                                |
+--|--------------------------------------------------------------------------------------------|
+--| Version P1A - Initial version, Deyan Levski, deyan.levski@eng.ox.ac.uk, 07.01.2015         |
+--|--------------------------------------------------------------------------------------------|
+--| Version P1A - Deyan Levski, deyan.levski@eng.ox.ac.uk, 17 Jan 2015                         |
+--|--------------------------------------------------------------------------------------------|
+--| Version P2A - Improved timing for full code coverage conversion, Deyan Levski, 05 Feb 2015 |
+--|--------------------------------------------------------------------------------------------|
+--| Version P3A - Added some more signals for coefficient strobing, 22 Feb 2015                |
+--|--------------------------------------------------------------------------------------------|
+--| Version P4A - Added memory addressing and readout signalling, 02 Mar 2015                  |
+--|--------------------------------------------------------------------------------------------|
+--| Version P5A to P9A - Lots of changes in-between, added SREG setting loader, 20 Jan 2016    |
+--|--------------------------------------------------------------------------------------------|
+--| Version P1B - Removed transport delays, now code synthesizable, DD, 07 Sep 2016            |
+--|--------------------------------------------------------------------------------------------|
 --|-+-|
 --
---
---
+
+
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
@@ -32,19 +32,34 @@ use work.counters.all;
 --use UNISIM.VComponents.all;
 
 entity SEQUENCER is
-	Port (	CLOCK		: in  STD_LOGIC;
-	       RESET		: in  STD_LOGIC;
+	Port ( CLOCK			: in  STD_LOGIC;
+	       RESET			: in  STD_LOGIC;
 
+		-- Image Out Control
+	       FVAL			: inout STD_LOGIC;	
+	       LVAL			: inout STD_LOGIC;
+
+	        -- row_drv 
+	       d_row_addr		: inout STD_LOGIC_VECTOR(7 downto 0);
+	       d_row_rs			: inout STD_LOGIC;
+	       d_row_rst		: inout STD_LOGIC;
+	       d_row_tx			: inout STD_LOGIC;
+
+		-- col_vln
+	       d_col_vln_sh		: inout STD_LOGIC;
+
+		-- sampling
 	       d_adc_shr_shs		: inout STD_LOGIC;
-
 	       d_shs			: inout STD_LOGIC;
 	       d_shr			: inout STD_LOGIC;
 	       d_ads			: inout STD_LOGIC;
 	       d_adr			: inout STD_LOGIC;
 
+		-- col_comp
 	       d_comp_bias_sh		: inout STD_LOGIC;
 	       d_comp_dyn_pon		: inout STD_LOGIC;
 
+		-- col_count
 	       d_count_rst		: inout STD_LOGIC;
 	       d_count_inv_clk		: inout STD_LOGIC;
 	       d_count_hold		: inout STD_LOGIC;
@@ -56,8 +71,10 @@ entity SEQUENCER is
 	       d_count_mem_wr		: inout STD_LOGIC;
 	       d_count_en		: inout STD_LOGIC;
 
+		-- digif
 	       d_digif_serial_rst	: inout std_logic;
 
+		-- ref_vref
 	       d_ref_vref_ramp_rst	: inout std_logic;
 	       d_ref_vref_sh		: inout std_logic;
 	       d_ref_vref_clamp_en	: inout std_logic;
@@ -451,5 +468,14 @@ begin
 	d_ref_vref_sh		<= 	pre_d_ref_vref_sh;
 	d_ref_vref_clamp_en	<=	pre_d_ref_vref_clamp_en;
 	d_ref_vref_ramp_ota_dyn_pon <= '1'; -- pre_d_ref_vref_ramp_ota_dyn_pon // stuck high for now
+	
+	d_row_addr		<= "00000000";
+	d_row_rs		<= '0';
+	d_row_rst		<= '0';
+	d_row_tx		<= '0';
+	d_col_vln_sh		<= '0';
+
+	FVAL			<= '0';
+	LVAL			<= '0';
 
 end Behavioral;

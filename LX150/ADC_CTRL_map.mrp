@@ -10,23 +10,23 @@ Target Device  : xc6slx150
 Target Package : fgg484
 Target Speed   : -3
 Mapper Version : spartan6 -- $Revision: 1.55 $
-Mapped Date    : Fri Oct  7 16:01:02 2016
+Mapped Date    : Fri Nov  4 13:28:33 2016
 
 Design Summary
 --------------
 Number of errors:      0
-Number of warnings:  131
+Number of warnings:  162
 Slice Logic Utilization:
-  Number of Slice Registers:                 1,241 out of 184,304    1%
-    Number used as Flip Flops:               1,113
+  Number of Slice Registers:                   938 out of 184,304    1%
+    Number used as Flip Flops:                 810
     Number used as Latches:                    128
     Number used as Latch-thrus:                  0
     Number used as AND/OR logics:                0
-  Number of Slice LUTs:                        865 out of  92,152    1%
-    Number used as logic:                      804 out of  92,152    1%
-      Number using O6 output only:             410
-      Number using O5 output only:             137
-      Number using O5 and O6:                  257
+  Number of Slice LUTs:                        661 out of  92,152    1%
+    Number used as logic:                      628 out of  92,152    1%
+      Number using O6 output only:             325
+      Number using O5 output only:              90
+      Number using O5 and O6:                  213
       Number used as ROM:                        0
     Number used as Memory:                       2 out of  21,680    1%
       Number used as Dual Port RAM:              0
@@ -35,21 +35,21 @@ Slice Logic Utilization:
         Number using O6 output only:             2
         Number using O5 output only:             0
         Number using O5 and O6:                  0
-    Number used exclusively as route-thrus:     59
-      Number with same-slice register load:     48
-      Number with same-slice carry load:        11
+    Number used exclusively as route-thrus:     31
+      Number with same-slice register load:     23
+      Number with same-slice carry load:         8
       Number with other load:                    0
 
 Slice Logic Distribution:
-  Number of occupied Slices:                   701 out of  23,038    3%
-  Number of MUXCYs used:                       216 out of  46,076    1%
-  Number of LUT Flip Flop pairs used:        1,442
-    Number with an unused Flip Flop:           303 out of   1,442   21%
-    Number with an unused LUT:                 577 out of   1,442   40%
-    Number of fully used LUT-FF pairs:         562 out of   1,442   38%
-    Number of unique control sets:             415
+  Number of occupied Slices:                   607 out of  23,038    2%
+  Number of MUXCYs used:                       144 out of  46,076    1%
+  Number of LUT Flip Flop pairs used:        1,148
+    Number with an unused Flip Flop:           254 out of   1,148   22%
+    Number with an unused LUT:                 487 out of   1,148   42%
+    Number of fully used LUT-FF pairs:         407 out of   1,148   35%
+    Number of unique control sets:             405
     Number of slice register sites lost
-      to control set restrictions:           2,773 out of 184,304    1%
+      to control set restrictions:           2,756 out of 184,304    1%
 
   A LUT Flip Flop pair for this architecture represents one LUT paired with
   one Flip Flop within a slice.  A control set is a unique combination of
@@ -58,11 +58,11 @@ Slice Logic Distribution:
   over-mapped for a non-slice resource or if Placement fails.
 
 IO Utilization:
-  Number of bonded IOBs:                        83 out of     338   24%
-    Number of LOCed IOBs:                       83 out of      83  100%
-    IOB Flip Flops:                              1
-    IOB Master Pads:                             1
-    IOB Slave Pads:                              1
+  Number of bonded IOBs:                       104 out of     338   30%
+    Number of LOCed IOBs:                      104 out of     104  100%
+    IOB Flip Flops:                              3
+    IOB Master Pads:                             2
+    IOB Slave Pads:                              2
 
 Specific Feature Utilization:
   Number of RAMB16BWERs:                        29 out of     268   10%
@@ -81,8 +81,8 @@ Specific Feature Utilization:
     Number used as DCM_CLKGENs:                  0
   Number of ILOGIC2/ISERDES2s:                   0 out of     586    0%
   Number of IODELAY2/IODRP2/IODRP2_MCBs:         0 out of     586    0%
-  Number of OLOGIC2/OSERDES2s:                   1 out of     586    1%
-    Number used as OLOGIC2s:                     1
+  Number of OLOGIC2/OSERDES2s:                   3 out of     586    1%
+    Number used as OLOGIC2s:                     3
     Number used as OSERDES2s:                    0
   Number of BSCANs:                              0 out of       4    0%
   Number of BUFHs:                               0 out of     384    0%
@@ -97,11 +97,11 @@ Specific Feature Utilization:
   Number of STARTUPs:                            0 out of       1    0%
   Number of SUSPEND_SYNCs:                       0 out of       1    0%
 
-Average Fanout of Non-Clock Nets:                2.93
+Average Fanout of Non-Clock Nets:                2.34
 
-Peak Memory Usage:  970 MB
-Total REAL time to MAP completion:  28 secs 
-Total CPU time to MAP completion:   28 secs 
+Peak Memory Usage:  963 MB
+Total REAL time to MAP completion:  25 secs 
+Total CPU time to MAP completion:   25 secs 
 
 Table of Contents
 -----------------
@@ -127,20 +127,70 @@ Section 2 - Warnings
 WARNING:Security:42 - Your software subscription period has lapsed. Your current
 version of Xilinx tools will continue to function, but you no longer qualify for
 Xilinx software updates or new releases.
-WARNING:Place:1206 - This design contains a global buffer instance,
-   <PLL_250_INST/clkout2_buf>, driving the net, <CLOCK_250>, that is driving the
-   following (first 30) non-clock load pins off chip.
-   < PIN: COUNT_CLK_P.O; >
-   This design practice, in Spartan-6, can lead to an unroutable situation due
-   to limitations in the global routing. If the design does route there may be
-   excessive delay or skew on this net. It is recommended to use a Clock
-   Forwarding technique to create a reliable and repeatable low skew solution:
-   instantiate an ODDR2 component; tie the .D0 pin to Logic1; tie the .D1 pin to
-   Logic0; tie the clock net to be forwarded to .C0; tie the inverted clock to
-   .C1. This is normally an ERROR but the CLOCK_DEDICATED_ROUTE constraint was
-   applied on COMP.PIN <PLL_250_INST/clkout2_buf.O> allowing your design to
-   continue. This constraint disables all clock placer rules related to the
-   specified COMP.PIN.
+WARNING:MapLib:701 - Signal G0LTX_P connected to top level port G0LTX_P has been
+   removed.
+WARNING:MapLib:701 - Signal G0LTX_N connected to top level port G0LTX_N has been
+   removed.
+WARNING:MapLib:701 - Signal G0HTX_P connected to top level port G0HTX_P has been
+   removed.
+WARNING:MapLib:701 - Signal G0HTX_N connected to top level port G0HTX_N has been
+   removed.
+WARNING:MapLib:701 - Signal G1LTX_P connected to top level port G1LTX_P has been
+   removed.
+WARNING:MapLib:701 - Signal G1LTX_N connected to top level port G1LTX_N has been
+   removed.
+WARNING:MapLib:701 - Signal G1HTX_P connected to top level port G1HTX_P has been
+   removed.
+WARNING:MapLib:701 - Signal G1HTX_N connected to top level port G1HTX_N has been
+   removed.
+WARNING:MapLib:701 - Signal G2LTX_P connected to top level port G2LTX_P has been
+   removed.
+WARNING:MapLib:701 - Signal G2LTX_N connected to top level port G2LTX_N has been
+   removed.
+WARNING:MapLib:701 - Signal G2HTX_P connected to top level port G2HTX_P has been
+   removed.
+WARNING:MapLib:701 - Signal G2HTX_N connected to top level port G2HTX_N has been
+   removed.
+WARNING:MapLib:701 - Signal G3LTX_P connected to top level port G3LTX_P has been
+   removed.
+WARNING:MapLib:701 - Signal G3LTX_N connected to top level port G3LTX_N has been
+   removed.
+WARNING:MapLib:701 - Signal G3HTX_P connected to top level port G3HTX_P has been
+   removed.
+WARNING:MapLib:701 - Signal G3HTX_N connected to top level port G3HTX_N has been
+   removed.
+WARNING:MapLib:701 - Signal G4LTX_P connected to top level port G4LTX_P has been
+   removed.
+WARNING:MapLib:701 - Signal G4LTX_N connected to top level port G4LTX_N has been
+   removed.
+WARNING:MapLib:701 - Signal G4HTX_P connected to top level port G4HTX_P has been
+   removed.
+WARNING:MapLib:701 - Signal G4HTX_N connected to top level port G4HTX_N has been
+   removed.
+WARNING:MapLib:701 - Signal G5LTX_P connected to top level port G5LTX_P has been
+   removed.
+WARNING:MapLib:701 - Signal G5LTX_N connected to top level port G5LTX_N has been
+   removed.
+WARNING:MapLib:701 - Signal G5HTX_P connected to top level port G5HTX_P has been
+   removed.
+WARNING:MapLib:701 - Signal G5HTX_N connected to top level port G5HTX_N has been
+   removed.
+WARNING:MapLib:701 - Signal G6LTX_P connected to top level port G6LTX_P has been
+   removed.
+WARNING:MapLib:701 - Signal G6LTX_N connected to top level port G6LTX_N has been
+   removed.
+WARNING:MapLib:701 - Signal G6HTX_P connected to top level port G6HTX_P has been
+   removed.
+WARNING:MapLib:701 - Signal G6HTX_N connected to top level port G6HTX_N has been
+   removed.
+WARNING:MapLib:701 - Signal G7LTX_P connected to top level port G7LTX_P has been
+   removed.
+WARNING:MapLib:701 - Signal G7LTX_N connected to top level port G7LTX_N has been
+   removed.
+WARNING:MapLib:701 - Signal G7HTX_P connected to top level port G7HTX_P has been
+   removed.
+WARNING:MapLib:701 - Signal G7HTX_N connected to top level port G7HTX_N has been
+   removed.
 WARNING:Place:1206 - This design contains a global buffer instance,
    <PLL_250_INST/clkout1_buf>, driving the net, <CLOCK_100>, that is driving the
    following (first 30) non-clock load pins off chip.
@@ -156,24 +206,11 @@ WARNING:Place:1206 - This design contains a global buffer instance,
    continue. This constraint disables all clock placer rules related to the
    specified COMP.PIN.
 WARNING:Place:1137 - This design is not guaranteed to be routable! This design
-   contains a global buffer instance, <PLL_250_INST/clkout2_buf>, driving the
-   net, <CLOCK_250>, that is driving the following (first 30) non-clock load
-   pins.
-   < PIN: COUNT_CLK_P.O; >
-   This is not a recommended design practice in Spartan-6 due to limitations in
-   the global routing that may cause excessive delay, skew or unroutable
-   situations.  It is recommended to only use a BUFG resource to drive clock
-   loads. Please pay extra attention to the timing and routing of this path to
-   ensure the design goals are met. This is normally an ERROR but the
-   CLOCK_DEDICATED_ROUTE constraint was applied on COMP.PIN
-   <PLL_250_INST/clkout2_buf.O> allowing your design to continue. This
-   constraint disables all clock placer rules related to the specified COMP.PIN.
-WARNING:Place:1137 - This design is not guaranteed to be routable! This design
    contains a global buffer instance, <PLL_250_INST/clkout1_buf>, driving the
    net, <CLOCK_100>, that is driving the following (first 30) non-clock load
    pins.
    < PIN: GPIFII_PCLK.O; >
-   < PIN: SYNC_CLOCK1_INV_0.A6; >
+   < PIN: GPIO21_INV_0.A6; >
    This is not a recommended design practice in Spartan-6 due to limitations in
    the global routing that may cause excessive delay, skew or unroutable
    situations.  It is recommended to only use a BUFG resource to drive clock
@@ -690,16 +727,18 @@ WARNING:PhysDesignRules:372 - Gated clock. Clock net
    SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[39]_AND_114_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net GPIO2_OBUF is sourced by a
+   combinatorial pin. This is not good design practice. Use the CE pin to
+   control the loading of data into the flip-flop.
 
 Section 3 - Informational
 -------------------------
 INFO:Security:56 - Part 'xc6slx150' is not a WebPack part.
-INFO:LIT:243 - Logical network
-   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gc
-   onvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.grdc1.rdc/rd_dc_i<13> has no
-   load.
-INFO:LIT:395 - The above info message is repeated 41 more times for the
+INFO:LIT:243 - Logical network SPI_ADC_MISO_IBUF has no load.
+INFO:LIT:395 - The above info message is repeated 42 more times for the
    following (max. 5 shown):
+   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gc
+   onvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.grdc1.rdc/rd_dc_i<13>,
    FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gc
    onvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.grdc1.rdc/rd_dc_i<12>,
    FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gc
@@ -707,9 +746,7 @@ INFO:LIT:395 - The above info message is repeated 41 more times for the
    FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gc
    onvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.grdc1.rdc/rd_dc_i<10>,
    FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gc
-   onvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.grdc1.rdc/rd_dc_i<9>,
-   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gc
-   onvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.grdc1.rdc/rd_dc_i<8>
+   onvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.grdc1.rdc/rd_dc_i<9>
    To see the details of these info messages, please use the -detail switch.
 INFO:MapLib:562 - No environment variables are currently set.
 INFO:LIT:244 - All of the single ended outputs in this design are using slew
@@ -728,9 +765,9 @@ INFO:PhysDesignRules:1861 - To achieve optimal frequency synthesis performance
 
 Section 4 - Removed Logic Summary
 ---------------------------------
- 801 block(s) removed
-   5 block(s) optimized away
- 813 signal(s) removed
+1057 block(s) removed
+ 123 block(s) optimized away
+1108 signal(s) removed
 
 Section 5 - Removed Logic
 -------------------------
@@ -2989,6 +3026,86 @@ and has been removed.
 nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.rsts/gae.c2/v1<5>1" (ROM)
 removed.
 Loadless block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_ODDR2" (ODDR2) removed.
+Loadless block "IBUFDS_DIGIF_LSB_G0" (IBUFGDS) removed.
+ The signal "G0HTX_P" is loadless and has been removed.
+  Loadless block "G0HTX_P" (PAD) removed.
+ The signal "G0HTX_N" is loadless and has been removed.
+  Loadless block "G0HTX_N" (PAD) removed.
+Loadless block "IBUFDS_DIGIF_LSB_G1" (IBUFGDS) removed.
+ The signal "G1HTX_P" is loadless and has been removed.
+  Loadless block "G1HTX_P" (PAD) removed.
+ The signal "G1HTX_N" is loadless and has been removed.
+  Loadless block "G1HTX_N" (PAD) removed.
+Loadless block "IBUFDS_DIGIF_LSB_G2" (IBUFGDS) removed.
+ The signal "G2HTX_P" is loadless and has been removed.
+  Loadless block "G2HTX_P" (PAD) removed.
+ The signal "G2HTX_N" is loadless and has been removed.
+  Loadless block "G2HTX_N" (PAD) removed.
+Loadless block "IBUFDS_DIGIF_LSB_G3" (IBUFGDS) removed.
+ The signal "G3HTX_P" is loadless and has been removed.
+  Loadless block "G3HTX_P" (PAD) removed.
+ The signal "G3HTX_N" is loadless and has been removed.
+  Loadless block "G3HTX_N" (PAD) removed.
+Loadless block "IBUFDS_DIGIF_LSB_G4" (IBUFGDS) removed.
+ The signal "G4HTX_P" is loadless and has been removed.
+  Loadless block "G4HTX_P" (PAD) removed.
+ The signal "G4HTX_N" is loadless and has been removed.
+  Loadless block "G4HTX_N" (PAD) removed.
+Loadless block "IBUFDS_DIGIF_LSB_G5" (IBUFGDS) removed.
+ The signal "G5HTX_P" is loadless and has been removed.
+  Loadless block "G5HTX_P" (PAD) removed.
+ The signal "G5HTX_N" is loadless and has been removed.
+  Loadless block "G5HTX_N" (PAD) removed.
+Loadless block "IBUFDS_DIGIF_LSB_G6" (IBUFGDS) removed.
+ The signal "G6HTX_P" is loadless and has been removed.
+  Loadless block "G6HTX_P" (PAD) removed.
+ The signal "G6HTX_N" is loadless and has been removed.
+  Loadless block "G6HTX_N" (PAD) removed.
+Loadless block "IBUFDS_DIGIF_LSB_G7" (IBUFGDS) removed.
+ The signal "G7HTX_P" is loadless and has been removed.
+  Loadless block "G7HTX_P" (PAD) removed.
+ The signal "G7HTX_N" is loadless and has been removed.
+  Loadless block "G7HTX_N" (PAD) removed.
+Loadless block "IBUFDS_DIGIF_MSB_G0" (IBUFGDS) removed.
+ The signal "G0LTX_P" is loadless and has been removed.
+  Loadless block "G0LTX_P" (PAD) removed.
+ The signal "G0LTX_N" is loadless and has been removed.
+  Loadless block "G0LTX_N" (PAD) removed.
+Loadless block "IBUFDS_DIGIF_MSB_G1" (IBUFGDS) removed.
+ The signal "G1LTX_P" is loadless and has been removed.
+  Loadless block "G1LTX_P" (PAD) removed.
+ The signal "G1LTX_N" is loadless and has been removed.
+  Loadless block "G1LTX_N" (PAD) removed.
+Loadless block "IBUFDS_DIGIF_MSB_G2" (IBUFGDS) removed.
+ The signal "G2LTX_P" is loadless and has been removed.
+  Loadless block "G2LTX_P" (PAD) removed.
+ The signal "G2LTX_N" is loadless and has been removed.
+  Loadless block "G2LTX_N" (PAD) removed.
+Loadless block "IBUFDS_DIGIF_MSB_G3" (IBUFGDS) removed.
+ The signal "G3LTX_P" is loadless and has been removed.
+  Loadless block "G3LTX_P" (PAD) removed.
+ The signal "G3LTX_N" is loadless and has been removed.
+  Loadless block "G3LTX_N" (PAD) removed.
+Loadless block "IBUFDS_DIGIF_MSB_G4" (IBUFGDS) removed.
+ The signal "G4LTX_P" is loadless and has been removed.
+  Loadless block "G4LTX_P" (PAD) removed.
+ The signal "G4LTX_N" is loadless and has been removed.
+  Loadless block "G4LTX_N" (PAD) removed.
+Loadless block "IBUFDS_DIGIF_MSB_G5" (IBUFGDS) removed.
+ The signal "G5LTX_P" is loadless and has been removed.
+  Loadless block "G5LTX_P" (PAD) removed.
+ The signal "G5LTX_N" is loadless and has been removed.
+  Loadless block "G5LTX_N" (PAD) removed.
+Loadless block "IBUFDS_DIGIF_MSB_G6" (IBUFGDS) removed.
+ The signal "G6LTX_P" is loadless and has been removed.
+  Loadless block "G6LTX_P" (PAD) removed.
+ The signal "G6LTX_N" is loadless and has been removed.
+  Loadless block "G6LTX_N" (PAD) removed.
+Loadless block "IBUFDS_DIGIF_MSB_G7" (IBUFGDS) removed.
+ The signal "G7LTX_P" is loadless and has been removed.
+  Loadless block "G7LTX_P" (PAD) removed.
+ The signal "G7LTX_N" is loadless and has been removed.
+  Loadless block "G7LTX_N" (PAD) removed.
 The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
 vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.grdc1.rdc/rd_dc_i<13>" is
@@ -3060,6 +3177,1589 @@ and has been removed.
 The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
 vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.rsts/gae.ram_almost_empty_i" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/rstblk/wr_rst_asreg_GND_12_o_MUX_1_o" is sourceless and has been
+removed.
+ Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/rstblk/wr_rst_asreg" (FF) removed.
+  The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/rstblk/wr_rst_asreg" is sourceless and has been removed.
+   Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/rstblk/wr_rst_asreg_d1" (FF) removed.
+    The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/rstblk/wr_rst_asreg_d1" is sourceless and has been removed.
+     Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/rstblk/wr_rst_asreg_d2" (FF) removed.
+      The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/rstblk/wr_rst_asreg_d2" is sourceless and has been removed.
+       Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/rstblk/wr_rst_comb1" (ROM) removed.
+        The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/rstblk/wr_rst_comb" is sourceless and has been removed.
+         Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1" (FF) removed.
+          The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg<1>" is sourceless and has been
+removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_13" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<13>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/v1<6>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/v1<6>" is sourceless and
+has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/gmux.gm[6].gms.ms" (MUX)
+removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/comp1" is sourceless and has
+been removed.
+                 Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/Mmux_comp1_GND_816_o_MUX_52_o
+11" (ROM) removed.
+                  The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/comp1_GND_816_o_MUX_52_o" is
+sourceless and has been removed.
+                   Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i" (FF) removed.
+                   Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i" (FF) removed.
+                    The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i" is sourceless
+and has been removed.
+                     Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/Mmux_ram_almost_full_i_GND_81
+6_o_MUX_54_o11" (ROM) removed.
+                      The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_almost_full_i_GND_816_o_M
+UX_54_o" is sourceless and has been removed.
+                       Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_almost_full_i" (FF)
+removed.
+                     Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/_n0021_inv1_INV_0" (BUF)
+removed.
+                      The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/_n0021_inv" is sourceless and
+has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_12" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<12>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_11" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<11>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/v1<5>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/v1<5>" is sourceless and
+has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/gmux.gm[5].gms.ms" (MUX)
+removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/gmux.carrynet<5>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_10" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<10>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_9" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<9>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/v1<4>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/v1<4>" is sourceless and
+has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/gmux.gm[4].gms.ms" (MUX)
+removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/gmux.carrynet<4>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_8" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<8>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_7" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<7>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/v1<3>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/v1<3>" is sourceless and
+has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/gmux.gm[3].gms.ms" (MUX)
+removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/gmux.carrynet<3>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_6" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<6>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_5" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<5>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/v1<2>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/v1<2>" is sourceless and
+has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/gmux.gm[2].gms.ms" (MUX)
+removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/gmux.carrynet<2>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_4" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<4>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_3" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<3>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/v1<1>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/v1<1>" is sourceless and
+has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/gmux.gm[1].gms.ms" (MUX)
+removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/gmux.carrynet<1>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_2" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<2>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1_13" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1<13>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/v1<6>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/v1<6>" is sourceless and
+has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/gmux.gm[6].gms.ms" (MUX)
+removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/comp2" is sourceless and has
+been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1_12" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1<12>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1_11" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1<11>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/v1<5>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/v1<5>" is sourceless and
+has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/gmux.gm[5].gms.ms" (MUX)
+removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/gmux.carrynet<5>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1_10" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1<10>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1_9" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1<9>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/v1<4>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/v1<4>" is sourceless and
+has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/gmux.gm[4].gms.ms" (MUX)
+removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/gmux.carrynet<4>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1_8" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1<8>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1_7" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1<7>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/v1<3>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/v1<3>" is sourceless and
+has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/gmux.gm[3].gms.ms" (MUX)
+removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/gmux.carrynet<3>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1_6" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1<6>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1_5" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1<5>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/v1<2>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/v1<2>" is sourceless and
+has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/gmux.gm[2].gms.ms" (MUX)
+removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/gmux.carrynet<2>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1_4" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1<4>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1_3" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1<3>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/v1<1>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/v1<1>" is sourceless and
+has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/gmux.gm[1].gms.ms" (MUX)
+removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/gmux.carrynet<1>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1_2" (FF)
+removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1<2>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_13" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<13>" is sourceless
+and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<6>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<6>" is sourceless
+and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.gm[6].gms.ms"
+(MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.comp3" is sourceless and
+has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_xor<13>_rt" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_xor<13>_rt" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_xor<13>" (XOR) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count[13]_GND_814_o_add_
+0_OUT<13>" is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_12" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<12>" is sourceless
+and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<12>_rt" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<12>_rt" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_xor<12>" (XOR) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count[13]_GND_814_o_add_
+0_OUT<12>" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<12>" (MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<12>" is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_11" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<11>" is sourceless
+and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<5>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<5>" is sourceless
+and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.gm[5].gms.ms"
+(MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.carrynet<5>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<11>_rt" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<11>_rt" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_xor<11>" (XOR) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count[13]_GND_814_o_add_
+0_OUT<11>" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<11>" (MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<11>" is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_10" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<10>" is sourceless
+and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<10>_rt" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<10>_rt" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_xor<10>" (XOR) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count[13]_GND_814_o_add_
+0_OUT<10>" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<10>" (MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<10>" is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_9" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<9>" is sourceless
+and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<4>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<4>" is sourceless
+and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.gm[4].gms.ms"
+(MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.carrynet<4>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<9>_rt" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<9>_rt" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_xor<9>" (XOR) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count[13]_GND_814_o_add_
+0_OUT<9>" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<9>" (MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<9>" is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_8" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<8>" is sourceless
+and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<8>_rt" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<8>_rt" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_xor<8>" (XOR) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count[13]_GND_814_o_add_
+0_OUT<8>" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<8>" (MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<8>" is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_7" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<7>" is sourceless
+and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<3>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<3>" is sourceless
+and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.gm[3].gms.ms"
+(MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.carrynet<3>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<7>_rt" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<7>_rt" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_xor<7>" (XOR) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count[13]_GND_814_o_add_
+0_OUT<7>" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<7>" (MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<7>" is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_6" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<6>" is sourceless
+and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<6>_rt" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<6>_rt" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_xor<6>" (XOR) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count[13]_GND_814_o_add_
+0_OUT<6>" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<6>" (MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<6>" is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_5" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<5>" is sourceless
+and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<2>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<2>" is sourceless
+and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.gm[2].gms.ms"
+(MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.carrynet<2>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<5>_rt" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<5>_rt" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_xor<5>" (XOR) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count[13]_GND_814_o_add_
+0_OUT<5>" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<5>" (MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<5>" is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_4" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<4>" is sourceless
+and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<4>_rt" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<4>_rt" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_xor<4>" (XOR) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count[13]_GND_814_o_add_
+0_OUT<4>" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<4>" (MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<4>" is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_3" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<3>" is sourceless
+and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<1>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<1>" is sourceless
+and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.gm[1].gms.ms"
+(MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.carrynet<1>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<3>_rt" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<3>_rt" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_xor<3>" (XOR) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count[13]_GND_814_o_add_
+0_OUT<3>" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<3>" (MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<3>" is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_2" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<2>" is sourceless
+and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<2>_rt" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<2>_rt" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_xor<2>" (XOR) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count[13]_GND_814_o_add_
+0_OUT<2>" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<2>" (MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<2>" is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_1" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<1>" is sourceless
+and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<1>_rt" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<1>_rt" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_xor<1>" (XOR) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count[13]_GND_814_o_add_
+0_OUT<1>" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<1>" (MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<1>" is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/v1<0>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/v1<0>" is sourceless and
+has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/gmux.gm[0].gm1.m1" (MUX)
+removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c1/gmux.carrynet<0>" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<0>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<0>" is sourceless
+and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.gm[0].gm1.m1"
+(MUX) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.carrynet<0>" is
+sourceless and has been removed.
+         Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0" (FF) removed.
+          The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg<0>" is sourceless and has been
+removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_13" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin<13>" is sourceless and
+has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_12" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin<12>" is sourceless and
+has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_11" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin<11>" is sourceless and
+has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_10" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin<10>" is sourceless and
+has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_9" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin<9>" is sourceless and has
+been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_8" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin<8>" is sourceless and has
+been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_7" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin<7>" is sourceless and has
+been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_6" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin<6>" is sourceless and has
+been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_5" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin<5>" is sourceless and has
+been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_4" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin<4>" is sourceless and has
+been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_3" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin<3>" is sourceless and has
+been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_2" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin<2>" is sourceless and has
+been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_1" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin<1>" is sourceless and has
+been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/v1<0>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/v1<0>" is sourceless and
+has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/gmux.gm[0].gm1.m1" (MUX)
+removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/c2/gmux.carrynet<0>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin_0" (FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_bin<0>" is sourceless and has
+been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg_13"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg<13>"
+is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+21_o1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+21_o" is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+22_o1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+22_o" is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+231_xo<0>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+23_o" is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+241_xo<0>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+24_o" is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+251_xo<0>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+25_o" is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+331_xo<0>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+331_xo<0>" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+331_xo<0>3" (ROM) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+33_o" is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+261_xo<0>" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+26_o" is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+271_xo<0>" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+27_o" is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+301_xo<0>_SW0" (ROM) removed.
+              The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/N6" is
+sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+301_xo<0>" (ROM) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+30_o" is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+281_xo<0>_SW0" (ROM) removed.
+              The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/N8" is
+sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+281_xo<0>" (ROM) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+28_o" is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+291_xo<0>_SW0" (ROM) removed.
+              The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/N10" is
+sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+291_xo<0>" (ROM) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+29_o" is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+311_xo<0>1" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+311_xo<0>" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+311_xo<0>3" (ROM) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+31_o" is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+321_xo<0>2" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+321_xo<0>1" is sourceless and has been removed.
+               Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+321_xo<0>3" (ROM) removed.
+                The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+32_o" is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg_12"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg<12>"
+is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg_11"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg<11>"
+is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg_10"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg<10>"
+is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+271_xo<0>_SW0" (ROM) removed.
+              The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/N4" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg_9"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg<9>"
+is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+261_xo<0>_SW0" (ROM) removed.
+              The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/N2" is
+sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+311_xo<0>2" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+311_xo<0>1" is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg_8"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg<8>"
+is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg_7"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg<7>"
+is sourceless and has been removed.
+             Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+331_xo<0>2" (ROM) removed.
+              The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_asreg_last[13]_reduce_xor_
+331_xo<0>1" is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg_6"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg<6>"
+is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg_5"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg<5>"
+is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg_4"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg<4>"
+is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg_3"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg<3>"
+is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg_2"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg<2>"
+is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg_1"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg<1>"
+is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg_0"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg<0>"
+is sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_13"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/D<13>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_12"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/D<12>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_11"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/D<11>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_10"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/D<10>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_9"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/D<9>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_8"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/D<8>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_7"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/D<7>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_6"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/D<6>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_5"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/D<5>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_4"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/D<4>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_3"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/D<3>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_2"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/D<2>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_1"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/D<1>" is
+sourceless and has been removed.
+           Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_0"
+(FF) removed.
+            The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/D<0>" is
+sourceless and has been removed.
+     Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/rstblk/Mmux_wr_rst_asreg_GND_12_o_MUX_1_o11" (ROM) removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg<1>" is sourceless and has been
+removed.
+ Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_13" (FF) removed.
+  The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/D<13>" is
+sourceless and has been removed.
+ Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_12" (FF) removed.
+  The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/D<12>" is
+sourceless and has been removed.
+ Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_11" (FF) removed.
+  The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/D<11>" is
+sourceless and has been removed.
+ Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_10" (FF) removed.
+  The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/D<10>" is
+sourceless and has been removed.
+ Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_9" (FF) removed.
+  The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/D<9>" is
+sourceless and has been removed.
+ Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_8" (FF) removed.
+  The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/D<8>" is
+sourceless and has been removed.
+ Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_7" (FF) removed.
+  The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/D<7>" is
+sourceless and has been removed.
+ Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_6" (FF) removed.
+  The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/D<6>" is
+sourceless and has been removed.
+ Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_5" (FF) removed.
+  The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/D<5>" is
+sourceless and has been removed.
+ Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_4" (FF) removed.
+  The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/D<4>" is
+sourceless and has been removed.
+ Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_3" (FF) removed.
+  The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/D<3>" is
+sourceless and has been removed.
+ Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_2" (FF) removed.
+  The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/D<2>" is
+sourceless and has been removed.
+ Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_1" (FF) removed.
+  The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/D<1>" is
+sourceless and has been removed.
+ Sourceless block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/rd_pntr_gc_0" (FF) removed.
+  The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/D<0>" is
 sourceless and has been removed.
 The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
@@ -3477,104 +5177,292 @@ vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.grdc1.rdc/Msub_GND_812_o_GND_812_o
 _sub_2_OUT<13:0>_cy<0>" (MUX) removed.
 The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<0>" is sourceless
-and has been removed.
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<0>" is sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<0>_rt" is sourceless and has been removed.
  Sourceless block
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.gm[0].gm1.m1"
-(MUX) removed.
-  The signal
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<0>" (MUX) removed.
+The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.carrynet<0>" is
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1" is sourceless and has
+been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wr_pntr_plus1<0>" is sourceless and has
+been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor_
+6_o" is sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor_
+7_o" is sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor_
+8_o" is sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor_
+9_o" is sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor_
+10_o" is sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor_
+11_o" is sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor_
+12_o" is sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor_
+13_o" is sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor_
+14_o" is sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor_
+15_o" is sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor_
+16_o" is sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor_
+17_o" is sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor_
+18_o" is sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/RD_PNTR[12]_RD_PNTR[13]_XOR_108_o" is
 sourceless and has been removed.
-   Sourceless block
+The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.gm[1].gms.ms"
-(MUX) removed.
-    The signal
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.carrynet<1>" is
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/RD_PNTR[11]_RD_PNTR[12]_XOR_109_o" is
 sourceless and has been removed.
-     Sourceless block
+The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.gm[2].gms.ms"
-(MUX) removed.
-      The signal
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.carrynet<2>" is
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/RD_PNTR[10]_RD_PNTR[11]_XOR_110_o" is
 sourceless and has been removed.
-       Sourceless block
+The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.gm[3].gms.ms"
-(MUX) removed.
-        The signal
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.carrynet<3>" is
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/RD_PNTR[9]_RD_PNTR[10]_XOR_111_o" is
 sourceless and has been removed.
-         Sourceless block
+The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.gm[4].gms.ms"
-(MUX) removed.
-          The signal
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.carrynet<4>" is
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/RD_PNTR[8]_RD_PNTR[9]_XOR_112_o" is
 sourceless and has been removed.
-           Sourceless block
+The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.gm[5].gms.ms"
-(MUX) removed.
-            The signal
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.carrynet<5>" is
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/RD_PNTR[7]_RD_PNTR[8]_XOR_113_o" is
 sourceless and has been removed.
-             Sourceless block
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/gmux.gm[6].gms.ms"
-(MUX) removed.
-              The signal
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.comp3" is sourceless and
-has been removed.
-               Sourceless block
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/Mmux_ram_almost_full_i_GND_81
-6_o_MUX_54_o11" (ROM) removed.
-                The signal
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_almost_full_i_GND_816_o_M
-UX_54_o" is sourceless and has been removed.
-                 Sourceless block
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_almost_full_i" (FF)
-removed.
 The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<1>" is sourceless
-and has been removed.
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/RD_PNTR[6]_RD_PNTR[7]_XOR_114_o" is
+sourceless and has been removed.
 The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<2>" is sourceless
-and has been removed.
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/RD_PNTR[5]_RD_PNTR[6]_XOR_115_o" is
+sourceless and has been removed.
 The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<3>" is sourceless
-and has been removed.
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/RD_PNTR[4]_RD_PNTR[5]_XOR_116_o" is
+sourceless and has been removed.
 The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<4>" is sourceless
-and has been removed.
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/RD_PNTR[3]_RD_PNTR[4]_XOR_117_o" is
+sourceless and has been removed.
 The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<5>" is sourceless
-and has been removed.
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/RD_PNTR[2]_RD_PNTR[3]_XOR_118_o" is
+sourceless and has been removed.
 The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<6>" is sourceless
-and has been removed.
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/RD_PNTR[1]_RD_PNTR[2]_XOR_119_o" is
+sourceless and has been removed.
 The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/_n0021_inv" is sourceless and
-has been removed.
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/RD_PNTR[0]_RD_PNTR[1]_XOR_120_o" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/D<13>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/WR_PNTR[12]_WR_PNTR[13]_XOR_4_o" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/D<12>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/WR_PNTR[11]_WR_PNTR[12]_XOR_5_o" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/D<11>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/WR_PNTR[10]_WR_PNTR[11]_XOR_6_o" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/D<10>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/WR_PNTR[9]_WR_PNTR[10]_XOR_7_o" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/D<9>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/WR_PNTR[8]_WR_PNTR[9]_XOR_8_o" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/D<8>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/WR_PNTR[7]_WR_PNTR[8]_XOR_9_o" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/D<7>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/WR_PNTR[6]_WR_PNTR[7]_XOR_10_o" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/D<6>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/WR_PNTR[5]_WR_PNTR[6]_XOR_11_o" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/D<5>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/WR_PNTR[4]_WR_PNTR[5]_XOR_12_o" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/D<4>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/WR_PNTR[3]_WR_PNTR[4]_XOR_13_o" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/D<3>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/WR_PNTR[2]_WR_PNTR[3]_XOR_14_o" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/D<2>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/WR_PNTR[1]_WR_PNTR[2]_XOR_15_o" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/D<1>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/WR_PNTR[0]_WR_PNTR[1]_XOR_16_o" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/D<0>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/D<13>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/D<12>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/D<11>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/D<10>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/D<9>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/D<8>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/D<7>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/D<6>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/D<5>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/D<4>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/D<3>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/D<2>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/D<1>" is
+sourceless and has been removed.
+The signal
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/D<0>" is
+sourceless and has been removed.
 The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I_DATA_FROM_GPIFII_FIFO/U0/xst_fifo_generator/gco
 nvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i<7>" is sourceless and has been
@@ -6027,163 +7915,215 @@ The trimmed logic reported below is either:
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<0>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_0" (FF) removed.
-  The signal "N47" is unused and has been removed.
+  The signal "N37" is unused and has been removed.
    Unused block "GPIFII_D_24_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<1>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_1" (FF) removed.
-  The signal "N46" is unused and has been removed.
+  The signal "N36" is unused and has been removed.
    Unused block "GPIFII_D_25_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<2>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_2" (FF) removed.
-  The signal "N45" is unused and has been removed.
+  The signal "N35" is unused and has been removed.
    Unused block "GPIFII_D_26_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<3>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_3" (FF) removed.
-  The signal "N44" is unused and has been removed.
+  The signal "N34" is unused and has been removed.
    Unused block "GPIFII_D_27_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<4>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_4" (FF) removed.
-  The signal "N43" is unused and has been removed.
+  The signal "N33" is unused and has been removed.
    Unused block "GPIFII_D_28_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<5>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_5" (FF) removed.
-  The signal "N42" is unused and has been removed.
+  The signal "N32" is unused and has been removed.
    Unused block "GPIFII_D_29_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<6>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_6" (FF) removed.
-  The signal "N41" is unused and has been removed.
+  The signal "N31" is unused and has been removed.
    Unused block "GPIFII_D_30_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<7>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_7" (FF) removed.
-  The signal "N40" is unused and has been removed.
+  The signal "N30" is unused and has been removed.
    Unused block "GPIFII_D_31_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<8>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_8" (FF) removed.
-  The signal "N55" is unused and has been removed.
+  The signal "N45" is unused and has been removed.
    Unused block "GPIFII_D_16_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<9>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_9" (FF) removed.
-  The signal "N54" is unused and has been removed.
+  The signal "N44" is unused and has been removed.
    Unused block "GPIFII_D_17_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<10>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_10" (FF) removed.
-  The signal "N53" is unused and has been removed.
+  The signal "N43" is unused and has been removed.
    Unused block "GPIFII_D_18_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<11>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_11" (FF) removed.
-  The signal "N52" is unused and has been removed.
+  The signal "N42" is unused and has been removed.
    Unused block "GPIFII_D_19_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<12>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_12" (FF) removed.
-  The signal "N51" is unused and has been removed.
+  The signal "N41" is unused and has been removed.
    Unused block "GPIFII_D_20_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<13>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_13" (FF) removed.
-  The signal "N50" is unused and has been removed.
+  The signal "N40" is unused and has been removed.
    Unused block "GPIFII_D_21_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<14>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_14" (FF) removed.
-  The signal "N49" is unused and has been removed.
+  The signal "N39" is unused and has been removed.
    Unused block "GPIFII_D_22_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<15>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_15" (FF) removed.
-  The signal "N48" is unused and has been removed.
+  The signal "N38" is unused and has been removed.
    Unused block "GPIFII_D_23_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<16>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_16" (FF) removed.
-  The signal "N63" is unused and has been removed.
+  The signal "N53" is unused and has been removed.
    Unused block "GPIFII_D_8_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<17>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_17" (FF) removed.
-  The signal "N62" is unused and has been removed.
+  The signal "N52" is unused and has been removed.
    Unused block "GPIFII_D_9_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<18>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_18" (FF) removed.
-  The signal "N61" is unused and has been removed.
+  The signal "N51" is unused and has been removed.
    Unused block "GPIFII_D_10_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<19>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_19" (FF) removed.
-  The signal "N60" is unused and has been removed.
+  The signal "N50" is unused and has been removed.
    Unused block "GPIFII_D_11_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<20>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_20" (FF) removed.
-  The signal "N59" is unused and has been removed.
+  The signal "N49" is unused and has been removed.
    Unused block "GPIFII_D_12_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<21>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_21" (FF) removed.
-  The signal "N58" is unused and has been removed.
+  The signal "N48" is unused and has been removed.
    Unused block "GPIFII_D_13_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<22>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_22" (FF) removed.
-  The signal "N57" is unused and has been removed.
+  The signal "N47" is unused and has been removed.
    Unused block "GPIFII_D_14_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<23>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_23" (FF) removed.
-  The signal "N56" is unused and has been removed.
+  The signal "N46" is unused and has been removed.
    Unused block "GPIFII_D_15_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<24>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_24" (FF) removed.
-  The signal "N71" is unused and has been removed.
+  The signal "N61" is unused and has been removed.
    Unused block "GPIFII_D_0_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<25>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_25" (FF) removed.
-  The signal "N70" is unused and has been removed.
+  The signal "N60" is unused and has been removed.
    Unused block "GPIFII_D_1_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<26>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_26" (FF) removed.
-  The signal "N69" is unused and has been removed.
+  The signal "N59" is unused and has been removed.
    Unused block "GPIFII_D_2_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<27>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_27" (FF) removed.
-  The signal "N68" is unused and has been removed.
+  The signal "N58" is unused and has been removed.
    Unused block "GPIFII_D_3_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<28>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_28" (FF) removed.
-  The signal "N67" is unused and has been removed.
+  The signal "N57" is unused and has been removed.
    Unused block "GPIFII_D_4_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<29>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_29" (FF) removed.
-  The signal "N66" is unused and has been removed.
+  The signal "N56" is unused and has been removed.
    Unused block "GPIFII_D_5_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<30>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_30" (FF) removed.
-  The signal "N65" is unused and has been removed.
+  The signal "N55" is unused and has been removed.
    Unused block "GPIFII_D_6_IOBUF/IBUF" (BUF) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<31>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_31" (FF) removed.
-  The signal "N64" is unused and has been removed.
+  The signal "N54" is unused and has been removed.
    Unused block "GPIFII_D_7_IOBUF/IBUF" (BUF) removed.
+Unused block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_RD_PNTR[0]_RD_PNTR[1]_XOR_120_o_
+xo<0>1" (ROM) removed.
+Unused block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_RD_PNTR[10]_RD_PNTR[11]_XOR_110_
+o_xo<0>1" (ROM) removed.
+Unused block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_RD_PNTR[11]_RD_PNTR[12]_XOR_109_
+o_xo<0>1" (ROM) removed.
+Unused block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_RD_PNTR[12]_RD_PNTR[13]_XOR_108_
+o_xo<0>1" (ROM) removed.
+Unused block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_RD_PNTR[1]_RD_PNTR[2]_XOR_119_o_
+xo<0>1" (ROM) removed.
+Unused block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_RD_PNTR[2]_RD_PNTR[3]_XOR_118_o_
+xo<0>1" (ROM) removed.
+Unused block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_RD_PNTR[3]_RD_PNTR[4]_XOR_117_o_
+xo<0>1" (ROM) removed.
+Unused block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_RD_PNTR[4]_RD_PNTR[5]_XOR_116_o_
+xo<0>1" (ROM) removed.
+Unused block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_RD_PNTR[5]_RD_PNTR[6]_XOR_115_o_
+xo<0>1" (ROM) removed.
+Unused block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_RD_PNTR[6]_RD_PNTR[7]_XOR_114_o_
+xo<0>1" (ROM) removed.
+Unused block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_RD_PNTR[7]_RD_PNTR[8]_XOR_113_o_
+xo<0>1" (ROM) removed.
+Unused block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_RD_PNTR[8]_RD_PNTR[9]_XOR_112_o_
+xo<0>1" (ROM) removed.
+Unused block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_RD_PNTR[9]_RD_PNTR[10]_XOR_111_o
+_xo<0>1" (ROM) removed.
 Unused block
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
 vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.grdc1.rdc/Msub_GND_812_o_GND_812_o
@@ -6266,32 +8206,15 @@ Unused block
 vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.rsts/ram_empty_i" (FF) removed.
 Unused block
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/_n0021_inv1_INV_0" (BUF)
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/Madd_gic0.gc1.count[13]_GND_814_o
+_add_0_OUT_cy<0>_rt" (ROM) removed.
+Unused block
+"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
+vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wr_pntr_plus2<0>_inv1_INV_0" (BUF)
 removed.
 Unused block
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<0>1" (ROM) removed.
-Unused block
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<1>1" (ROM) removed.
-Unused block
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<2>1" (ROM) removed.
-Unused block
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<3>1" (ROM) removed.
-Unused block
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<4>1" (ROM) removed.
-Unused block
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<5>1" (ROM) removed.
-Unused block
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/gaf.c3/v1<6>1" (ROM) removed.
-Unused block
-"FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
-vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i" (FF) removed.
+vfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1" (FF) removed.
 Unused block
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I_DATA_FROM_GPIFII_FIFO/U0/xst_fifo_generator/gco
 nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_RD_PNTR[0]_RD_PNTR[1]_XOR_54_o_
@@ -6359,10 +8282,525 @@ Unused block "FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE/XST_VCC" (ONE) removed.
 
 Optimized Block(s):
 TYPE 		BLOCK
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_WR_PNTR[0]_WR_PNTR[1]_XOR_16_o_
+xo<0>1
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_WR_PNTR[10]_WR_PNTR[11]_XOR_6_o
+_xo<0>1
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_WR_PNTR[11]_WR_PNTR[12]_XOR_5_o
+_xo<0>1
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_WR_PNTR[12]_WR_PNTR[13]_XOR_4_o
+_xo<0>1
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_WR_PNTR[1]_WR_PNTR[2]_XOR_15_o_
+xo<0>1
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_WR_PNTR[2]_WR_PNTR[3]_XOR_14_o_
+xo<0>1
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_WR_PNTR[3]_WR_PNTR[4]_XOR_13_o_
+xo<0>1
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_WR_PNTR[4]_WR_PNTR[5]_XOR_12_o_
+xo<0>1
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_WR_PNTR[5]_WR_PNTR[6]_XOR_11_o_
+xo<0>1
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_WR_PNTR[6]_WR_PNTR[7]_XOR_10_o_
+xo<0>1
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_WR_PNTR[7]_WR_PNTR[8]_XOR_9_o_x
+o<0>1
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_WR_PNTR[8]_WR_PNTR[9]_XOR_8_o_x
+o<0>1
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/Mxor_WR_PNTR[9]_WR_PNTR[10]_XOR_7_o_
+xo<0>1
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_reg_0
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_reg_1
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_reg_10
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_reg_11
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_reg_12
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_reg_13
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_reg_2
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_reg_3
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_reg_4
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_reg_5
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_reg_6
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_reg_7
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_reg_8
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].rd_stg_inst/Q_reg_9
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_reg_0
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_reg_1
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_reg_10
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_reg_11
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_reg_12
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_reg_13
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_reg_2
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_reg_3
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_reg_4
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_reg_5
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_reg_6
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_reg_7
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_reg_8
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].rd_stg_inst/Q_reg_9
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_0
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_1
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_10
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_11
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_12
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_13
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_2
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_3
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_4
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_5
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_6
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_7
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_8
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_bin_9
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_0
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_1
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_10
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_11
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_12
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_13
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_2
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_3
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_4
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_5
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_6
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_7
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_8
+   optimized to 0
+FDC
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_9
+   optimized to 0
+LUT6
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_101_xo<0>1
+   optimized to 0
+LUT6
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_111_xo<0>
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_111_xo<0>_SW0
+   optimized to 0
+LUT6
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_121_xo<0>
+   optimized to 0
+LUT3
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_121_xo<0>_SW0
+   optimized to 1
+LUT6
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_131_xo<0>
+   optimized to 0
+LUT4
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_131_xo<0>_SW0
+   optimized to 0
+LUT6
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_141_xo<0>
+   optimized to 0
+LUT5
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_141_xo<0>_SW0
+   optimized to 1
+LUT6
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_151_xo<0>
+   optimized to 0
+LUT6
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_151_xo<0>_SW0
+   optimized to 0
+LUT6
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_161_xo<0>1
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_161_xo<0>3
+   optimized to 0
+LUT6
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_171_xo<0>1
+   optimized to 0
+LUT5
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_171_xo<0>2
+   optimized to 0
+LUT4
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_171_xo<0>3
+   optimized to 0
+LUT6
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_181_xo<0>1
+   optimized to 0
+LUT6
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_181_xo<0>2
+   optimized to 0
+LUT4
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_181_xo<0>3
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_6_o1
+   optimized to 0
+LUT3
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_7_o1
+   optimized to 0
+LUT4
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_81_xo<0>1
+   optimized to 0
+LUT5
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/wr_pntr_gc_asreg_last[13]_reduce_xor
+_91_xo<0>1
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_1
+   optimized to 0
+LUT2
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_2
+   optimized to 0
+FDCE
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1_0
+   optimized to 0
+FDPE
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1_1
+   optimized to 1
+FDCE
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_10
+   optimized to 0
+FDCE
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_11
+   optimized to 0
+FDCE
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_12
+   optimized to 0
+FDCE
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_13
+   optimized to 0
+FDCE
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_2
+   optimized to 0
+FDCE
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_3
+   optimized to 0
+FDCE
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_4
+   optimized to 0
+FDCE
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_5
+   optimized to 0
+FDCE
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_6
+   optimized to 0
+FDCE
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_7
+   optimized to 0
+FDCE
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_8
+   optimized to 0
+FDCE
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_9
+   optimized to 0
+INV
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wr_pntr_plus2<1>_inv1_INV_0
 GND
 		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
 nvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.nativ
 e_blk_mem_gen/valid.cstr/XST_GND
+LUT4
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.nativ
+e_blk_mem_gen/valid.cstr/bindec_a.bindec_inst_a/Mmux_ENOUT<0>11
+   optimized to 0
+LUT4
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.nativ
+e_blk_mem_gen/valid.cstr/bindec_a.bindec_inst_a/Mmux_ENOUT<1>11
+   optimized to 0
+LUT4
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.nativ
+e_blk_mem_gen/valid.cstr/bindec_a.bindec_inst_a/Mmux_ENOUT<2>11
+   optimized to 0
+LUT4
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.nativ
+e_blk_mem_gen/valid.cstr/bindec_a.bindec_inst_a/Mmux_ENOUT<3>11
+   optimized to 0
+LUT4
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.nativ
+e_blk_mem_gen/valid.cstr/bindec_a.bindec_inst_a/Mmux_ENOUT<4>11
+   optimized to 0
+LUT4
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.nativ
+e_blk_mem_gen/valid.cstr/bindec_a.bindec_inst_a/Mmux_ENOUT<5>11
+   optimized to 0
+LUT4
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.nativ
+e_blk_mem_gen/valid.cstr/bindec_a.bindec_inst_a/Mmux_ENOUT<6>11
+   optimized to 0
+LUT4
+		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
+nvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.nativ
+e_blk_mem_gen/valid.cstr/bindec_a.bindec_inst_a/Mmux_ENOUT<7>11
+   optimized to 0
 GND 		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/XST_GND
 VCC 		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/XST_VCC
 GND 		XST_GND
@@ -6379,9 +8817,8 @@ Section 6 - IOB Properties
 |                                    |                  |           |                      | Term  | Strength | Rate |              |          | Delay    |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------+
 | CLOCK                              | IOB              | INPUT     | LVCMOS33             |       |          |      |              |          |          |
-| COUNT_CLK_N                        | IOBS             | OUTPUT    | LVDS_33              |       |          |      |              |          |          |
-| COUNT_CLK_P                        | IOBM             | OUTPUT    | LVDS_33              |       |          |      |              |          |          |
-| DEBUG_PIN                          | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| COUNT_CLK_N                        | IOBM             | OUTPUT    | LVDS_33              |       |          |      | ODDR         |          |          |
+| COUNT_CLK_P                        | IOBS             | OUTPUT    | LVDS_33              |       |          |      |              |          |          |
 | GPIFII_ADDR<0>                     | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | GPIFII_ADDR<1>                     | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | GPIFII_ADDR<2>                     | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
@@ -6428,8 +8865,18 @@ Section 6 - IOB Properties
 | GPIFII_SLOE_N                      | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | GPIFII_SLRD_N                      | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | GPIFII_SLWR_N                      | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| GPIO1                              | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| GPIO2                              | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| GPIO3                              | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| GPIO4                              | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | RESET                              | IOB              | INPUT     | LVCMOS33             |       |          |      |              |          |          |
 | RX                                 | IOB              | INPUT     | LVCMOS33             |       |          |      |              |          |          |
+| SHUTDOWN_VDA                       | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| SHUTDOWN_VDD                       | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| SPI_ADC_CLK                        | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| SPI_ADC_CS                         | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| SPI_ADC_MISO                       | IOB              | INPUT     | LVCMOS33             |       |          |      |              |          |          |
+| SPI_ADC_MOSI                       | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | SPI_DAC_A_SYNC                     | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | SPI_DAC_B_SYNC                     | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | SPI_DAC_SCK                        | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
@@ -6437,11 +8884,12 @@ Section 6 - IOB Properties
 | SPI_SCK                            | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | SPI_SDA                            | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | SPI_SEN                            | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
-| SYNC_CLOCK                         | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| SRX_N                              | IOBM             | OUTPUT    | LVDS_33              |       |          |      | ODDR         |          |          |
+| SRX_P                              | IOBS             | OUTPUT    | LVDS_33              |       |          |      |              |          |          |
 | TX                                 | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
-| d_adc_shr_shs                      | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | d_adr                              | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | d_ads                              | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| d_col_vln_sh                       | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | d_comp_bias_sh                     | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | d_comp_dyn_pon                     | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | d_count_en                         | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
@@ -6459,6 +8907,17 @@ Section 6 - IOB Properties
 | d_ref_vref_ramp_ota_dyn_pon        | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | d_ref_vref_ramp_rst                | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | d_ref_vref_sh                      | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| d_row_addr<0>                      | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| d_row_addr<1>                      | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| d_row_addr<2>                      | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| d_row_addr<3>                      | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| d_row_addr<4>                      | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| d_row_addr<5>                      | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| d_row_addr<6>                      | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| d_row_addr<7>                      | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| d_row_rs                           | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| d_row_rst                          | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
+| d_row_tx                           | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | d_shr                              | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | d_shs                              | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 +---------------------------------------------------------------------------------------------------------------------------------------------------------+

@@ -14,6 +14,9 @@ entity FX3_SLAVE is
 	Port (	CLOCK : in  STD_LOGIC;
 	       RESET : in  STD_LOGIC;
 	       LED   : out STD_LOGIC;
+	       FVAL_IN : in STD_LOGIC;
+	       LVAL_IN : in STD_LOGIC;
+	       DATA_IN : in STD_LOGIC_VECTOR(15 downto 0);
 	       -- FX3 GPIFII Interface
 	       GPIFII_PCLK	:		out   std_logic;			-- fx3 interface clock
 	       GPIFII_D		:		inout std_logic_vector(31 downto 0);	-- fx3 data bus
@@ -34,7 +37,7 @@ architecture Behavioral of FX3_SLAVE is
 
 	component FX3_SLAVE_IF is
 		generic (
-				G_WRDAT_W:		    positive:= 16);		-- FIFO WRDAT width
+			     G_WRDAT_W:		    positive:= 16);		-- FIFO WRDAT width
 		port ( 
 			     -- system signals
 			     RESET:			 in    std_logic;
@@ -66,11 +69,11 @@ architecture Behavioral of FX3_SLAVE is
 
 	component IMAGE_OUT is
 		generic (
-				G_CLK_PERIOD_PS:	    integer:=10000;				 -- clock period in picoseconds
-				G_DATA_WIDTH:		    integer:=16;				 -- number of DATA_IN bits
-				G_SENSOR_ID:		    std_logic_vector(7 downto 0):=x"00";	 -- sensor id
-				G_HW_ID:		    std_logic_vector(7 downto 0):=x"00";	 -- hardware id
-				G_FW_VERS:		    std_logic_vector(7 downto 0):=x"00");	 -- fpga firmware version
+			     G_CLK_PERIOD_PS:	    integer:=10000;				 -- clock period in picoseconds
+			     G_DATA_WIDTH:		    integer:=16;				 -- number of DATA_IN bits
+			     G_SENSOR_ID:		    std_logic_vector(7 downto 0):=x"00";	 -- sensor id
+			     G_HW_ID:		    std_logic_vector(7 downto 0):=x"00";	 -- hardware id
+			     G_FW_VERS:		    std_logic_vector(7 downto 0):=x"00");	 -- fpga firmware version
 		port (
 			     -- system signals
 			     RESET:			 in  std_logic;					 -- asynchronous reset
@@ -95,13 +98,11 @@ architecture Behavioral of FX3_SLAVE is
 	signal		     TX_FIFO_WREN_O:		 std_logic;					 -- tx fifo write enable
 	signal		     TX_FIFO_WRDAT_O:		 std_logic_vector(31 downto 0);			 -- tx fifo write data
 
-	signal			FVAL_IN_SIG:		std_logic;
-	signal			LVAL_IN_SIG:		std_logic;
 begin
 
 	FX3_SLAVE_INST: FX3_SLAVE_IF
 	generic map (
-			    G_WRDAT_W	=> 32)								 -- FIFO WRDAT width
+			 G_WRDAT_W	=> 32)								 -- FIFO WRDAT width
 	port map (
 			 -- system signals
 			 RESET			=> RESET,
@@ -147,8 +148,8 @@ begin
 			 NO_COLS		  => "0000010000000000",
 			 NO_ROWS		  => "0000000010000000",
 			 -- image data interface
-			 FVAL_IN		  => FVAL_IN_SIG, 
-			 LVAL_IN		  => LVAL_IN_SIG,
+			 FVAL_IN		  => FVAL_IN, 
+			 LVAL_IN		  => LVAL_IN,
 			 DATA_IN		  => "0101010101010101",
 			 DATA_IN_EN		  => '1',
 			 -- fifo write interface
@@ -157,22 +158,6 @@ begin
 			 TEST			  => open);
 
 	GPIFII_PCLK <= CLOCK;
-
-	process (RESET, CLOCK) 
-	begin
-
-		if RESET = '1' then
-			LED <= '0';
-			FVAL_IN_SIG <= '0';
-			LVAL_IN_SIG <= '0';
-		else
-			LED <= '1';
-			FVAL_IN_SIG <= '1';
-			LVAL_IN_SIG <= '1';
-
-		end if;
-
-	end process;
-
+        LED <= '0';
 end Behavioral;
 
