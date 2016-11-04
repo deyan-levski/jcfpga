@@ -475,7 +475,7 @@ begin
 	d_row_tx		<= '0';
 	d_col_vln_sh		<= '0';
 
-	FVAL			<= '0';
-	LVAL			<= '0';
+	FVAL			<= '1';
+	LVAL			<= d_digif_serial_rst;
 
 end Behavioral;
