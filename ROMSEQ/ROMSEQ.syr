@@ -12,7 +12,7 @@ Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.05 secs
+Total CPU time to Xst completion: 0.04 secs
  
 --> 
 Reading design: ROMSEQ.prj
@@ -132,14 +132,23 @@ Elaborating entity <blockmem> (architecture <blockmem_a>) from library <work>.
 
 Synthesizing Unit <ROMSEQ>.
     Related source file is "/media/data/git/jcfpga/ROMSEQ/hdl/ROMSEQ.vhd".
+WARNING:Xst:647 - Input <ADDR> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
+    Found 32-bit register for signal <MEM_ADDR>.
+    Found 32-bit adder for signal <MEM_ADDR[31]_GND_6_o_add_0_OUT> created at line 68.
     Summary:
-	no macro.
+	inferred   1 Adder/Subtractor(s).
+	inferred  32 D-type flip-flop(s).
 Unit <ROMSEQ> synthesized.
 
 =========================================================================
 HDL Synthesis Report
 
-Found no macro
+Macro Statistics
+# Adders/Subtractors                                   : 1
+ 32-bit adder                                          : 1
+# Registers                                            : 1
+ 32-bit register                                       : 1
+
 =========================================================================
 
 =========================================================================
@@ -149,10 +158,17 @@ Found no macro
 Reading core <ipcore_dir/blockmem.ngc>.
 Loading core <blockmem> for timing and area information for instance <ROM0>.
 
+Synthesizing (advanced) Unit <ROMSEQ>.
+The following registers are absorbed into counter <MEM_ADDR>: 1 register on signal <MEM_ADDR>.
+Unit <ROMSEQ> synthesized (advanced).
+
 =========================================================================
 Advanced HDL Synthesis Report
 
-Found no macro
+Macro Statistics
+# Counters                                             : 1
+ 32-bit up counter                                     : 1
+
 =========================================================================
 
 =========================================================================
@@ -170,7 +186,10 @@ Final Macro Processing ...
 =========================================================================
 Final Register Report
 
-Found no macro
+Macro Statistics
+# Registers                                            : 32
+ Flip-Flops                                            : 32
+
 =========================================================================
 
 =========================================================================
@@ -192,20 +211,25 @@ Top Level Output File Name         : ROMSEQ.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 38
-#      GND                         : 1
+# BELS                             : 134
+#      GND                         : 2
+#      INV                         : 1
+#      LUT1                        : 30
 #      LUT2                        : 2
 #      LUT4                        : 32
 #      LUT6                        : 2
-#      VCC                         : 1
-# FlipFlops/Latches                : 6
+#      MUXCY                       : 31
+#      VCC                         : 2
+#      XORCY                       : 32
+# FlipFlops/Latches                : 38
+#      FDC                         : 32
 #      FDE                         : 6
 # RAMS                             : 33
 #      RAMB8BWER                   : 33
 # Clock Buffers                    : 1
 #      BUFGP                       : 1
-# IO Buffers                       : 66
-#      IBUF                        : 34
+# IO Buffers                       : 34
+#      IBUF                        : 2
 #      OBUF                        : 32
 
 Device utilization summary:
@@ -215,20 +239,20 @@ Selected Device : 6slx150fgg484-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:               6  out of  184304     0%  
- Number of Slice LUTs:                   36  out of  92152     0%  
-    Number used as Logic:                36  out of  92152     0%  
+ Number of Slice Registers:              38  out of  184304     0%  
+ Number of Slice LUTs:                   67  out of  92152     0%  
+    Number used as Logic:                67  out of  92152     0%  
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:     39
-   Number with an unused Flip Flop:      33  out of     39    84%  
-   Number with an unused LUT:             3  out of     39     7%  
-   Number of fully used LUT-FF pairs:     3  out of     39     7%  
-   Number of unique control sets:         1
+ Number of LUT Flip Flop pairs used:     74
+   Number with an unused Flip Flop:      36  out of     74    48%  
+   Number with an unused LUT:             7  out of     74     9%  
+   Number of fully used LUT-FF pairs:    31  out of     74    41%  
+   Number of unique control sets:         2
 
 IO Utilization: 
  Number of IOs:                          67
- Number of bonded IOBs:                  67  out of    338    19%  
+ Number of bonded IOBs:                  35  out of    338    10%  
 
 Specific Feature Utilization:
  Number of Block RAM/FIFO:               17  out of    268     6%  
@@ -256,7 +280,7 @@ Clock Information:
 -----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)                                                                                                                          | Load  |
 -----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------+-------+
-CLOCK                              | BUFGP                                                                                                                                          | 39    |
+CLOCK                              | BUFGP                                                                                                                                          | 71    |
 ROM0/N1                            | NONE(ROM0/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[32].ram.r/s6_init.ram/SP.SIMPLE_PRIM9.ram)| 32    |
 -----------------------------------+------------------------------------------------------------------------------------------------------------------------------------------------+-------+
 INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
@@ -269,8 +293,8 @@ Timing Summary:
 ---------------
 Speed Grade: -3
 
-   Minimum period: No path found
-   Minimum input arrival time before clock: 4.471ns
+   Minimum period: 3.710ns (Maximum Frequency: 269.548MHz)
+   Minimum input arrival time before clock: 3.843ns
    Maximum output required time after clock: 6.952ns
    Maximum combinational path delay: No path found
 
@@ -279,26 +303,49 @@ Timing Details:
 All values displayed in nanoseconds (ns)
 
 =========================================================================
-Timing constraint: Default OFFSET IN BEFORE for Clock 'CLOCK'
-  Total number of paths / destination ports: 556 / 512
+Timing constraint: Default period analysis for Clock 'CLOCK'
+  Clock period: 3.710ns (frequency: 269.548MHz)
+  Total number of paths / destination ports: 1010 / 504
 -------------------------------------------------------------------------
-Offset:              4.471ns (Levels of Logic = 4)
-  Source:            ADDR<11> (PAD)
+Delay:               3.710ns (Levels of Logic = 3)
+  Source:            MEM_ADDR_11 (FF)
   Destination:       ROM0/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_init.ram/SP.WIDE_PRIM9.ram (RAM)
+  Source Clock:      CLOCK rising
   Destination Clock: CLOCK rising
 
-  Data Path: ADDR<11> to ROM0/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_init.ram/SP.WIDE_PRIM9.ram
+  Data Path: MEM_ADDR_11 to ROM0/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_init.ram/SP.WIDE_PRIM9.ram
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     IBUF:I->O            34   1.222   1.425  ADDR_11_IBUF (ADDR_11_IBUF)
+     FDC:C->Q             35   0.447   1.439  MEM_ADDR_11 (MEM_ADDR_11)
      begin scope: 'ROM0:addra<11>'
      LUT2:I0->O            1   0.203   0.580  U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/bindec_a.bindec_inst_a/Mmux_ENOUT<32>1_SW0 (N2)
      LUT6:I5->O            2   0.205   0.616  U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/bindec_a.bindec_inst_a/Mmux_ENOUT<32>1 (U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ena_array<32>)
      RAMB8BWER:ENAWREN         0.220          U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_init.ram/SP.WIDE_PRIM9.ram
     ----------------------------------------
-    Total                      4.471ns (1.850ns logic, 2.621ns route)
-                                       (41.4% logic, 58.6% route)
+    Total                      3.710ns (1.075ns logic, 2.635ns route)
+                                       (29.0% logic, 71.0% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'CLOCK'
+  Total number of paths / destination ports: 106 / 106
+-------------------------------------------------------------------------
+Offset:              3.843ns (Levels of Logic = 3)
+  Source:            EN (PAD)
+  Destination:       ROM0/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[32].ram.r/s6_init.ram/SP.SIMPLE_PRIM9.ram (RAM)
+  Destination Clock: CLOCK rising
+
+  Data Path: EN to ROM0/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[32].ram.r/s6_init.ram/SP.SIMPLE_PRIM9.ram
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O             8   1.222   0.907  EN_IBUF (EN_IBUF)
+     begin scope: 'ROM0:ena'
+     LUT2:I0->O           32   0.203   1.291  U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/out21 (U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.ram_ena)
+     RAMB8BWER:ENAWREN         0.220          U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[32].ram.r/s6_init.ram/SP.SIMPLE_PRIM9.ram
+    ----------------------------------------
+    Total                      3.843ns (1.645ns logic, 2.198ns route)
+                                       (42.8% logic, 57.2% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK'
@@ -327,18 +374,26 @@ Offset:              6.952ns (Levels of Logic = 4)
 Cross Clock Domains Report:
 --------------------------
 
+Clock to Setup on destination clock CLOCK
+---------------+---------+---------+---------+---------+
+               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+---------------+---------+---------+---------+---------+
+CLOCK          |    3.710|         |         |         |
+---------------+---------+---------+---------+---------+
+
 =========================================================================
 
 
-Total REAL time to Xst completion: 5.00 secs
-Total CPU time to Xst completion: 4.98 secs
+Total REAL time to Xst completion: 6.00 secs
+Total CPU time to Xst completion: 5.25 secs
  
 --> 
 
 
-Total memory usage is 391368 kilobytes
+Total memory usage is 400832 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    0 (   0 filtered)
+Number of warnings :    1 (   0 filtered)
 Number of infos    :    1 (   0 filtered)
 

@@ -30,10 +30,10 @@ int main(int argc, char **argv)
 
     xsi_register_min_prec_unit(-12);
     ieee_p_2592010699_init();
-    unisim_p_0947159679_init();
-    std_textio_init();
     ieee_p_3499444699_init();
     ieee_p_3620187407_init();
+    unisim_p_0947159679_init();
+    std_textio_init();
     ieee_p_3564397177_init();
     xilinxcorelib_a_3492177565_2959432447_init();
     xilinxcorelib_a_2253701716_2959432447_init();

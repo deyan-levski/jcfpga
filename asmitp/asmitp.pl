@@ -1,24 +1,32 @@
 #!/usr/bin/perl
 #==============================================================================
 #
-# asmitp.pl: ADC Testchip instruction decoder
+# asmitp.pl: ADC Instruction Decoder for FPGA ROM
 #
 # DESCRIPTION
 #
 #   Usage: asmitp.pl <file> [options]
 #
-#   Example: ./asmitp.pl instructions.asm
+#   Example: ./asmitp.pl program.asm -o machinecode.bin
+#
+#   Program file must always begin with the START command.
+#   Instruction list is found under the parse_line subroutine.
 #
 # AUTHOR
-#   
+#   Deyan Levski, deyan.levski@eng.ox.ac.uk
+#
 #==============================================================================
-# Version: A, 2014-01-31
+# Version: A, 2016-11-05
 #==============================================================================
 use strict;
 use warnings;
 use Getopt::Long;
 use File::Basename;
 use Text::Wrap;
+use Fcntl qw(SEEK_END);
+use Fcntl qw(SEEK_CUR);
+use Fcntl qw(SEEK_SET);
+
 
 #=============
 # Subroutines
@@ -33,7 +41,7 @@ Usage: $0 <file> [--output=<file>] [--help]
 
 Options:
     <file>             Input netlist file name.
-    -o|--output <file> Output netlist file (default same as "input file name".asm[.hex])
+    -o|--output <file> Output netlist file (default same as "input file name".bin[.asm])
     -h|--help          Print this help message
 
 EOM
@@ -57,21 +65,52 @@ sub get_line
 sub parse_line
 {
 # INSTRUCTION TABLE
-# Bit Positions from Left to Right
-# Actual posisiton is +1 Right
-# E.g. bit 5 in this table corresponds to bit 6
+# Bit Positions from Left to Right 0 = MSB
 	#
-	my $SHR_POS = 5;
-	my $SHS_POS = 6;
+	my $ROW_00 = 0;
+	my $ROW_01 = 1;
+	my $ROW_02 = 2;
+	my $ROW_03 = 3;
+	my $ROW_04 = 4;
 
+	my $SHX_00 = 5;
+	my $SHX_01 = 6;
+	my $ADX_00 = 7;
+	my $ADX_01 = 8;
+
+	my $COM_00 = 9;
+	my $COM_01 = 10;
+
+	my $CNT_00 = 11;
+	my $CNT_01 = 12;
+	my $CNT_02 = 13;
+	my $CNT_03 = 14;
+	my $CNT_04 = 15;
+	my $CNT_05 = 16;
+	my $CNT_06 = 17;
+	my $CNT_07 = 18;
+	my $CNT_08 = 19;
+
+	my $MEM_00 = 20;
+
+	my $REF_00 = 21;
+	my $REF_01 = 22;
+	my $REF_02 = 23;
+	my $REF_03 = 24;
+
+	my $SER_00 = 25;
+
+##################################################
 
 	my $topars_line = $_[0];
 	my $lst_line = $_[1];
 	my $ram_width = $_[2];
 	my $parsd_line = '';
+	my $prnt_flag = '';
 
 	if ($topars_line =~ /^NOP$|^NOP\s*$/) {
 		$parsd_line = $lst_line;
+		$prnt_flag = 1;
 	}
 	elsif ($topars_line =~ /^NOP\s*(\d+)\s*$/) {
 		my $ops = $1;
@@ -80,36 +119,157 @@ sub parse_line
 				$parsd_line = $lst_line;
 			}
 			else {
-				$parsd_line = $parsd_line . "\n" . $lst_line;
+				$parsd_line = $parsd_line . ",\n" . $lst_line;
 			}
 		}
+		$prnt_flag = 1;
 	}
-	elsif ($topars_line =~ /^START$|^START\s*$/) {
+	elsif ($topars_line =~ /^START$|^START\s*.*$/) {
 		$parsd_line = "0" x $ram_width;
 	}
 
-	elsif ($topars_line =~ /^MOV.*SHR\s*(\d+)\s*$/) {
-		substr($lst_line, $SHR_POS, 1, $1);
+	elsif ($topars_line =~ /^MOV\s*ROW\s*0x00\s*(\d+)\s*.*$/) {
+		substr($lst_line, $ROW_00, 1, $1);
 		$parsd_line = $lst_line;
+		$prnt_flag = 1;
 	}
-	elsif ($topars_line =~ /^MOV.*SHS\s*(\d+)\s*$/) {
-		substr($lst_line, $SHS_POS, 1, $1);
+	elsif ($topars_line =~ /^MOV\s*ROW\s*0x01\s*(\d+)\s*.*$/) {
+		substr($lst_line, $ROW_01, 1, $1);
 		$parsd_line = $lst_line;
+		$prnt_flag = 1;
 	}
-	elsif ($topars_line =~ /^LOAD.*SPE2\s*(\d+)\s*(\d+)\s*(\d+)\s*(\d+)\s*$/) {
+	elsif ($topars_line =~ /^MOV\s*ROW\s*0x02\s*(\d+)\s*.*$/) {
+		substr($lst_line, $ROW_02, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*ROW\s*0x03\s*(\d+)\s*.*$/) {
+		substr($lst_line, $ROW_03, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*ROW\s*0x04\s*(\d+)\s*.*$/) {
+		substr($lst_line, $ROW_04, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*SHX\s*0x00\s*(\d+)\s*.*$/) {
+		substr($lst_line, $SHX_00, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*SHX\s*0x01\s*(\d+)\s*.*$/) {
+		substr($lst_line, $SHX_01, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*ADX\s*0x00\s*(\d+)\s*.*$/) {
+		substr($lst_line, $ADX_00, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*ADX\s*0x01\s*(\d+)\s*.*$/) {
+		substr($lst_line, $ADX_01, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*COM\s*0x00\s*(\d+)\s*.*$/) {
+		substr($lst_line, $COM_00, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*COM\s*0x01\s*(\d+)\s*.*$/) {
+		substr($lst_line, $COM_01, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*CNT\s*0x00\s*(\d+)\s*.*$/) {
+		substr($lst_line, $CNT_00, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*CNT\s*0x01\s*(\d+)\s*.*$/) {
+		substr($lst_line, $CNT_01, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*CNT\s*0x02\s*(\d+)\s*.*$/) {
+		substr($lst_line, $CNT_02, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*CNT\s*0x03\s*(\d+)\s*.*$/) {
+		substr($lst_line, $CNT_03, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*CNT\s*0x04\s*(\d+)\s*.*$/) {
+		substr($lst_line, $CNT_04, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*CNT\s*0x05\s*(\d+)\s*.*$/) {
+		substr($lst_line, $CNT_05, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*CNT\s*0x06\s*(\d+)\s*.*$/) {
+		substr($lst_line, $CNT_06, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*CNT\s*0x07\s*(\d+)\s*.*$/) {
+		substr($lst_line, $CNT_07, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*CNT\s*0x08\s*(\d+)\s*.*$/) {
+		substr($lst_line, $CNT_08, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*MEM\s*0x00\s*(\d+)\s*.*$/) {
+		substr($lst_line, $MEM_00, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*REF\s*0x00\s*(\d+)\s*.*$/) {
+		substr($lst_line, $REF_00, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*REF\s*0x01\s*(\d+)\s*.*$/) {
+		substr($lst_line, $REF_01, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*REF\s*0x02\s*(\d+)\s*.*$/) {
+		substr($lst_line, $REF_02, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*REF\s*0x03\s*(\d+)\s*.*$/) {
+		substr($lst_line, $REF_03, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^MOV\s*SER\s*0x00\s*(\d+)\s*.*$/) {
+		substr($lst_line, $SER_00, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = 1;
+	}
+	elsif ($topars_line =~ /^LOAD\s*SPE2\s*(\d+)\s*(\d+)\s*(\d+)\s*(\d+)\s*.*$/) {
 		substr($lst_line, $1, 1, $2);
 		substr($lst_line, $3, 1, $4);
 		$parsd_line = $lst_line;
+		$prnt_flag = 1;
 	}
-
-
 	else{
+		$prnt_flag = '0';
+		$parsd_line = $lst_line;
 	}
 
-
-
-	return $parsd_line;
-
+	return ($parsd_line, $prnt_flag);
 }
 
 # Print line and fold if too long
@@ -155,11 +315,11 @@ if ($help_flag || $#ARGV lt 0)
 ($ifname, $ifpath, $ifsuffix) = fileparse($ARGV[0],'.asm') or exit 1;
 if ($ofile_flag)
 {
-	($ofname, $ofpath, $ofsuffix) = fileparse($ofile_flag,'.hex') or exit 1;
+	($ofname, $ofpath, $ofsuffix) = fileparse($ofile_flag,'.bin') or exit 1;
 }
 else
 {
-	$ofname = $ifname . '.hex';
+	$ofname = $ifname . '.bin';
 	$ofpath = $ifpath;
 	$ofsuffix = $ifsuffix;
 }
@@ -173,15 +333,51 @@ my $prev_line = <$ifile>;
 my $line = '';
 my $parsd_line = '';
 my $lst_line = '';
+my $prnt_flag = '';
+
+# Prepare header
+print_line($ofile,"memory_initialization_radix=2;");
+print_line($ofile,"memory_initialization_vector=");
 
 while (defined($line = get_line($ifile, \$prev_line)))
-{
-	$parsd_line = parse_line($line,$lst_line,$ram_width);
+{ 
+	($parsd_line, $prnt_flag) = parse_line($line,$lst_line,$ram_width);
 	$lst_line = substr($parsd_line, $ram_width*(-1));
-	print_line($ofile,$parsd_line);
+	if ($prnt_flag =~ /1/){
+		print_line($ofile,$parsd_line . ",");
+	}
 }
 
+seek $ofile, -2, SEEK_END; # replaces last , character with ;
+print $ofile ";\n";
 
 # Close files
 close($ifile);
 close($ofile);
+
+# Open machine code and read number of extra lines over ram depth
+# Reopening files, for sake of code flexibility
+open(my $ofilerd, "<" . $ofpath . $ofname . $ofsuffix) or die $!;
+while (<$ofilerd>) {}
+my $cut_lines = $. - $ram_depth - 2; # lines to be chopped (-2 due to header)
+seek $ofilerd, 0, SEEK_SET;
+
+open(my $ofilechp, ">" . $ofpath . $ofname . $ofsuffix . ".chp") or die $!;
+
+my $index = 0; # So we can loop over the buffer
+my @buffer;
+my $counter = 0;
+while (<$ofilerd>) {
+    if ($counter++ >= $cut_lines) {
+        print $ofilechp $buffer[$index];
+    }
+    $buffer[$index++] = $_;
+    $index = 0 if $cut_lines == $index;
+}
+seek $ofilechp, -2, SEEK_END; # replaces last , character with ;
+print $ofilechp ";\n";
+close($ofilechp);
+
+# Overwrite old file
+use File::Copy;
+move($ofpath . $ofname . $ofsuffix . ".chp", $ofpath . $ofname . $ofsuffix) or die $!;
