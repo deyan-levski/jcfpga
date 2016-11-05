@@ -57,29 +57,55 @@ sub get_line
 sub parse_line
 {
 # INSTRUCTION TABLE
-
-
-
+# Bit Positions from Left to Right
+# Actual posisiton is +1 Right
+# E.g. bit 5 in this table corresponds to bit 6
+	#
+	my $SHR_POS = 5;
+	my $SHS_POS = 6;
 
 
 	my $topars_line = $_[0];
+	my $lst_line = $_[1];
+	my $ram_width = $_[2];
 	my $parsd_line = '';
 
 	if ($topars_line =~ /^NOP$|^NOP\s*$/) {
-		$parsd_line = "00000000000000000000000000000000";
+		$parsd_line = $lst_line;
 	}
 	elsif ($topars_line =~ /^NOP\s*(\d+)\s*$/) {
 		my $ops = $1;
 		for (my $i=0; $i < $ops; $i++) {
 			if (length($parsd_line) == 0) {
-				$parsd_line = "00000000000000000000000000000000";
+				$parsd_line = $lst_line;
 			}
 			else {
-				$parsd_line = $parsd_line . "\n" . "00000000000000000000000000000000";
+				$parsd_line = $parsd_line . "\n" . $lst_line;
 			}
 		}
-
 	}
+	elsif ($topars_line =~ /^START$|^START\s*$/) {
+		$parsd_line = "0" x $ram_width;
+	}
+
+	elsif ($topars_line =~ /^MOV.*SHR\s*(\d+)\s*$/) {
+		substr($lst_line, $SHR_POS, 1, $1);
+		$parsd_line = $lst_line;
+	}
+	elsif ($topars_line =~ /^MOV.*SHS\s*(\d+)\s*$/) {
+		substr($lst_line, $SHS_POS, 1, $1);
+		$parsd_line = $lst_line;
+	}
+	elsif ($topars_line =~ /^LOAD.*SPE2\s*(\d+)\s*(\d+)\s*(\d+)\s*(\d+)\s*$/) {
+		substr($lst_line, $1, 1, $2);
+		substr($lst_line, $3, 1, $4);
+		$parsd_line = $lst_line;
+	}
+
+
+	else{
+	}
+
 
 
 	return $parsd_line;
@@ -112,6 +138,9 @@ my $ofname = '';
 my $ofpath = '';
 my $ofsuffix = '';
 
+my $ram_width = 32;
+my $ram_depth = 8196;
+
 # Parse command line arguments
 GetOptions('h|help'     => \$help_flag,
 	'o|output=s' => \$ofile_flag)
@@ -143,10 +172,12 @@ open(my $ofile, ">" . $ofpath . $ofname . $ofsuffix) or die $!;
 my $prev_line = <$ifile>;
 my $line = '';
 my $parsd_line = '';
+my $lst_line = '';
 
 while (defined($line = get_line($ifile, \$prev_line)))
 {
-	$parsd_line = &parse_line($line);
+	$parsd_line = parse_line($line,$lst_line,$ram_width);
+	$lst_line = substr($parsd_line, $ram_width*(-1));
 	print_line($ofile,$parsd_line);
 }
 
