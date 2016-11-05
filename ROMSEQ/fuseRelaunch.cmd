@@ -1,0 +1,1 @@
+-intstyle "ise" -incremental -lib "secureip" -o "/media/data/git/jcfpga/ROMSEQ/ROMSEQ_isim_beh.exe" -prj "/media/data/git/jcfpga/ROMSEQ/ROMSEQ_beh.prj" "work.ROMSEQ" 
