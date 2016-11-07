@@ -37,13 +37,15 @@
 ;| LOAD PAR — load follow-up instructions to buf register |
 ;| SET PAR  — set the loaded in buf register to output    |
 ;| START    — initialize output register to 0x0000        |
+;| NOP      — NOP operation (stall) one cycle             |
+;| NOP n    — NOP operation (stall) n cycles              |
 ;| FVAL 0x00 1/0 — FVAL_SEQ                               |
 ;| LVAL 0x00 1/0 — LVAL_SEQ                               |
 ;|--------------------------------------------------------|
 ;|-+-|
 ;
 
-START
+START	
 ; initialize startup signals
 LOAD PAR
 MOV REF 0x03 1	; ota_dyn_pon always @ '1'
@@ -53,10 +55,8 @@ MOV CNT 0x05 1	; count_inc_one '1'
 MOV CNT 0x08 1	; count_lsb_clk '1'
 MOV FVAL 0x00 1 ; Tie FVAL '1'
 MOV LVAL 0x00 1 ; Tie LVAL '1'
-;SET PAR
 
 ; references and shr sampling
-;LOAD PAR
 MOV ADX 0x00 1	; d_adr
 MOV SHX 0x00 1	; d_shr
 MOV REF 0x01 1	; d_ref_vref_sh
@@ -64,14 +64,15 @@ MOV REF 0x00 1	; d_ref_vref_ramp_rst
 MOV COM 0x00 1  ; d_comp_bias_sh
 MOV SER 0x00 1	; d_digif_serial_rst
 SET PAR
-; halt 320 ns — phase 1 in vref_ramp
-NOP 40		
+
+NOP 40		; halt 320 ns — phase 1 in vref_ramp
+
 LOAD PAR
 MOV REF 0x01 0	; d_ref_vref_sh
 MOV REF 0x02 1	; clamp on
 SET PAR
-; halt 80 ns
-NOP 10		
+
+NOP 10		; halt 80 ns
 MOV REF 0x02 0	; clamp off
 NOP 2
 
@@ -95,10 +96,9 @@ MOV CNT 0x05 1
 SET PAR
 NOP
 
-; halt 1028 ns — wait for ramp buffer to settle
-NOP 128
+NOP 128 	; halt 1028 ns — wait for ramp buffer to settle
 
-MOV SHX 0x00 0 ; complete shr sampling
+MOV SHX 0x00 0	; complete shr sampling
 NOP 2
 
 ; start count & ramp current
@@ -107,15 +107,14 @@ MOV REF 0x00 0
 MOV CNT 0x00 1
 SET PAR
 
-; halt 1024 ns (ramp slew time)
-NOP 128
+NOP 128 	; halt 1024 ns (ramp slew time)
+
 MOV CNT 0x00 0	; stop counter
 MOV REF 0x00 1	; stop ramp current
 
 NOP 2
 
 ; transfer johnsons to lsb counter
-
 MOV CNT 0x06 1	; open jc_shift_en
 NOP 2
 MOV CNT 0x07 1	; open lsb_en
@@ -206,16 +205,17 @@ MOV REF 0x00 1	; d_ref_vref_ramp_rst
 MOV COM 0x00 1  ; d_comp_bias_sh
 MOV SER 0x00 1	; d_digif_serial_rst
 SET PAR
-; halt 320 ns — phase 1 in vref_ramp
-NOP 40		
+
+NOP 40		; halt 320 ns — phase 1 in vref_ramp
+
 LOAD PAR
 MOV REF 0x01 0	; d_ref_vref_sh
 MOV REF 0x02 1	; clamp on
 SET PAR
-; halt 80 ns
-NOP 10		
+NOP 10		; halt 80 ns
 MOV REF 0x02 0	; clamp off
 NOP 2
+
 ; reset counter
 LOAD PAR
 MOV CNT 0x04 0
@@ -230,10 +230,9 @@ MOV CNT 0x05 1
 SET PAR
 NOP
 
-; halt 1028 ns — wait for ramp buffer to settle
-NOP 128
+NOP 128 	; halt 1028 ns — wait for ramp buffer to settle
 
-MOV SHX 0x01 0 ; complete shs sampling
+MOV SHX 0x01 0	; complete shs sampling
 NOP 2
 
 ; start count & ramp current
@@ -242,8 +241,8 @@ MOV REF 0x00 0
 MOV CNT 0x00 1
 SET PAR
 
-; halt 1024 ns (ramp slew time)
-NOP 128
+NOP 128 	; halt 1024 ns (ramp slew time)
+
 MOV CNT 0x00 0	; stop counter
 MOV REF 0x00 1	; stop ramp current
 
@@ -309,5 +308,5 @@ NOP 4
 
 MOV ADX 0x01 0	; switch off d_ads
 
-NOP 1024
+NOP 1024	; fill extra ROM /w NOP
 
