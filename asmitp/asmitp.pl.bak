@@ -75,8 +75,8 @@ sub parse_line
 
 	my $SHX_00 = 5;
 	my $SHX_01 = 6;
-	my $ADX_00 = 7;
-	my $ADX_01 = 8;
+	my $ADX_01 = 7; # swp err
+	my $ADX_00 = 8; # swp err
 
 	my $COM_00 = 9;
 	my $COM_01 = 10;
@@ -109,15 +109,11 @@ sub parse_line
 	my $prnt_flag = '';
 	my $ld_flag = $_[3]; # load flag, contrlled by LD PAR & LD SET
 
-	if ($topars_line =~ /^NOP$|^NOP\s*.*$/) {
+	if ($topars_line =~ /^NOP$|^NOP\s*$/) {
 		$parsd_line = $lst_line;
 		$prnt_flag = $ld_flag;
-	print $topars_line . "\n";
-
 	}
-	elsif ($topars_line =~ /^NOP\s*(\d+)\s*.*$/) {
-	print $topars_line . "\n";
-
+	elsif ($topars_line =~ /^NOP\s*(\d+)\s*$/) {
 		my $ops = $1;
 		for (my $i=0; $i < $ops; $i++) {
 			if (length($parsd_line) == 0) {

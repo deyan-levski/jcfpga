@@ -10,23 +10,23 @@ Target Device  : xc6slx150
 Target Package : fgg484
 Target Speed   : -3
 Mapper Version : spartan6 -- $Revision: 1.55 $
-Mapped Date    : Sun Nov  6 12:05:43 2016
+Mapped Date    : Mon Nov  7 13:45:56 2016
 
 Design Summary
 --------------
 Number of errors:      0
-Number of warnings:  163
+Number of warnings:  162
 Slice Logic Utilization:
-  Number of Slice Registers:                 1,200 out of 184,304    1%
-    Number used as Flip Flops:               1,072
+  Number of Slice Registers:                 1,193 out of 184,304    1%
+    Number used as Flip Flops:               1,065
     Number used as Latches:                    128
     Number used as Latch-thrus:                  0
     Number used as AND/OR logics:                0
-  Number of Slice LUTs:                        782 out of  92,152    1%
-    Number used as logic:                      724 out of  92,152    1%
-      Number using O6 output only:             365
-      Number using O5 output only:             113
-      Number using O5 and O6:                  246
+  Number of Slice LUTs:                        783 out of  92,152    1%
+    Number used as logic:                      709 out of  92,152    1%
+      Number using O6 output only:             362
+      Number using O5 output only:             121
+      Number using O5 and O6:                  226
       Number used as ROM:                        0
     Number used as Memory:                       2 out of  21,680    1%
       Number used as Dual Port RAM:              0
@@ -35,21 +35,21 @@ Slice Logic Utilization:
         Number using O6 output only:             2
         Number using O5 output only:             0
         Number using O5 and O6:                  0
-    Number used exclusively as route-thrus:     56
-      Number with same-slice register load:     47
-      Number with same-slice carry load:         9
+    Number used exclusively as route-thrus:     72
+      Number with same-slice register load:     62
+      Number with same-slice carry load:        10
       Number with other load:                    0
 
 Slice Logic Distribution:
-  Number of occupied Slices:                   710 out of  23,038    3%
-  Number of MUXCYs used:                       184 out of  46,076    1%
-  Number of LUT Flip Flop pairs used:        1,368
-    Number with an unused Flip Flop:           283 out of   1,368   20%
-    Number with an unused LUT:                 586 out of   1,368   42%
-    Number of fully used LUT-FF pairs:         499 out of   1,368   36%
-    Number of unique control sets:             413
+  Number of occupied Slices:                   647 out of  23,038    2%
+  Number of MUXCYs used:                       196 out of  46,076    1%
+  Number of LUT Flip Flop pairs used:        1,321
+    Number with an unused Flip Flop:           232 out of   1,321   17%
+    Number with an unused LUT:                 538 out of   1,321   40%
+    Number of fully used LUT-FF pairs:         551 out of   1,321   41%
+    Number of unique control sets:             411
     Number of slice register sites lost
-      to control set restrictions:           2,758 out of 184,304    1%
+      to control set restrictions:           2,757 out of 184,304    1%
 
   A LUT Flip Flop pair for this architecture represents one LUT paired with
   one Flip Flop within a slice.  A control set is a unique combination of
@@ -65,8 +65,8 @@ IO Utilization:
     IOB Slave Pads:                              2
 
 Specific Feature Utilization:
-  Number of RAMB16BWERs:                        29 out of     268   10%
-  Number of RAMB8BWERs:                         28 out of     536    5%
+  Number of RAMB16BWERs:                        31 out of     268   11%
+  Number of RAMB8BWERs:                          0 out of     536    0%
   Number of BUFIO2/BUFIO2_2CLKs:                 1 out of      32    3%
     Number used as BUFIO2s:                      1
     Number used as BUFIO2_2CLKs:                 0
@@ -97,11 +97,11 @@ Specific Feature Utilization:
   Number of STARTUPs:                            0 out of       1    0%
   Number of SUSPEND_SYNCs:                       0 out of       1    0%
 
-Average Fanout of Non-Clock Nets:                3.01
+Average Fanout of Non-Clock Nets:                2.87
 
-Peak Memory Usage:  970 MB
-Total REAL time to MAP completion:  39 secs 
-Total CPU time to MAP completion:   39 secs 
+Peak Memory Usage:  969 MB
+Total REAL time to MAP completion:  29 secs 
+Total CPU time to MAP completion:   27 secs 
 
 Table of Contents
 -----------------
@@ -209,8 +209,8 @@ WARNING:Place:1137 - This design is not guaranteed to be routable! This design
    contains a global buffer instance, <PLL_250_INST/clkout1_buf>, driving the
    net, <CLOCK_100>, that is driving the following (first 30) non-clock load
    pins.
-   < PIN: GPIO21_INV_0.A6; >
    < PIN: GPIFII_PCLK.O; >
+   < PIN: GPIO21_INV_0.A6; >
    This is not a recommended design practice in Spartan-6 due to limitations in
    the global routing that may cause excessive delay, skew or unroutable
    situations.  It is recommended to only use a BUFG resource to drive clock
@@ -220,23 +220,43 @@ WARNING:Place:1137 - This design is not guaranteed to be routable! This design
    <PLL_250_INST/clkout1_buf.O> allowing your design to continue. This
    constraint disables all clock placer rules related to the specified COMP.PIN.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/Mcount_spiclkgen.sck_counter_val is sourced
-   by a combinatorial pin. This is not good design practice. Use the CE pin to
-   control the loading of data into the flip-flop.
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[72]_AND_48_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[64]_AND_64_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[56]_AND_80_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[88]_AND_16_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[91]_AND_10_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[92]_AND_8_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
    SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[10]_AND_235_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[11]_AND_233_o is
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[73]_AND_46_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[12]_AND_231_o is
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[65]_AND_62_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[20]_AND_215_o is
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[93]_AND_6_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
@@ -244,11 +264,7 @@ WARNING:PhysDesignRules:372 - Gated clock. Clock net
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[21]_AND_213_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[14]_AND_227_o is
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[94]_AND_4_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
@@ -256,7 +272,243 @@ WARNING:PhysDesignRules:372 - Gated clock. Clock net
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[30]_AND_195_o is
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[1]_AND_253_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[89]_AND_14_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[10]_AND_172_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[95]_AND_2_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[25]_AND_205_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[17]_AND_221_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[4]_AND_247_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[13]_AND_166_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[30]_AND_132_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[1]_AND_190_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[47]_AND_98_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[33]_AND_126_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[25]_AND_142_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[4]_AND_184_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[50]_AND_92_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[28]_AND_136_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[45]_AND_102_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[7]_AND_178_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[82]_AND_28_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[74]_AND_44_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[66]_AND_60_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[48]_AND_96_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[51]_AND_90_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[83]_AND_26_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[75]_AND_42_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[11]_AND_233_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[57]_AND_78_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[49]_AND_94_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[60]_AND_72_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[14]_AND_227_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[2]_AND_251_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[11]_AND_170_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[84]_AND_24_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[76]_AND_40_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[26]_AND_203_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[5]_AND_245_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[31]_AND_130_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/Mcount_spiclkgen.sck_counter_val is sourced
+   by a combinatorial pin. This is not good design practice. Use the CE pin to
+   control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[22]_AND_148_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[14]_AND_164_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[8]_AND_239_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[42]_AND_108_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[34]_AND_124_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[26]_AND_140_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[17]_AND_158_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[5]_AND_182_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[46]_AND_100_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[37]_AND_118_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[29]_AND_134_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[8]_AND_176_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[58]_AND_76_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[61]_AND_70_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[85]_AND_22_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[67]_AND_58_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[59]_AND_74_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[70]_AND_52_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[86]_AND_20_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[20]_AND_215_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[12]_AND_231_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[52]_AND_88_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
@@ -268,59 +520,7 @@ WARNING:PhysDesignRules:372 - Gated clock. Clock net
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[31]_AND_193_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[16]_AND_223_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[24]_AND_207_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[17]_AND_221_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[25]_AND_205_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[18]_AND_219_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[26]_AND_203_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[19]_AND_217_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[27]_AND_201_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[28]_AND_199_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[29]_AND_197_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[10]_AND_172_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[11]_AND_170_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[12]_AND_168_o is
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[30]_AND_195_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
@@ -328,351 +528,15 @@ WARNING:PhysDesignRules:372 - Gated clock. Clock net
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[13]_AND_166_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[21]_AND_150_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[14]_AND_164_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[22]_AND_148_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[30]_AND_132_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[15]_AND_162_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[23]_AND_146_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[31]_AND_130_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[16]_AND_160_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[24]_AND_144_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[32]_AND_128_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[40]_AND_112_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[17]_AND_158_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[25]_AND_142_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[33]_AND_126_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[41]_AND_110_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[18]_AND_156_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[26]_AND_140_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[34]_AND_124_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[42]_AND_108_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[50]_AND_92_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[19]_AND_154_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[27]_AND_138_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[35]_AND_122_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[43]_AND_106_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[51]_AND_90_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[28]_AND_136_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[36]_AND_120_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[44]_AND_104_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[52]_AND_88_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[60]_AND_72_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[29]_AND_134_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[37]_AND_118_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[45]_AND_102_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[53]_AND_86_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[61]_AND_70_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[38]_AND_116_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[46]_AND_100_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[54]_AND_84_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[62]_AND_68_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[70]_AND_52_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[39]_AND_114_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[47]_AND_98_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[55]_AND_82_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[63]_AND_66_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[71]_AND_50_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[48]_AND_96_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[56]_AND_80_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[64]_AND_64_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[72]_AND_48_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[80]_AND_32_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[49]_AND_94_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[57]_AND_78_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[65]_AND_62_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[73]_AND_46_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[81]_AND_30_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[58]_AND_76_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[66]_AND_60_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[74]_AND_44_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[82]_AND_28_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[90]_AND_12_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[59]_AND_74_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[67]_AND_58_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[75]_AND_42_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[83]_AND_26_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[91]_AND_10_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
    SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[68]_AND_56_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[76]_AND_40_o is
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[18]_AND_219_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[84]_AND_24_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[92]_AND_8_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[69]_AND_54_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[77]_AND_38_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[85]_AND_22_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[93]_AND_6_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[78]_AND_36_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[86]_AND_20_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[94]_AND_4_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[79]_AND_34_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[87]_AND_18_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[95]_AND_2_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[88]_AND_16_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[89]_AND_14_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[1]_AND_253_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[2]_AND_251_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[3]_AND_249_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[4]_AND_247_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[5]_AND_245_o is
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[27]_AND_201_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
@@ -680,19 +544,19 @@ WARNING:PhysDesignRules:372 - Gated clock. Clock net
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[7]_AND_241_o is
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[71]_AND_50_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[8]_AND_239_o is
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[23]_AND_146_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[9]_AND_237_o is
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[15]_AND_162_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[1]_AND_190_o is
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[40]_AND_112_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
@@ -700,15 +564,23 @@ WARNING:PhysDesignRules:372 - Gated clock. Clock net
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[3]_AND_186_o is
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[28]_AND_199_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[4]_AND_184_o is
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[9]_AND_237_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[5]_AND_182_o is
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[18]_AND_156_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[43]_AND_106_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[35]_AND_122_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
@@ -716,24 +588,148 @@ WARNING:PhysDesignRules:372 - Gated clock. Clock net
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[7]_AND_178_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[8]_AND_176_o is
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[38]_AND_116_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
    SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[9]_AND_174_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[53]_AND_86_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[77]_AND_38_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[69]_AND_54_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[80]_AND_32_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[62]_AND_68_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[54]_AND_84_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[78]_AND_36_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[81]_AND_30_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[21]_AND_213_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[31]_AND_193_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[24]_AND_207_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[16]_AND_223_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[3]_AND_249_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[21]_AND_150_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[12]_AND_168_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[19]_AND_217_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[7]_AND_241_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[63]_AND_66_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[55]_AND_82_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[41]_AND_110_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[32]_AND_128_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[24]_AND_144_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[16]_AND_160_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[3]_AND_186_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[29]_AND_197_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[87]_AND_18_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[79]_AND_34_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[44]_AND_104_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[36]_AND_120_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[27]_AND_138_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[19]_AND_154_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[90]_AND_12_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[39]_AND_114_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net GPIO2_OBUF is sourced by a
    combinatorial pin. This is not good design practice. Use the CE pin to
    control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:2410 - This design is using one or more 9K Block RAMs
-   (RAMB8BWER).  9K Block RAM initialization data, both user defined and
-   default, may be incorrect and should not be used.  For more information,
-   please reference Xilinx Answer Record 39999.
 
 Section 3 - Informational
 -------------------------
@@ -741,7 +737,7 @@ INFO:Security:56 - Part 'xc6slx150' is not a WebPack part.
 INFO:LIT:243 - Logical network SPI_ADC_MISO_IBUF has no load.
 INFO:LIT:395 - The above info message is repeated 47 more times for the
    following (max. 5 shown):
-   BLOCKMEM_INST/douta<4>,
+   BLOCKMEM_INST/douta<27>,
    BLOCKMEM_INST/douta<3>,
    BLOCKMEM_INST/douta<2>,
    BLOCKMEM_INST/douta<1>,
@@ -764,9 +760,9 @@ INFO:PhysDesignRules:1861 - To achieve optimal frequency synthesis performance
 
 Section 4 - Removed Logic Summary
 ---------------------------------
- 910 block(s) removed
-   7 block(s) optimized away
- 911 signal(s) removed
+ 849 block(s) removed
+   6 block(s) optimized away
+ 850 signal(s) removed
 
 Section 5 - Removed Logic
 -------------------------
@@ -3105,61 +3101,11 @@ Loadless block "IBUFDS_DIGIF_MSB_G7" (IBUFGDS) removed.
   Loadless block "G7LTX_P" (PAD) removed.
  The signal "G7LTX_N" is loadless and has been removed.
   Loadless block "G7LTX_N" (PAD) removed.
-The signal "BLOCKMEM_INST/douta<4>" is sourceless and has been removed.
+The signal "BLOCKMEM_INST/douta<27>" is sourceless and has been removed.
 The signal "BLOCKMEM_INST/douta<3>" is sourceless and has been removed.
 The signal "BLOCKMEM_INST/douta<2>" is sourceless and has been removed.
 The signal "BLOCKMEM_INST/douta<1>" is sourceless and has been removed.
 The signal "BLOCKMEM_INST/douta<0>" is sourceless and has been removed.
-The signal
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/ramloop[1].ram.ram_douta<0>" is sourceless and has been
-removed.
- Sourceless block
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux111" (ROM) removed.
-The signal
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/ramloop[0].ram.ram_douta" is sourceless and has been removed.
-The signal
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/ramloop[1].ram.ram_douta<1>" is sourceless and has been
-removed.
- Sourceless block
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux121" (ROM) removed.
-The signal
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/ramloop[2].ram.ram_douta" is sourceless and has been removed.
-The signal
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/ramloop[1].ram.ram_douta<2>" is sourceless and has been
-removed.
- Sourceless block
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux231" (ROM) removed.
-The signal
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/ramloop[3].ram.ram_douta" is sourceless and has been removed.
-The signal
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/ramloop[1].ram.ram_douta<3>" is sourceless and has been
-removed.
- Sourceless block
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux261" (ROM) removed.
-The signal
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/ramloop[4].ram.ram_douta" is sourceless and has been removed.
-The signal
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/ramloop[1].ram.ram_douta<4>" is sourceless and has been
-removed.
- Sourceless block
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux271" (ROM) removed.
-The signal
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/ramloop[5].ram.ram_douta" is sourceless and has been removed.
 The signal
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
 vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.grdc1.rdc/rd_dc_i<13>" is
@@ -6195,146 +6141,6 @@ The trimmed logic reported below is either:
    2. part of disabled logic
    3. a side-effect of other trimmed logic
 
-The signal "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG<29>" is unused and has been
-removed.
- Unused block "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_29" (FF) removed.
-  The signal "Result<29>" is unused and has been removed.
-   Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_xor<29>" (XOR) removed.
-    The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<28>" is unused and has
-been removed.
-     Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<28>" (MUX) removed.
-      The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<27>" is unused and has
-been removed.
-       Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<27>" (MUX) removed.
-        The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<26>" is unused and has
-been removed.
-         Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<26>" (MUX) removed.
-          The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<25>" is unused and has
-been removed.
-           Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<25>" (MUX) removed.
-            The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<24>" is unused and has
-been removed.
-             Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<24>" (MUX) removed.
-              The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<23>" is unused and has
-been removed.
-               Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<23>" (MUX) removed.
-                The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<22>" is unused and has
-been removed.
-                 Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<22>" (MUX) removed.
-                  The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<21>" is unused and has
-been removed.
-                   Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<21>" (MUX) removed.
-                    The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<20>" is unused and has
-been removed.
-                     Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<20>" (MUX) removed.
-                      The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<19>" is unused and has
-been removed.
-                       Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<19>" (MUX) removed.
-                        The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<18>" is unused and has
-been removed.
-                         Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<18>" (MUX) removed.
-                          The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<17>" is unused and has
-been removed.
-                           Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<17>" (MUX) removed.
-                            The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<16>" is unused and has
-been removed.
-                             Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<16>" (MUX) removed.
-                            The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<17>_rt" is unused and has
-been removed.
-                             Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<17>_rt" (ROM) removed.
-                              The signal "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG<17>" is unused and has been
-removed.
-                               Unused block "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_17" (FF) removed.
-                                The signal "Result<17>" is unused and has been removed.
-                                 Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_xor<17>" (XOR) removed.
-                          The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<18>_rt" is unused and has
-been removed.
-                           Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<18>_rt" (ROM) removed.
-                            The signal "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG<18>" is unused and has been
-removed.
-                             Unused block "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_18" (FF) removed.
-                              The signal "Result<18>" is unused and has been removed.
-                               Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_xor<18>" (XOR) removed.
-                        The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<19>_rt" is unused and has
-been removed.
-                         Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<19>_rt" (ROM) removed.
-                          The signal "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG<19>" is unused and has been
-removed.
-                           Unused block "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_19" (FF) removed.
-                            The signal "Result<19>" is unused and has been removed.
-                             Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_xor<19>" (XOR) removed.
-                      The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<20>_rt" is unused and has
-been removed.
-                       Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<20>_rt" (ROM) removed.
-                        The signal "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG<20>" is unused and has been
-removed.
-                         Unused block "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_20" (FF) removed.
-                          The signal "Result<20>" is unused and has been removed.
-                           Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_xor<20>" (XOR) removed.
-                    The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<21>_rt" is unused and has
-been removed.
-                     Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<21>_rt" (ROM) removed.
-                      The signal "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG<21>" is unused and has been
-removed.
-                       Unused block "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_21" (FF) removed.
-                        The signal "Result<21>" is unused and has been removed.
-                         Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_xor<21>" (XOR) removed.
-                  The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<22>_rt" is unused and has
-been removed.
-                   Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<22>_rt" (ROM) removed.
-                    The signal "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG<22>" is unused and has been
-removed.
-                     Unused block "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_22" (FF) removed.
-                      The signal "Result<22>" is unused and has been removed.
-                       Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_xor<22>" (XOR) removed.
-                The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<23>_rt" is unused and has
-been removed.
-                 Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<23>_rt" (ROM) removed.
-                  The signal "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG<23>" is unused and has been
-removed.
-                   Unused block "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_23" (FF) removed.
-                    The signal "Result<23>" is unused and has been removed.
-                     Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_xor<23>" (XOR) removed.
-              The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<24>_rt" is unused and has
-been removed.
-               Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<24>_rt" (ROM) removed.
-                The signal "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG<24>" is unused and has been
-removed.
-                 Unused block "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_24" (FF) removed.
-                  The signal "Result<24>" is unused and has been removed.
-                   Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_xor<24>" (XOR) removed.
-            The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<25>_rt" is unused and has
-been removed.
-             Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<25>_rt" (ROM) removed.
-              The signal "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG<25>" is unused and has been
-removed.
-               Unused block "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_25" (FF) removed.
-                The signal "Result<25>" is unused and has been removed.
-                 Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_xor<25>" (XOR) removed.
-          The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<26>_rt" is unused and has
-been removed.
-           Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<26>_rt" (ROM) removed.
-            The signal "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG<26>" is unused and has been
-removed.
-             Unused block "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_26" (FF) removed.
-              The signal "Result<26>" is unused and has been removed.
-               Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_xor<26>" (XOR) removed.
-        The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<27>_rt" is unused and has
-been removed.
-         Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<27>_rt" (ROM) removed.
-          The signal "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG<27>" is unused and has been
-removed.
-           Unused block "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_27" (FF) removed.
-            The signal "Result<27>" is unused and has been removed.
-             Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_xor<27>" (XOR) removed.
-      The signal "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<28>_rt" is unused and has
-been removed.
-       Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_cy<28>_rt" (ROM) removed.
-        The signal "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG<28>" is unused and has been
-removed.
-         Unused block "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_28" (FF) removed.
-          The signal "Result<28>" is unused and has been removed.
-           Unused block "BLOCKMEM_CTRL_INST/Mcount_CLOCK_DIV_REG_xor<28>" (XOR) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<0>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_0" (FF) removed.
@@ -6495,26 +6301,6 @@ been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_31" (FF) removed.
   The signal "N45" is unused and has been removed.
    Unused block "GPIFII_D_7_IOBUF/IBUF" (BUF) removed.
-Unused block
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/ramloop[0].ram.r/s6_init.ram/SP.SIMPLE_PRIM9.ram" (RAMB8BWER)
-removed.
-Unused block
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/ramloop[2].ram.r/s6_init.ram/SP.SIMPLE_PRIM9.ram" (RAMB8BWER)
-removed.
-Unused block
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/ramloop[3].ram.r/s6_init.ram/SP.SIMPLE_PRIM9.ram" (RAMB8BWER)
-removed.
-Unused block
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/ramloop[4].ram.r/s6_init.ram/SP.SIMPLE_PRIM9.ram" (RAMB8BWER)
-removed.
-Unused block
-"BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_m
-em_gen/valid.cstr/ramloop[5].ram.r/s6_init.ram/SP.SIMPLE_PRIM9.ram" (RAMB8BWER)
-removed.
 Unused block
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
 vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.grdc1.rdc/Msub_GND_812_o_GND_812_o
@@ -6691,7 +6477,6 @@ Unused block "FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE/XST_VCC" (ONE) removed.
 Optimized Block(s):
 TYPE 		BLOCK
 GND 		BLOCKMEM_INST/XST_GND
-VCC 		BLOCKMEM_INST/XST_VCC
 GND
 		FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gco
 nvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.nativ

@@ -75,8 +75,8 @@ sub parse_line
 
 	my $SHX_00 = 5;
 	my $SHX_01 = 6;
-	my $ADX_00 = 7;
-	my $ADX_01 = 8;
+	my $ADX_01 = 7; # swp err
+	my $ADX_00 = 8; # swp err
 
 	my $COM_00 = 9;
 	my $COM_01 = 10;
@@ -312,7 +312,7 @@ my $ofpath = '';
 my $ofsuffix = '';
 
 my $ram_width = 32;
-my $ram_depth = 8196;
+my $ram_depth = 1024;
 
 # Parse command line arguments
 GetOptions('h|help'     => \$help_flag,
