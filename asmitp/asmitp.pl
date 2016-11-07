@@ -100,6 +100,9 @@ sub parse_line
 
 	my $SER_00 = 25;
 
+	my $FVAL_00 = 26;
+	my $LVAL_00 = 27;
+
 ##################################################
 
 	my $topars_line = $_[0];
@@ -274,6 +277,16 @@ sub parse_line
 	elsif ($topars_line =~ /^LOAD\s*SPE2\s*(\d+)\s*(\d+)\s*(\d+)\s*(\d+)\s*.*$/) {
 		substr($lst_line, $1, 1, $2);
 		substr($lst_line, $3, 1, $4);
+		$parsd_line = $lst_line;
+		$prnt_flag = $ld_flag;
+	}
+	elsif ($topars_line =~ /^MOV\s*FVAL\s*0x00\s*(\d+)\s*.*$/) {
+		substr($lst_line, $FVAL_00, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = $ld_flag;
+	}
+	elsif ($topars_line =~ /^MOV\s*LVAL\s*0x00\s*(\d+)\s*.*$/) {
+		substr($lst_line, $LVAL_00, 1, $1);
 		$parsd_line = $lst_line;
 		$prnt_flag = $ld_flag;
 	}

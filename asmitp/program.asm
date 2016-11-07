@@ -51,6 +51,8 @@ MOV CNT 0x04 1	; count_updn '1'
 MOV CNT 0x01 1	; count_rst '1'
 MOV CNT 0x05 1	; count_inc_one '1'
 MOV CNT 0x08 1	; count_lsb_clk '1'
+MOV FVAL 0x00 1 ; Tie FVAL '1'
+MOV LVAL 0x00 1 ; Tie LVAL '1'
 ;SET PAR
 
 ; references and shr sampling

@@ -277,6 +277,16 @@ sub parse_line
 		$parsd_line = $lst_line;
 		$prnt_flag = $ld_flag;
 	}
+	elsif ($topars_line =~ /^MOV\s*FVAL\s*0x00\s*(\d+)\s*.*$/) {
+		substr($lst_line, $FVAL_00, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = $ld_flag;
+	}
+	elsif ($topars_line =~ /^MOV\s*LVAL\s*0x00\s*(\d+)\s*.*$/) {
+		substr($lst_line, $LVAL_00, 1, $1);
+		$parsd_line = $lst_line;
+		$prnt_flag = $ld_flag;
+	}
 	else{
 		$prnt_flag = '0';
 		$parsd_line = $lst_line;
@@ -312,7 +322,7 @@ my $ofpath = '';
 my $ofsuffix = '';
 
 my $ram_width = 32;
-my $ram_depth = 8196;
+my $ram_depth = 1024;
 
 # Parse command line arguments
 GetOptions('h|help'     => \$help_flag,
