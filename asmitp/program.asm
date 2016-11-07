@@ -1,47 +1,46 @@
-;|----------------------------------------------------------------|
-;| Test assembler file for ADC Testchip readout board             |
-;|----------------------------------------------------------------|
-;| Version A, Deyan Levski, deyan.levski@eng.ox.ac.uk, 05.11.2016 |
-;|----------------------------------------------------------------|
+;|------------------------------------------------------------------|
+;| Sample assembler file for ADC Testchip readout board             |
+;|------------------------------------------------------------------|
+;| Version A, Deyan Levski, deyan.levski@eng.ox.ac.uk, 05.11.2016   |
+;|------------------------------------------------------------------|
 ;|-+-|
-;
-;|--------------------------------------------------------|
-;| Instruction List and Function                          |
-;|--------------------------------------------------------|
-;| ROW 0x00 1/0 — set d_row_rs                            |
-;| ROW 0x01 1/0 — set d_row_rst                           |
-;| ROW 0x02 1/0 — set d_row_tx                            |
-;| ROW 0x03 1/0 — set d_col_vln_sh                        |
-;| ROW 0x04 1/0 — set ROW_NEXT                            |
-;| SHX 0x00 1/0 — set d_shr                               |
-;| SHX 0x01 1/0 — set d_shs                               |
-;| ADX 0x00 1/0 — set d_adr                               |
-;| ADX 0x01 1/0 - set d_ads                               |
-;| COM 0x00 1/0 — set d_comp_bias_sh                      |
-;| COM 0x01 1/0 — set d_comp_dyn_pon                      |
-;| CNT 0x00 1/0 — set d_count_en                          |
-;| CNT 0x01 1/0 — set d_count_rst                         |
-;| CNT 0x02 1/0 — set d_count_inv_clk                     |
-;| CNT 0x03 1/0 — set d_count_hold                        |
-;| CNT 0x04 1/0 — set d_count_updn                        |
-;| CNT 0x05 1/0 — set d_count_inc_one                     |
-;| CNT 0x06 1/0 — set d_count_jc_shift_en                 |
-;| CNT 0x07 1/0 — set d_count_lsb_en                      |
-;| CNT 0x08 1/0 — set d_count_lsb_clk                     |
-;| MEM 0x00 1/0 — set d_count_mem_wr                      |
-;| REF 0x00 1/0 — set d_ref_vref_ramp_rst                 |
-;| REF 0x01 1/0 — set d_ref_vref_sh                       |
-;| REF 0x02 1/0 — set d_ref_vref_clamp_en                 |
-;| REF 0x03 1/0 — set d_ref_vref_ramp_ota_dyn_pon         |
-;| SER 0x00 1/0 — set d_digif_seraial_rst                 |
-;| LOAD PAR — load follow-up instructions to buf register |
-;| SET PAR  — set the loaded in buf register to output    |
-;| START    — initialize output register to 0x0000        |
-;| NOP      — NOP operation (stall) one cycle             |
-;| NOP n    — NOP operation (stall) n cycles              |
-;| FVAL 0x00 1/0 — FVAL_SEQ                               |
-;| LVAL 0x00 1/0 — LVAL_SEQ                               |
-;|--------------------------------------------------------|
+;|------------------------------------------------------------------|
+;| Instruction List and Function                                    |
+;|------------------------------------------------------------------|
+;| ROW 0x00 1/0 — set d_row_rs                                      |
+;| ROW 0x01 1/0 — set d_row_rst                                     |
+;| ROW 0x02 1/0 — set d_row_tx                                      |
+;| ROW 0x03 1/0 — set d_col_vln_sh                                  |
+;| ROW 0x04 1/0 — set ROW_NEXT                                      |
+;| SHX 0x00 1/0 — set d_shr                                         |
+;| SHX 0x01 1/0 — set d_shs                                         |
+;| ADX 0x00 1/0 — set d_adr                                         |
+;| ADX 0x01 1/0 - set d_ads                                         |
+;| COM 0x00 1/0 — set d_comp_bias_sh                                |
+;| COM 0x01 1/0 — set d_comp_dyn_pon                                |
+;| CNT 0x00 1/0 — set d_count_en                                    |
+;| CNT 0x01 1/0 — set d_count_rst                                   |
+;| CNT 0x02 1/0 — set d_count_inv_clk                               |
+;| CNT 0x03 1/0 — set d_count_hold                                  |
+;| CNT 0x04 1/0 — set d_count_updn                                  |
+;| CNT 0x05 1/0 — set d_count_inc_one                               |
+;| CNT 0x06 1/0 — set d_count_jc_shift_en                           |
+;| CNT 0x07 1/0 — set d_count_lsb_en                                |
+;| CNT 0x08 1/0 — set d_count_lsb_clk                               |
+;| MEM 0x00 1/0 — set d_count_mem_wr                                |
+;| REF 0x00 1/0 — set d_ref_vref_ramp_rst                           |
+;| REF 0x01 1/0 — set d_ref_vref_sh                                 |
+;| REF 0x02 1/0 — set d_ref_vref_clamp_en                           |
+;| REF 0x03 1/0 — set d_ref_vref_ramp_ota_dyn_pon                   |
+;| SER 0x00 1/0 — set d_digif_seraial_rst                           |
+;| LOAD PAR — load follow-up instructions to buf register           |
+;| SET PAR  — set the loaded in buf register to output              |
+;| START    — initialize output register to 0x0000                  |
+;| NOP      — NOP operation (stall) one cycle                       |
+;| NOP n    — NOP operation (stall) n cycles                        |
+;| FVAL 0x00 1/0 — FVAL_SEQ                                         |
+;| LVAL 0x00 1/0 — LVAL_SEQ                                         |
+;|------------------------------------------------------------------|
 ;|-+-|
 ;
 
