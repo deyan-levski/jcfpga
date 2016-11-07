@@ -168,50 +168,69 @@ architecture Behavioral of ADC_CTRL is
 	);
 	end component;
 
-	component SEQUENCER is
-		port (
-		CLOCK			: in  STD_LOGIC;
-		RESET			: in  STD_LOGIC;
-
-		FVAL			: inout STD_LOGIC;
-		LVAL			: inout STD_LOGIC;
-
-		d_row_addr		: inout STD_LOGIC_VECTOR(7 downto 0);
-		d_row_rs		: inout STD_LOGIC;
-		d_row_rst		: inout STD_LOGIC;
-		d_row_tx		: inout STD_LOGIC;
-
-		d_col_vln_sh		: inout STD_LOGIC;
-
-		d_adc_shr_shs		: inout STD_LOGIC;
-
-		d_shs			: inout STD_LOGIC;
-		d_shr			: inout STD_LOGIC;
-		d_ads			: inout STD_LOGIC;
-		d_adr			: inout STD_LOGIC;
-		
-		d_comp_bias_sh		: inout STD_LOGIC;
-		d_comp_dyn_pon		: inout STD_LOGIC;
-		
-		d_count_rst		: inout STD_LOGIC;
-		d_count_inv_clk		: inout STD_LOGIC;
-		d_count_hold		: inout STD_LOGIC;
-		d_count_updn		: inout STD_LOGIC;
-		d_count_inc_one		: inout STD_LOGIC;
-		d_count_jc_shift_en	: inout STD_LOGIC;
-		d_count_lsb_en		: inout STD_LOGIC;
-		d_count_lsb_clk		: inout STD_LOGIC;
-		d_count_mem_wr		: inout STD_LOGIC;
-		d_count_en		: inout STD_LOGIC;
-		
-		d_digif_serial_rst	: inout std_logic;
-		
-		d_ref_vref_ramp_rst	: inout std_logic;
-		d_ref_vref_sh		: inout std_logic;
-		d_ref_vref_clamp_en	: inout std_logic;
-		d_ref_vref_ramp_ota_dyn_pon: inout std_logic
-	);
+	component BLOCKMEM is
+	  PORT (
+	    clka : IN STD_LOGIC;
+	    rsta : IN STD_LOGIC;
+	    ena : IN STD_LOGIC;
+	    addra : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+	    douta : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
+	  );
 	end component;
+
+	component BLOCKMEM_CTRL is
+	 Port ( 
+	    CLOCK : in  STD_LOGIC;
+	    RESET : in  STD_LOGIC;
+	    MEMCLK : out  STD_LOGIC;
+	    MEMADDR : out  STD_LOGIC_VECTOR (31 downto 0)
+          );
+	end component;
+
+--	component SEQUENCER is
+--		port (
+--		CLOCK			: in  STD_LOGIC;
+--		RESET			: in  STD_LOGIC;
+--	
+--		FVAL			: inout STD_LOGIC;
+--		LVAL			: inout STD_LOGIC;
+--	
+--		d_row_addr		: inout STD_LOGIC_VECTOR(7 downto 0);
+--		d_row_rs		: inout STD_LOGIC;
+--		d_row_rst		: inout STD_LOGIC;
+--		d_row_tx		: inout STD_LOGIC;
+--	
+--		d_col_vln_sh		: inout STD_LOGIC;
+--	
+--		d_adc_shr_shs		: inout STD_LOGIC;
+--	
+--		d_shs			: inout STD_LOGIC;
+--		d_shr			: inout STD_LOGIC;
+--		d_ads			: inout STD_LOGIC;
+--		d_adr			: inout STD_LOGIC;
+--		
+--		d_comp_bias_sh		: inout STD_LOGIC;
+--		d_comp_dyn_pon		: inout STD_LOGIC;
+--		
+--		d_count_rst		: inout STD_LOGIC;
+--		d_count_inv_clk		: inout STD_LOGIC;
+--		d_count_hold		: inout STD_LOGIC;
+--		d_count_updn		: inout STD_LOGIC;
+--		d_count_inc_one		: inout STD_LOGIC;
+--		d_count_jc_shift_en	: inout STD_LOGIC;
+--		d_count_lsb_en		: inout STD_LOGIC;
+--		d_count_lsb_clk		: inout STD_LOGIC;
+--		d_count_mem_wr		: inout STD_LOGIC;
+--		d_count_en		: inout STD_LOGIC;
+--		
+--		d_digif_serial_rst	: inout std_logic;
+--		
+--		d_ref_vref_ramp_rst	: inout std_logic;
+--		d_ref_vref_sh		: inout std_logic;
+--		d_ref_vref_clamp_en	: inout std_logic;
+--		d_ref_vref_ramp_ota_dyn_pon: inout std_logic
+--	);
+--	end component;
 
 	component FX3_SLAVE is
 	port (	CLOCK : in  std_logic;
@@ -237,10 +256,14 @@ architecture Behavioral of ADC_CTRL is
 
 	signal CLOCK_100 : std_logic;
 	signal CLOCK_250 : std_logic;
+	signal MEMCLK    : std_logic;
+	signal MEMDATA   : std_logic_vector(31 downto 0);
+	signal MEMADDR   : std_logic_vector(31 downto 0);
 	signal CLOCK_COUNT_OBUFDS : std_logic;
 	signal CLOCK_DIGIF_OBUFDS : std_logic;
 	signal FVAL_SEQ  : std_logic;
 	signal LVAL_SEQ  : std_logic;
+	signal ROW_NEXT  : std_logic;
 	signal G0LTX	 : std_logic;
 	signal G0HTX	 : std_logic;
 	signal G1LTX	 : std_logic;
@@ -570,47 +593,100 @@ begin
 --| Instantiating SEQUENCER |
 --|-------------------------|
 
-	SEQUENCER_INST: SEQUENCER
-	port map (
-		CLOCK			=>	  CLOCK_250, -- should use CLOCK_250, using CLOCK_100 for scope
-		RESET			=>	  RESET,
-		FVAL			=>	  FVAL_SEQ,
-		LVAL			=>	  LVAL_SEQ,
+	BLOCKMEM_INST : BLOCKMEM
+	  port map (
+	    clka => MEMCLK,
+	    rsta => RESET,
+	    ena  => '1',
+	    addra => MEMADDR,
+	    douta => MEMDATA
+	  );
 
-		d_row_addr		=>	  d_row_addr,
-		d_row_rs		=>	  d_row_rs,
-		d_row_rst		=>	  d_row_rst,
-		d_row_tx		=>	  d_row_tx,
-		d_col_vln_sh		=> 	  d_col_vln_sh,
 
-		d_adc_shr_shs		=>	  open,
-									  
-		d_shs			=>	  d_shs,
-		d_shr			=>	  d_shr,
-		d_ads			=>	  d_ads,
-		d_adr			=>	  d_adr,
-						  
-		d_comp_bias_sh		=>	  d_comp_bias_sh,
-		d_comp_dyn_pon		=>	  d_comp_dyn_pon,
-						  
-		d_count_rst		=>	  d_count_rst,
-		d_count_inv_clk		=>	  d_count_inv_clk,
-		d_count_hold		=>	  d_count_hold,
-		d_count_updn		=>	  d_count_updn,
-		d_count_inc_one		=>	  d_count_inc_one,
-		d_count_jc_shift_en	=>	  d_count_jc_shift_en,
-		d_count_lsb_en		=>	  d_count_lsb_en,
-		d_count_lsb_clk		=>	  d_count_lsb_clk,
-		d_count_mem_wr		=>	  d_count_mem_wr,
-		d_count_en		=>	  d_count_en,
-						  
-		d_digif_serial_rst	=>	  d_digif_serial_rst,
-						  
-		d_ref_vref_ramp_rst	=>	  d_ref_vref_ramp_rst,
-		d_ref_vref_sh		=>	  d_ref_vref_sh,
-		d_ref_vref_clamp_en	=>	  d_ref_vref_clamp_en,
-		d_ref_vref_ramp_ota_dyn_pon =>	  d_ref_vref_ramp_ota_dyn_pon
-		 );
+	BLOCKMEM_CTRL_INST : BLOCKMEM_CTRL
+
+	  port map ( 
+	   CLOCK => CLOCK_100,
+           RESET => RESET,
+           MEMCLK => MEMCLK,
+           MEMADDR => MEMADDR
+   	  );
+
+	  d_row_rs <= MEMDATA(31);
+	  d_row_rst <= MEMDATA(30);
+	  d_row_tx <= MEMDATA(29);
+	  d_col_vln_sh <= MEMDATA(28);
+	  ROW_NEXT <= MEMDATA(27);
+	  d_shr <= MEMDATA(26);
+	  d_shs <= MEMDATA(25);
+	  d_ads <= MEMDATA(24);
+	  d_adr <= MEMDATA(23);
+	  d_comp_bias_sh <= MEMDATA(22);
+	  d_comp_dyn_pon <= MEMDATA(21);
+	  d_count_en <= MEMDATA(20);
+	  d_count_rst <= MEMDATA(19);
+	  d_count_inv_clk <= MEMDATA(18);
+	  d_count_hold <= MEMDATA(17);
+	  d_count_updn <= MEMDATA(16);
+	  d_count_inc_one <= MEMDATA(15);
+	  d_count_jc_shift_en <= MEMDATA(14);
+	  d_count_lsb_en <= MEMDATA(13);
+	  d_count_lsb_clk <= MEMDATA(12);
+	  d_count_mem_wr <= MEMDATA(11);
+	  d_ref_vref_ramp_rst <= MEMDATA(10);
+	  d_ref_vref_sh <= MEMDATA(9);
+	  d_ref_vref_clamp_en <= MEMDATA(8);
+	  d_ref_vref_ramp_ota_dyn_pon <= MEMDATA(7);
+	  d_digif_serial_rst <= MEMDATA(6);
+	  FVAL_SEQ <= MEMDATA(5);
+	  LVAL_SEQ <= MEMDATA(4);
+	  d_row_addr(7 downto 0) <= "00000000";
+
+--|---------------------------------------|
+--| Keeping old state machine sequenencer |
+--|---------------------------------------|
+
+--	SEQUENCER_INST: SEQUENCER
+--	port map (
+--		CLOCK			=>	  CLOCK_250, -- should use CLOCK_250, using CLOCK_100 for scope
+--		RESET			=>	  RESET,
+--		FVAL			=>	  FVAL_SEQ,
+--		LVAL			=>	  LVAL_SEQ,
+--	
+--		d_row_addr		=>	  d_row_addr,
+--		d_row_rs		=>	  d_row_rs,
+--		d_row_rst		=>	  d_row_rst,
+--		d_row_tx		=>	  d_row_tx,
+--		d_col_vln_sh		=> 	  d_col_vln_sh,
+--	
+--		d_adc_shr_shs		=>	  open,
+--									  
+--		d_shs			=>	  d_shs,
+--		d_shr			=>	  d_shr,
+--		d_ads			=>	  d_ads,
+--		d_adr			=>	  d_adr,
+--						  
+--		d_comp_bias_sh		=>	  d_comp_bias_sh,
+--		d_comp_dyn_pon		=>	  d_comp_dyn_pon,
+--						  
+--		d_count_rst		=>	  d_count_rst,
+--		d_count_inv_clk		=>	  d_count_inv_clk,
+--		d_count_hold		=>	  d_count_hold,
+--		d_count_updn		=>	  d_count_updn,
+--		d_count_inc_one		=>	  d_count_inc_one,
+--		d_count_jc_shift_en	=>	  d_count_jc_shift_en,
+--		d_count_lsb_en		=>	  d_count_lsb_en,
+--		d_count_lsb_clk		=>	  d_count_lsb_clk,
+--		d_count_mem_wr		=>	  d_count_mem_wr,
+--		d_count_en		=>	  d_count_en,
+--						  
+--		d_digif_serial_rst	=>	  d_digif_serial_rst,
+--						  
+--		d_ref_vref_ramp_rst	=>	  d_ref_vref_ramp_rst,
+--		d_ref_vref_sh		=>	  d_ref_vref_sh,
+--		d_ref_vref_clamp_en	=>	  d_ref_vref_clamp_en,
+--		d_ref_vref_ramp_ota_dyn_pon =>	  d_ref_vref_ramp_ota_dyn_pon
+--		 );
 
    -- End of SEQUENCER instantiation
 
@@ -648,7 +724,7 @@ SHUTDOWN_VDA <= '0';
 SPI_ADC_CS   <= '0';
 SPI_ADC_MOSI <= '0';
 SPI_ADC_CLK  <= '0';
-SPI_ADC_MISO <= '0';
+--SPI_ADC_MISO <= '0';
 
 end Behavioral;
 

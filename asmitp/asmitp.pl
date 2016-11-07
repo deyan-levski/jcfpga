@@ -107,10 +107,11 @@ sub parse_line
 	my $ram_width = $_[2];
 	my $parsd_line = '';
 	my $prnt_flag = '';
+	my $ld_flag = $_[3]; # load flag, contrlled by LD PAR & LD SET
 
 	if ($topars_line =~ /^NOP$|^NOP\s*$/) {
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^NOP\s*(\d+)\s*$/) {
 		my $ops = $1;
@@ -122,154 +123,166 @@ sub parse_line
 				$parsd_line = $parsd_line . ",\n" . $lst_line;
 			}
 		}
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^START$|^START\s*.*$/) {
 		$parsd_line = "0" x $ram_width;
+		$prnt_flag = '0';
+	}
+
+	elsif ($topars_line =~ /^LOAD\s*PAR$|^LOAD\s*PAR\s*.*$/) {
+		$parsd_line = $lst_line;
+		$ld_flag = '0';
+		$prnt_flag = '0';
+	}
+	elsif ($topars_line =~ /^SET\s*PAR$|^SET\s*PAR\s*.*$/) {
+		$ld_flag = '1';
+		$prnt_flag = '1';
+		$parsd_line = $lst_line;
 	}
 
 	elsif ($topars_line =~ /^MOV\s*ROW\s*0x00\s*(\d+)\s*.*$/) {
 		substr($lst_line, $ROW_00, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*ROW\s*0x01\s*(\d+)\s*.*$/) {
 		substr($lst_line, $ROW_01, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*ROW\s*0x02\s*(\d+)\s*.*$/) {
 		substr($lst_line, $ROW_02, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*ROW\s*0x03\s*(\d+)\s*.*$/) {
 		substr($lst_line, $ROW_03, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*ROW\s*0x04\s*(\d+)\s*.*$/) {
 		substr($lst_line, $ROW_04, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*SHX\s*0x00\s*(\d+)\s*.*$/) {
 		substr($lst_line, $SHX_00, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*SHX\s*0x01\s*(\d+)\s*.*$/) {
 		substr($lst_line, $SHX_01, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*ADX\s*0x00\s*(\d+)\s*.*$/) {
 		substr($lst_line, $ADX_00, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*ADX\s*0x01\s*(\d+)\s*.*$/) {
 		substr($lst_line, $ADX_01, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*COM\s*0x00\s*(\d+)\s*.*$/) {
 		substr($lst_line, $COM_00, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*COM\s*0x01\s*(\d+)\s*.*$/) {
 		substr($lst_line, $COM_01, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*CNT\s*0x00\s*(\d+)\s*.*$/) {
 		substr($lst_line, $CNT_00, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*CNT\s*0x01\s*(\d+)\s*.*$/) {
 		substr($lst_line, $CNT_01, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*CNT\s*0x02\s*(\d+)\s*.*$/) {
 		substr($lst_line, $CNT_02, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*CNT\s*0x03\s*(\d+)\s*.*$/) {
 		substr($lst_line, $CNT_03, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*CNT\s*0x04\s*(\d+)\s*.*$/) {
 		substr($lst_line, $CNT_04, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*CNT\s*0x05\s*(\d+)\s*.*$/) {
 		substr($lst_line, $CNT_05, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*CNT\s*0x06\s*(\d+)\s*.*$/) {
 		substr($lst_line, $CNT_06, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*CNT\s*0x07\s*(\d+)\s*.*$/) {
 		substr($lst_line, $CNT_07, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*CNT\s*0x08\s*(\d+)\s*.*$/) {
 		substr($lst_line, $CNT_08, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*MEM\s*0x00\s*(\d+)\s*.*$/) {
 		substr($lst_line, $MEM_00, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*REF\s*0x00\s*(\d+)\s*.*$/) {
 		substr($lst_line, $REF_00, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*REF\s*0x01\s*(\d+)\s*.*$/) {
 		substr($lst_line, $REF_01, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*REF\s*0x02\s*(\d+)\s*.*$/) {
 		substr($lst_line, $REF_02, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*REF\s*0x03\s*(\d+)\s*.*$/) {
 		substr($lst_line, $REF_03, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*SER\s*0x00\s*(\d+)\s*.*$/) {
 		substr($lst_line, $SER_00, 1, $1);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^LOAD\s*SPE2\s*(\d+)\s*(\d+)\s*(\d+)\s*(\d+)\s*.*$/) {
 		substr($lst_line, $1, 1, $2);
 		substr($lst_line, $3, 1, $4);
 		$parsd_line = $lst_line;
-		$prnt_flag = 1;
+		$prnt_flag = $ld_flag;
 	}
 	else{
 		$prnt_flag = '0';
 		$parsd_line = $lst_line;
 	}
 
-	return ($parsd_line, $prnt_flag);
+	return ($parsd_line, $prnt_flag, $ld_flag);
 }
 
 # Print line and fold if too long
@@ -334,6 +347,8 @@ my $line = '';
 my $parsd_line = '';
 my $lst_line = '';
 my $prnt_flag = '';
+my $ld_flag = '';
+my $ld_flag_old = '';
 
 # Prepare header
 print_line($ofile,"memory_initialization_radix=2;");
@@ -341,7 +356,8 @@ print_line($ofile,"memory_initialization_vector=");
 
 while (defined($line = get_line($ifile, \$prev_line)))
 { 
-	($parsd_line, $prnt_flag) = parse_line($line,$lst_line,$ram_width);
+	($parsd_line, $prnt_flag, $ld_flag) = parse_line($line,$lst_line,$ram_width,$ld_flag_old);
+	$ld_flag_old = $ld_flag;
 	$lst_line = substr($parsd_line, $ram_width*(-1));
 	if ($prnt_flag =~ /1/){
 		print_line($ofile,$parsd_line . ",");
