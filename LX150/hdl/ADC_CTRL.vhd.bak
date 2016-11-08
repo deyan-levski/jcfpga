@@ -152,14 +152,14 @@ architecture Behavioral of ADC_CTRL is
 		);
 	end component;
 
-	component PLL_FX3 is
-		port
-		 (
-		  CLK_IN1           : in     std_logic;
-		  -- Clock out ports
-		  CLK_OUT1          : out    std_logic
-		 );
-	end component;
+--	component PLL_FX3 is
+--		port
+--		 (
+--		  CLK_IN1           : in     std_logic;
+--		  -- Clock out ports
+--		  CLK_OUT1          : out    std_logic
+--		 );
+--	end component;
 
 	component SREG_CONTROL is
 		port (
@@ -266,6 +266,7 @@ architecture Behavioral of ADC_CTRL is
 
 	signal CLOCK_100 : std_logic;
 	signal CLOCK_250 : std_logic;
+	signal CLOCK_100_PCLK : std_logic;
 	signal FX3_CLK	 : std_logic;
 	signal MEMCLK    : std_logic;
 	signal MEMDATA   : std_logic_vector(31 downto 0);
@@ -305,6 +306,8 @@ begin
 	CLK_OUT1          => CLOCK_100,
 	CLK_OUT2          => CLOCK_250
 	);
+
+	FX3_CLK <= GPIFII_PCLK_IN;
 
 --	PLL_FX3_INST: PLL_FX3
 --	port map (
@@ -721,7 +724,7 @@ begin
 		LVAL_IN			=> LVAL_SEQ,
 		DATA_IN			=> "0101010101010101",
 	        -- FX3 GPIFII Interface
-	        GPIFII_PCLK		=> GPIFII_PCLK,		-- fx3 interface clock
+	        GPIFII_PCLK		=> open, --GPIFII_PCLK,	-- fx3 interface clock
 	        GPIFII_D		=> GPIFII_D,		-- fx3 data bus
 	        GPIFII_ADDR		=> GPIFII_ADDR,		-- fx3 fifo address
 	        GPIFII_SLCS_N		=> GPIFII_SLCS_N,	-- fx3 fifo chip select
@@ -733,6 +736,35 @@ begin
 	        GPIFII_FLAGA		=> GPIFII_FLAGA,	-- fx3 fifo flag
 	        GPIFII_FLAGB		=> GPIFII_FLAGB		-- fx3 fifo flag
        );
+
+-- Feeding out USB PCLK
+
+	CLOCK_100_BUFG: BUFG
+	  port map (
+	    O	=> CLOCK_100_PCLK,
+	    I	=> CLOCK_100);
+
+
+       	ODDR2_GPIFII_PCLK : ODDR2
+	generic map(
+	   DDR_ALIGNMENT => "NONE", -- Sets output alignment to "NONE", "C0", "C1" 
+	   INIT => '0', -- Sets initial state of the Q output to '0' or '1'
+	   SRTYPE => "SYNC") -- Specifies "SYNC" or "ASYNC" set/reset
+	port map (
+	   Q  => GPIFII_PCLK, -- 1-bit output data
+	   C0 => CLOCK_100_PCLK, -- 1-bit clock input
+	   C1 => not CLOCK_100_PCLK, -- 1-bit clock input
+	   CE => '1',   -- 1-bit clock enable input
+	   D0 => '0',   -- 1-bit data input (associated with C0)
+	   D1 => '1',   -- 1-bit data input (associated with C1)
+	   R => RESET,  -- 1-bit reset input
+	   S => '0'     -- 1-bit set input
+	); 	
+
+
+--|-------------------|
+--| STATIC SIGNALLING |
+--|-------------------|
 
 GPIO2 <= not CLOCK_100; -- scope triggering clock
 GPIO3 <= '0';

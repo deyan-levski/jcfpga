@@ -172,7 +172,7 @@ begin
 --	   S => '0'     -- 1-bit set input
 --	); 	
 
-GPIFII_PCLK <= CLOCK;
+--GPIFII_PCLK <= CLOCK;
 	
 --	GPIFII_PCLK_ODDR2: ODDR2
 --	  generic map(
