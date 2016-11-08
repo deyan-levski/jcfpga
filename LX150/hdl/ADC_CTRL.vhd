@@ -747,17 +747,17 @@ begin
 
        	ODDR2_GPIFII_PCLK : ODDR2
 	generic map(
-	   DDR_ALIGNMENT => "NONE", -- Sets output alignment to "NONE", "C0", "C1" 
+	   DDR_ALIGNMENT => "C0", -- Sets output alignment to "NONE", "C0", "C1" 
 	   INIT => '0', -- Sets initial state of the Q output to '0' or '1'
-	   SRTYPE => "SYNC") -- Specifies "SYNC" or "ASYNC" set/reset
+	   SRTYPE => "ASYNC") -- Specifies "SYNC" or "ASYNC" set/reset
 	port map (
 	   Q  => GPIFII_PCLK, -- 1-bit output data
 	   C0 => CLOCK_100_PCLK, -- 1-bit clock input
 	   C1 => not CLOCK_100_PCLK, -- 1-bit clock input
 	   CE => '1',   -- 1-bit clock enable input
-	   D0 => '0',   -- 1-bit data input (associated with C0)
-	   D1 => '1',   -- 1-bit data input (associated with C1)
-	   R => RESET,  -- 1-bit reset input
+	   D0 => '1',   -- 1-bit data input (associated with C0)
+	   D1 => '0',   -- 1-bit data input (associated with C1)
+	   R => '0',  -- 1-bit reset input
 	   S => '0'     -- 1-bit set input
 	); 	
 
