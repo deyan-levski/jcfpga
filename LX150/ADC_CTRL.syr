@@ -1099,8 +1099,8 @@ Primitive and Black Box Usage:
 #      RAMB16BWER                  : 33
 # Shift Registers                  : 3
 #      SRLC16E                     : 3
-# Clock Buffers                    : 8
-#      BUFG                        : 8
+# Clock Buffers                    : 7
+#      BUFG                        : 7
 # IO Buffers                       : 118
 #      IBUF                        : 4
 #      IBUFG                       : 2
@@ -1139,7 +1139,7 @@ IO Utilization:
 Specific Feature Utilization:
  Number of Block RAM/FIFO:               33  out of    268    12%  
     Number using Block RAM only:         33
- Number of BUFG/BUFGCTRL/BUFHCEs:         8  out of     16    50%  
+ Number of BUFG/BUFGCTRL/BUFHCEs:         7  out of     16    43%  
 
 ---------------------------
 Partition Resource Summary:
@@ -1164,7 +1164,7 @@ Clock Signal                                                                    
 -----------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
 CLOCK                                                                                                                                                | DCM_SP:CLK0                                                                                                                                             | 221   |
 CLOCK                                                                                                                                                | DCM_SP:CLKFX                                                                                                                                            | 2     |
-GPIFII_PCLK_IN                                                                                                                                       | DCM_SP:CLK270                                                                                                                                           | 850   |
+GPIFII_PCLK_IN                                                                                                                                       | DCM_SP:CLK0                                                                                                                                             | 850   |
 SPI_ADC_CLK_OBUF                                                                                                                                     | NONE(FX3_SLAVE_INST/FX3_SLAVE_INST/I_ODDR2)                                                                                                             | 1     |
 GPIFII_PKTEND_N_OBUF                                                                                                                                 | NONE(FX3_SLAVE_INST/FX3_SLAVE_INST/I_ODDR2)                                                                                                             | 1     |
 SREG_CONTROL_INST/T_SERIAL_INST/BASIC_UART_INST/tx_state_ready                                                                                       | BUFG                                                                                                                                                    | 141   |
@@ -1353,8 +1353,8 @@ Timing constraint: Default period analysis for Clock 'GPIFII_PCLK_IN'
 Delay:               4.364ns (Levels of Logic = 4)
   Source:            FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_SLWR_N (FF)
   Destination:       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[5].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAM)
-  Source Clock:      GPIFII_PCLK_IN rising +270
-  Destination Clock: GPIFII_PCLK_IN rising +270
+  Source Clock:      GPIFII_PCLK_IN rising
+  Destination Clock: GPIFII_PCLK_IN rising
 
   Data Path: FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_SLWR_N to FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[5].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
                                 Gate     Net
@@ -1466,7 +1466,7 @@ Timing constraint: Default OFFSET IN BEFORE for Clock 'GPIFII_PCLK_IN'
 Offset:              3.738ns (Levels of Logic = 1)
   Source:            RESET (PAD)
   Destination:       FX3_SLAVE_INST/IMAGE_OUT_INST/I_FRAME_CNT_7 (FF)
-  Destination Clock: GPIFII_PCLK_IN rising +270
+  Destination Clock: GPIFII_PCLK_IN rising
 
   Data Path: RESET to FX3_SLAVE_INST/IMAGE_OUT_INST/I_FRAME_CNT_7
                                 Gate     Net
@@ -4085,7 +4085,7 @@ Timing constraint: Default OFFSET OUT AFTER for Clock 'GPIFII_PCLK_IN'
 Offset:              4.323ns (Levels of Logic = 1)
   Source:            FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_SLWR_N2 (FF)
   Destination:       GPIFII_D<31> (PAD)
-  Source Clock:      GPIFII_PCLK_IN rising +270
+  Source Clock:      GPIFII_PCLK_IN rising
 
   Data Path: FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_SLWR_N2 to GPIFII_D<31>
                                 Gate     Net
@@ -5380,12 +5380,12 @@ CLOCK          |    5.552|         |         |         |
 
 
 Total REAL time to Xst completion: 9.00 secs
-Total CPU time to Xst completion: 9.08 secs
+Total CPU time to Xst completion: 9.25 secs
  
 --> 
 
 
-Total memory usage is 412440 kilobytes
+Total memory usage is 412420 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings :   31 (   0 filtered)
