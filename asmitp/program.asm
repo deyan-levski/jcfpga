@@ -216,18 +216,18 @@ MOV REF 0x02 0	; clamp off
 NOP 2
 
 ; reset counter
-LOAD PAR
-MOV CNT 0x04 0
-MOV CNT 0x01 0
-MOV CNT 0x05 0
-SET PAR
-NOP 2
-LOAD PAR
-MOV CNT 0x04 1
-MOV CNT 0x01 1
-MOV CNT 0x05 1
-SET PAR
-NOP
+;LOAD PAR
+;MOV CNT 0x04 0
+;MOV CNT 0x01 0
+;MOV CNT 0x05 0
+;SET PAR
+;NOP 2
+;LOAD PAR
+;MOV CNT 0x04 1
+;MOV CNT 0x01 1
+;MOV CNT 0x05 1
+;SET PAR
+;NOP
 
 NOP 128 	; halt 1028 ns — wait for ramp buffer to settle
 
