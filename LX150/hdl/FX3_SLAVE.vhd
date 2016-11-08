@@ -145,7 +145,7 @@ begin
 			 -- status inputs
 			 STATUS_IN		  => "0101010101010101",
 			 NO_COLS		  => "0000001100011000",
-			 NO_ROWS		  => "0000000000000001",
+			 NO_ROWS		  => "0000000000000000",
 			 -- image data interface
 			 FVAL_IN		  => FVAL_IN, 
 			 LVAL_IN		  => LVAL_IN,
