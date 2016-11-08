@@ -7,8 +7,8 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 -- Uncomment the following library declaration if instantiating
 -- any Xilinx primitives in this code.
---library UNISIM;
---use UNISIM.VComponents.all;
+library UNISIM;
+use UNISIM.VComponents.all;
 
 entity FX3_SLAVE is
 	Port (	CLOCK : in  STD_LOGIC;
@@ -29,7 +29,6 @@ entity FX3_SLAVE is
 	       GPIFII_EPSWITCH	:		out   std_logic;			-- fx3 endpoint switch
 	       GPIFII_FLAGA	:		in    std_logic;			-- fx3 fifo flag
 	       GPIFII_FLAGB	:		in    std_logic				-- fx3 fifo flag
-
        );
 end FX3_SLAVE;
 
@@ -157,7 +156,24 @@ begin
 			 TX_FIFO_WRDAT		  => TX_FIFO_WRDAT_O,
 			 TEST			  => open);
 
-	GPIFII_PCLK <= not CLOCK;
+
+	GPIFII_PCLK_ODDR2: ODDR2
+
+	  generic map(
+	    DDR_ALIGNMENT               => "C0",               -- Sets output alignment to "NONE", "C0", "C1"
+	    INIT                        => '0',                -- Sets initial state of the Q output to '0' or '1'
+	    SRTYPE                      => "ASYNC")            -- Specifies "SYNC" or "ASYNC" set/reset
+	  port map (
+	    Q                           => GPIFII_PCLK,    -- 1-bit output data
+	    C0                          => CLOCK,          -- 1-bit clock input
+	    C1                          => not CLOCK,        -- 1-bit clock input
+	    CE                          => '1',                -- 1-bit clock enable input
+	    D0                          => '1',                -- 1-bit data input (associated with C0)
+	    D1                          => '0',                -- 1-bit data input (associated with C1)
+	    R                           => '0',                -- 1-bit reset input
+	    S                           => '0');               -- 1-bit set input
+
+
         LED <= '0';
 end Behavioral;
 

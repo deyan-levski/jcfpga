@@ -126,6 +126,7 @@ entity ADC_CTRL is
 	   G7HTX_N : in STD_LOGIC;
 	   G7HTX_P : in STD_LOGIC;
 	-- FX3 GPIFII Interface
+	   GPIFII_PCLK_IN		: in   std_logic;			-- fx3 interface clock
 	   GPIFII_PCLK			: out   std_logic;			-- fx3 interface clock
 	   GPIFII_D			: inout std_logic_vector(31 downto 0);	-- fx3 data bus
 	   GPIFII_ADDR			: out   std_logic_vector(4 downto 0);	-- fx3 fifo address
@@ -149,6 +150,15 @@ architecture Behavioral of ADC_CTRL is
 		CLK_OUT1          : out    std_logic;
 		CLK_OUT2          : out    std_logic
 		);
+	end component;
+
+	component PLL_FX3 is
+		port
+		 (
+		  CLK_IN1           : in     std_logic;
+		  -- Clock out ports
+		  CLK_OUT1          : out    std_logic;
+		 );
 	end component;
 
 	component SREG_CONTROL is
@@ -256,6 +266,7 @@ architecture Behavioral of ADC_CTRL is
 
 	signal CLOCK_100 : std_logic;
 	signal CLOCK_250 : std_logic;
+	signal FX3_CLK	 : std_logic;
 	signal MEMCLK    : std_logic;
 	signal MEMDATA   : std_logic_vector(31 downto 0);
 	signal MEMADDR   : std_logic_vector(31 downto 0);
@@ -294,6 +305,13 @@ begin
 	CLK_OUT1          => CLOCK_100,
 	CLK_OUT2          => CLOCK_250
 	);
+
+	PLL_FX3_INST: PLL_FX3
+	port map (
+	  CLK_IN1         => GPIFII_PCLK_IN, 
+	  -- Clock out ports
+	  CLK_OUT1        => FX3_CLK
+	 );
 
    -- End of PLL Core instantiation
 
@@ -696,7 +714,7 @@ begin
 
 	FX3_SLAVE_INST : FX3_SLAVE 
 	port map (	
-		CLOCK 			=> CLOCK_100,
+		CLOCK 			=> FX3_CLK,
 	        RESET 			=> RESET,
 	        LED   			=> open,
 		FVAL_IN 		=> FVAL_SEQ,
