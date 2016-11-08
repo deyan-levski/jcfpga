@@ -307,5 +307,19 @@ NOP 4
 
 MOV ADX 0x01 0	; switch off d_ads
 
+NOP 4
+
+LOAD PAR
+MOV FVAL 0x00 0
+MOV LVAL 0x00 0
+SET PAR
+
+NOP 100
+LOAD PAR
+MOV FVAL 0x00 1
+MOV LVAL 0x00 1
+SET PAR
+
+
 NOP 1024	; fill extra ROM /w NOP
 
