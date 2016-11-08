@@ -157,7 +157,7 @@ begin
 			 TX_FIFO_WRDAT		  => TX_FIFO_WRDAT_O,
 			 TEST			  => open);
 
-	GPIFII_PCLK <= CLOCK;
+	GPIFII_PCLK <= not CLOCK;
         LED <= '0';
 end Behavioral;
 
