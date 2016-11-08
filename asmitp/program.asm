@@ -52,6 +52,7 @@ MOV CNT 0x04 1	; count_updn '1'
 MOV CNT 0x01 1	; count_rst '1'
 MOV CNT 0x05 1	; count_inc_one '1'
 MOV CNT 0x08 1	; count_lsb_clk '1'
+MOV MEM 0x00 1	; count_mem_wr '1'
 MOV FVAL 0x00 0 ; FVAL '0'
 MOV LVAL 0x00 0 ; LVAL '0'
 
@@ -64,24 +65,24 @@ MOV COM 0x00 1  ; d_comp_bias_sh
 MOV SER 0x00 1	; d_digif_serial_rst
 SET PAR
 
+MOV FVAL 0x00 1 ; frame on
+
 NOP 40		; halt 320 ns — phase 1 in vref_ramp
+
+MOV LVAL 0x00 1 ; line on
 
 LOAD PAR
 MOV REF 0x01 0	; d_ref_vref_sh
 MOV REF 0x02 1	; clamp on
 SET PAR
 
-MOV FVAL 0x00 1 ; frame on
 
 NOP 10		; halt 80 ns
 MOV REF 0x02 0	; clamp off
 NOP 2
 
-MOV LVAL 0x00 1 ; line on
-
-; memory write and digif enable
-MOV MEM 0x00 1	; write to SRAM (prev. conversion)
-NOP 2
+; digif enable
+NOP 3
 MOV SER 0x00 0	; start data serialization out
 NOP 2
 
@@ -98,8 +99,13 @@ MOV CNT 0x01 1
 MOV CNT 0x05 1
 SET PAR
 NOP
+;25
 
-NOP 128 	; halt 1028 ns — wait for ramp buffer to settle
+NOP 102		; prehalt — wait for ramp buffer, toggle LVAL
+MOV LVAL 0x00 0 ; line off
+NOP 25
+;NOP 128 	; halt 1028 ns — wait for ramp buffer to settle
+
 
 MOV SHX 0x00 0	; complete shr sampling
 NOP 2
@@ -110,7 +116,10 @@ MOV REF 0x00 0
 MOV CNT 0x00 1
 SET PAR
 
-NOP 128 	; halt 1024 ns (ramp slew time)
+NOP 11
+MOV FVAL 0x00 0 ; frame off
+NOP 116
+;NOP 128 	; halt 1024 ns (ramp slew time)
 
 MOV CNT 0x00 0	; stop counter
 MOV REF 0x00 1	; stop ramp current
@@ -207,11 +216,7 @@ MOV COM 0x00 1  ; d_comp_bias_sh
 MOV SER 0x00 1	; d_digif_serial_rst
 SET PAR
 
-MOV LVAL 0x00 0 ; line off
-
 NOP 40		; halt 320 ns — phase 1 in vref_ramp
-
-MOV FVAL 0x00 0 ; frame off
 
 LOAD PAR
 MOV REF 0x01 0	; d_ref_vref_sh
@@ -220,20 +225,6 @@ SET PAR
 NOP 10		; halt 80 ns
 MOV REF 0x02 0	; clamp off
 NOP 2
-
-; reset counter
-;LOAD PAR
-;MOV CNT 0x04 0
-;MOV CNT 0x01 0
-;MOV CNT 0x05 0
-;SET PAR
-;NOP 2
-;LOAD PAR
-;MOV CNT 0x04 1
-;MOV CNT 0x01 1
-;MOV CNT 0x05 1
-;SET PAR
-;NOP
 
 NOP 128 	; halt 1028 ns — wait for ramp buffer to settle
 
@@ -312,6 +303,13 @@ MOV CNT 0x06 0	; close jc_shift_en
 NOP 4
 
 MOV ADX 0x01 0	; switch off d_ads
+
+;write to memory
+MOV MEM 0x00 0	; write to SRAM
+NOP 10
+MOV MEM 0x00 1	; write to SRAM
+
+
 
 
 NOP 1024	; fill extra ROM /w NOP
