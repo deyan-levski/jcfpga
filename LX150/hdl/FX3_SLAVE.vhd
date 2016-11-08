@@ -156,22 +156,36 @@ begin
 			 TX_FIFO_WRDAT		  => TX_FIFO_WRDAT_O,
 			 TEST			  => open);
 
-
-	GPIFII_PCLK_ODDR2: ODDR2
-
-	  generic map(
-	    DDR_ALIGNMENT               => "C0",               -- Sets output alignment to "NONE", "C0", "C1"
-	    INIT                        => '0',                -- Sets initial state of the Q output to '0' or '1'
-	    SRTYPE                      => "ASYNC")            -- Specifies "SYNC" or "ASYNC" set/reset
-	  port map (
-	    Q                           => GPIFII_PCLK,    -- 1-bit output data
-	    C0                          => CLOCK,          -- 1-bit clock input
-	    C1                          => not CLOCK,        -- 1-bit clock input
-	    CE                          => '1',                -- 1-bit clock enable input
-	    D0                          => '1',                -- 1-bit data input (associated with C0)
-	    D1                          => '0',                -- 1-bit data input (associated with C1)
-	    R                           => '0',                -- 1-bit reset input
-	    S                           => '0');               -- 1-bit set input
+	ODDR2_LVDS_CLOC_DIGIF_BUFFER_OUT_INST : ODDR2
+	generic map(
+	   DDR_ALIGNMENT => "NONE", -- Sets output alignment to "NONE", "C0", "C1" 
+	   INIT => '0', -- Sets initial state of the Q output to '0' or '1'
+	   SRTYPE => "SYNC") -- Specifies "SYNC" or "ASYNC" set/reset
+	port map (
+	   Q  => GPIFII_PCLK, -- 1-bit output data
+	   C0 => CLOCK, -- 1-bit clock input
+	   C1 => not CLOCK, -- 1-bit clock input
+	   CE => '1',   -- 1-bit clock enable input
+	   D0 => '0',   -- 1-bit data input (associated with C0)
+	   D1 => '1',   -- 1-bit data input (associated with C1)
+	   R => RESET,  -- 1-bit reset input
+	   S => '0'     -- 1-bit set input
+	); 	
+	
+--	GPIFII_PCLK_ODDR2: ODDR2
+--	  generic map(
+--	    DDR_ALIGNMENT               => "C0",               -- Sets output alignment to "NONE", "C0", "C1"
+--	    INIT                        => '0',                -- Sets initial state of the Q output to '0' or '1'
+--	    SRTYPE                      => "ASYNC")            -- Specifies "SYNC" or "ASYNC" set/reset
+--	  port map (
+--	    Q                           => GPIFII_PCLK,    -- 1-bit output data
+--	    C0                          => CLOCK,          -- 1-bit clock input
+--	    C1                          => not CLOCK,        -- 1-bit clock input
+--	    CE                          => '1',                -- 1-bit clock enable input
+--	    D0                          => '1',                -- 1-bit data input (associated with C0)
+--	    D1                          => '0',                -- 1-bit data input (associated with C1)
+--	    R                           => '0',                -- 1-bit reset input
+--	    S                           => '0');               -- 1-bit set input
 
 
         LED <= '0';
