@@ -52,8 +52,8 @@ MOV CNT 0x04 1	; count_updn '1'
 MOV CNT 0x01 1	; count_rst '1'
 MOV CNT 0x05 1	; count_inc_one '1'
 MOV CNT 0x08 1	; count_lsb_clk '1'
-MOV FVAL 0x00 1 ; Tie FVAL '1'
-MOV LVAL 0x00 1 ; Tie LVAL '1'
+MOV FVAL 0x00 0 ; Tie FVAL '1'
+MOV LVAL 0x00 0 ; Tie LVAL '1'
 
 ; references and shr sampling
 MOV ADX 0x00 1	; d_adr
@@ -310,14 +310,14 @@ MOV ADX 0x01 0	; switch off d_ads
 NOP 4
 
 LOAD PAR
-MOV FVAL 0x00 0
-MOV LVAL 0x00 0
-SET PAR
-
-NOP 100
-LOAD PAR
 MOV FVAL 0x00 1
 MOV LVAL 0x00 1
+SET PAR
+
+NOP 200
+LOAD PAR
+MOV FVAL 0x00 0
+MOV LVAL 0x00 0
 SET PAR
 
 
