@@ -152,14 +152,14 @@ architecture Behavioral of ADC_CTRL is
 		);
 	end component;
 
---	component PLL_FX3 is
---		port
---		 (
---		  CLK_IN1           : in     std_logic;
---		  -- Clock out ports
---		  CLK_OUT1          : out    std_logic
---		 );
---	end component;
+	component PLL_FX3 is
+		port
+		 (
+		  CLK_IN1           : in     std_logic;
+		  -- Clock out ports
+		  CLK_OUT1          : out    std_logic
+		 );
+	end component;
 
 	component SREG_CONTROL is
 		port (
@@ -307,14 +307,14 @@ begin
 	CLK_OUT2          => CLOCK_250
 	);
 
-	FX3_CLK <= GPIFII_PCLK_IN;
+--	FX3_CLK <= GPIFII_PCLK_IN;
 
---	PLL_FX3_INST: PLL_FX3
---	port map (
---	  CLK_IN1         => GPIFII_PCLK_IN, 
---	  -- Clock out ports
---	  CLK_OUT1        => FX3_CLK
---	 );
+	PLL_FX3_INST: PLL_FX3
+	port map (
+	  CLK_IN1         => GPIFII_PCLK_IN, 
+	  -- Clock out ports
+	  CLK_OUT1        => FX3_CLK
+	 );
 
    -- End of PLL Core instantiation
 
