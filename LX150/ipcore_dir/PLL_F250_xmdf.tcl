@@ -40,12 +40,20 @@ utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path PLL_F250/clk
 utilities_xmdf::xmdfSetData $instance FileSet $fcount type Ignore
 incr fcount
 
+utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path PLL_F250/example_design/PLL_F250_exdes.ucf
+utilities_xmdf::xmdfSetData $instance FileSet $fcount type ucf
+incr fcount
+
 utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path PLL_F250/doc/clk_wiz_ds709.pdf
 utilities_xmdf::xmdfSetData $instance FileSet $fcount type Ignore
 incr fcount
 
 utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path PLL_F250/doc/clk_wiz_gsg521.pdf
 utilities_xmdf::xmdfSetData $instance FileSet $fcount type Ignore
+incr fcount
+
+utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path PLL_F250/example_design/PLL_F250_exdes.vhd
+utilities_xmdf::xmdfSetData $instance FileSet $fcount type vhdl
 incr fcount
 
 utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path PLL_F250/implement/implement.bat
@@ -98,10 +106,6 @@ incr fcount
 
 utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path PLL_F250.ejp
 utilities_xmdf::xmdfSetData $instance FileSet $fcount type AnyView
-incr fcount
-
-utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path PLL_F250.ucf
-utilities_xmdf::xmdfSetData $instance FileSet $fcount type ucf
 incr fcount
 
 utilities_xmdf::xmdfSetData $instance FileSet $fcount relative_path PLL_F250.vhd
