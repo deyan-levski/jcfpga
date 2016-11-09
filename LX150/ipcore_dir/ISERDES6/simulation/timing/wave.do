@@ -51,8 +51,6 @@ quietly WaveActivateNextPane {} 0
 add wave -noupdate -format Logic   /ISERDES6_tb/IO_RESET
 add wave -noupdate -format Logic   /ISERDES6_tb/CLK_RESET
 add wave -noupdate -format Logic   /ISERDES6_tb/CLK_IN
-add wave -noupdate -format Logic   /ISERDES6_tb/CLK_IN_P
-add wave -noupdate -format Logic   /ISERDES6_tb/CLK_IN_N
 add wave -noupdate -format Logic   /ISERDES6_tb/dut/CLK_DIV_OUT
 add wave -noupdate -format Literal /ISERDES6_tb/DATA_IN_FROM_PINS_P
 add wave -noupdate -format Literal /ISERDES6_tb/DATA_IN_FROM_PINS_N

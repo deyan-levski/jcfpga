@@ -74,13 +74,10 @@ port (
   DATA_IN_FROM_PINS_N      : in    std_logic_vector(sys_w-1 downto 0);
   DATA_OUT_TO_PINS_P         : out   std_logic_vector(sys_w-1 downto 0);
   DATA_OUT_TO_PINS_N         : out   std_logic_vector(sys_w-1 downto 0);
-  CLK_TO_PINS_FWD_P         : out std_logic;
-  CLK_TO_PINS_FWD_N         : out std_logic;
+  CLK_TO_PINS_FWD           : out std_logic;
 
-  CLK_IN_P                 : in    std_logic;
-  CLK_IN_N                 : in    std_logic;
-  CLK_IN_FWD_P             : in    std_logic;
-  CLK_IN_FWD_N             : in    std_logic;
+  CLK_IN                   : in    std_logic;
+  CLK_IN_FWD               : in    std_logic;
   CLK_RESET                : in    std_logic;
   IO_RESET                 : in    std_logic);
 end ISERDES6_exdes;
@@ -103,8 +100,7 @@ port
   DEBUG_IN                : in    std_logic_vector (1 downto 0);       -- Input debug data. Tie to "00" if not used
   DEBUG_OUT               : out   std_logic_vector ((3*sys_w)+5 downto 0); -- Ouput debug data. Leave NC if not required
 -- Clock and reset signals
-  CLK_IN_P                : in    std_logic;                    -- Differential fast clock from IOB
-  CLK_IN_N                : in    std_logic;
+  CLK_IN                  : in    std_logic;                    -- Single ended Fast clock from IOB
   CLK_DIV_OUT             : out   std_logic;                    -- Slow clock output
   IO_RESET                : in    std_logic);                   -- Reset signal for IO circuit
 end component;
@@ -225,11 +221,10 @@ begin
    end process;
 
 
-   clkin_in_buf : IBUFGDS
+   clkin_in_buf : IBUFG
    port map
-     (O  => clkin1,
-      I  => CLK_IN_P,
-      IB => CLK_IN_N);
+     (O => clkin1,
+      I => CLK_IN);
 
    -- set up the fabric PLL_BASE to drive the BUFPLL
    pll_base_inst : PLL_BASE
@@ -515,12 +510,11 @@ end generate assign;
 	 TCE		=> clock_enable,
          RST            => IO_RESET);
 
-          obufds_clk_inst : OBUFDS
+         obuf_clk_inst : OBUF
            generic map (
-             IOSTANDARD => "LVDS_33")
+             IOSTANDARD => "LVCMOS33")
            port map (
-             O          => CLK_TO_PINS_FWD_P,
-             OB         => CLK_TO_PINS_FWD_N,
+             O          => CLK_TO_PINS_FWD,
              I          => clk_fwd_out);
 
    -- Instantiate the IO design
@@ -536,8 +530,7 @@ end generate assign;
     DEBUG_IN                => "00",
     DEBUG_OUT               => open,
 
-    CLK_IN_P                => CLK_IN_FWD_P,
-    CLK_IN_N                => CLK_IN_FWD_N,
+    CLK_IN                  => CLK_IN_FWD,
     CLK_DIV_OUT             => clk_div_out,
     IO_RESET                => rst_sync_int);
 end xilinx;

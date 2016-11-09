@@ -78,13 +78,10 @@ port (
   DATA_IN_FROM_PINS_N      : in    std_logic_vector(1 downto 0);
   DATA_OUT_TO_PINS_P         : out   std_logic_vector(1 downto 0);
   DATA_OUT_TO_PINS_N         : out   std_logic_vector(1 downto 0);
-  CLK_TO_PINS_FWD_P         : out std_logic;
-  CLK_TO_PINS_FWD_N         : out std_logic;
+  CLK_TO_PINS_FWD           : out std_logic;
 
-  CLK_IN_P                 : in    std_logic;
-  CLK_IN_N                 : in    std_logic;
-  CLK_IN_FWD_P             : in    std_logic;
-  CLK_IN_FWD_N             : in    std_logic;
+  CLK_IN                   : in    std_logic;
+  CLK_IN_FWD               : in    std_logic;
   CLK_RESET                : in    std_logic;
   IO_RESET                 : in    std_logic);
 end component;
@@ -97,13 +94,9 @@ end component;
   signal   data_in_from_pins_n : std_logic_vector(sys_w-1 downto 0);
   signal   data_out_to_pins_p : std_logic_vector(sys_w-1 downto 0);
   signal   data_out_to_pins_n : std_logic_vector(sys_w-1 downto 0);
-  signal clk_in_fwd_p               : std_logic;
-  signal clk_in_fwd_n               : std_logic;
-  signal clk_to_pins_fwd_p          : std_logic;
-  signal clk_to_pins_fwd_n          : std_logic;
+  signal clk_in_fwd           : std_logic;
+  signal clk_to_pins_fwd      : std_logic;
   signal   clk_in             : std_logic := '0';
-  signal   clk_in_p           : std_logic;
-  signal   clk_in_n           : std_logic;
   signal   clk_reset          : std_logic;
   signal   io_reset           : std_logic;
   signal   io_reset1           : std_logic;
@@ -136,8 +129,6 @@ end process;
 
 
   -- Any aliases
-   clk_in_p <= clk_in;
-   clk_in_n <= not clk_in;
 
   -- clock generator- 100 MHz simulation clock
   --------------------------------------------
@@ -238,9 +229,8 @@ end process;
     data_in_from_pins_p <= transport data_out_to_pins_p after 0.750 ns;
     data_in_from_pins_n <= transport data_out_to_pins_n after 0.750 ns;
 
-      clk_in_fwd_p  <=   clk_to_pins_fwd_p;
-    clk_in_fwd_n  <=   clk_to_pins_fwd_n;
-
+      clk_in_fwd    <=   clk_to_pins_fwd;
+  
    pattern_completed_out <= pattern_completed_out1 after (0.4*clk_per);
  
 
@@ -255,12 +245,9 @@ end process;
    DATA_IN_FROM_PINS_N       => data_in_from_pins_n,
    DATA_OUT_TO_PINS_P        => data_out_to_pins_p,
    DATA_OUT_TO_PINS_N        => data_out_to_pins_n,
-   CLK_TO_PINS_FWD_P         => clk_to_pins_fwd_p,
-   CLK_TO_PINS_FWD_N         => clk_to_pins_fwd_n,
-   CLK_IN_FWD_P              => clk_in_fwd_p,
-   CLK_IN_FWD_N              => clk_in_fwd_n,
-   CLK_IN_P                  => clk_in_p,
-   CLK_IN_N                  => clk_in_n,
+   CLK_TO_PINS_FWD           => clk_to_pins_fwd,
+   CLK_IN_FWD                => clk_in_fwd,
+   CLK_IN                    => clk_in,
    CLK_RESET                 => clk_reset,
    IO_RESET                  => io_reset);
 end test;

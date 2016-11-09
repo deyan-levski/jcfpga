@@ -63,8 +63,7 @@ port
   DEBUG_IN                : in    std_logic_vector (1 downto 0);       -- Input debug data. Tie to "00" if not used
   DEBUG_OUT               : out   std_logic_vector ((3*sys_w)+5 downto 0); -- Ouput debug data. Leave NC if not required
 -- Clock and reset signals
-  CLK_IN_P                : in    std_logic;                    -- Differential fast clock from IOB
-  CLK_IN_N                : in    std_logic;
+  CLK_IN                  : in    std_logic;                    -- Single ended Fast clock from IOB
   CLK_DIV_OUT             : out   std_logic;                    -- Slow clock output
   IO_RESET                : in    std_logic);                   -- Reset signal for IO circuit
 end component;
@@ -89,8 +88,7 @@ your_instance_name : ISERDES6
   DEBUG_OUT =>   DEBUG_OUT, -- leave NC is not required
   
 -- Clock and reset signals
-  CLK_IN_P =>   CLK_IN_P,     -- Differential clock from IOB
-  CLK_IN_N =>   CLK_IN_N,     -- Differential clock from IOB
+  CLK_IN =>   CLK_IN,      -- Single ended clock from IOB
   CLK_DIV_OUT =>   CLK_DIV_OUT,     -- Slow clock output
   CLK_RESET =>   CLK_RESET,         --clocking logic reset
   IO_RESET =>   IO_RESET);          --system reset

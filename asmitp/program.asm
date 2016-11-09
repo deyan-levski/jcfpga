@@ -77,14 +77,10 @@ MOV REF 0x02 1	; clamp on
 SET PAR
 
 
+
 NOP 10		; halt 80 ns
 MOV REF 0x02 0	; clamp off
-NOP 2
-
-; digif enable
-NOP 3
-MOV SER 0x00 0	; start data serialization out
-NOP 2
+NOP 8
 
 ; reset counter
 LOAD PAR
@@ -118,7 +114,11 @@ SET PAR
 
 NOP 11
 MOV FVAL 0x00 0 ; frame off
-NOP 116
+
+NOP 67
+MOV SER 0x00 1	; stop data serialization out
+NOP 49
+
 ;NOP 128 	; halt 1024 ns (ramp slew time)
 
 MOV CNT 0x00 0	; stop counter
@@ -308,7 +308,8 @@ MOV ADX 0x01 0	; switch off d_ads
 MOV MEM 0x00 0	; write to SRAM
 NOP 10
 MOV MEM 0x00 1	; write to SRAM
-
+NOP 5
+MOV SER 0x00 0	; start data serialization out
 
 
 
