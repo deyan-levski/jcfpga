@@ -46,16 +46,14 @@
 # PART OF THIS FILE AT ALL TIMES.
 
 #----------------------------------------------------------------
-create_clock -name CLK_IN_P -period 10 [get_ports CLK_IN_P]
-set_propagated_clock CLK_IN_P
-set_input_jitter CLK_IN_P 0.1 
+create_clock -name CLK_IN -period 10 [get_ports CLK_IN]
+set_propagated_clock CLK_IN
+set_input_jitter CLK_IN 0.1 
 
-create_clock -name CLK_IN_FWD_P -period 10 [get_ports CLK_IN_FWD_P]
-set_propagated_clock CLK_IN_FWD_P
-set_input_jitter CLK_IN_FWD_P 0.1 
+create_clock -name CLK_IN_FWD -period 10 [get_ports CLK_IN_FWD]
+set_propagated_clock CLK_IN_FWD
+set_input_jitter CLK_IN_FWD 0.1 
 
-NET "CLK_TO_PINS_FWD_P" LOC = "Bank0";
-NET "CLK_TO_PINS_FWD_N" LOC = "Bank0";
 
 
 

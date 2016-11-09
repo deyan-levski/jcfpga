@@ -10,13 +10,9 @@ LINE Wide 0 144 32 144
 PIN 0 144 LEFT 36
 PINATTR PinName data_in_from_pins_n[1:0]
 PINATTR Polarity IN
-LINE Normal 0 496 32 496
-PIN 0 496 LEFT 36
-PINATTR PinName clk_in_p
-PINATTR Polarity IN
-LINE Normal 0 528 32 528
-PIN 0 528 LEFT 36
-PINATTR PinName clk_in_n
+LINE Normal 0 464 32 464
+PIN 0 464 LEFT 36
+PINATTR PinName clk_in
 PINATTR Polarity IN
 LINE Normal 0 656 32 656
 PIN 0 656 LEFT 36
