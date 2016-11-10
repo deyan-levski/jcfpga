@@ -152,14 +152,14 @@ architecture Behavioral of ADC_CTRL is
 		);
 	end component;
 
---	component PLL_FX3 is
---		port
---		 (
---		  CLK_IN1           : in     std_logic;
---		  -- Clock out ports
---		  CLK_OUT1          : out    std_logic
---		 );
---	end component;
+	component PLL_FX3 is
+		port
+		 (
+		  CLK_IN1           : in     std_logic;
+		  -- Clock out ports
+		  CLK_OUT1          : out    std_logic
+		 );
+	end component;
 
 	component SREG_CONTROL is
 		port (
@@ -241,6 +241,15 @@ architecture Behavioral of ADC_CTRL is
 --		d_ref_vref_ramp_ota_dyn_pon: inout std_logic
 --	);
 --	end component;
+
+	component DIGIF is
+	port ( d_digif_sck : in  STD_LOGIC;
+	       d_digif_rst : in  STD_LOGIC;
+	       RESET	   : in  STD_LOGIC;
+	       d_digif_msb_data : out  STD_LOGIC;
+	       d_digif_lsb_data : out  STD_LOGIC);
+	end component;
+
 
 	component FX3_SLAVE is
 	port (	CLOCK : in  std_logic;
@@ -711,6 +720,14 @@ begin
 
    -- End of SEQUENCER instantiation
 
+	DIGIF_INST : DIGIF
+	port map ( 
+		d_digif_sck => CLOCK_100,
+		d_digif_rst => d_digif_serial_rst,
+		RESET	    => RESET,
+		d_digif_msb_data => GPIO3,
+		d_digif_lsb_data => GPIO4);
+
 -- |----------------------------------------|
 -- | Instantiating IMAGE_OUT and FX3 DRIVER |
 -- |----------------------------------------|
@@ -767,8 +784,8 @@ begin
 --|-------------------|
 
 GPIO2 <= not CLOCK_100; -- scope triggering clock
-GPIO3 <= '0';
-GPIO4 <= '0';
+--GPIO3 <= '0';
+--GPIO4 <= '0';
 SHUTDOWN_VDD <= '0';
 SHUTDOWN_VDA <= '0';
 SPI_ADC_CS   <= '0';
