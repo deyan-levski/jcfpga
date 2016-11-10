@@ -74,10 +74,8 @@ component ISERDES6_exdes
 port (
   PATTERN_COMPLETED_OUT     : out   std_logic_vector (1 downto 0);
   -- From the system into the device
-  DATA_IN_FROM_PINS_P      : in    std_logic_vector(1 downto 0);
-  DATA_IN_FROM_PINS_N      : in    std_logic_vector(1 downto 0);
-  DATA_OUT_TO_PINS_P         : out   std_logic_vector(1 downto 0);
-  DATA_OUT_TO_PINS_N         : out   std_logic_vector(1 downto 0);
+  DATA_IN_FROM_PINS        : in    std_logic_vector(1 downto 0);
+  DATA_OUT_TO_PINS         : out   std_logic_vector(1 downto 0);
   CLK_TO_PINS_FWD           : out std_logic;
 
   CLK_IN                   : in    std_logic;
@@ -90,10 +88,8 @@ end component;
   constant dev_w           : integer := 12;
   constant num_serial_bits : integer := dev_w/sys_w;
   -- From the system into the device
-  signal   data_in_from_pins_p : std_logic_vector(sys_w-1 downto 0);
-  signal   data_in_from_pins_n : std_logic_vector(sys_w-1 downto 0);
-  signal   data_out_to_pins_p : std_logic_vector(sys_w-1 downto 0);
-  signal   data_out_to_pins_n : std_logic_vector(sys_w-1 downto 0);
+  signal   data_in_from_pins   : std_logic_vector(sys_w-1 downto 0);
+  signal   data_out_to_pins    : std_logic_vector(sys_w-1 downto 0);
   signal clk_in_fwd           : std_logic;
   signal clk_to_pins_fwd      : std_logic;
   signal   clk_in             : std_logic := '0';
@@ -107,24 +103,6 @@ end component;
 
 begin
 
-process (clk_in)
-    procedure simtimeprint is
-      variable outline : line;
-    begin
-      write(outline, string'("## SYSTEM_CYCLE_COUNTER "));
-      write(outline, NOW/clk_per);
-      write(outline, string'(" ns"));
-      writeline(output,outline);
-    end simtimeprint;
-begin
-    if (clk_in'event and clk_in = '1') then
-       if (io_reset = '0') then
-         simtimeprint;
-         report "Refer XAPP1064 for exact functionality of Phase detector" severity note;
-         report "SIMULATION STOPPED." severity failure;
-       end if;
-    end if;
-end process;
 
 
 
@@ -226,8 +204,7 @@ end process;
 
 
 
-    data_in_from_pins_p <= transport data_out_to_pins_p after 0.750 ns;
-    data_in_from_pins_n <= transport data_out_to_pins_n after 0.750 ns;
+    data_in_from_pins <= transport data_out_to_pins after 0.750 ns;
 
       clk_in_fwd    <=   clk_to_pins_fwd;
   
@@ -241,10 +218,8 @@ end process;
   (
    PATTERN_COMPLETED_OUT      => pattern_completed_out1,
    -- From the system into the device
-   DATA_IN_FROM_PINS_P       => data_in_from_pins_p,
-   DATA_IN_FROM_PINS_N       => data_in_from_pins_n,
-   DATA_OUT_TO_PINS_P        => data_out_to_pins_p,
-   DATA_OUT_TO_PINS_N        => data_out_to_pins_n,
+   DATA_IN_FROM_PINS         => data_in_from_pins,
+   DATA_OUT_TO_PINS          => data_out_to_pins,
    CLK_TO_PINS_FWD           => clk_to_pins_fwd,
    CLK_IN_FWD                => clk_in_fwd,
    CLK_IN                    => clk_in,

@@ -70,6 +70,7 @@ int main(int argc, char **argv)
     xilinxcorelib_a_1047597834_3212880686_init();
     work_a_2620093191_2197999913_init();
     work_a_2712585320_3212880686_init();
+    work_a_3050171595_3212880686_init();
     xilinxcorelib_a_1855255528_3212880686_init();
     xilinxcorelib_a_1931361406_3212880686_init();
     xilinxcorelib_a_0605834661_3212880686_init();

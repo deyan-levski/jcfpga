@@ -46,7 +46,6 @@
 # PART OF THIS FILE AT ALL TIMES.
 
 # create the project
-vhpcomp -work work ../../example_design/phase_detector.vhd
 vhpcomp -work work ../../../ISERDES6.vhd
 vhpcomp -work work ../../example_design/ISERDES6_exdes.vhd
 vhpcomp -work work ../ISERDES6_tb.vhd

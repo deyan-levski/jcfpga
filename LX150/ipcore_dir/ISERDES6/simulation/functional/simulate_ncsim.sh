@@ -50,7 +50,6 @@
 mkdir work
 
 # compile all of the files
-ncvhdl -v93 -work work ../../example_design/phase_detector.vhd
 ncvhdl -v93 -work work ../../../ISERDES6.vhd
 ncvhdl -v93 -work work ../../example_design/ISERDES6_exdes.vhd
 ncvhdl -v93 -work work ../ISERDES6_tb.vhd

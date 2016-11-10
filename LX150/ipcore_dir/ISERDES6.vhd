@@ -69,12 +69,9 @@ generic
 port
  (
   -- From the system into the device
-  DATA_IN_FROM_PINS_P     : in    std_logic_vector(sys_w-1 downto 0);
-  DATA_IN_FROM_PINS_N     : in    std_logic_vector(sys_w-1 downto 0);
+  DATA_IN_FROM_PINS       : in    std_logic_vector(sys_w-1 downto 0);
   DATA_IN_TO_DEVICE       : out   std_logic_vector(dev_w-1 downto 0);
 
-  DEBUG_IN                : in    std_logic_vector (1 downto 0);       -- Input debug data. Tie to "00" if not used
-  DEBUG_OUT               : out   std_logic_vector ((3*sys_w)+5 downto 0); -- Ouput debug data. Leave NC if not required
 -- Clock and reset signals
   CLK_IN                  : in    std_logic;                    -- Single ended Fast clock from IOB
   CLK_DIV_OUT             : out   std_logic;                    -- Slow clock output
@@ -83,23 +80,20 @@ end ISERDES6;
 
 architecture xilinx of ISERDES6 is
   attribute CORE_GENERATION_INFO            : string;
-  attribute CORE_GENERATION_INFO of xilinx  : architecture is "ISERDES6,selectio_wiz_v4_1,{component_name=ISERDES6,bus_dir=INPUTS,bus_sig_type=DIFF,bus_io_std=LVDS_33,use_serialization=true,use_phase_detector=false,serialization_factor=6,enable_bitslip=false,enable_train=false,system_data_width=2,bus_in_delay=FIXED,bus_out_delay=NONE,clk_sig_type=SINGLE,clk_io_std=LVCMOS33,clk_buf=BUFIO2,active_edge=BOTH_RISE_FALL,clk_delay=FIXED,v6_bus_in_delay=NONE,v6_bus_out_delay=NONE,v6_clk_buf=BUFIO,v6_active_edge=NOT_APP,v6_ddr_alignment=SAME_EDGE_PIPELINED,v6_oddr_alignment=SAME_EDGE,ddr_alignment=C0,v6_interface_type=NETWORKING,interface_type=RETIMED,v6_bus_in_tap=0,v6_bus_out_tap=0,v6_clk_io_std=LVCMOS18,v6_clk_sig_type=DIFF}";
+  attribute CORE_GENERATION_INFO of xilinx  : architecture is "ISERDES6,selectio_wiz_v4_1,{component_name=ISERDES6,bus_dir=INPUTS,bus_sig_type=SINGLE,bus_io_std=LVCMOS33,use_serialization=true,use_phase_detector=false,serialization_factor=6,enable_bitslip=false,enable_train=false,system_data_width=2,bus_in_delay=NONE,bus_out_delay=NONE,clk_sig_type=SINGLE,clk_io_std=LVCMOS33,clk_buf=BUFIO2,active_edge=BOTH_RISE_FALL,clk_delay=NONE,v6_bus_in_delay=NONE,v6_bus_out_delay=NONE,v6_clk_buf=BUFIO,v6_active_edge=NOT_APP,v6_ddr_alignment=SAME_EDGE_PIPELINED,v6_oddr_alignment=SAME_EDGE,ddr_alignment=C0,v6_interface_type=NETWORKING,interface_type=RETIMED,v6_bus_in_tap=0,v6_bus_out_tap=0,v6_clk_io_std=LVCMOS18,v6_clk_sig_type=SINGLE}";
   constant clock_enable            : std_logic := '1';
   signal unused : std_logic;
   signal clk_in_int                : std_logic;
   signal clk_div                   : std_logic;
   signal clk_div_int               : std_logic;
   signal clk_in_int_buf            : std_logic;
-  signal clk_in_int_delay          : std_logic;
   signal clk_in_int_inv            : std_logic;
-  signal clk_in_int_n_delay        : std_logic;
 
 
   -- After the buffer
   signal data_in_from_pins_int     : std_logic_vector(sys_w-1 downto 0);
   -- Between the delay and serdes
-  signal data_in_from_pins_delay_m   : std_logic_vector(sys_w-1 downto 0);
-  signal data_in_from_pins_delay_s   : std_logic_vector(sys_w-1 downto 0);
+  signal data_in_from_pins_delay   : std_logic_vector(sys_w-1 downto 0);
   constant num_serial_bits         : integer := dev_w/sys_w;
   type serdarr is array (0 to 7) of std_logic_vector(sys_w-1 downto 0);
   -- Array to use intermediately from the serdes to the internal
@@ -109,35 +103,6 @@ architecture xilinx of ISERDES6 is
   signal serdesstrobe             : std_logic;
   signal icascade                 : std_logic_vector(sys_w-1 downto 0);
 
-  signal pd_edge                   :    std_logic_vector(sys_w-1 downto 0);
-  signal pd_clk                    :    std_logic;
-  signal pd_busy                   :    std_logic_vector(sys_w-1 downto 0);
-  signal pd_data_inc               :    std_logic_vector(sys_w-1 downto 0);
-  signal pd_data_ce                :    std_logic_vector(sys_w-1 downto 0);
-  signal pd_cal_master             :    std_logic;
-  signal pd_cal_slave              :    std_logic;
-  signal pd_cal_rst                :    std_logic;
-  signal pd_valid                  :    std_logic_vector(sys_w-1 downto 0);
-  signal pd_inc_dec                :    std_logic_vector(sys_w-1 downto 0);
-
-component phase_detector
-           generic (
-        D                       : integer := 2) ;                            -- Set the number of inputs
-           port         (
-        use_phase_detector      :  in std_logic ;                               -- Set generation of phase detector logic
-        busy                    :  in std_logic_vector(D-1 downto 0) ;          -- BUSY inputs from phase detectors
-        valid                   :  in std_logic_vector(D-1 downto 0) ;          -- VALID inputs from phase detectors
-        inc_dec                 :  in std_logic_vector(D-1 downto 0) ;          -- INC_DEC inputs from phase detectors
-        reset                   :  in std_logic ;                               -- Reset line
-        gclk                    :  in std_logic ;                               -- Global clock
-        debug_in                :  in std_logic_vector(1 downto 0) ;            -- input debug data
-        debug                   : out std_logic_vector((3*D)+5 downto 0) ;      -- Debug bus, 3D+5 = 3 lines per input (from inc, mux and ce) + 6, leave                                                                                 --  nc if debug not required
-        cal_master              : out std_logic ;                               -- Output to cal pins on master iodelay2
-        cal_slave               : out std_logic ;                               -- Output to cal pins on slave iodelay2
-        rst_out                 : out std_logic ;                               -- Output to rst pins on master & slave iodelay2
-        ce                      : out std_logic_vector(D-1 downto 0) ;          -- Output to ce pins on iodelay2
-        inc                     : out std_logic_vector(D-1 downto 0)) ;         -- Output to inc pins on iodelay2
-end component ;
 
 
 begin
@@ -146,75 +111,13 @@ begin
 
 
   -- Create the clock logic
-  ibufg_clk_inst : IBUFG
-    generic map (
-      IOSTANDARD => "LVCMOS33")
-    port map (
-      I          => CLK_IN,
-      O          => clk_in_int);
-
-  -- delay the input clock
-  iodelay2_clk : IODELAY2
-  generic map (
-     DATA_RATE             => "DDR",
-     IDELAY_VALUE          => 0,
-     IDELAY_TYPE           => "FIXED",
-     COUNTER_WRAPAROUND    => "STAY_AT_LIMIT",
-     DELAY_SRC             => "IDATAIN",
-     SERDES_MODE           => "NONE",
-     SIM_TAPDELAY_VALUE    => 75)
-  port map (
-     -- required datapath
-     IDATAIN               => clk_in_int_p,
-     DATAOUT               => clk_in_int_p_delay,
-     T                     => '1',
-     -- inactive data connections
-     DATAOUT2              => open,
-     DOUT                  => open,
-     ODATAIN               => '0',
-     TOUT                  => open,
-     -- tie off the clocks
-     IOCLK0                => '0',                  -- No calibration needed
-     IOCLK1                => '0',                  -- No calibration needed
-     -- Tie of the variable delay programming
-     CLK                   => '0',
-     CAL                   => '0',
-     INC                   => '0',
-     CE                    => '0',
-     BUSY                  => open,
-     RST                   => '0');
-
-  iodelay2_clk_n : IODELAY2
-  generic  map (
-     DATA_RATE             => "DDR",
-     IDELAY_VALUE          => 0,
-     IDELAY_TYPE           => "FIXED",
-     COUNTER_WRAPAROUND    => "STAY_AT_LIMIT",
-     DELAY_SRC             => "IDATAIN",
-     SERDES_MODE           => "NONE",
-     SIM_TAPDELAY_VALUE    => 75)
-  port map
-    (
-     -- required datapath
-     IDATAIN               => clk_in_int_n,
-     DATAOUT               => clk_in_int_n_delay,
-     T                     => '1',
-     -- inactive data connections
-     DATAOUT2              => open,
-     DOUT                  => open,
-     ODATAIN               => '0',
-     TOUT                  => open,
-     -- tie off the clocks
-     IOCLK0                => '0',                 -- No calibration needed
-     IOCLK1                => '0',                 -- No calibration needed
-     -- Tie of the variable delay programming
-     CLK                   => '0',
-     CAL                   => '0',
-     INC                   => '0',
-     CE                    => '0',
-     BUSY                  => open,
-     RST                   => '0');
-     
+--  ibufg_clk_inst : IBUFG
+--    generic map (
+--      IOSTANDARD => "LVCMOS33")
+--    port map (
+--      I          => CLK_IN,
+--      O          => clk_in_int);
+    clk_in_int <= CLK_IN;
 
   -- Set up the clock for use in the serdes
   bufio2_inst : BUFIO2
@@ -227,20 +130,20 @@ begin
       DIVCLK       => clk_div,
       IOCLK        => clk_in_int_buf,
       SERDESSTROBE => serdesstrobe,
-      I            => clk_in_int_delay);
+      I            => clk_in_int);
 
   -- also generated the inverted clock
   bufio2_inv_inst : BUFIO2
     generic map (
       DIVIDE_BYPASS => FALSE,
-      I_INVERT      => FALSE,
+      I_INVERT      => TRUE,
       USE_DOUBLER   => FALSE,
       DIVIDE        => 6)
-     port map (
+    port map (
       DIVCLK        => open,
       IOCLK         => clk_in_int_inv,
       SERDESSTROBE  => open,
-      I             => clk_in_int_n_delay);
+      I             => clk_in_int);
 
    -- Buffer up the divided clock
    clkdiv_buf_inst : BUFG
@@ -257,70 +160,17 @@ begin
     -- Instantiate the buffers
     ----------------------------------
     -- Instantiate a buffer for every bit of the data bus
-     ibufds_inst : IBUFDS
+     ibuf_inst : IBUF
        generic map (
-         DIFF_TERM  => FALSE,             -- Differential termination
-         IOSTANDARD => "LVDS_33")
-       port map (
-         I          => DATA_IN_FROM_PINS_P  (pin_count),
-         IB         => DATA_IN_FROM_PINS_N  (pin_count),
+         IOSTANDARD => "LVCMOS33")
+       port map (     
+         I          => DATA_IN_FROM_PINS    (pin_count),
          O          => data_in_from_pins_int(pin_count));
 
-  iodelay2_bus_m  : IODELAY2
-    generic map (
-      DATA_RATE                => "DDR",
-      IDELAY_VALUE             => 0,
-      IDELAY_TYPE              => "DIFF_PHASE_DETECTOR",
-      COUNTER_WRAPAROUND       => "WRAPAROUND",
-      DELAY_SRC                => "IDATAIN",
-      SERDES_MODE              => "MASTER",
-      SIM_TAPDELAY_VALUE       => 49)
-  port map (
-        IDATAIN  	       => data_in_from_pins_int  (pin_count), 
-	TOUT     	       => open, 	
-	DOUT     	       => open, 	
-	T        	       => '1', 	
-	ODATAIN  	       => '0', 
-	DATAOUT  	       => data_in_from_pins_delay_m(pin_count), 	
-	DATAOUT2 	       => open,
-       	 		
-	IOCLK0   	       => clk_in_int_buf,
-	IOCLK1   	       => clk_in_int_inv, 
-	CLK      	       => clk_div_int, 	
- 
-	CAL      	       => pd_cal_master,
-	INC      	       => pd_data_inc(pin_count), 	
-	CE       	       => pd_data_ce(pin_count), 	
-	RST      	       => pd_cal_rst,		
-	BUSY      	       => open); 			  
 
-iodelay2_bus_s  : IODELAY2
-      generic map (
-        DATA_RATE                => "DDR",
-        IDELAY_VALUE             => 0,
-        IDELAY_TYPE              => "DIFF_PHASE_DETECTOR",
-        COUNTER_WRAPAROUND       => "WRAPAROUND",
-        DELAY_SRC                => "IDATAIN",
-        SERDES_MODE              => "SLAVE",
-        SIM_TAPDELAY_VALUE       => 49)
-      port map (
-        IDATAIN                  => data_in_from_pins_int  (pin_count),
-        TOUT                     => open,
-        DOUT                     => open,
-        T                        => '1',
-        ODATAIN                  => '0',
-        DATAOUT                  => data_in_from_pins_delay_s(pin_count),
-        DATAOUT2                 => open,
-        IOCLK0                   => clk_in_int_buf,
-        IOCLK1                   => clk_in_int_inv,
-	CLK      	       => clk_div_int, 	
- 
-        CAL                      => pd_cal_slave,
-        INC                      => pd_data_inc(pin_count),
-        CE                       => pd_data_ce(pin_count),
-        RST                      => pd_cal_rst,
-        BUSY                     => pd_busy(pin_count) );
-
+    -- Pass through the delay
+    -----------------------------------
+   data_in_from_pins_delay(pin_count) <= data_in_from_pins_int(pin_count);
 
      -- Instantiate the serdes primitive
      ----------------------------------
@@ -337,13 +187,9 @@ iodelay2_bus_s  : IODELAY2
          Q2         => iserdes_q(2)(pin_count),
          Q3         => iserdes_q(1)(pin_count),
          Q4         => iserdes_q(0)(pin_count),
-        SHIFTOUT    => icascade(pin_count),-- 1-bit Cascade out signal for Master/Slave IO. In Phase Detector mode used to
-                                          -- send slave sampled data.
-        INCDEC      => pd_inc_dec(pin_count),  -- 1-bit Output of Phase Detector (Dummy in slave)
-  
-        VALID       => pd_valid(pin_count),   -- 1-bit Output of Phase Detector (Dummy in Slave). If the input data contains no
-                                     -- edges (no info for the phase detector to work with) the VALID signal will go
-                                     -- LOW to indicate that the fabric should ignore the INCDEC signal.
+         SHIFTOUT   => icascade(pin_count),
+         INCDEC     => open,
+         VALID      => open,
          BITSLIP    => '0',
          CE0        => clock_enable,   -- 1-bit Clock enable input
          CLK0       => clk_in_int_buf, -- 1-bit IO Clock network input. Optionally Invertible. This is the primary clock
@@ -352,12 +198,12 @@ iodelay2_bus_s  : IODELAY2
          CLK1       => clk_in_int_inv, -- 1-bit Optionally invertible IO Clock network input. Timing note: CLK1 should be
                                        -- 180 degrees out of phase with CLK0.
          CLKDIV     => clk_div_int,                        -- 1-bit Global clock network input. This is the clock for the fabric domain.
-         D          => data_in_from_pins_delay_m(pin_count), -- 1-bit Input signal from IOB.
+         D          => data_in_from_pins_delay(pin_count), -- 1-bit Input signal from IOB.
          IOCE       => serdesstrobe,                       -- 1-bit Data strobe signal derived from BUFIO CE. Strobes data capture for
                                                           -- NETWORKING and NETWORKING_PIPELINES alignment modes.
 
          RST        => IO_RESET,        -- 1-bit Asynchronous reset only.
-         SHIFTIN    => pd_edge(pin_count),
+         SHIFTIN    => '0',
 
 
         -- unused connections
@@ -378,13 +224,9 @@ iodelay2_bus_s  : IODELAY2
         Q2         => iserdes_q(6)(pin_count),
         Q3         => iserdes_q(5)(pin_count),
         Q4         => iserdes_q(4)(pin_count),
-        INCDEC     => open,   -- 1-bit Output of Phase Detector (Dummy in slave)
-        SHIFTOUT   => pd_edge(pin_count), -- 1-bit Cascade out signal for Master/Slave IO. In Phase Detector mode used to
-                                      -- send slave sampled data.
-
-        VALID      => open,    -- 1-bit Output of Phase Detector (Dummy in Slave). If the input data contains no
-                                      -- edges (no info for the phase detector to work with) the VALID signal will go
-                                      -- LOW to indicate that the fabric should ignore the INCDEC signal.
+        SHIFTOUT   => open,
+        INCDEC     => open,
+        VALID      => open,
         BITSLIP    => '0',
         CE0        => clock_enable,   -- 1-bit Clock enable input
         CLK0       => clk_in_int_buf, -- 1-bit IO Clock network input. Optionally Invertible. This is the primary clock
@@ -393,7 +235,7 @@ iodelay2_bus_s  : IODELAY2
         CLK1       => clk_in_int_inv, -- 1-bit Optionally invertible IO Clock network input. Timing note: CLK1 should be
                                       -- 180 degrees out of phase with CLK0.
         CLKDIV     => clk_div_int,                        -- 1-bit Global clock network input. This is the clock for the fabric domain.
-        D          => data_in_from_pins_delay_s(pin_count),            -- 1-bit Input signal from IOB.
+        D          => '0',            -- 1-bit Input signal from IOB.
         IOCE       => serdesstrobe,   -- 1-bit Data strobe signal derived from BUFIO CE. Strobes data capture for
                                       -- NETWORKING and NETWORKING_PIPELINES alignment modes.
 
@@ -427,24 +269,6 @@ iodelay2_bus_s  : IODELAY2
   end generate pins;
 
 
-pd_inst : phase_detector
-generic map (
-        D                       => 2)
-
-port map        (
-        use_phase_detector      => '1',
-        busy                    => pd_busy,
-        valid                   => pd_valid,
-        inc_dec                 => pd_inc_dec,
-        reset                   => IO_RESET,
-        gclk                    => clk_div_int,
-        debug_in                => DEBUG_IN,
-        debug                   => DEBUG_OUT,
-        cal_master              => pd_cal_master,
-        cal_slave               => pd_cal_slave,
-        rst_out                 => pd_cal_rst,
-        ce                      => pd_data_ce,
-        inc                     => pd_data_inc);
 
 
 

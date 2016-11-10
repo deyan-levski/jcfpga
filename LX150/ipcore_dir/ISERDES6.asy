@@ -2,13 +2,9 @@ Version 4
 SymbolType BLOCK
 TEXT 32 32 LEFT 4 ISERDES6
 RECTANGLE Normal 32 32 672 960
-LINE Wide 0 112 32 112
-PIN 0 112 LEFT 36
-PINATTR PinName data_in_from_pins_p[1:0]
-PINATTR Polarity IN
-LINE Wide 0 144 32 144
-PIN 0 144 LEFT 36
-PINATTR PinName data_in_from_pins_n[1:0]
+LINE Wide 0 80 32 80
+PIN 0 80 LEFT 36
+PINATTR PinName data_in_from_pins[1:0]
 PINATTR Polarity IN
 LINE Normal 0 464 32 464
 PIN 0 464 LEFT 36

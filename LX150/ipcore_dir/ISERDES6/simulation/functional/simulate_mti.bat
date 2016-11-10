@@ -49,7 +49,6 @@ REM set up the working directory
 vlib work
 
 REM compile all of the files
-vcom -work work ..\..\example_design\phase_detector.vhd
 vcom -work work ..\..\..\ISERDES6.vhd
 vcom -work work ..\..\example_design\ISERDES6_exdes.vhd
 vcom -work work ..\ISERDES6_tb.vhd

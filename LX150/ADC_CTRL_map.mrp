@@ -10,21 +10,21 @@ Target Device  : xc6slx150
 Target Package : fgg484
 Target Speed   : -3
 Mapper Version : spartan6 -- $Revision: 1.55 $
-Mapped Date    : Thu Nov 10 09:45:11 2016
+Mapped Date    : Thu Nov 10 10:09:48 2016
 
 Design Summary
 --------------
 Number of errors:      0
-Number of warnings:  161
+Number of warnings:  162
 Slice Logic Utilization:
   Number of Slice Registers:                 1,220 out of 184,304    1%
     Number used as Flip Flops:               1,092
     Number used as Latches:                    128
     Number used as Latch-thrus:                  0
     Number used as AND/OR logics:                0
-  Number of Slice LUTs:                        750 out of  92,152    1%
-    Number used as logic:                      711 out of  92,152    1%
-      Number using O6 output only:             350
+  Number of Slice LUTs:                        761 out of  92,152    1%
+    Number used as logic:                      710 out of  92,152    1%
+      Number using O6 output only:             349
       Number using O5 output only:             121
       Number using O5 and O6:                  240
       Number used as ROM:                        0
@@ -35,18 +35,18 @@ Slice Logic Utilization:
         Number using O6 output only:             2
         Number using O5 output only:             0
         Number using O5 and O6:                  0
-    Number used exclusively as route-thrus:     37
-      Number with same-slice register load:     27
+    Number used exclusively as route-thrus:     49
+      Number with same-slice register load:     39
       Number with same-slice carry load:        10
       Number with other load:                    0
 
 Slice Logic Distribution:
-  Number of occupied Slices:                   727 out of  23,038    3%
+  Number of occupied Slices:                   711 out of  23,038    3%
   Number of MUXCYs used:                       196 out of  46,076    1%
-  Number of LUT Flip Flop pairs used:        1,388
-    Number with an unused Flip Flop:           244 out of   1,388   17%
-    Number with an unused LUT:                 638 out of   1,388   45%
-    Number of fully used LUT-FF pairs:         506 out of   1,388   36%
+  Number of LUT Flip Flop pairs used:        1,373
+    Number with an unused Flip Flop:           242 out of   1,373   17%
+    Number with an unused LUT:                 612 out of   1,373   44%
+    Number of fully used LUT-FF pairs:         519 out of   1,373   37%
     Number of unique control sets:             421
     Number of slice register sites lost
       to control set restrictions:           2,794 out of 184,304    1%
@@ -58,8 +58,8 @@ Slice Logic Distribution:
   over-mapped for a non-slice resource or if Placement fails.
 
 IO Utilization:
-  Number of bonded IOBs:                       105 out of     338   31%
-    Number of LOCed IOBs:                      105 out of     105  100%
+  Number of bonded IOBs:                       103 out of     338   30%
+    Number of LOCed IOBs:                      103 out of     103  100%
     IOB Flip Flops:                              4
     IOB Master Pads:                             2
     IOB Slave Pads:                              2
@@ -73,8 +73,8 @@ Specific Feature Utilization:
   Number of BUFIO2FB/BUFIO2FB_2CLKs:             2 out of      32    6%
     Number used as BUFIO2FBs:                    2
     Number used as BUFIO2FB_2CLKs:               0
-  Number of BUFG/BUFGMUXs:                       8 out of      16   50%
-    Number used as BUFGs:                        8
+  Number of BUFG/BUFGMUXs:                       7 out of      16   43%
+    Number used as BUFGs:                        7
     Number used as BUFGMUX:                      0
   Number of DCM/DCM_CLKGENs:                     2 out of      12   16%
     Number used as DCMs:                         2
@@ -99,9 +99,9 @@ Specific Feature Utilization:
 
 Average Fanout of Non-Clock Nets:                2.86
 
-Peak Memory Usage:  970 MB
-Total REAL time to MAP completion:  43 secs 
-Total CPU time to MAP completion:   43 secs 
+Peak Memory Usage:  969 MB
+Total REAL time to MAP completion:  41 secs 
+Total CPU time to MAP completion:   41 secs 
 
 Table of Contents
 -----------------
@@ -191,12 +191,15 @@ WARNING:MapLib:701 - Signal G7HTX_P connected to top level port G7HTX_P has been
    removed.
 WARNING:MapLib:701 - Signal G7HTX_N connected to top level port G7HTX_N has been
    removed.
+WARNING:MapLib:701 - Signal GPIO1 connected to top level port GPIO1 has been
+   removed.
+WARNING:MapLib:701 - Signal GPIO2 connected to top level port GPIO2 has been
+   removed.
 WARNING:Place:1137 - This design is not guaranteed to be routable! This design
    contains a global buffer instance, <PLL_250_INST/clkout1_buf>, driving the
    net, <CLOCK_100>, that is driving the following (first 30) non-clock load
    pins.
    < PIN: CLOCK_100_BUFG.I0; >
-   < PIN: GPIO21_INV_0.A6; >
    This is not a recommended design practice in Spartan-6 due to limitations in
    the global routing that may cause excessive delay, skew or unroutable
    situations.  It is recommended to only use a BUFG resource to drive clock
@@ -597,9 +600,6 @@ WARNING:PhysDesignRules:372 - Gated clock. Clock net
    SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[80]_AND_32_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net DIGIF_INST/d_digif_sck_inv
-   is sourced by a combinatorial pin. This is not good design practice. Use the
-   CE pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
    SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[62]_AND_68_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
@@ -746,9 +746,9 @@ INFO:PhysDesignRules:1861 - To achieve optimal frequency synthesis performance
 
 Section 4 - Removed Logic Summary
 ---------------------------------
- 849 block(s) removed
+ 860 block(s) removed
    6 block(s) optimized away
- 850 signal(s) removed
+ 861 signal(s) removed
 
 Section 5 - Removed Logic
 -------------------------
@@ -3087,6 +3087,16 @@ Loadless block "IBUFDS_DIGIF_MSB_G7" (IBUFGDS) removed.
   Loadless block "G7LTX_P" (PAD) removed.
  The signal "G7LTX_N" is loadless and has been removed.
   Loadless block "G7LTX_N" (PAD) removed.
+Loadless block "ISERDES_INST/pins[0].iserdes2_slave" (ISERDES2) removed.
+ The signal "ISERDES_INST/clk_div_int" is loadless and has been removed.
+  Loadless block "ISERDES_INST/clkdiv_buf_inst" (CKBUF) removed.
+   The signal "ISERDES_INST/clk_div" is loadless and has been removed.
+ The signal "ISERDES_INST/clk_in_int_buf" is loadless and has been removed.
+ The signal "ISERDES_INST/serdesstrobe" is loadless and has been removed.
+ The signal "ISERDES_INST/icascade<0>" is loadless and has been removed.
+ The signal "ISERDES_INST/clk_in_int_inv" is loadless and has been removed.
+Loadless block "ISERDES_INST/pins[1].iserdes2_slave" (ISERDES2) removed.
+ The signal "ISERDES_INST/icascade<1>" is loadless and has been removed.
 The signal "BLOCKMEM_INST/douta<27>" is sourceless and has been removed.
 The signal "BLOCKMEM_INST/douta<3>" is sourceless and has been removed.
 The signal "BLOCKMEM_INST/douta<2>" is sourceless and has been removed.
@@ -6127,6 +6137,10 @@ The trimmed logic reported below is either:
    2. part of disabled logic
    3. a side-effect of other trimmed logic
 
+The signal "GPIO1" is unused and has been removed.
+ Unused block "GPIO1" (PAD) removed.
+The signal "GPIO2" is unused and has been removed.
+ Unused block "GPIO2" (PAD) removed.
 The signal "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN<0>" is unused and has
 been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_0" (FF) removed.
@@ -6287,6 +6301,12 @@ been removed.
  Unused block "FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_DIN_31" (FF) removed.
   The signal "N47" is unused and has been removed.
    Unused block "GPIFII_D_7_IOBUF/IBUF" (BUF) removed.
+The signal "ISERDES_INST/data_in_from_pins_int<1>" is unused and has been
+removed.
+ Unused block "ISERDES_INST/pins[1].ibuf_inst" (BUF) removed.
+The signal "ISERDES_INST/data_in_from_pins_int<0>" is unused and has been
+removed.
+ Unused block "ISERDES_INST/pins[0].ibuf_inst" (BUF) removed.
 Unused block
 "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gcon
 vfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.grdc1.rdc/Msub_GND_812_o_GND_812_o
@@ -6459,6 +6479,10 @@ n/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram" (RAMB16BWER)
 removed.
 Unused block "FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE/XST_GND" (ZERO) removed.
 Unused block "FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE/XST_VCC" (ONE) removed.
+Unused block "ISERDES_INST/bufio2_inst" (BUFIO2) removed.
+Unused block "ISERDES_INST/bufio2_inv_inst" (BUFIO2) removed.
+Unused block "ISERDES_INST/pins[0].iserdes2_master" (ISERDES2) removed.
+Unused block "ISERDES_INST/pins[1].iserdes2_master" (ISERDES2) removed.
 
 Optimized Block(s):
 TYPE 		BLOCK
@@ -6532,8 +6556,6 @@ Section 6 - IOB Properties
 | GPIFII_SLOE_N                      | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | GPIFII_SLRD_N                      | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | GPIFII_SLWR_N                      | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
-| GPIO1                              | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
-| GPIO2                              | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | GPIO3                              | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | GPIO4                              | IOB              | OUTPUT    | LVCMOS33             |       | 12       | SLOW |              |          |          |
 | RESET                              | IOB              | INPUT     | LVCMOS33             |       |          |      |              |          |          |
