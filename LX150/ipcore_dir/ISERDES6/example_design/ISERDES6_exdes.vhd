@@ -70,10 +70,8 @@ generic (
 port (
   PATTERN_COMPLETED_OUT     : out   std_logic_vector (1 downto 0);
   -- From the system into the device
-  DATA_IN_FROM_PINS_P      : in    std_logic_vector(sys_w-1 downto 0);
-  DATA_IN_FROM_PINS_N      : in    std_logic_vector(sys_w-1 downto 0);
-  DATA_OUT_TO_PINS_P         : out   std_logic_vector(sys_w-1 downto 0);
-  DATA_OUT_TO_PINS_N         : out   std_logic_vector(sys_w-1 downto 0);
+  DATA_IN_FROM_PINS        : in    std_logic_vector(sys_w-1 downto 0);
+  DATA_OUT_TO_PINS         : out   std_logic_vector(sys_w-1 downto 0);
   CLK_TO_PINS_FWD           : out std_logic;
 
   CLK_IN                   : in    std_logic;
@@ -93,12 +91,9 @@ generic
 port
  (
   -- From the system into the device
-  DATA_IN_FROM_PINS_P     : in    std_logic_vector(sys_w-1 downto 0);
-  DATA_IN_FROM_PINS_N     : in    std_logic_vector(sys_w-1 downto 0);
+  DATA_IN_FROM_PINS       : in    std_logic_vector(sys_w-1 downto 0);
   DATA_IN_TO_DEVICE       : out   std_logic_vector(dev_w-1 downto 0);
 
-  DEBUG_IN                : in    std_logic_vector (1 downto 0);       -- Input debug data. Tie to "00" if not used
-  DEBUG_OUT               : out   std_logic_vector ((3*sys_w)+5 downto 0); -- Ouput debug data. Leave NC if not required
 -- Clock and reset signals
   CLK_IN                  : in    std_logic;                    -- Single ended Fast clock from IOB
   CLK_DIV_OUT             : out   std_logic;                    -- Slow clock output
@@ -361,12 +356,11 @@ end generate assign;
   pins: for pin_count in 0 to sys_w-1 generate
     -- Instantiate the buffers
     ----------------------------------
-     obufds_inst : OBUFDS
+     obuf_inst : OBUF
        generic map (
-         IOSTANDARD => "LVDS_33")
+         IOSTANDARD => "LVCMOS33")
        port map (
-         O          => DATA_OUT_TO_PINS_P  (pin_count),
-         OB         => DATA_OUT_TO_PINS_N  (pin_count),
+         O          => DATA_OUT_TO_PINS    (pin_count),
          I          => data_out_to_pins_predelay(pin_count));
 
      -- Instantiate the serdes primitive
@@ -522,13 +516,9 @@ end generate assign;
    port map
    (
     -- From the system into the device
-    DATA_IN_FROM_PINS_P     => DATA_IN_FROM_PINS_P,
-    DATA_IN_FROM_PINS_N     => DATA_IN_FROM_PINS_N,
+    DATA_IN_FROM_PINS       => DATA_IN_FROM_PINS,
     DATA_IN_TO_DEVICE       => data_in_to_device,
 
--- Example does not implement the debug feature of Phase detector logic
-    DEBUG_IN                => "00",
-    DEBUG_OUT               => open,
 
     CLK_IN                  => CLK_IN_FWD,
     CLK_DIV_OUT             => clk_div_out,

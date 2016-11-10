@@ -56,12 +56,9 @@ generic
 port
  (
   -- From the system into the device
-  DATA_IN_FROM_PINS_P     : in    std_logic_vector(sys_w-1 downto 0);
-  DATA_IN_FROM_PINS_N     : in    std_logic_vector(sys_w-1 downto 0);
+  DATA_IN_FROM_PINS       : in    std_logic_vector(sys_w-1 downto 0);
   DATA_IN_TO_DEVICE       : out   std_logic_vector(dev_w-1 downto 0);
 
-  DEBUG_IN                : in    std_logic_vector (1 downto 0);       -- Input debug data. Tie to "00" if not used
-  DEBUG_OUT               : out   std_logic_vector ((3*sys_w)+5 downto 0); -- Ouput debug data. Leave NC if not required
 -- Clock and reset signals
   CLK_IN                  : in    std_logic;                    -- Single ended Fast clock from IOB
   CLK_DIV_OUT             : out   std_logic;                    -- Slow clock output
@@ -80,12 +77,9 @@ your_instance_name : ISERDES6
   port map
    (
   -- From the system into the device
-  DATA_IN_FROM_PINS_P =>   DATA_IN_FROM_PINS_P, --Input pins
-  DATA_IN_FROM_PINS_N =>   DATA_IN_FROM_PINS_N, --Input pins
+  DATA_IN_FROM_PINS =>   DATA_IN_FROM_PINS, --Input pins
   DATA_IN_TO_DEVICE =>   DATA_IN_TO_DEVICE, --Output pins
 
-  DEBUG_IN =>   DEBUG_IN, -- Tie to "00" if not used
-  DEBUG_OUT =>   DEBUG_OUT, -- leave NC is not required
   
 -- Clock and reset signals
   CLK_IN =>   CLK_IN,      -- Single ended clock from IOB

@@ -52,8 +52,7 @@ add wave -noupdate -format Logic   /ISERDES6_tb/IO_RESET
 add wave -noupdate -format Logic   /ISERDES6_tb/CLK_RESET
 add wave -noupdate -format Logic   /ISERDES6_tb/CLK_IN
 add wave -noupdate -format Logic   /ISERDES6_tb/dut/CLK_DIV_OUT
-add wave -noupdate -format Literal /ISERDES6_tb/DATA_IN_FROM_PINS_P
-add wave -noupdate -format Literal /ISERDES6_tb/DATA_IN_FROM_PINS_N
+add wave -noupdate -format Literal /ISERDES6_tb/DATA_IN_FROM_PINS
 add wave -noupdate -format Literal /ISERDES6_tb/dut/DATA_IN_TO_DEVICE
 TreeUpdate [SetDefaultTree]
 WaveRestoreCursors {{Cursor 1} {370825 ps} 0}

@@ -40,8 +40,8 @@ entity ADC_CTRL is
 	   SPI_DAC_A_SYNC : inout STD_LOGIC;
 	   SPI_DAC_B_SYNC : inout STD_LOGIC;
 	-- BOARD GPIO
-	   GPIO1 : out STD_LOGIC; -- DEBUG_PIN / SREG LOADED
-	   GPIO2 : out STD_LOGIC; -- SYNC_CLOCK / Scope Trigger
+	   GPIO1 : in STD_LOGIC; -- DEBUG_PIN / SREG LOADED
+	   GPIO2 : in STD_LOGIC; -- SYNC_CLOCK / Scope Trigger
 	   GPIO3 : out STD_LOGIC;
 	   GPIO4 : out STD_LOGIC;
 	-- GPIO5 : out STD_LOGIC;
@@ -250,6 +250,23 @@ architecture Behavioral of ADC_CTRL is
 	       d_digif_lsb_data : out  STD_LOGIC);
 	end component;
 
+	component ISERDES6
+	generic
+	 (-- width of the data for the system
+	  sys_w       : integer := 2;
+	  -- width of the data for the device
+	  dev_w       : integer := 12);
+	port
+	 (
+	  -- From the system into the device
+	  DATA_IN_FROM_PINS       : in    std_logic_vector(sys_w-1 downto 0);
+	  DATA_IN_TO_DEVICE       : out   std_logic_vector(dev_w-1 downto 0);
+
+	-- Clock and reset signals
+	  CLK_IN                  : in    std_logic;                    -- Single ended Fast clock from IOB
+	  CLK_DIV_OUT             : out   std_logic;                    -- Slow clock output
+	  IO_RESET                : in    std_logic);                   -- Reset signal for IO circuit
+	end component;
 
 	component FX3_SLAVE is
 	port (	CLOCK : in  std_logic;
@@ -280,6 +297,7 @@ architecture Behavioral of ADC_CTRL is
 	signal MEMCLK    : std_logic;
 	signal MEMDATA   : std_logic_vector(31 downto 0);
 	signal MEMADDR   : std_logic_vector(31 downto 0);
+	signal DESER_DATA: std_logic_vector(11 downto 0);
 	signal CLOCK_COUNT_OBUFDS : std_logic;
 	signal CLOCK_DIGIF_OBUFDS : std_logic;
 	signal FVAL_SEQ  : std_logic;
@@ -614,7 +632,7 @@ begin
 	SPI_DAC_SDA => SPI_DAC_SDA,
 	SPI_DAC_A_SYNC => SPI_DAC_A_SYNC,
 	SPI_DAC_B_SYNC => SPI_DAC_B_SYNC,
-	DEBUG_PIN => GPIO1
+	DEBUG_PIN => open
 	);
 
    -- End of SREG_CONTROL instantiation
@@ -728,6 +746,20 @@ begin
 		d_digif_msb_data => GPIO3,
 		d_digif_lsb_data => GPIO4);
 
+	ISERDES_INST : ISERDES6
+	  port map
+	   (
+	  -- From the system into the device
+	  DATA_IN_FROM_PINS =>   GPIO1 & GPIO2, --Input pins
+	  DATA_IN_TO_DEVICE =>   DESER_DATA, --Output pins
+
+	  
+	-- Clock and reset signals
+	  CLK_IN =>   CLOCK_100,      -- Single ended clock from IOB
+	  CLK_DIV_OUT => open,     -- Slow clock output
+	  --CLK_RESET =>   open,         --clocking logic reset
+	  IO_RESET =>    RESET);          --system reset
+
 -- |----------------------------------------|
 -- | Instantiating IMAGE_OUT and FX3 DRIVER |
 -- |----------------------------------------|
@@ -739,7 +771,7 @@ begin
 	        LED   			=> open,
 		FVAL_IN 		=> FVAL_SEQ,
 		LVAL_IN			=> LVAL_SEQ,
-		DATA_IN			=> "0101010101010101",
+		DATA_IN			=> "0000" & DESER_DATA, -- "0101010101010101",
 	        -- FX3 GPIFII Interface
 	        GPIFII_PCLK		=> open, --GPIFII_PCLK,	-- fx3 interface clock
 	        GPIFII_D		=> GPIFII_D,		-- fx3 data bus
@@ -783,7 +815,7 @@ begin
 --| STATIC SIGNALLING |
 --|-------------------|
 
-GPIO2 <= not CLOCK_100; -- scope triggering clock
+--GPIO2 <= not CLOCK_100; -- scope triggering clock
 --GPIO3 <= '0';
 --GPIO4 <= '0';
 SHUTDOWN_VDD <= '0';
