@@ -250,24 +250,6 @@ architecture Behavioral of ADC_CTRL is
 	       d_digif_lsb_data : out  STD_LOGIC);
 	end component;
 
-	component ISERDES6
-	generic
-	 (-- width of the data for the system
-	  sys_w       : integer := 2;
-	  -- width of the data for the device
-	  dev_w       : integer := 12);
-	port
-	 (
-	  -- From the system into the device
-	  DATA_IN_FROM_PINS       : in    std_logic_vector(sys_w-1 downto 0);
-	  DATA_IN_TO_DEVICE       : out   std_logic_vector(dev_w-1 downto 0);
-
-	-- Clock and reset signals
-	  CLK_IN                  : in    std_logic;                    -- Single ended Fast clock from IOB
-	  CLK_DIV_OUT             : out   std_logic;                    -- Slow clock output
-	  IO_RESET                : in    std_logic);                   -- Reset signal for IO circuit
-	end component;
-
 	component FX3_SLAVE is
 	port (	CLOCK : in  std_logic;
 	        RESET : in  std_logic;
@@ -745,20 +727,6 @@ begin
 		RESET	    => RESET,
 		d_digif_msb_data => GPIO3,
 		d_digif_lsb_data => GPIO4);
-
-	ISERDES_INST : ISERDES6
-	  port map
-	   (
-	  -- From the system into the device
-	  DATA_IN_FROM_PINS =>   GPIO1 & GPIO2, --Input pins
-	  DATA_IN_TO_DEVICE =>   DESER_DATA, --Output pins
-
-	  
-	-- Clock and reset signals
-	  CLK_IN =>   CLOCK_100,      -- Single ended clock from IOB
-	  CLK_DIV_OUT => open,     -- Slow clock output
-	  --CLK_RESET =>   open,         --clocking logic reset
-	  IO_RESET =>    RESET);          --system reset
 
 -- |----------------------------------------|
 -- | Instantiating IMAGE_OUT and FX3 DRIVER |
