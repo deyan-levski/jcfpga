@@ -45,42 +45,45 @@
 ;
 
 START	
-; initialize startup signals
+
+;|----------------------------|
+;| Initialize startup signals |
+;|----------------------------|
+
 LOAD PAR
-MOV REF 0x03 1	; ota_dyn_pon always @ '1'
-MOV CNT 0x04 1	; count_updn '1'
-MOV CNT 0x01 1	; count_rst '1'
-MOV CNT 0x05 1	; count_inc_one '1'
-MOV CNT 0x08 1	; count_lsb_clk '1'
-MOV MEM 0x00 1	; count_mem_wr '1'
-MOV FVAL 0x00 0 ; FVAL '0'
-MOV LVAL 0x00 0 ; LVAL '0'
+MOV REF 0x03 1		; ota_dyn_pon always @ '1'
+MOV CNT 0x04 1		; count_updn '1'
+MOV CNT 0x01 1		; count_rst '1'
+MOV CNT 0x05 1		; count_inc_one '1'
+MOV CNT 0x08 1		; count_lsb_clk '1'
+MOV MEM 0x00 1		; count_mem_wr '1'
+MOV FVAL 0x00 1 	; FVAL '1'
+MOV LVAL 0x00 1 	; LVAL '1'
+
+;|-----------------|
+;| Sequencer start |
+;|-----------------|
 
 ; references and shr sampling
-MOV ADX 0x00 1	; d_adr
-MOV SHX 0x00 1	; d_shr
-MOV REF 0x01 1	; d_ref_vref_sh
-MOV REF 0x00 1	; d_ref_vref_ramp_rst
-MOV COM 0x00 1  ; d_comp_bias_sh
-MOV SER 0x00 1	; d_digif_serial_rst
+MOV ADX 0x00 1		; d_adr
+MOV SHX 0x00 1		; d_shr
+MOV REF 0x01 1		; d_ref_vref_sh
+MOV REF 0x00 1		; d_ref_vref_ramp_rst
+MOV COM 0x00 1		; d_comp_bias_sh
 SET PAR
 
-MOV FVAL 0x00 1 ; frame on
+NOP 32			; halt 320 ns — phase 1 in vref_ramp
 
-NOP 40		; halt 320 ns — phase 1 in vref_ramp
-
-MOV LVAL 0x00 1 ; line on
+MOV LVAL 0x00 1		; line on
 
 LOAD PAR
-MOV REF 0x01 0	; d_ref_vref_sh
-MOV REF 0x02 1	; clamp on
+MOV REF 0x01 0		; d_ref_vref_sh
+MOV REF 0x02 1		; clamp on
 SET PAR
 
-
-
-NOP 10		; halt 80 ns
-MOV REF 0x02 0	; clamp off
-NOP 8
+NOP 8			; halt 80 ns
+MOV REF 0x02 0		; clamp off
+NOP 6
 
 ; reset counter
 LOAD PAR
@@ -95,15 +98,15 @@ MOV CNT 0x01 1
 MOV CNT 0x05 1
 SET PAR
 NOP
-;25
 
-NOP 102		; prehalt — wait for ramp buffer, toggle LVAL
-MOV LVAL 0x00 0 ; line off
-NOP 25
-;NOP 128 	; halt 1028 ns — wait for ramp buffer to settle
+; halt 1020 ns — wait for ramp buffer to settle
+NOP 50
+MOV SER 0x00 1		; stop data serialization out
+MOV LVAL 0x00 0 	; line off
+NOP 52			; prehalt — wait for ramp buffer, toggle LVAL
+MOV FVAL 0x00 0		; frame off
 
-
-MOV SHX 0x00 0	; complete shr sampling
+MOV SHX 0x00 0		; complete shr sampling
 NOP 2
 
 ; start count & ramp current
@@ -112,123 +115,116 @@ MOV REF 0x00 0
 MOV CNT 0x00 1
 SET PAR
 
-NOP 11
-MOV FVAL 0x00 0 ; frame off
+; halt 1024 ns (ramp slew time)
+NOP 6
+MOV FVAL 0x00 0 	; frame off
+NOP 95
 
-NOP 67
-MOV SER 0x00 1	; stop data serialization out
-NOP 49
-
-;NOP 128 	; halt 1024 ns (ramp slew time)
-
-MOV CNT 0x00 0	; stop counter
-MOV REF 0x00 1	; stop ramp current
+MOV CNT 0x00 0		; stop counter
+MOV REF 0x00 1		; stop ramp current
 
 NOP 2
 
 ; transfer johnsons to lsb counter
-MOV CNT 0x06 1	; open jc_shift_en
+MOV CNT 0x06 1		; open jc_shift_en
 NOP 2
-MOV CNT 0x07 1	; open lsb_en
+MOV CNT 0x07 1		; open lsb_en
 NOP 2
-MOV CNT 0x08 0	; run lsb clocks
+MOV CNT 0x08 0		; run lsb clocks
 NOP 2
-MOV CNT 0x08 1	; clk 1
-NOP 2
-MOV CNT 0x08 0
-NOP 2
-MOV CNT 0x08 1	; clk 2
+MOV CNT 0x08 1		; clk 1
 NOP 2
 MOV CNT 0x08 0
 NOP 2
-MOV CNT 0x08 1	; clk 3
+MOV CNT 0x08 1		; clk 2
 NOP 2
 MOV CNT 0x08 0
 NOP 2
-MOV CNT 0x08 1	; clk 4
+MOV CNT 0x08 1		; clk 3
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 5
+MOV CNT 0x08 1		; clk 4
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 6
+MOV CNT 0x08 1		; clk 5
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 7
+MOV CNT 0x08 1		; clk 6
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 8
+MOV CNT 0x08 1		; clk 7
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 9
+MOV CNT 0x08 1		; clk 8
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 10
+MOV CNT 0x08 1		; clk 9
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 11
+MOV CNT 0x08 1		; clk 10
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 12
+MOV CNT 0x08 1		; clk 11
 NOP 2
-MOV CNT 0x07 0	; close lsb_en
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x06 0	; close jc_shift_en
+MOV CNT 0x08 1		; clk 12
+NOP 2
+MOV CNT 0x07 0		; close lsb_en
+NOP 2
+MOV CNT 0x06 0		; close jc_shift_en
 NOP 4
 
 ; start SHR DCDS inversion
 LOAD PAR
-MOV CNT 0x02 1	; inv_clk '1'
-MOV CNT 0x03 1	; hold '1'
+MOV CNT 0x02 1		; inv_clk '1'
+MOV CNT 0x03 1		; hold '1'
 SET PAR
 NOP 4
-MOV CNT 0x02 0	; inv_clk '0'
+MOV CNT 0x02 0		; inv_clk '0'
 NOP 4
-MOV CNT 0x05 0	; inc_one '0'
+MOV CNT 0x05 0		; inc_one '0'
 NOP 4
-MOV CNT 0x05 1	; inc_one '1'
+MOV CNT 0x05 1		; inc_one '1'
 NOP 4
-MOV CNT 0x04 0	; updn '0'
+MOV CNT 0x04 0		; updn '0'
 NOP 4
-MOV CNT 0x03 0	; hold '0'
+MOV CNT 0x03 0		; hold '0'
 NOP 4
-MOV CNT 0x04 1	; updn '1'
+MOV CNT 0x04 1		; updn '1'
 
-; stop serializer
-MOV SER 0x00 1	; stop data serialization out
-MOV ADX 0x00 0	; switch off d_adr
+MOV ADX 0x00 0		; switch off d_adr
 
 ; references and shs sampling
 LOAD PAR
-MOV ADX 0x01 1	; d_ads
-MOV SHX 0x01 1	; d_shs
-MOV REF 0x01 1	; d_ref_vref_sh
-MOV REF 0x00 1	; d_ref_vref_ramp_rst
-MOV COM 0x00 1  ; d_comp_bias_sh
-MOV SER 0x00 1	; d_digif_serial_rst
+MOV ADX 0x01 1		; d_ads
+MOV SHX 0x01 1		; d_shs
+MOV REF 0x01 1		; d_ref_vref_sh
+MOV REF 0x00 1		; d_ref_vref_ramp_rst
+MOV COM 0x00 1		; d_comp_bias_sh
 SET PAR
 
-NOP 40		; halt 320 ns — phase 1 in vref_ramp
+NOP 32	      		; halt 320 ns — phase 1 in vref_ramp
 
 LOAD PAR
-MOV REF 0x01 0	; d_ref_vref_sh
-MOV REF 0x02 1	; clamp on
+MOV REF 0x01 0		; d_ref_vref_sh
+MOV REF 0x02 1		; clamp on
 SET PAR
-NOP 10		; halt 80 ns
-MOV REF 0x02 0	; clamp off
+NOP 8	      		; halt 80 ns
+MOV REF 0x02 0		; clamp off
 NOP 2
 
-NOP 128 	; halt 1028 ns — wait for ramp buffer to settle
+NOP 102       		; halt 1020 ns — wait for ramp buffer to settle
 
-MOV SHX 0x01 0	; complete shs sampling
+MOV SHX 0x01 0		; complete shs sampling
 NOP 2
 
 ; start count & ramp current
@@ -237,80 +233,83 @@ MOV REF 0x00 0
 MOV CNT 0x00 1
 SET PAR
 
-NOP 128 	; halt 1024 ns (ramp slew time)
+NOP 102 		; halt 1020 ns (ramp slew time)
 
-MOV CNT 0x00 0	; stop counter
-MOV REF 0x00 1	; stop ramp current
+MOV CNT 0x00 0		; stop counter
+MOV REF 0x00 1		; stop ramp current
 
 NOP 2
 
 ; transfer johnsons to lsb counter
-MOV CNT 0x06 1	; open jc_shift_en
+MOV CNT 0x06 1		; open jc_shift_en
 NOP 2
-MOV CNT 0x07 1	; open lsb_en
+MOV CNT 0x07 1		; open lsb_en
 NOP 2
-MOV CNT 0x08 0	; run lsb clocks
+MOV CNT 0x08 0		; run lsb clocks
 NOP 2
-MOV CNT 0x08 1	; clk 1
+MOV CNT 0x08 1		; clk 1
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 2
+MOV CNT 0x08 1		; clk 2
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 3
+MOV CNT 0x08 1		; clk 3
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 4
+MOV CNT 0x08 1		; clk 4
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 5
+MOV CNT 0x08 1		; clk 5
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 6
+MOV CNT 0x08 1		; clk 6
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 7
+MOV CNT 0x08 1		; clk 7
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 8
+MOV CNT 0x08 1		; clk 8
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 9
+MOV CNT 0x08 1		; clk 9
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 10
+MOV CNT 0x08 1		; clk 10
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 11
+MOV CNT 0x08 1		; clk 11
 NOP 2
-MOV CNT 0x08 0
+MOV CNT 0x08 0		
 NOP 2
-MOV CNT 0x08 1	; clk 12
+MOV CNT 0x08 1		; clk 12
 NOP 2
-MOV CNT 0x07 0	; close lsb_en
+MOV CNT 0x07 0		; close lsb_en
 NOP 2
-MOV CNT 0x06 0	; close jc_shift_en
+MOV CNT 0x06 0		; close jc_shift_en
 NOP 4
 
-MOV ADX 0x01 0	; switch off d_ads
+MOV ADX 0x01 0		; switch off d_ads
 
 ;write to memory
-MOV MEM 0x00 0	; write to SRAM
-NOP 10
-MOV MEM 0x00 1	; write to SRAM
-NOP 5
-MOV SER 0x00 0	; start data serialization out
+MOV MEM 0x00 0		; write to SRAM
+NOP 8
+MOV MEM 0x00 1		; write to SRAM
+NOP 4
 
+MOV SER 0x00 0		; start data serialization out
+MOV FVAL 0x00 1		; frame on
+NOP 4
+MOV LVAL 0x00 1		; line on
 
 
 NOP 1024	; fill extra ROM /w NOP
