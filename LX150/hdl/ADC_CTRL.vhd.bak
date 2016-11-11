@@ -845,7 +845,7 @@ begin
 	  generic map (
 	    G_SIMULATION                => false,                   -- simulation mode
 	    G_INVERT_LSB                => false,                   -- invert LSB sensor data
-	    C_TP                        => x"34343434")             -- training pattern
+	    C_TP                        => x"D3D3D3D3")             -- training pattern
 	  port map (
 	    -- system signals
 	    RESET                       => not BUFPLL_LOCKED_BANK0, -- 

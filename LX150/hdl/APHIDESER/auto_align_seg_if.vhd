@@ -14,7 +14,7 @@ entity AUTO_ALIGN_SEG_IF is
   generic (
     G_SIMULATION:               boolean:= false;                                -- simulation mode
     G_INVERT_LSB:               boolean:= false;                                -- invert LSB sensor data
-    C_TP:                       std_logic_vector:=x"34343434");                 -- training pattern
+    C_TP:                       std_logic_vector:=x"D3D3D3D3");                 -- training pattern
   port (
     -- system signals
     RESET:                      in  std_logic;                                  -- async. reset
