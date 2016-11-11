@@ -292,6 +292,7 @@ architecture Behavioral of ADC_CTRL is
 	component FX3_SLAVE is
 	port (	CLOCK : in  std_logic;
 	        RESET : in  std_logic;
+		CLOCK_IMG : in std_logic;
 	        LED   : out std_logic;
 		FVAL_IN : in std_logic;
 		LVAL_IN : in std_logic;
@@ -870,6 +871,7 @@ begin
 	port map (	
 		CLOCK 			=> FX3_CLK,
 	        RESET 			=> RESET,
+		CLOCK_IMG		=> CLOCK_DESER_WORD,
 	        LED   			=> open,
 		FVAL_IN 		=> FVAL_SEQ,
 		LVAL_IN			=> LVAL_SEQ,
