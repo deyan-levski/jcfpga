@@ -13,6 +13,7 @@ use UNISIM.VComponents.all;
 entity FX3_SLAVE is
 	Port (	CLOCK : in  STD_LOGIC;
 	       RESET : in  STD_LOGIC;
+	       CLOCK_IMG : in STD_LOGIC;
 	       LED   : out STD_LOGIC;
 	       FVAL_IN : in STD_LOGIC;
 	       LVAL_IN : in STD_LOGIC;
@@ -140,7 +141,7 @@ begin
 	port map (
 			 -- system signals
 			 RESET			  => RESET,
-			 CLOCK			  => CLOCK,
+			 CLOCK			  => CLOCK_IMG,
 			 ENABLE			  => '1',
 			 -- status inputs
 			 STATUS_IN		  => "0101010101010101",
