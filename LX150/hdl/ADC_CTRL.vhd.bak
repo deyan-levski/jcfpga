@@ -143,6 +143,7 @@ end ADC_CTRL;
 
 architecture Behavioral of ADC_CTRL is
 
+
 	component PLL_F250 is
 		port (
 		CLK_IN1           : in     std_logic;
@@ -158,6 +159,22 @@ architecture Behavioral of ADC_CTRL is
 		  CLK_IN1           : in     std_logic;
 		  -- Clock out ports
 		  CLK_OUT1          : out    std_logic
+		 );
+	end component;
+
+	component PLL_DESER is
+		port
+		 (-- Clock in ports
+		  CLK_IN1           : in     std_logic;
+		  CLKFB_IN          : in     std_logic;
+		  -- Clock out ports
+		  CLK_OUT1          : out    std_logic;
+		  CLK_OUT2          : out    std_logic;
+		  CLK_OUT3          : out    std_logic;
+		  CLKFB_OUT         : out    std_logic;
+		  -- Status and control signals
+		  RESET             : in     std_logic;
+		  LOCKED            : out    std_logic
 		 );
 	end component;
 
@@ -250,6 +267,28 @@ architecture Behavioral of ADC_CTRL is
 	       d_digif_lsb_data : out  STD_LOGIC);
 	end component;
 
+	component AUTO_ALIGN_SEG_IF is
+	  generic (
+	    G_SIMULATION:               boolean:= false;                                -- simulation mode
+	    G_INVERT_LSB:               boolean:= false;                                -- invert LSB sensor data
+	    C_TP:                       std_logic_vector:=x"34343434");                 -- training pattern
+	  port (
+	    -- system signals
+	    RESET:                      in  std_logic;                                  -- async. reset
+	    ENABLE:                     in  std_logic;                                  -- module activation
+	    IO_CLK:                     in  std_logic;                                  -- bit clock
+	    DIV_CLK:                    in  std_logic;                                  -- bit clock / 4
+	    BYTE_CLK:                   in  std_logic;                                  -- word clock
+	    SERDESSTROBE_IN:            in  std_logic;                                  -- strobe to ISERDES
+	    SEG_DATA:                   in  std_logic;                                  -- serial data for segment LS-Byte (LVDS+)
+	    -- image data interface
+	    DATA:                       out std_logic_vector(5 downto 0);              -- data output
+	    DATA_EN:                    out std_logic;                                  -- DATA_IN data valid
+	    -- debug
+	    DEBUG_IN:                   in  std_logic_vector(7 downto 0);
+	    DEBUG_OUT:                  out std_logic_vector(11 downto 0));
+	end component AUTO_ALIGN_SEG_IF;
+
 	component FX3_SLAVE is
 	port (	CLOCK : in  std_logic;
 	        RESET : in  std_logic;
@@ -272,6 +311,7 @@ architecture Behavioral of ADC_CTRL is
        );
 	end component;
 
+	signal CLOCK_I 	 : std_logic;
 	signal CLOCK_100 : std_logic;
 	signal CLOCK_250 : std_logic;
 	signal CLOCK_100_PCLK : std_logic;
@@ -279,7 +319,15 @@ architecture Behavioral of ADC_CTRL is
 	signal MEMCLK    : std_logic;
 	signal MEMDATA   : std_logic_vector(31 downto 0);
 	signal MEMADDR   : std_logic_vector(31 downto 0);
-	signal DESER_DATA: std_logic_vector(11 downto 0);
+	signal PLL_DESER_FB : std_logic;
+	signal PLL_DESER_LOCKED : std_logic;
+	signal IO_CLK_BANK0 : std_logic;
+	signal BUFPLL_LOCKED_BANK0 : std_logic;
+	signal SERDESSTROBE_BANK0 : std_logic;
+	signal CLOCK_DESER_1BIT : std_logic;
+	signal CLOCK_DESER_4BIT : std_logic;
+	signal CLOCK_DESER_WORD : std_logic; 
+	signal DESER_DATA: std_logic_vector(5 downto 0);
 	signal CLOCK_COUNT_OBUFDS : std_logic;
 	signal CLOCK_DIGIF_OBUFDS : std_logic;
 	signal FVAL_SEQ  : std_logic;
@@ -301,6 +349,7 @@ architecture Behavioral of ADC_CTRL is
 	signal G6HTX	 : std_logic;
 	signal G7LTX	 : std_logic;
 	signal G7HTX	 : std_logic;
+	signal LSBDAT	 : std_logic;
 
 begin
 
@@ -308,9 +357,15 @@ begin
 --| Instantiate PLL Core |
 --|----------------------|
 
+	PAD_CLOCK_BUFFER : IBUFG
+	port map (
+	O => CLOCK_I,
+	I => CLOCK
+	);
+
 	PLL_250_INST: PLL_F250
 	port map (
-	CLK_IN1           => CLOCK,
+	CLK_IN1           => CLOCK_I,
 	-- Clock out ports
 	CLK_OUT1          => CLOCK_100,
 	CLK_OUT2          => CLOCK_250
@@ -325,7 +380,65 @@ begin
 	  CLK_OUT1        => FX3_CLK
 	 );
 
+	PLL_DESER_INST: PLL_DESER
+	port map (-- Clock in ports
+	CLK_IN1 => CLOCK_I,
+	CLKFB_IN => PLL_DESER_FB,
+	-- Clock out ports
+	CLK_OUT1 => CLOCK_DESER_1BIT,
+	CLK_OUT2 => CLOCK_DESER_4BIT,
+	CLK_OUT3 => CLOCK_DESER_WORD,
+	CLKFB_OUT => PLL_DESER_FB,
+	-- Status and control signals
+	RESET  => '0',
+	LOCKED => PLL_DESER_LOCKED
+	);
+
    -- End of PLL Core instantiation
+
+	I_BUFPLL_BANK0: BUFPLL
+	generic map (
+	  DIVIDE                      => 4)
+	port map (
+	  IOCLK                       => IO_CLK_BANK0,		-- Deser_1bit_clk output clock
+	  LOCK                        => BUFPLL_LOCKED_BANK0,	-- Synchronized Lock output
+	  SERDESSTROBE                => SERDESSTROBE_BANK0,	-- SERDES Strobe signal
+	  GCLK                        => CLOCK_DESER_4BIT,
+	  LOCKED                      => PLL_DESER_LOCKED,
+	  PLLIN                       => CLOCK_DESER_1BIT
+  	);
+
+   -- End BUFPLL Core instantiation
+
+--|---------------------------------|
+--| Test LVDS drivers and Receivers |
+--|---------------------------------|
+
+   ODDR2_LSBDATTX_INST : ODDR2
+   generic map(
+      DDR_ALIGNMENT => "NONE", -- Sets output alignment to "NONE", "C0", "C1" 
+      INIT => '0', -- Sets initial state of the Q output to '0' or '1'
+      SRTYPE => "SYNC") -- Specifies "SYNC" or "ASYNC" set/reset
+   port map (
+      Q  => CLOCK_DIGIF_OBUFDS, -- 1-bit output data
+      C0 => LSBDAT, -- 1-bit clock input
+      C1 => not LSBDAT, -- 1-bit clock input
+      CE => '1',   -- 1-bit clock enable input
+      D0 => '0',   -- 1-bit data input (associated with C0)
+      D1 => '1',   -- 1-bit data input (associated with C1)
+      R => RESET,  -- 1-bit reset input
+      S => '0'     -- 1-bit set input
+   ); 
+
+   OBUFDS_LSBDAT_TX : OBUFDS
+   generic map (
+      IOSTANDARD => "LVDS_33")
+   port map (
+      O => SRX_N,     -- Diff_p output (connect directly to top-level port)
+      OB => SRX_P,    -- Diff_n output (connect directly to top-level port)
+      I => CLOCK_DIGIF_OBUFDS  -- Buffer input
+   );
+
 
 --|------------------------------------------------|
 --| OBUFDS: Differential Output Count Clock Buffer |
@@ -362,30 +475,30 @@ begin
 --| OBUFDS: Differential Digif Serializer Clock Buffer |
 --|----------------------------------------------------|
 
-   ODDR2_LVDS_CLOC_DIGIF_BUFFER_OUT_INST : ODDR2
-   generic map(
-      DDR_ALIGNMENT => "NONE", -- Sets output alignment to "NONE", "C0", "C1" 
-      INIT => '0', -- Sets initial state of the Q output to '0' or '1'
-      SRTYPE => "SYNC") -- Specifies "SYNC" or "ASYNC" set/reset
-   port map (
-      Q  => CLOCK_DIGIF_OBUFDS, -- 1-bit output data
-      C0 => CLOCK_100, -- 1-bit clock input
-      C1 => not CLOCK_100, -- 1-bit clock input
-      CE => '1',   -- 1-bit clock enable input
-      D0 => '0',   -- 1-bit data input (associated with C0)
-      D1 => '1',   -- 1-bit data input (associated with C1)
-      R => RESET,  -- 1-bit reset input
-      S => '0'     -- 1-bit set input
-   ); 
-
-   OBUFDS_DIGIF_CLK : OBUFDS
-   generic map (
-      IOSTANDARD => "LVDS_33")
-   port map (
-      O => SRX_N,     -- Diff_p output (connect directly to top-level port)
-      OB => SRX_P,    -- Diff_n output (connect directly to top-level port)
-      I => CLOCK_DIGIF_OBUFDS  -- Buffer input
-   );
+--  ODDR2_LVDS_CLOC_DIGIF_BUFFER_OUT_INST : ODDR2
+--  generic map(
+--     DDR_ALIGNMENT => "NONE", -- Sets output alignment to "NONE", "C0", "C1" 
+--     INIT => '0', -- Sets initial state of the Q output to '0' or '1'
+--     SRTYPE => "SYNC") -- Specifies "SYNC" or "ASYNC" set/reset
+--  port map (
+--     Q  => CLOCK_DIGIF_OBUFDS, -- 1-bit output data
+--     C0 => CLOCK_100, -- 1-bit clock input
+--     C1 => not CLOCK_100, -- 1-bit clock input
+--     CE => '1',   -- 1-bit clock enable input
+--     D0 => '0',   -- 1-bit data input (associated with C0)
+--     D1 => '1',   -- 1-bit data input (associated with C1)
+--     R => RESET,  -- 1-bit reset input
+--     S => '0'     -- 1-bit set input
+--  ); 
+--
+--  OBUFDS_DIGIF_CLK : OBUFDS
+--  generic map (
+--     IOSTANDARD => "LVDS_33")
+--  port map (
+--     O => SRX_N,     -- Diff_p output (connect directly to top-level port)
+--     OB => SRX_P,    -- Diff_n output (connect directly to top-level port)
+--     I => CLOCK_DIGIF_OBUFDS  -- Buffer input
+--  );
   
    -- End of OBUFDS_inst instantiation
 
@@ -393,7 +506,7 @@ begin
 --| GROUP 0 DATA IBUFF |
 --|--------------------|
 
-   IBUFDS_DIGIF_MSB_G0 : IBUFGDS
+   IBUFDS_DIGIF_LSB_G0 : IBUFGDS
    generic map (
       DIFF_TERM => TRUE, -- Differential Termination 
       IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -404,7 +517,7 @@ begin
       IB 		=> G0LTX_N
    );
 
-   IBUFDS_DIGIF_LSB_G0 : IBUFGDS
+   IBUFDS_DIGIF_MSB_G0 : IBUFGDS
    generic map (
       DIFF_TERM => TRUE, -- Differential Termination 
       IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -419,7 +532,7 @@ begin
 --| GROUP 1 DATA IBUFF |
 --|--------------------|
 
-   IBUFDS_DIGIF_MSB_G1 : IBUFGDS
+   IBUFDS_DIGIF_LSB_G1 : IBUFGDS
    generic map (
       DIFF_TERM => TRUE, -- Differential Termination 
       IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -430,7 +543,7 @@ begin
       IB 		=> G1LTX_N
    );
 
-   IBUFDS_DIGIF_LSB_G1 : IBUFGDS
+   IBUFDS_DIGIF_MSB_G1 : IBUFGDS
    generic map (
       DIFF_TERM => TRUE, -- Differential Termination 
       IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -445,7 +558,7 @@ begin
 --| GROUP 2 DATA IBUFF |
 --|--------------------|
 
-   IBUFDS_DIGIF_MSB_G2 : IBUFGDS
+   IBUFDS_DIGIF_LSB_G2 : IBUFGDS
    generic map (
       DIFF_TERM => TRUE, -- Differential Termination 
       IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -456,7 +569,7 @@ begin
       IB 		=> G2LTX_N
    );
 
-   IBUFDS_DIGIF_LSB_G2 : IBUFGDS
+   IBUFDS_DIGIF_MSB_G2 : IBUFGDS
    generic map (
       DIFF_TERM => TRUE, -- Differential Termination 
       IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -471,7 +584,7 @@ begin
 --| GROUP 3 DATA IBUFF |
 --|--------------------|
 
-   IBUFDS_DIGIF_MSB_G3 : IBUFGDS
+   IBUFDS_DIGIF_LSB_G3 : IBUFGDS
    generic map (
       DIFF_TERM => TRUE, -- Differential Termination 
       IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -482,7 +595,7 @@ begin
       IB 		=> G3LTX_N
    );
 
-   IBUFDS_DIGIF_LSB_G3 : IBUFGDS
+   IBUFDS_DIGIF_MSB_G3 : IBUFGDS
    generic map (
       DIFF_TERM => TRUE, -- Differential Termination 
       IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -497,7 +610,7 @@ begin
 --| GROUP 4 DATA IBUFF |
 --|--------------------|
 
-   IBUFDS_DIGIF_MSB_G4 : IBUFGDS
+   IBUFDS_DIGIF_LSB_G4 : IBUFGDS
    generic map (
       DIFF_TERM => TRUE, -- Differential Termination 
       IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -508,7 +621,7 @@ begin
       IB 		=> G4LTX_N
    );
 
-   IBUFDS_DIGIF_LSB_G4 : IBUFGDS
+   IBUFDS_DIGIF_MSB_G4 : IBUFGDS
    generic map (
       DIFF_TERM => TRUE, -- Differential Termination 
       IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -523,7 +636,7 @@ begin
 --| GROUP 5 DATA IBUFF |
 --|--------------------|
 
-   IBUFDS_DIGIF_MSB_G5 : IBUFGDS
+   IBUFDS_DIGIF_LSB_G5 : IBUFGDS
    generic map (
       DIFF_TERM => TRUE, -- Differential Termination 
       IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -534,7 +647,7 @@ begin
       IB 		=> G5LTX_N
    );
 
-   IBUFDS_DIGIF_LSB_G5 : IBUFGDS
+   IBUFDS_DIGIF_MSB_G5 : IBUFGDS
    generic map (
       DIFF_TERM => TRUE, -- Differential Termination 
       IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -549,7 +662,7 @@ begin
 --| GROUP 6 DATA IBUFF |
 --|--------------------|
 
-   IBUFDS_DIGIF_MSB_G6 : IBUFGDS
+   IBUFDS_DIGIF_LSB_G6 : IBUFGDS
    generic map (
       DIFF_TERM => TRUE, -- Differential Termination 
       IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -560,7 +673,7 @@ begin
       IB 		=> G6LTX_N
    );
 
-   IBUFDS_DIGIF_LSB_G6 : IBUFGDS
+   IBUFDS_DIGIF_MSB_G6 : IBUFGDS
    generic map (
       DIFF_TERM => TRUE, -- Differential Termination 
       IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -575,7 +688,7 @@ begin
 --| GROUP 7 DATA IBUFF |
 --|--------------------|
 
-   IBUFDS_DIGIF_MSB_G7 : IBUFGDS
+   IBUFDS_DIGIF_LSB_G7 : IBUFGDS
    generic map (
       DIFF_TERM => TRUE, -- Differential Termination 
       IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -586,7 +699,7 @@ begin
       IB 		=> G7LTX_N
    );
 
-   IBUFDS_DIGIF_LSB_G7 : IBUFGDS
+   IBUFDS_DIGIF_MSB_G7 : IBUFGDS
    generic map (
       DIFF_TERM => TRUE, -- Differential Termination 
       IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
@@ -726,7 +839,28 @@ begin
 		d_digif_rst => d_digif_serial_rst,
 		RESET	    => RESET,
 		d_digif_msb_data => GPIO3,
-		d_digif_lsb_data => GPIO4);
+		d_digif_lsb_data => LSBDAT);
+
+	G0LTX_DESER_INST : AUTO_ALIGN_SEG_IF
+	  generic map (
+	    G_SIMULATION                => false,                   -- simulation mode
+	    G_INVERT_LSB                => false,                   -- invert LSB sensor data
+	    C_TP                        => x"34343434")             -- training pattern
+	  port map (
+	    -- system signals
+	    RESET                       => not BUFPLL_LOCKED_BANK0, -- 
+	    ENABLE                      => '1',                     -- module activation
+	    IO_CLK                      => CLOCK_DESER_1BIT,            -- bit clock
+	    DIV_CLK                     => CLOCK_DESER_4BIT,      -- bit clock / 4
+	    BYTE_CLK                    => CLOCK_DESER_WORD,      -- word clock
+	    SERDESSTROBE_IN             => SERDESSTROBE_BANK0,      -- strobe to ISERDES
+	    SEG_DATA                    => G0LTX,    -- serial data for segment LS-Byte (LVDS+)
+	    -- image data interface
+	    DATA                        => DESER_DATA,   -- data output
+	    DATA_EN                     => open,                    -- DATA_IN data valid
+	    -- debug
+	    DEBUG_IN                    => "00000000",
+	    DEBUG_OUT                   => open);
 
 -- |----------------------------------------|
 -- | Instantiating IMAGE_OUT and FX3 DRIVER |
@@ -739,7 +873,7 @@ begin
 	        LED   			=> open,
 		FVAL_IN 		=> FVAL_SEQ,
 		LVAL_IN			=> LVAL_SEQ,
-		DATA_IN			=> "0000" & DESER_DATA, -- "0101010101010101",
+		DATA_IN			=> "0000000000" & DESER_DATA, -- "0101010101010101",
 	        -- FX3 GPIFII Interface
 	        GPIFII_PCLK		=> open, --GPIFII_PCLK,	-- fx3 interface clock
 	        GPIFII_D		=> GPIFII_D,		-- fx3 data bus
