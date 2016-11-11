@@ -850,7 +850,7 @@ begin
 	    -- system signals
 	    RESET                       => not BUFPLL_LOCKED_BANK0, -- 
 	    ENABLE                      => '1',                     -- module activation
-	    IO_CLK                      => CLOCK_DESER_1BIT,            -- bit clock
+	    IO_CLK                      => IO_CLK_BANK0,            -- bit clock
 	    DIV_CLK                     => CLOCK_DESER_4BIT,      -- bit clock / 4
 	    BYTE_CLK                    => CLOCK_DESER_WORD,      -- word clock
 	    SERDESSTROBE_IN             => SERDESSTROBE_BANK0,      -- strobe to ISERDES

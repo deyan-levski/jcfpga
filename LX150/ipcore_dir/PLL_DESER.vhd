@@ -124,7 +124,7 @@ begin
 
   pll_base_inst : PLL_BASE
   generic map
-   (BANDWIDTH            => "OPTIMIZED",
+   (BANDWIDTH            => "HIGH",
     CLK_FEEDBACK         => "CLKFBOUT",
     COMPENSATION         => "SYSTEM_SYNCHRONOUS",
     DIVCLK_DIVIDE        => 1,

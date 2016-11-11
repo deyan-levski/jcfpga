@@ -149,7 +149,7 @@ begin
 			 -- image data interface
 			 FVAL_IN		  => FVAL_IN, 
 			 LVAL_IN		  => LVAL_IN,
-			 DATA_IN		  => "0101010101010101",
+			 DATA_IN		  => DATA_IN,
 			 DATA_IN_EN		  => '1',
 			 -- fifo write interface
 			 TX_FIFO_WREN		  => TX_FIFO_WREN_O,

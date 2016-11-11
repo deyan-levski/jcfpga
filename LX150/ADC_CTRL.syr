@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.05 secs
  
 --> 
 Reading design: ADC_CTRL.prj
@@ -648,7 +648,6 @@ Unit <DESERIALIZER> synthesized.
 
 Synthesizing Unit <FX3_SLAVE>.
     Related source file is "/media/data/git/jcfpga/LX150/hdl/FX3_SLAVE.vhd".
-WARNING:Xst:647 - Input <DATA_IN> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 INFO:Xst:3210 - "/media/data/git/jcfpga/LX150/hdl/FX3_SLAVE.vhd" line 102: Output port <FIFO_RDDAT_O> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/media/data/git/jcfpga/LX150/hdl/FX3_SLAVE.vhd" line 102: Output port <FIFO0_FULL_O> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/media/data/git/jcfpga/LX150/hdl/FX3_SLAVE.vhd" line 102: Output port <FIFO_EMPTY_O> of the instance <FX3_SLAVE_INST> is unconnected or connected to loadless signal.
@@ -848,20 +847,19 @@ Macro Statistics
 =========================================================================
 
 Reading core <ipcore_dir/BLOCKMEM.ngc>.
+Reading core <hdl/word2byte.ngc>.
 Reading core <hdl/DATA_TO_GPIFII_FIFO.ngc>.
 Reading core <hdl/DATA_FROM_GPIFII_FIFO.ngc>.
-Reading core <hdl/word2byte.ngc>.
 Loading core <BLOCKMEM> for timing and area information for instance <BLOCKMEM_INST>.
+Loading core <word2byte> for timing and area information for instance <I_WORD2BYTE>.
 Loading core <DATA_TO_GPIFII_FIFO> for timing and area information for instance <I0_DATA_TO_GPIFII_FIFO>.
 Loading core <DATA_FROM_GPIFII_FIFO> for timing and area information for instance <I_DATA_FROM_GPIFII_FIFO>.
-Loading core <word2byte> for timing and area information for instance <I_WORD2BYTE>.
-WARNING:Xst:1290 - Hierarchical block <I_DESERIALIZER_LSB> is unconnected in block <G0LTX_DESER_INST>.
-   It will be removed from the design.
 INFO:Xst:2261 - The FF/Latch <SPI_FLUSH> in Unit <SREG_CONTROL_INST> is equivalent to the following FF/Latch, which will be removed : <SPI_DAC_FLUSH> 
 INFO:Xst:2261 - The FF/Latch <I_GPIFII_ADDR_2> in Unit <FX3_SLAVE_INST> is equivalent to the following 2 FFs/Latches, which will be removed : <I_GPIFII_ADDR_3> <I_GPIFII_ADDR_4> 
 WARNING:Xst:1426 - The value init of the FF/Latch I_GPIFII_SLCS_N hinder the constant cleaning in the block FX3_SLAVE_INST.
    You should achieve better results by setting this init to 0.
 WARNING:Xst:1293 - FF/Latch <I_GPIFII_ADDR_2> has a constant value of 0 in block <FX3_SLAVE_INST>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:2677 - Node <I_SREG_11> of sequential type is unconnected in block <I_DESERIALIZER_LSB>.
 
 Synthesizing (advanced) Unit <BLOCKMEM_CTRL>.
 The following registers are absorbed into counter <CLOCK_DIV_REG>: 1 register on signal <CLOCK_DIV_REG>.
@@ -968,6 +966,25 @@ Optimizing FSM <SREG_CONTROL_INST/T_SERIAL_INST/FSM_0> on signal <state_fsm_stat
  emitting | 10
 ----------------------
 Analyzing FSM <MFsm> for best encoding.
+Optimizing FSM <FX3_SLAVE_INST/IMAGE_OUT_INST/FSM_3> on signal <I_PRESENT_STATE[1:4]> with user encoding.
+---------------------------
+ State         | Encoding
+---------------------------
+ idle          | 0000
+ sync_id1      | 0001
+ sync_id2      | 0010
+ hl_sensor_id  | 0011
+ fcnt_bpp      | 0100
+ col_nbr       | 0101
+ row_nbr       | 0110
+ status        | 0111
+ hw_id_vers    | 1000
+ timestamp_msb | 1001
+ timestamp_lsb | 1010
+ image_data    | 1011
+ wait_cycle    | 1100
+---------------------------
+Analyzing FSM <MFsm> for best encoding.
 Optimizing FSM <FX3_SLAVE_INST/FX3_SLAVE_INST/FSM_2> on signal <I_PRESENT_STATE[1:14]> with one-hot encoding.
 ---------------------------------
  State         | Encoding
@@ -987,25 +1004,6 @@ Optimizing FSM <FX3_SLAVE_INST/FX3_SLAVE_INST/FSM_2> on signal <I_PRESENT_STATE[
  terminate9    | 10000000000000
  terminate10   | 00000000100000
 ---------------------------------
-Analyzing FSM <MFsm> for best encoding.
-Optimizing FSM <FX3_SLAVE_INST/IMAGE_OUT_INST/FSM_3> on signal <I_PRESENT_STATE[1:4]> with user encoding.
----------------------------
- State         | Encoding
----------------------------
- idle          | 0000
- sync_id1      | 0001
- sync_id2      | 0010
- hl_sensor_id  | 0011
- fcnt_bpp      | 0100
- col_nbr       | 0101
- row_nbr       | 0110
- status        | 0111
- hw_id_vers    | 1000
- timestamp_msb | 1001
- timestamp_lsb | 1010
- image_data    | 1011
- wait_cycle    | 1100
----------------------------
 Analyzing FSM <MFsm> for best encoding.
 Optimizing FSM <G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/FSM_1> on signal <state[1:4]> with user encoding.
 -------------------
@@ -1245,30 +1243,6 @@ Optimizing unit <IMAGE_OUT> ...
 Optimizing unit <AUTO_ALIGN_SEG_IF> ...
 
 Optimizing unit <phase_detector> ...
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DATA_5> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DATA_4> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DATA_3> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DATA_2> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DATA_1> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DATA_0> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PDAT_OUT_5> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PDAT_OUT_4> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PDAT_OUT_3> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PDAT_OUT_2> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PDAT_OUT_1> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PDAT_OUT_0> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PREG_5> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PREG_4> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PREG_3> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PREG_2> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PREG_1> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PREG_0> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_5> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_4> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_3> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_2> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_1> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_0> of sequential type is unconnected in block <ADC_CTRL>.
 WARNING:Xst:1293 - FF/Latch <DIGIF_INST/falling_edge_process.preamble_counter_3> has a constant value of 0 in block <ADC_CTRL>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1293 - FF/Latch <DIGIF_INST/falling_edge_process.preamble_counter_2> has a constant value of 0 in block <ADC_CTRL>. This FF/Latch will be trimmed during the optimization process.
 WARNING:Xst:1293 - FF/Latch <DIGIF_INST/falling_edge_process.preamble_counter_4> has a constant value of 0 in block <ADC_CTRL>. This FF/Latch will be trimmed during the optimization process.
@@ -1309,6 +1283,10 @@ INFO:Xst:3203 - The FF/Latch <SREG_CONTROL_INST/T_SERIAL_INST/BASIC_UART_INST/tx
 Mapping all equations...
 Building and optimizing final netlist ...
 Found area constraint ratio of 100 (+ 5) on block ADC_CTRL, actual ratio is 1.
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
@@ -1318,10 +1296,10 @@ INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <FX3_SLAVE_INST/FX3_SLAVE_INST/I_DATA_FROM_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <FX3_SLAVE_INST/FX3_SLAVE_INST/I_DATA_FROM_GPIFII_FIFO> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <FX3_SLAVE_INST/FX3_SLAVE_INST/I_DATA_FROM_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
+INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.rsts/ram_empty_i> in Unit <FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gras.rsts/ram_empty_fb_i> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
@@ -1331,10 +1309,6 @@ INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/n
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <FX3_SLAVE_INST/FX3_SLAVE_INST/I_DATA_FROM_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <FX3_SLAVE_INST/FX3_SLAVE_INST/I_DATA_FROM_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
 INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/aempty_fwft_i> in Unit <FX3_SLAVE_INST/FX3_SLAVE_INST/I_DATA_FROM_GPIFII_FIFO> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/aempty_fwft_fb> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_i> in Unit <FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_1> in Unit <FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.wr_rst_reg_0> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_2> in Unit <FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following 2 FFs/Latches : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_1> <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0> 
-INFO:Xst:2260 - The FF/Latch <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_i> in Unit <FX3_SLAVE_INST/IMAGE_OUT_INST/I_WORD2BYTE> is equivalent to the following FF/Latch : <U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/gr1.rfwft/empty_fwft_fb> 
 
 Final Macro Processing ...
 
@@ -1348,8 +1322,8 @@ Unit <ADC_CTRL> processed.
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 924
- Flip-Flops                                            : 924
+# Registers                                            : 948
+ Flip-Flops                                            : 948
 # Shift Registers                                      : 3
  2-bit shift register                                  : 1
  3-bit shift register                                  : 2
@@ -1375,23 +1349,23 @@ Top Level Output File Name         : ADC_CTRL.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 1728
+# BELS                             : 1734
 #      GND                         : 7
 #      INV                         : 46
 #      LUT1                        : 131
 #      LUT2                        : 186
-#      LUT3                        : 466
-#      LUT4                        : 182
-#      LUT5                        : 66
+#      LUT3                        : 470
+#      LUT4                        : 177
+#      LUT5                        : 73
 #      LUT6                        : 176
 #      MUXCY                       : 264
 #      MUXF7                       : 33
 #      VCC                         : 4
 #      XORCY                       : 167
-# FlipFlops/Latches                : 1638
+# FlipFlops/Latches                : 1662
 #      FD                          : 241
 #      FD_1                        : 3
-#      FDC                         : 550
+#      FDC                         : 574
 #      FDC_1                       : 96
 #      FDCE                        : 342
 #      FDE                         : 14
@@ -1436,18 +1410,18 @@ Selected Device : 6slx150fgg484-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:            1637  out of  184304     0%  
- Number of Slice LUTs:                 1256  out of  92152     1%  
-    Number used as Logic:              1253  out of  92152     1%  
+ Number of Slice Registers:            1661  out of  184304     0%  
+ Number of Slice LUTs:                 1262  out of  92152     1%  
+    Number used as Logic:              1259  out of  92152     1%  
     Number used as Memory:                3  out of  21680     0%  
        Number used as SRL:                3
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:   2041
-   Number with an unused Flip Flop:     404  out of   2041    19%  
-   Number with an unused LUT:           785  out of   2041    38%  
-   Number of fully used LUT-FF pairs:   852  out of   2041    41%  
-   Number of unique control sets:       462
+ Number of LUT Flip Flop pairs used:   2071
+   Number with an unused Flip Flop:     410  out of   2071    19%  
+   Number with an unused LUT:           809  out of   2071    39%  
+   Number of fully used LUT-FF pairs:   852  out of   2071    41%  
+   Number of unique control sets:       463
 
 IO Utilization: 
  Number of IOs:                         137
@@ -1493,7 +1467,8 @@ SREG_CONTROL_INST/SREG_CORE_INST/CLOCK_DIV_REG_16                               
 SREG_CONTROL_INST/SREG_CORE_INST/SPI_SCK                                                                                                             | BUFG                                                                                                                                                    | 191   |
 SREG_CONTROL_INST/SPI_CORE_INST/Mcount_spiclkgen.sck_counter_val(SREG_CONTROL_INST/SREG_CORE_INST/Mcount_spiclkgen.sck_counter_val1:O)               | NONE(*)(SREG_CONTROL_INST/SREG_CORE_INST/SPI_DATA_TX_0)                                                                                                 | 2     |
 SREG_CONTROL_INST/SPI_CORE_INST/SPI_SCK                                                                                                              | NONE(SREG_CONTROL_INST/SPI_CORE_INST/SPI_DATA_TX_32)                                                                                                    | 63    |
-PLL_DESER_INST/pll_base_inst/CLKOUT1                                                                                                                 | BUFG                                                                                                                                                    | 32    |
+PLL_DESER_INST/pll_base_inst/CLKOUT2                                                                                                                 | BUFG                                                                                                                                                    | 18    |
+PLL_DESER_INST/pll_base_inst/CLKOUT1                                                                                                                 | BUFG                                                                                                                                                    | 38    |
 BLOCKMEM_INST/N1                                                                                                                                     | NONE(BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_init.ram/SP.SIMPLE_PRIM18.ram)| 2     |
 SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[95]_AND_2_o(SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[95]_AND_2_o1:O)    | NONE(*)(SREG_CONTROL_INST/SREG_CORE_INST/SPI_DATA_TX_95_LDC)                                                                                            | 1     |
 SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[94]_AND_4_o(SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[94]_AND_4_o1:O)    | NONE(*)(SREG_CONTROL_INST/SREG_CORE_INST/SPI_DATA_TX_94_LDC)                                                                                            | 1     |
@@ -1638,7 +1613,7 @@ Speed Grade: -3
    Minimum period: 6.370ns (Maximum Frequency: 156.996MHz)
    Minimum input arrival time before clock: 6.031ns
    Maximum output required time after clock: 5.448ns
-   Maximum combinational path delay: 2.213ns
+   Maximum combinational path delay: 2.555ns
 
 Timing Details:
 ---------------
@@ -1670,7 +1645,7 @@ Delay:               3.185ns (Levels of Logic = 2)
 =========================================================================
 Timing constraint: Default period analysis for Clock 'GPIFII_PCLK_IN'
   Clock period: 4.364ns (frequency: 229.163MHz)
-  Total number of paths / destination ports: 7319 / 2873
+  Total number of paths / destination ports: 7328 / 2873
 -------------------------------------------------------------------------
 Delay:               4.364ns (Levels of Logic = 4)
   Source:            FX3_SLAVE_INST/FX3_SLAVE_INST/I_GPIFII_SLWR_N (FF)
@@ -1762,9 +1737,30 @@ Delay:               1.436ns (Levels of Logic = 1)
                                        (52.4% logic, 47.6% route)
 
 =========================================================================
+Timing constraint: Default period analysis for Clock 'PLL_DESER_INST/pll_base_inst/CLKOUT2'
+  Clock period: 1.128ns (frequency: 886.643MHz)
+  Total number of paths / destination ports: 12 / 12
+-------------------------------------------------------------------------
+Delay:               1.128ns (Levels of Logic = 0)
+  Source:            G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PDAT_OUT_5 (FF)
+  Destination:       G0LTX_DESER_INST/I_DATA_5 (FF)
+  Source Clock:      PLL_DESER_INST/pll_base_inst/CLKOUT2 rising
+  Destination Clock: PLL_DESER_INST/pll_base_inst/CLKOUT2 rising
+
+  Data Path: G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PDAT_OUT_5 to G0LTX_DESER_INST/I_DATA_5
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDC:C->Q              1   0.447   0.579  G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PDAT_OUT_5 (G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PDAT_OUT_5)
+     FDC:D                     0.102          G0LTX_DESER_INST/I_DATA_5
+    ----------------------------------------
+    Total                      1.128ns (0.549ns logic, 0.579ns route)
+                                       (48.7% logic, 51.3% route)
+
+=========================================================================
 Timing constraint: Default period analysis for Clock 'PLL_DESER_INST/pll_base_inst/CLKOUT1'
   Clock period: 4.366ns (frequency: 229.066MHz)
-  Total number of paths / destination ports: 386 / 36
+  Total number of paths / destination ports: 388 / 38
 -------------------------------------------------------------------------
 Delay:               4.366ns (Levels of Logic = 3)
   Source:            G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/state_FSM_FFd4 (FF)
@@ -1924,10 +1920,30 @@ Offset:              5.078ns (Levels of Logic = 2)
                                        (36.6% logic, 63.4% route)
 
 =========================================================================
-Timing constraint: Default OFFSET IN BEFORE for Clock 'PLL_DESER_INST/pll_base_inst/CLKOUT1'
-  Total number of paths / destination ports: 37 / 37
+Timing constraint: Default OFFSET IN BEFORE for Clock 'PLL_DESER_INST/pll_base_inst/CLKOUT2'
+  Total number of paths / destination ports: 18 / 18
 -------------------------------------------------------------------------
-Offset:              2.643ns (Levels of Logic = 1)
+Offset:              2.985ns (Levels of Logic = 1)
+  Source:            I_BUFPLL_BANK0:LOCK (PAD)
+  Destination:       G0LTX_DESER_INST/I_DATA_5 (FF)
+  Destination Clock: PLL_DESER_INST/pll_base_inst/CLKOUT2 rising
+
+  Data Path: I_BUFPLL_BANK0:LOCK to G0LTX_DESER_INST/I_DATA_5
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+    BUFPLL:LOCK            8   0.000   0.802  I_BUFPLL_BANK0 (BUFPLL_LOCKED_BANK0)
+     INV:I->O             50   0.206   1.547  BUFPLL_LOCKED_BANK0_INV_179_o1_INV_0 (BUFPLL_LOCKED_BANK0_INV_179_o)
+     FDC:CLR                   0.430          G0LTX_DESER_INST/I_DATA_0
+    ----------------------------------------
+    Total                      2.985ns (0.636ns logic, 2.349ns route)
+                                       (21.3% logic, 78.7% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'PLL_DESER_INST/pll_base_inst/CLKOUT1'
+  Total number of paths / destination ports: 47 / 47
+-------------------------------------------------------------------------
+Offset:              2.985ns (Levels of Logic = 1)
   Source:            I_BUFPLL_BANK0:LOCK (PAD)
   Destination:       G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/state_FSM_FFd2 (FF)
   Destination Clock: PLL_DESER_INST/pll_base_inst/CLKOUT1 rising
@@ -1937,11 +1953,11 @@ Offset:              2.643ns (Levels of Logic = 1)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
     BUFPLL:LOCK            8   0.000   0.802  I_BUFPLL_BANK0 (BUFPLL_LOCKED_BANK0)
-     INV:I->O             26   0.206   1.206  BUFPLL_LOCKED_BANK0_INV_179_o1_INV_0 (BUFPLL_LOCKED_BANK0_INV_179_o)
+     INV:I->O             50   0.206   1.547  BUFPLL_LOCKED_BANK0_INV_179_o1_INV_0 (BUFPLL_LOCKED_BANK0_INV_179_o)
      FDC:CLR                   0.430          G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/inc_data_int
     ----------------------------------------
-    Total                      2.643ns (0.636ns logic, 2.007ns route)
-                                       (24.1% logic, 75.9% route)
+    Total                      2.985ns (0.636ns logic, 2.349ns route)
+                                       (21.3% logic, 78.7% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[95]_AND_2_o'
@@ -4580,9 +4596,9 @@ Offset:              1.097ns (Levels of Logic = 0)
 
 =========================================================================
 Timing constraint: Default path analysis
-  Total number of paths / destination ports: 12 / 10
+  Total number of paths / destination ports: 16 / 14
 -------------------------------------------------------------------------
-Delay:               2.213ns (Levels of Logic = 1)
+Delay:               2.555ns (Levels of Logic = 1)
   Source:            I_BUFPLL_BANK0:LOCK (PAD)
   Destination:       G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iserdes2_master:RST (PAD)
 
@@ -4591,11 +4607,11 @@ Delay:               2.213ns (Levels of Logic = 1)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
     BUFPLL:LOCK            8   0.000   0.802  I_BUFPLL_BANK0 (BUFPLL_LOCKED_BANK0)
-     INV:I->O             26   0.206   1.206  BUFPLL_LOCKED_BANK0_INV_179_o1_INV_0 (BUFPLL_LOCKED_BANK0_INV_179_o)
+     INV:I->O             50   0.206   1.547  BUFPLL_LOCKED_BANK0_INV_179_o1_INV_0 (BUFPLL_LOCKED_BANK0_INV_179_o)
     ISERDES2:RST               0.000          G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iserdes2_slave
     ----------------------------------------
-    Total                      2.213ns (0.206ns logic, 2.007ns route)
-                                       (9.3% logic, 90.7% route)
+    Total                      2.555ns (0.206ns logic, 2.349ns route)
+                                       (8.1% logic, 91.9% route)
 
 =========================================================================
 
@@ -4612,13 +4628,14 @@ SREG_CONTROL_INST/T_SERIAL_INST/BASIC_UART_INST/tx_state_ready|    3.043|       
 --------------------------------------------------------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock GPIFII_PCLK_IN
----------------+---------+---------+---------+---------+
-               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
-Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
----------------+---------+---------+---------+---------+
-CLOCK          |         |    4.319|         |         |
-GPIFII_PCLK_IN |    4.364|         |         |         |
----------------+---------+---------+---------+---------+
+------------------------------------+---------+---------+---------+---------+
+                                    | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock                        |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+------------------------------------+---------+---------+---------+---------+
+CLOCK                               |         |    4.319|         |         |
+GPIFII_PCLK_IN                      |    4.364|         |         |         |
+PLL_DESER_INST/pll_base_inst/CLKOUT2|    2.258|         |         |         |
+------------------------------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock PLL_DESER_INST/pll_base_inst/CLKOUT1
 ------------------------------------+---------+---------+---------+---------+
@@ -4626,6 +4643,15 @@ Clock to Setup on destination clock PLL_DESER_INST/pll_base_inst/CLKOUT1
 Source Clock                        |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ------------------------------------+---------+---------+---------+---------+
 PLL_DESER_INST/pll_base_inst/CLKOUT1|    4.366|         |         |         |
+------------------------------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock PLL_DESER_INST/pll_base_inst/CLKOUT2
+------------------------------------+---------+---------+---------+---------+
+                                    | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock                        |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+------------------------------------+---------+---------+---------+---------+
+PLL_DESER_INST/pll_base_inst/CLKOUT1|    1.165|         |         |         |
+PLL_DESER_INST/pll_base_inst/CLKOUT2|    1.128|         |         |         |
 ------------------------------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock SREG_CONTROL_INST/SPI_CORE_INST/Mcount_spiclkgen.sck_counter_val
@@ -5810,15 +5836,15 @@ CLOCK          |    5.552|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 11.00 secs
-Total CPU time to Xst completion: 10.60 secs
+Total REAL time to Xst completion: 12.00 secs
+Total CPU time to Xst completion: 10.58 secs
  
 --> 
 
 
-Total memory usage is 414780 kilobytes
+Total memory usage is 414932 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :  117 (   0 filtered)
+Number of warnings :   92 (   0 filtered)
 Number of infos    :   84 (   0 filtered)
 
