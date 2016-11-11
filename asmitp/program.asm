@@ -308,7 +308,7 @@ NOP 4
 
 MOV SER 0x00 0		; start data serialization out
 MOV FVAL 0x00 1		; frame on
-NOP 4
+NOP 16
 MOV LVAL 0x00 1		; line on
 
 
