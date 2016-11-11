@@ -53,8 +53,11 @@ add wave -noupdate -format Literal -radix unsigned /ISERDES6_tb/dut/dev_w
 add wave -noupdate -format Logic   /ISERDES6_tb/IO_RESET
 add wave -noupdate -format Logic   /ISERDES6_tb/CLK_RESET
 add wave -noupdate -format Logic   /ISERDES6_tb/CLK_IN
+add wave -noupdate -format Logic   /ISERDES6_tb/CLK_IN_P
+add wave -noupdate -format Logic   /ISERDES6_tb/CLK_IN_N
 add wave -noupdate -format Logic   /ISERDES6_tb/dut/CLK_DIV_OUT
-add wave -noupdate -format Literal /ISERDES6_tb/DATA_IN_FROM_PINS
+add wave -noupdate -format Literal /ISERDES6_tb/DATA_IN_FROM_PINS_P
+add wave -noupdate -format Literal /ISERDES6_tb/DATA_IN_FROM_PINS_N
 add wave -noupdate -format Literal /ISERDES6_tb/dut/io_inst/iserdes_q
 add wave -noupdate -format Literal /ISERDES6_tb/dut/DATA_IN_TO_DEVICE
 add wave -noupdate -format Logic   /ISERDES6_tb/dut/IO_RESET
