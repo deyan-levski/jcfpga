@@ -837,7 +837,7 @@ begin
 	DIGIF_INST : DIGIF
 	port map ( 
 		d_digif_sck => CLOCK_100,
-		d_digif_rst => d_digif_serial_rst,
+		d_digif_rst => '0', --d_digif_serial_rst,
 		RESET	    => RESET,
 		d_digif_msb_data => GPIO3,
 		d_digif_lsb_data => LSBDAT);
