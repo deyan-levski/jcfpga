@@ -159,7 +159,7 @@ architecture Behavioral of ADC_CTRL is
 		  CLK_IN1           : in     std_logic;
 		  -- Clock out ports
 		  CLK_OUT1          : out    std_logic
-	  );
+		 );
 	end component;
 
 	component PLL_DESER is
@@ -214,6 +214,51 @@ architecture Behavioral of ADC_CTRL is
           );
 	end component;
 
+--	component SEQUENCER is
+--		port (
+--		CLOCK			: in  STD_LOGIC;
+--		RESET			: in  STD_LOGIC;
+--	
+--		FVAL			: inout STD_LOGIC;
+--		LVAL			: inout STD_LOGIC;
+--	
+--		d_row_addr		: inout STD_LOGIC_VECTOR(7 downto 0);
+--		d_row_rs		: inout STD_LOGIC;
+--		d_row_rst		: inout STD_LOGIC;
+--		d_row_tx		: inout STD_LOGIC;
+--	
+--		d_col_vln_sh		: inout STD_LOGIC;
+--	
+--		d_adc_shr_shs		: inout STD_LOGIC;
+--	
+--		d_shs			: inout STD_LOGIC;
+--		d_shr			: inout STD_LOGIC;
+--		d_ads			: inout STD_LOGIC;
+--		d_adr			: inout STD_LOGIC;
+--		
+--		d_comp_bias_sh		: inout STD_LOGIC;
+--		d_comp_dyn_pon		: inout STD_LOGIC;
+--		
+--		d_count_rst		: inout STD_LOGIC;
+--		d_count_inv_clk		: inout STD_LOGIC;
+--		d_count_hold		: inout STD_LOGIC;
+--		d_count_updn		: inout STD_LOGIC;
+--		d_count_inc_one		: inout STD_LOGIC;
+--		d_count_jc_shift_en	: inout STD_LOGIC;
+--		d_count_lsb_en		: inout STD_LOGIC;
+--		d_count_lsb_clk		: inout STD_LOGIC;
+--		d_count_mem_wr		: inout STD_LOGIC;
+--		d_count_en		: inout STD_LOGIC;
+--		
+--		d_digif_serial_rst	: inout std_logic;
+--		
+--		d_ref_vref_ramp_rst	: inout std_logic;
+--		d_ref_vref_sh		: inout std_logic;
+--		d_ref_vref_clamp_en	: inout std_logic;
+--		d_ref_vref_ramp_ota_dyn_pon: inout std_logic
+--	);
+--	end component;
+
 	component DIGIF is
 	port ( d_digif_sck : in  STD_LOGIC;
 	       d_digif_rst : in  STD_LOGIC;
@@ -222,34 +267,27 @@ architecture Behavioral of ADC_CTRL is
 	       d_digif_lsb_data : out  STD_LOGIC);
 	end component;
 
-	component OPTO_SEG_IF is
-	generic (
-	       G_SIMULATION:               boolean:= false;                                -- simulation mode
-	       C_TP:                       std_logic_vector:=x"D3D3D3D3");                 -- training pattern
-	port (
-	       G_INVERT_MSB:               in boolean:= false;                             -- invert MSB sensor data
-	       G_INVERT_LSB:               in boolean:= false;                             -- invert LSB sensor data
-	       -- system signals
-	       RESET:                      in  std_logic;                                  -- async. reset
-	       ENABLE:                     in  std_logic;                                  -- module activation
-	       IO_CLK:                     in  std_logic;                                  -- bit clock
-	       DIV_CLK:                    in  std_logic;                                  -- bit clock / 4
-	       BYTE_CLK:                   in  std_logic;                                  -- word clock
-	       SERDESSTROBE_IN:            in  std_logic;                                  -- strobe to ISERDES
-	       -- serial interconnect
-	       DIGIF_MSB_P:                in  std_logic;                                  -- serial data for segment MS-Byte (LVDS+)
-	       DIGIF_MSB_N:                in  std_logic;                                  -- serial data for segment MS-Byte (LVDS-)
-	       DIGIF_LSB_P:                in  std_logic;                                  -- serial data for segment LS-Byte (LVDS+)
-	       DIGIF_LSB_N:                in  std_logic;                                  -- serial data for segment LS-Byte (LVDS+)
-	       -- image data interface
-	       DATA:                       out std_logic_vector(15 downto 0);              -- data output
-	       DATA_EN:                    out std_logic;                                  -- DATA_IN data valid
-	       -- debug
-	       DIV_CLK_CS:                 out std_logic;
-	       DEBUG_IN:                   in  std_logic_vector(7 downto 0);
-	       DEBUG_OUT:                  out std_logic_vector(15 downto 0));
-	end component;
-
+	component AUTO_ALIGN_SEG_IF is
+	  generic (
+	    G_SIMULATION:               boolean:= false;                                -- simulation mode
+	    G_INVERT_LSB:               boolean:= false;                                -- invert LSB sensor data
+	    C_TP:                       std_logic_vector:=x"34343434");                 -- training pattern
+	  port (
+	    -- system signals
+	    RESET:                      in  std_logic;                                  -- async. reset
+	    ENABLE:                     in  std_logic;                                  -- module activation
+	    IO_CLK:                     in  std_logic;                                  -- bit clock
+	    DIV_CLK:                    in  std_logic;                                  -- bit clock / 4
+	    BYTE_CLK:                   in  std_logic;                                  -- word clock
+	    SERDESSTROBE_IN:            in  std_logic;                                  -- strobe to ISERDES
+	    SEG_DATA:                   in  std_logic;                                  -- serial data for segment LS-Byte (LVDS+)
+	    -- image data interface
+	    DATA:                       out std_logic_vector(5 downto 0);              -- data output
+	    DATA_EN:                    out std_logic;                                  -- DATA_IN data valid
+	    -- debug
+	    DEBUG_IN:                   in  std_logic_vector(7 downto 0);
+	    DEBUG_OUT:                  out std_logic_vector(11 downto 0));
+	end component AUTO_ALIGN_SEG_IF;
 
 	component FX3_SLAVE is
 	port (	CLOCK : in  std_logic;
@@ -290,12 +328,7 @@ architecture Behavioral of ADC_CTRL is
 	signal CLOCK_DESER_1BIT : std_logic;
 	signal CLOCK_DESER_4BIT : std_logic;
 	signal CLOCK_DESER_WORD : std_logic; 
-	signal DESER_DATA_G0 : std_logic_vector(15 downto 0);
-	signal I_BIT_SLIP_POS : std_logic_vector(1 downto 0);
-	signal I_BIT_SLIP_POS_AUTO : std_logic_vector(1 downto 0);
-	signal I_BIT_SLIP_1A_LSB_FLAG : std_logic;
-	signal I_BIT_SLIP_1A_MSB_FLAG : std_logic;
-	signal I_BIT_SLIP_AUTO : std_logic;
+	signal DESER_DATA: std_logic_vector(5 downto 0);
 	signal CLOCK_COUNT_OBUFDS : std_logic;
 	signal CLOCK_DIGIF_OBUFDS : std_logic;
 	signal FVAL_SEQ  : std_logic;
@@ -478,27 +511,27 @@ begin
 --| GROUP 0 DATA IBUFF |
 --|--------------------|
 
---   IBUFDS_DIGIF_LSB_G0 : IBUFGDS
---   generic map (
---      DIFF_TERM => TRUE, -- Differential Termination 
---      IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
---      IOSTANDARD => "LVDS_33")
---   port map (
---      O 		=> G0LTX,  -- Buffer output
---      I 		=> G0LTX_P,
---      IB 		=> G0LTX_N
---   );
--- 
---   IBUFDS_DIGIF_MSB_G0 : IBUFGDS
---   generic map (
---      DIFF_TERM => TRUE, -- Differential Termination 
---      IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
---      IOSTANDARD => "LVDS_33")
---   port map (
---      O 		=> G0HTX,  -- Buffer output
---      I 		=> G0HTX_P,
---      IB 		=> G0HTX_N
---   );
+   IBUFDS_DIGIF_LSB_G0 : IBUFGDS
+   generic map (
+      DIFF_TERM => TRUE, -- Differential Termination 
+      IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
+      IOSTANDARD => "LVDS_33")
+   port map (
+      O 		=> G0LTX,  -- Buffer output
+      I 		=> G0LTX_P,
+      IB 		=> G0LTX_N
+   );
+
+   IBUFDS_DIGIF_MSB_G0 : IBUFGDS
+   generic map (
+      DIFF_TERM => TRUE, -- Differential Termination 
+      IBUF_LOW_PWR => FALSE, -- Low power (TRUE) vs. performance (FALSE) setting for referenced I/O standards
+      IOSTANDARD => "LVDS_33")
+   port map (
+      O 		=> G0HTX,  -- Buffer output
+      I 		=> G0HTX_P,
+      IB 		=> G0HTX_N
+   );
 
 --|--------------------|
 --| GROUP 1 DATA IBUFF |
@@ -757,9 +790,53 @@ begin
 	  LVAL_SEQ <= MEMDATA(4);
 	  d_row_addr(7 downto 0) <= "00000000";
 
---|-----------------|
---| MOCK SERIALIZER |
---|-----------------|
+--|---------------------------------------|
+--| Keeping old state machine sequenencer |
+--|---------------------------------------|
+
+--	SEQUENCER_INST: SEQUENCER
+--	port map (
+--		CLOCK			=>	  CLOCK_250, -- should use CLOCK_250, using CLOCK_100 for scope
+--		RESET			=>	  RESET,
+--		FVAL			=>	  FVAL_SEQ,
+--		LVAL			=>	  LVAL_SEQ,
+--	
+--		d_row_addr		=>	  d_row_addr,
+--		d_row_rs		=>	  d_row_rs,
+--		d_row_rst		=>	  d_row_rst,
+--		d_row_tx		=>	  d_row_tx,
+--		d_col_vln_sh		=> 	  d_col_vln_sh,
+--	
+--		d_adc_shr_shs		=>	  open,
+--									  
+--		d_shs			=>	  d_shs,
+--		d_shr			=>	  d_shr,
+--		d_ads			=>	  d_ads,
+--		d_adr			=>	  d_adr,
+--						  
+--		d_comp_bias_sh		=>	  d_comp_bias_sh,
+--		d_comp_dyn_pon		=>	  d_comp_dyn_pon,
+--						  
+--		d_count_rst		=>	  d_count_rst,
+--		d_count_inv_clk		=>	  d_count_inv_clk,
+--		d_count_hold		=>	  d_count_hold,
+--		d_count_updn		=>	  d_count_updn,
+--		d_count_inc_one		=>	  d_count_inc_one,
+--		d_count_jc_shift_en	=>	  d_count_jc_shift_en,
+--		d_count_lsb_en		=>	  d_count_lsb_en,
+--		d_count_lsb_clk		=>	  d_count_lsb_clk,
+--		d_count_mem_wr		=>	  d_count_mem_wr,
+--		d_count_en		=>	  d_count_en,
+--						  
+--		d_digif_serial_rst	=>	  d_digif_serial_rst,
+--						  
+--		d_ref_vref_ramp_rst	=>	  d_ref_vref_ramp_rst,
+--		d_ref_vref_sh		=>	  d_ref_vref_sh,
+--		d_ref_vref_clamp_en	=>	  d_ref_vref_clamp_en,
+--		d_ref_vref_ramp_ota_dyn_pon =>	  d_ref_vref_ramp_ota_dyn_pon
+--		 );
+
+   -- End of SEQUENCER instantiation
 
 	DIGIF_INST : DIGIF
 	port map ( 
@@ -773,84 +850,26 @@ begin
 >>>>>>> 988aeba246de826efd3d1090b1372bd49169783c
 		d_digif_lsb_data => LSBDAT);
 
---|---------------|
---| DESERIALIZERS |
---|---------------|
-
-	G0LTX_DESER_INST : OPTO_SEG_IF
-	generic map (
-		G_SIMULATION           => false,			-- simulation mode
-		C_TP                   => x"D3D3D3D3")			-- training pattern
-	port map (
-		G_INVERT_MSB           => false,			-- invert MSB sensor data
-		G_INVERT_LSB           => false,			-- invert LSB sensor data
-		-- system signals
-		RESET                  => RESET,  -- async. reset
-		ENABLE                 => '1',				-- module activation
-		IO_CLK                 => IO_CLK_BANK0,			-- bit clock
-		DIV_CLK                => CLOCK_DESER_4BIT,		-- bit clock / 4
-		BYTE_CLK               => CLOCK_DESER_WORD,		-- word clock
-		SERDESSTROBE_IN        => SERDESSTROBE_BANK0,		-- strobe to ISERDES
-		-- serial interconnect
-		DIGIF_MSB_P            => G0HTX_P,			-- serial data for segment MS-Byte (LVDS+)
-		DIGIF_MSB_N            => G0HTX_N,			-- serial data for segment MS-Byte (LVDS-)
-		DIGIF_LSB_P            => G0LTX_P,			-- serial data for segment LS-Byte (LVDS+)
-		DIGIF_LSB_N            => G0LTX_N,			-- serial data for segment LS-Byte (LVDS+)
-		-- image data interface
-		DATA                   => DESER_DATA_G0,		-- data output
-		DATA_EN                => open,				-- DATA_IN data valid
-		-- debug
-		DIV_CLK_CS             => open,
-		DEBUG_IN               => (("000000" & I_BIT_SLIP_POS(1 downto 0)) or ("000000" & I_BIT_SLIP_POS_AUTO(1 downto 0))),
-		DEBUG_OUT              => open);
-
-I_BIT_SLIP_AUTO <= '1';
-I_BIT_SLIP_POS <= "00";
-
-BIT_SLIP_SEG1A_PROC: process(RESET,CLOCK_DESER_WORD)
-begin
-	if (RESET = '1') then
-		I_BIT_SLIP_1A_LSB_FLAG <= '0';
-		I_BIT_SLIP_1A_MSB_FLAG <= '0';
-		--
-		I_BIT_SLIP_POS_AUTO(1 downto 0) <= (others => '0');
-	elsif (rising_edge(CLOCK_DESER_WORD)) then
-		if (I_BIT_SLIP_AUTO ='1') then
-			if ((d_digif_serial_rst = '1') and (I_BIT_SLIP_1A_LSB_FLAG = '0')) then
-				if (DESER_DATA_G0(5 downto 0) = "110100") then
-					I_BIT_SLIP_POS_AUTO(0) <= '0';
-				else
-					I_BIT_SLIP_POS_AUTO(0) <= '1';
-				end if;
-				I_BIT_SLIP_1A_LSB_FLAG <= '1';
-			else
-				I_BIT_SLIP_POS_AUTO(0) <= '0';
-			end if;
-			if ((d_digif_serial_rst = '1') and (I_BIT_SLIP_1A_MSB_FLAG = '0')) then
-				if (DESER_DATA_G0(11 downto 6) = "110100") then
-					I_BIT_SLIP_POS_AUTO(1) <= '0';
-				else
-					I_BIT_SLIP_POS_AUTO(1) <= '1';
-				end if;
-				I_BIT_SLIP_1A_MSB_FLAG <= '1';
-			else
-				I_BIT_SLIP_POS_AUTO(1) <= '0';
-			end if;
-		else
-			I_BIT_SLIP_POS_AUTO(1 downto 0) <= (others => '0');
-			I_BIT_SLIP_1A_LSB_FLAG <= '0';
-			I_BIT_SLIP_1A_MSB_FLAG <= '0';
-		end if;
-
-		if (d_digif_serial_rst = '0') then
-			I_BIT_SLIP_POS_AUTO(1 downto 0) <= (others => '0');
-			I_BIT_SLIP_1A_LSB_FLAG <= '0';
-			I_BIT_SLIP_1A_MSB_FLAG <= '0';
-		end if;
-	end if;
-
-end process BIT_SLIP_SEG1A_PROC;
-
+	G0LTX_DESER_INST : AUTO_ALIGN_SEG_IF
+	  generic map (
+	    G_SIMULATION                => false,                   -- simulation mode
+	    G_INVERT_LSB                => false,                   -- invert LSB sensor data
+	    C_TP                        => x"D3D3D3D3")             -- training pattern
+	  port map (
+	    -- system signals
+	    RESET                       => not BUFPLL_LOCKED_BANK0, -- 
+	    ENABLE                      => '1',                     -- module activation
+	    IO_CLK                      => IO_CLK_BANK0,            -- bit clock
+	    DIV_CLK                     => CLOCK_DESER_4BIT,      -- bit clock / 4
+	    BYTE_CLK                    => CLOCK_DESER_WORD,      -- word clock
+	    SERDESSTROBE_IN             => SERDESSTROBE_BANK0,      -- strobe to ISERDES
+	    SEG_DATA                    => G0LTX,    -- serial data for segment LS-Byte (LVDS+)
+	    -- image data interface
+	    DATA                        => DESER_DATA,   -- data output
+	    DATA_EN                     => open,                    -- DATA_IN data valid
+	    -- debug
+	    DEBUG_IN                    => "00000000",
+	    DEBUG_OUT                   => open);
 
 -- |----------------------------------------|
 -- | Instantiating IMAGE_OUT and FX3 DRIVER |
@@ -865,7 +884,7 @@ end process BIT_SLIP_SEG1A_PROC;
 	        LED   			=> open,
 		FVAL_IN 		=> FVAL_SEQ,
 		LVAL_IN			=> LVAL_SEQ,
-		DATA_IN			=> DESER_DATA_G0,	-- "0101010101010101",
+		DATA_IN			=> "0000000000" & DESER_DATA, -- "0101010101010101",
 	        -- FX3 GPIFII Interface
 	        GPIFII_PCLK		=> open, --GPIFII_PCLK,	-- fx3 interface clock
 	        GPIFII_D		=> GPIFII_D,		-- fx3 data bus
