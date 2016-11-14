@@ -318,6 +318,7 @@ architecture Behavioral of ADC_CTRL is
 	signal G7LTX	 : std_logic;
 	signal G7HTX	 : std_logic;
 	signal LSBDAT	 : std_logic;
+	signal MSBDAT	 : std_logic;
 
 begin
 
@@ -419,8 +420,8 @@ begin
       SRTYPE => "SYNC") -- Specifies "SYNC" or "ASYNC" set/reset
    port map (
       Q  => CLOCK_COUNT_OBUFDS, -- 1-bit output data
-      C0 => CLOCK_250, -- 1-bit clock input
-      C1 => not CLOCK_250, -- 1-bit clock input
+      C0 => MSBDAT, --CLOCK_250, -- 1-bit clock input
+      C1 => not MSBDAT, -- not CLOCK_250, -- 1-bit clock input
       CE => '1',   -- 1-bit clock enable input
       D0 => '0',   -- 1-bit data input (associated with C0)
       D1 => '1',   -- 1-bit data input (associated with C1)
@@ -762,7 +763,7 @@ begin
 		d_digif_sck => CLOCK_100,
 		d_digif_rst => d_digif_serial_rst,
 		RESET	    => RESET,
-		d_digif_msb_data => GPIO3,
+		d_digif_msb_data => MSBDAT,
 		d_digif_lsb_data => LSBDAT);
 
 --|---------------|
@@ -852,7 +853,7 @@ end process BIT_SLIP_SEG1A_PROC;
 	port map (	
 		CLOCK 			=> FX3_CLK,
 	        RESET 			=> RESET,
-		CLOCK_IMG		=> CLOCK_DESER_WORD,
+		CLOCK_IMG		=> FX3_CLK, --CLOCK_DESER_WORD,
 	        LED   			=> open,
 		FVAL_IN 		=> FVAL_SEQ,
 		LVAL_IN			=> LVAL_SEQ,
@@ -901,7 +902,7 @@ end process BIT_SLIP_SEG1A_PROC;
 --|-------------------|
 
 --GPIO2 <= not CLOCK_100; -- scope triggering clock
---GPIO3 <= '0';
+GPIO3 <= '0';
 GPIO4 <= '0';
 SHUTDOWN_VDD <= '0';
 SHUTDOWN_VDA <= '0';
