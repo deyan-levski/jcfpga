@@ -797,8 +797,8 @@ begin
 		DEBUG_IN               => (("000000" & I_BIT_SLIP_POS(1 downto 0)) or ("000000" & I_BIT_SLIP_POS_AUTO(1 downto 0))),
 		DEBUG_OUT              => open);
 
-I_BIT_SLIP_AUTO <= '0';
-I_BIT_SLIP_POS <= "01";
+I_BIT_SLIP_AUTO <= '1';
+I_BIT_SLIP_POS <= "00";
 
 BIT_SLIP_SEG1A_PROC: process(RESET,CLOCK_DESER_WORD)
 begin
@@ -856,7 +856,7 @@ end process BIT_SLIP_SEG1A_PROC;
 	port map (	
 		CLOCK 			=> FX3_CLK,
 	        RESET 			=> RESET,
-		CLOCK_IMG		=> FX3_CLK,
+		CLOCK_IMG		=> CLOCK_DESER_WORD,
 	        LED   			=> open,
 		FVAL_IN 		=> FVAL_SEQ,
 		LVAL_IN			=> LVAL_SEQ,
