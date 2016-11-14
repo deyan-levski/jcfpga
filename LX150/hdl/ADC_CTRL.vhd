@@ -318,7 +318,10 @@ architecture Behavioral of ADC_CTRL is
 	signal G7LTX	 : std_logic;
 	signal G7HTX	 : std_logic;
 	signal LSBDAT	 : std_logic;
+<<<<<<< HEAD
 	signal MSBDAT	 : std_logic;
+=======
+>>>>>>> 988aeba246de826efd3d1090b1372bd49169783c
 
 begin
 
@@ -763,7 +766,11 @@ begin
 		d_digif_sck => CLOCK_100,
 		d_digif_rst => d_digif_serial_rst,
 		RESET	    => RESET,
+<<<<<<< HEAD
 		d_digif_msb_data => MSBDAT,
+=======
+		d_digif_msb_data => GPIO3,
+>>>>>>> 988aeba246de826efd3d1090b1372bd49169783c
 		d_digif_lsb_data => LSBDAT);
 
 --|---------------|
@@ -853,7 +860,11 @@ end process BIT_SLIP_SEG1A_PROC;
 	port map (	
 		CLOCK 			=> FX3_CLK,
 	        RESET 			=> RESET,
+<<<<<<< HEAD
 		CLOCK_IMG		=> FX3_CLK, --CLOCK_DESER_WORD,
+=======
+		CLOCK_IMG		=> CLOCK_DESER_WORD,
+>>>>>>> 988aeba246de826efd3d1090b1372bd49169783c
 	        LED   			=> open,
 		FVAL_IN 		=> FVAL_SEQ,
 		LVAL_IN			=> LVAL_SEQ,
@@ -902,7 +913,11 @@ end process BIT_SLIP_SEG1A_PROC;
 --|-------------------|
 
 --GPIO2 <= not CLOCK_100; -- scope triggering clock
+<<<<<<< HEAD
 GPIO3 <= '0';
+=======
+--GPIO3 <= '0';
+>>>>>>> 988aeba246de826efd3d1090b1372bd49169783c
 GPIO4 <= '0';
 SHUTDOWN_VDD <= '0';
 SHUTDOWN_VDA <= '0';
