@@ -318,6 +318,7 @@ architecture Behavioral of ADC_CTRL is
 	signal G7LTX	 : std_logic;
 	signal G7HTX	 : std_logic;
 	signal LSBDAT	 : std_logic;
+	signal MSBDAT	 : std_logic;
 
 begin
 
@@ -762,7 +763,7 @@ begin
 		d_digif_sck => CLOCK_100,
 		d_digif_rst => d_digif_serial_rst,
 		RESET	    => RESET,
-		d_digif_msb_data => GPIO3,
+		d_digif_msb_data => MSBDAT,
 		d_digif_lsb_data => LSBDAT);
 
 --|---------------|
@@ -796,7 +797,7 @@ begin
 		DEBUG_IN               => (("000000" & I_BIT_SLIP_POS(1 downto 0)) or ("000000" & I_BIT_SLIP_POS_AUTO(1 downto 0))),
 		DEBUG_OUT              => open);
 
-I_BIT_SLIP_AUTO <= '1';
+I_BIT_SLIP_AUTO <= '0';
 I_BIT_SLIP_POS <= "00";
 
 BIT_SLIP_SEG1A_PROC: process(RESET,CLOCK_DESER_WORD)
@@ -901,7 +902,7 @@ end process BIT_SLIP_SEG1A_PROC;
 --|-------------------|
 
 --GPIO2 <= not CLOCK_100; -- scope triggering clock
---GPIO3 <= '0';
+GPIO3 <= '0';
 GPIO4 <= '0';
 SHUTDOWN_VDD <= '0';
 SHUTDOWN_VDA <= '0';

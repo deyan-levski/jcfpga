@@ -74,8 +74,6 @@ SET PAR
 
 NOP 32			; halt 320 ns — phase 1 in vref_ramp
 
-MOV LVAL 0x00 1		; line on
-
 LOAD PAR
 MOV REF 0x01 0		; d_ref_vref_sh
 MOV REF 0x02 1		; clamp on
@@ -100,10 +98,10 @@ SET PAR
 NOP
 
 ; halt 1020 ns — wait for ramp buffer to settle
-NOP 50
-MOV SER 0x00 1		; stop data serialization out
+NOP 69
 MOV LVAL 0x00 0 	; line off
-NOP 52			; prehalt — wait for ramp buffer, toggle LVAL
+MOV SER 0x00 1		; stop data serialization out
+NOP 33			; prehalt — wait for ramp buffer, toggle LVAL
 MOV FVAL 0x00 0		; frame off
 
 MOV SHX 0x00 0		; complete shr sampling

@@ -797,7 +797,7 @@ begin
 		DEBUG_IN               => (("000000" & I_BIT_SLIP_POS(1 downto 0)) or ("000000" & I_BIT_SLIP_POS_AUTO(1 downto 0))),
 		DEBUG_OUT              => open);
 
-I_BIT_SLIP_AUTO <= '1';
+I_BIT_SLIP_AUTO <= '0';
 I_BIT_SLIP_POS <= "00";
 
 BIT_SLIP_SEG1A_PROC: process(RESET,CLOCK_DESER_WORD)
