@@ -114,7 +114,7 @@ begin
 			 FIFO0_WRDAT_I		=> TX_FIFO_WRDAT_O, --"10101011110011011110111100000001",
 			 FIFO0_WREN_I		=> TX_FIFO_WREN_O,
 			 FIFO0_FULL_O		=> open,
-			 FIFO_RD_CLK		=> CLOCK,
+			 FIFO_RD_CLK		=> CLOCK_IMG,
 			 FIFO_RDEN_I		=> '0',
 			 FIFO_EMPTY_O		=> open,
 			 FIFO_RDDAT_O		=> open,
