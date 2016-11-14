@@ -24,10 +24,7 @@ char *IEEE_P_1242562249;
 char *IEEE_P_3972351953;
 char *IEEE_P_0017514958;
 char *SYNOPSYS_P_3308480207;
-<<<<<<< HEAD
-=======
 char *WORK_P_1819820311;
->>>>>>> 988aeba246de826efd3d1090b1372bd49169783c
 char *IEEE_P_2717149903;
 char *UNISIM_P_3222816464;
 char *IEEE_P_1367372525;
@@ -50,10 +47,7 @@ int main(int argc, char **argv)
     ieee_p_2717149903_init();
     ieee_p_1367372525_init();
     unisim_p_3222816464_init();
-<<<<<<< HEAD
-=======
     work_p_1819820311_init();
->>>>>>> 988aeba246de826efd3d1090b1372bd49169783c
     unisim_a_0780662263_2014779070_init();
     unisim_a_0850834979_2152628908_init();
     unisim_a_0714155612_2768510774_init();
@@ -89,17 +83,6 @@ int main(int argc, char **argv)
     work_a_3050171595_3212880686_init();
     synopsys_p_3308480207_init();
     ieee_p_0017514958_init();
-<<<<<<< HEAD
-    unisim_a_3137140568_0725860537_init();
-    unisim_a_0620792213_1524426403_init();
-    unisim_a_0112009149_1524426403_init();
-    unisim_a_2071189792_0143995345_init();
-    unisim_a_0924121346_0143995345_init();
-    work_a_1296040699_3929803617_init();
-    work_a_3130588779_0912031422_init();
-    work_a_1280507499_1516540902_init();
-    work_a_2904986214_1181938964_init();
-=======
     unisim_a_0941147393_1524426403_init();
     unisim_a_2831913298_1524426403_init();
     unisim_a_3035483880_0143995345_init();
@@ -108,7 +91,6 @@ int main(int argc, char **argv)
     work_a_3130588779_0912031422_init();
     work_a_1280507499_1516540902_init();
     work_a_2795664740_1181938964_init();
->>>>>>> 988aeba246de826efd3d1090b1372bd49169783c
     xilinxcorelib_a_1855255528_3212880686_init();
     xilinxcorelib_a_1931361406_3212880686_init();
     xilinxcorelib_a_0605834661_3212880686_init();
@@ -143,10 +125,7 @@ int main(int argc, char **argv)
     IEEE_P_3972351953 = xsi_get_engine_memory("ieee_p_3972351953");
     IEEE_P_0017514958 = xsi_get_engine_memory("ieee_p_0017514958");
     SYNOPSYS_P_3308480207 = xsi_get_engine_memory("synopsys_p_3308480207");
-<<<<<<< HEAD
-=======
     WORK_P_1819820311 = xsi_get_engine_memory("work_p_1819820311");
->>>>>>> 988aeba246de826efd3d1090b1372bd49169783c
     IEEE_P_2717149903 = xsi_get_engine_memory("ieee_p_2717149903");
     UNISIM_P_3222816464 = xsi_get_engine_memory("unisim_p_3222816464");
     IEEE_P_1367372525 = xsi_get_engine_memory("ieee_p_1367372525");
