@@ -856,7 +856,7 @@ end process BIT_SLIP_SEG1A_PROC;
 	port map (	
 		CLOCK 			=> FX3_CLK,
 	        RESET 			=> RESET,
-		CLOCK_IMG		=> CLOCK_DESER_WORD,
+		CLOCK_IMG		=> FX3_CLK, --CLOCK_DESER_WORD,
 	        LED   			=> open,
 		FVAL_IN 		=> FVAL_SEQ,
 		LVAL_IN			=> LVAL_SEQ,
