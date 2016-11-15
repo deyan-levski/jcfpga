@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.58f on Tue Nov 15 18:21:13 2016
+// Written by: Map P.58f on Tue Nov 15 18:33:40 2016
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -63,7 +63,6 @@ COMP "GPIO2" LOCATE = SITE "C13" LEVEL 1;
 COMP "GPIO3" LOCATE = SITE "A14" LEVEL 1;
 COMP "GPIO4" LOCATE = SITE "B14" LEVEL 1;
 COMP "d_count_en" LOCATE = SITE "W13" LEVEL 1;
-COMP "RESET" LOCATE = SITE "R19" LEVEL 1;
 COMP "SRX_N" LOCATE = SITE "D11" LEVEL 1;
 COMP "SRX_P" LOCATE = SITE "C12" LEVEL 1;
 COMP "SPI_ADC_CS" LOCATE = SITE "C7" LEVEL 1;
@@ -112,6 +111,7 @@ COMP "d_count_mem_wr" LOCATE = SITE "T7" LEVEL 1;
 COMP "d_count_lsb_en" LOCATE = SITE "W10" LEVEL 1;
 COMP "d_count_hold" LOCATE = SITE "T10" LEVEL 1;
 COMP "d_count_updn" LOCATE = SITE "Y10" LEVEL 1;
+COMP "RESET_IN" LOCATE = SITE "R19" LEVEL 1;
 PIN PLL_250_INST/clkout1_buf_pin<1> = BEL "PLL_250_INST/clkout1_buf" PINNAME
         O;
 PIN "PLL_250_INST/clkout1_buf_pin<1>" CLOCK_DEDICATED_ROUTE = FALSE;
@@ -1111,8 +1111,13 @@ PIN G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_master_pins<2> = BEL
         CLK0;
 PIN G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_slave_pins<2> = BEL
         "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_slave" PINNAME CLK0;
-TIMEGRP CLOCK_DESER_1BIT = BEL "DIGIF_INST/falling_edge_process.sck_counter_0"
-        BEL "DIGIF_INST/rising_edge_process.sck_counter_0" BEL
+TIMEGRP CLOCK_DESER_1BIT = PIN
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_m_pins<6>" PIN
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_s_pins<7>" PIN
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iodelay2_bus_m_pins<6>" PIN
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iodelay2_bus_s_pins<7>" BEL
+        "DIGIF_INST/falling_edge_process.sck_counter_0" BEL
+        "DIGIF_INST/rising_edge_process.sck_counter_0" BEL
         "DIGIF_INST/falling_edge_process.preamble_counter_0" BEL
         "DIGIF_INST/rising_edge_process.preamble_counter_0" BEL
         "DIGIF_INST/falling_edge_process.sck_counter_3" BEL
@@ -1145,10 +1150,6 @@ TIMEGRP CLOCK_DESER_1BIT = BEL "DIGIF_INST/falling_edge_process.sck_counter_0"
         "DIGIF_INST/R_EDGE_FLAG_DAT" BEL "DIGIF_INST/mux_sck_rise" BEL
         "DIGIF_INST/rising_edge_process.sck_toggle" BEL
         "DIGIF_INST/falling_edge_process.sck_toggle" PIN
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_m_pins<6>" PIN
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_s_pins<7>" PIN
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iodelay2_bus_m_pins<6>" PIN
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iodelay2_bus_s_pins<7>" PIN
         "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iserdes2_master_pins<2>" PIN
         "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iserdes2_slave_pins<2>" PIN
         "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_master_pins<2>" PIN
