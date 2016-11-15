@@ -56,7 +56,7 @@ begin
 	DATA1	 <= "000000000001"; --"100000001101"; --"011000101111"; --"111101000110" LSB FIRST LSB--->MSB	-- mirrored word
 
 
-	rising_edge_process : process(d_digif_sck)
+	rising_edge_process : process(d_digif_sck, RESET)
 
 		variable txbuf_m : STD_LOGIC_VECTOR(5 downto 0);	-- tx buffer msb
 		variable txbuf_l : STD_LOGIC_VECTOR(5 downto 0);	-- tx buffer lsb
@@ -149,7 +149,7 @@ begin
 	end process;
 
 
-	falling_edge_process : process(d_digif_sck)	-- falling edge process; almost identical to rising edge process
+	falling_edge_process : process(d_digif_sck, RESET)	-- falling edge process; almost identical to rising edge process
 
 		variable txbuf_m : STD_LOGIC_VECTOR(5 downto 0);
 		variable txbuf_l : STD_LOGIC_VECTOR(5 downto 0);
