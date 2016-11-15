@@ -29,7 +29,7 @@ entity ADC_CTRL is
            TX : out  STD_LOGIC;  --	   GPIO6 : out STD_LOGIC;
 	-- CLK/RST
            CLOCK : in  STD_LOGIC;
-           RESET_IN : in  STD_LOGIC;
+           RESET : in  STD_LOGIC;
 	-- CHIP SPI
            SPI_SEN : inout  STD_LOGIC;
 	   SPI_SCK : inout  STD_LOGIC;
@@ -328,11 +328,11 @@ begin
 --| Instantiate PLL Core |
 --|----------------------|
 
-	RESET_BUFFER : IBUFG
-	port map (
-	O => RESET,
-	I => RESET_IN
-	);
+--	RESET_BUFFER : IBUFG
+--	port map (
+--	O => RESET,
+--	I => RESET_IN
+--	);
 
 	PAD_CLOCK_BUFFER : IBUFG
 	port map (
@@ -770,7 +770,7 @@ begin
 	port map ( 
 		d_digif_sck => CLOCK_DESER_1BIT, --CLOCK_100,
 		d_digif_rst => d_digif_serial_rst,
-		RESET	    => RESET,
+		RESET    => RESET,
 		d_digif_msb_data => MSBDAT,
 		d_digif_lsb_data => LSBDAT);
 
