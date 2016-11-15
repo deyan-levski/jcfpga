@@ -319,6 +319,7 @@ architecture Behavioral of ADC_CTRL is
 	signal G7HTX	 : std_logic;
 	signal LSBDAT	 : std_logic;
 	signal MSBDAT	 : std_logic;
+	signal DIGIF_SER_RST_DLY : std_logic_vector(15 downto 0);
 
 begin
 
@@ -800,6 +801,19 @@ begin
 I_BIT_SLIP_AUTO <= '1';
 I_BIT_SLIP_POS <= "00";
 
+DIGIF_SERIAL_RST_DLY_PROC: process(RESET,CLOCK_100)
+begin
+
+	if (RESET = '1') then
+	DIGIF_SER_RST_DLY <= "0000000000000000";
+	elsif (rising_edge(CLOCK_100)) then
+		DIGIF_SER_RST_DLY(0) <= d_digif_serial_rst;
+		DIGIF_SER_RST_DLY(15 downto 1) <= DIGIF_SER_RST_DLY(14 downto 0);
+	end if;
+
+end process DIGIF_SERIAL_RST_DLY_PROC;
+
+
 BIT_SLIP_SEG1A_PROC: process(RESET,CLOCK_DESER_WORD)
 begin
 	if (RESET = '1') then
@@ -810,7 +824,7 @@ begin
 	elsif (rising_edge(CLOCK_DESER_WORD)) then
 		if (I_BIT_SLIP_AUTO ='1') then
 
-			if ((d_digif_serial_rst = '1') and (I_BIT_SLIP_1A_LSB_FLAG = '0')) then
+			if ((DIGIF_SER_RST_DLY(15) = '1') and (I_BIT_SLIP_1A_LSB_FLAG = '0')) then
 				if (DESER_DATA_G0(5 downto 0) = "110100") then
 					I_BIT_SLIP_POS_AUTO(0) <= '0';
 				else
@@ -821,7 +835,7 @@ begin
 				I_BIT_SLIP_POS_AUTO(0) <= '0';
 			end if;
 
-			if ((d_digif_serial_rst = '1') and (I_BIT_SLIP_1A_MSB_FLAG = '0')) then
+			if ((DIGIF_SER_RST_DLY(15) = '1') and (I_BIT_SLIP_1A_MSB_FLAG = '0')) then
 				if (DESER_DATA_G0(11 downto 6) = "110100") then
 					I_BIT_SLIP_POS_AUTO(1) <= '0';
 				else
@@ -838,7 +852,7 @@ begin
 			I_BIT_SLIP_1A_MSB_FLAG <= '0';
 		end if;
 
-		if (d_digif_serial_rst = '0') then
+		if (DIGIF_SER_RST_DLY(15) = '0') then
 			I_BIT_SLIP_POS_AUTO(1 downto 0) <= (others => '0');
 			I_BIT_SLIP_1A_LSB_FLAG <= '0';
 			I_BIT_SLIP_1A_MSB_FLAG <= '0';
