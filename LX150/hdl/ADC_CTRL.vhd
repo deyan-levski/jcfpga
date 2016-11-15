@@ -775,7 +775,7 @@ begin
 		G_SIMULATION           => false,			-- simulation mode
 		C_TP                   => x"D3D3D3D3")			-- training pattern
 	port map (
-		G_INVERT_MSB           => false,			-- invert MSB sensor data
+		G_INVERT_MSB           => true,			-- invert MSB sensor data
 		G_INVERT_LSB           => false,			-- invert LSB sensor data
 		-- system signals
 		RESET                  => RESET,  -- async. reset
