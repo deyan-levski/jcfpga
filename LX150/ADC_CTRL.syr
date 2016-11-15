@@ -5,7 +5,7 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.03 secs
  
 --> 
 Parameter xsthdpdir set to xst
@@ -258,7 +258,6 @@ WARNING:Xst:647 - Input <GPIO2> is never used. This port will be preserved and l
 WARNING:Xst:647 - Input <SPI_ADC_MISO> is never used. This port will be preserved and left unconnected if it belongs to a top-level block or it belongs to a sub-block and the hierarchy of this sub-block is preserved.
 INFO:Xst:3210 - "/media/data/git/jcfpga/LX150/hdl/ADC_CTRL.vhd" line 335: Output port <CLK_OUT2> of the instance <PLL_250_INST> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/media/data/git/jcfpga/LX150/hdl/ADC_CTRL.vhd" line 686: Output port <DEBUG_PIN> of the instance <SREG_CONTROL_INST> is unconnected or connected to loadless signal.
-INFO:Xst:3210 - "/media/data/git/jcfpga/LX150/hdl/ADC_CTRL.vhd" line 761: Output port <d_digif_msb_data> of the instance <DIGIF_INST> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/media/data/git/jcfpga/LX150/hdl/ADC_CTRL.vhd" line 773: Output port <DEBUG_OUT> of the instance <G0LTX_DESER_INST> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/media/data/git/jcfpga/LX150/hdl/ADC_CTRL.vhd" line 773: Output port <DATA_EN> of the instance <G0LTX_DESER_INST> is unconnected or connected to loadless signal.
 INFO:Xst:3210 - "/media/data/git/jcfpga/LX150/hdl/ADC_CTRL.vhd" line 773: Output port <DIV_CLK_CS> of the instance <G0LTX_DESER_INST> is unconnected or connected to loadless signal.
@@ -1240,8 +1239,6 @@ Optimizing unit <phase_detector> ...
 Optimizing unit <DESERIALIZER> ...
 
 Optimizing unit <IMAGE_OUT> ...
-WARNING:Xst:2677 - Node <DIGIF_INST/MSB_SDA_FALL> of sequential type is unconnected in block <ADC_CTRL>.
-WARNING:Xst:2677 - Node <DIGIF_INST/MSB_SDA_RISE> of sequential type is unconnected in block <ADC_CTRL>.
 INFO:Xst:2261 - The FF/Latch <SREG_CONTROL_INST/T_SERIAL_INST/state_fsm_state_FSM_FFd1> in Unit <ADC_CTRL> is equivalent to the following FF/Latch, which will be removed : <SREG_CONTROL_INST/T_SERIAL_INST/state_tx_enable> 
 INFO:Xst:2261 - The FF/Latch <G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_10> in Unit <ADC_CTRL> is equivalent to the following FF/Latch, which will be removed : <G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/counter_10> 
 INFO:Xst:2261 - The FF/Latch <G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_11> in Unit <ADC_CTRL> is equivalent to the following FF/Latch, which will be removed : <G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/counter_11> 
@@ -1321,8 +1318,8 @@ Unit <ADC_CTRL> processed.
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 1036
- Flip-Flops                                            : 1036
+# Registers                                            : 1038
+ Flip-Flops                                            : 1038
 # Shift Registers                                      : 3
  2-bit shift register                                  : 1
  3-bit shift register                                  : 2
@@ -1348,26 +1345,26 @@ Top Level Output File Name         : ADC_CTRL.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 1845
+# BELS                             : 1849
 #      GND                         : 7
 #      INV                         : 50
 #      LUT1                        : 131
 #      LUT2                        : 191
 #      LUT3                        : 480
-#      LUT4                        : 168
+#      LUT4                        : 172
 #      LUT5                        : 120
 #      LUT6                        : 226
 #      MUXCY                       : 264
 #      MUXF7                       : 37
 #      VCC                         : 4
 #      XORCY                       : 167
-# FlipFlops/Latches                : 1751
+# FlipFlops/Latches                : 1753
 #      FD                          : 236
 #      FDC                         : 623
 #      FDC_1                       : 112
 #      FDCE                        : 348
-#      FDE                         : 16
-#      FDE_1                       : 2
+#      FDE                         : 17
+#      FDE_1                       : 3
 #      FDP                         : 68
 #      FDP_1                       : 95
 #      FDPE                        : 21
@@ -1410,17 +1407,17 @@ Selected Device : 6slx150fgg484-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:            1750  out of  184304     0%  
- Number of Slice LUTs:                 1369  out of  92152     1%  
-    Number used as Logic:              1366  out of  92152     1%  
+ Number of Slice Registers:            1752  out of  184304     0%  
+ Number of Slice LUTs:                 1373  out of  92152     1%  
+    Number used as Logic:              1370  out of  92152     1%  
     Number used as Memory:                3  out of  21680     0%  
        Number used as SRL:                3
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:   2219
-   Number with an unused Flip Flop:     469  out of   2219    21%  
-   Number with an unused LUT:           850  out of   2219    38%  
-   Number of fully used LUT-FF pairs:   900  out of   2219    40%  
+ Number of LUT Flip Flop pairs used:   2222
+   Number with an unused Flip Flop:     470  out of   2222    21%  
+   Number with an unused LUT:           849  out of   2222    38%  
+   Number of fully used LUT-FF pairs:   903  out of   2222    40%  
    Number of unique control sets:       467
 
 IO Utilization: 
@@ -1457,8 +1454,10 @@ Clock Signal                                                                    
 -----------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
 PLL_DESER_INST/pll_base_inst/CLKOUT2                                                                                                                 | BUFG                                                                                                                                                    | 498   |
 CLOCK                                                                                                                                                | DCM_SP:CLK0+BUFG                                                                                                                                        | 222   |
-LSBDAT(DIGIF_INST/Mmux_d_digif_lsb_data11:O)                                                                                                         | NONE(*)(ODDR2_LSBDATTX_INST)                                                                                                                            | 2     |
-LSBDAT_INV_2_o(LSBDAT_INV_2_o1:O)                                                                                                                    | NONE(*)(ODDR2_LSBDATTX_INST)                                                                                                                            | 2     |
+LSBDAT(DIGIF_INST/Mmux_d_digif_lsb_data11:O)                                                                                                         | NONE(*)(ODDR2_LSBDATTX_INST)                                                                                                                            | 1     |
+LSBDAT_INV_2_o(LSBDAT_INV_2_o1:O)                                                                                                                    | NONE(*)(ODDR2_LSBDATTX_INST)                                                                                                                            | 1     |
+MSBDAT(DIGIF_INST/Mmux_d_digif_msb_data11:O)                                                                                                         | NONE(*)(ODDR2_LVDS_CLOC_BUFFER_OUT_INST)                                                                                                                | 1     |
+MSBDAT_INV_4_o(MSBDAT_INV_4_o1:O)                                                                                                                    | NONE(*)(ODDR2_LVDS_CLOC_BUFFER_OUT_INST)                                                                                                                | 1     |
 SPI_ADC_CLK_OBUF                                                                                                                                     | NONE(FX3_SLAVE_INST/FX3_SLAVE_INST/I_ODDR2)                                                                                                             | 91    |
 I_BIT_SLIP_AUTO                                                                                                                                      | NONE(FX3_SLAVE_INST/FX3_SLAVE_INST/I_ODDR2)                                                                                                             | 1     |
 GPIFII_PCLK_IN                                                                                                                                       | DCM_SP:CLK0                                                                                                                                             | 349   |
@@ -1467,7 +1466,7 @@ SREG_CONTROL_INST/SREG_CORE_INST/CLOCK_DIV_REG_16                               
 SREG_CONTROL_INST/SREG_CORE_INST/SPI_SCK                                                                                                             | BUFG                                                                                                                                                    | 191   |
 SREG_CONTROL_INST/SPI_CORE_INST/Mcount_spiclkgen.sck_counter_val(SREG_CONTROL_INST/SREG_CORE_INST/Mcount_spiclkgen.sck_counter_val1:O)               | NONE(*)(SREG_CONTROL_INST/SREG_CORE_INST/SPI_DATA_TX_0)                                                                                                 | 2     |
 SREG_CONTROL_INST/SPI_CORE_INST/SPI_SCK                                                                                                              | NONE(SREG_CONTROL_INST/SPI_CORE_INST/SPI_DATA_TX_32)                                                                                                    | 63    |
-PLL_DESER_INST/pll_base_inst/CLKOUT0                                                                                                                 | NONE(DIGIF_INST/falling_edge_process.sck_counter_0)                                                                                                     | 35    |
+PLL_DESER_INST/pll_base_inst/CLKOUT0                                                                                                                 | NONE(DIGIF_INST/falling_edge_process.sck_counter_0)                                                                                                     | 37    |
 PLL_DESER_INST/pll_base_inst/CLKOUT1                                                                                                                 | BUFG                                                                                                                                                    | 77    |
 BLOCKMEM_INST/N1                                                                                                                                     | NONE(BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_init.ram/SP.SIMPLE_PRIM18.ram)| 2     |
 SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[95]_AND_2_o(SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[95]_AND_2_o1:O)    | NONE(*)(SREG_CONTROL_INST/SREG_CORE_INST/SPI_DATA_TX_95_LDC)                                                                                            | 1     |
@@ -1597,7 +1596,7 @@ SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[3]_AND_249_o(SREG_CONT
 SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[2]_AND_251_o(SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[2]_AND_251_o1:O)    | NONE(*)(SREG_CONTROL_INST/SPI_CORE_INST/SPI_DATA_TX_2_LDC)                                                                                              | 1     |
 SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[1]_AND_253_o(SREG_CONTROL_INST/SPI_CORE_INST/SPI_MASTER_RESET_SPI_DATA[1]_AND_253_o1:O)    | NONE(*)(SREG_CONTROL_INST/SPI_CORE_INST/SPI_DATA_TX_1_LDC)                                                                                              | 1     |
 -----------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
-(*) These 129 clock signal(s) are generated by combinatorial logic,
+(*) These 131 clock signal(s) are generated by combinatorial logic,
 and XST is not able to identify which are the primary clock signals.
 Please use the CLOCK_SIGNAL constraint to specify the clock signal(s) generated by combinatorial logic.
 INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
@@ -1612,7 +1611,7 @@ Speed Grade: -3
 
    Minimum period: 4.836ns (Maximum Frequency: 206.774MHz)
    Minimum input arrival time before clock: 6.059ns
-   Maximum output required time after clock: 5.329ns
+   Maximum output required time after clock: 5.378ns
    Maximum combinational path delay: 3.337ns
 
 Timing Details:
@@ -1761,10 +1760,10 @@ Delay:               1.436ns (Levels of Logic = 1)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'PLL_DESER_INST/pll_base_inst/CLKOUT0'
-  Clock period: 3.968ns (frequency: 252.003MHz)
-  Total number of paths / destination ports: 194 / 54
+  Clock period: 4.096ns (frequency: 244.158MHz)
+  Total number of paths / destination ports: 200 / 56
 -------------------------------------------------------------------------
-Delay:               1.984ns (Levels of Logic = 1)
+Delay:               2.048ns (Levels of Logic = 1)
   Source:            DIGIF_INST/F_EDGE_FLAG (FF)
   Destination:       DIGIF_INST/R_EDGE_FLAG (FF)
   Source Clock:      PLL_DESER_INST/pll_base_inst/CLKOUT0 falling
@@ -1774,12 +1773,12 @@ Delay:               1.984ns (Levels of Logic = 1)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDRE_1:C->Q           3   0.447   0.650  DIGIF_INST/F_EDGE_FLAG (DIGIF_INST/F_EDGE_FLAG)
+     FDRE_1:C->Q           5   0.447   0.714  DIGIF_INST/F_EDGE_FLAG (DIGIF_INST/F_EDGE_FLAG)
      INV:I->O              1   0.206   0.579  DIGIF_INST/F_EDGE_FLAG_INV_162_o1_INV_0 (DIGIF_INST/F_EDGE_FLAG_INV_162_o)
      FDRE:D                    0.102          DIGIF_INST/R_EDGE_FLAG
     ----------------------------------------
-    Total                      1.984ns (0.755ns logic, 1.229ns route)
-                                       (38.1% logic, 61.9% route)
+    Total                      2.048ns (0.755ns logic, 1.293ns route)
+                                       (36.9% logic, 63.1% route)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'PLL_DESER_INST/pll_base_inst/CLKOUT1'
@@ -1868,7 +1867,7 @@ Offset:              4.769ns (Levels of Logic = 2)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'LSBDAT'
-  Total number of paths / destination ports: 2 / 2
+  Total number of paths / destination ports: 1 / 1
 -------------------------------------------------------------------------
 Offset:              3.337ns (Levels of Logic = 1)
   Source:            RESET (PAD)
@@ -1881,6 +1880,25 @@ Offset:              3.337ns (Levels of Logic = 1)
     ----------------------------------------  ------------
      IBUF:I->O           618   1.222   2.115  RESET_IBUF (RESET_IBUF)
      ODDR2:R                   0.000          ODDR2_LSBDATTX_INST
+    ----------------------------------------
+    Total                      3.337ns (1.222ns logic, 2.115ns route)
+                                       (36.6% logic, 63.4% route)
+
+=========================================================================
+Timing constraint: Default OFFSET IN BEFORE for Clock 'MSBDAT'
+  Total number of paths / destination ports: 1 / 1
+-------------------------------------------------------------------------
+Offset:              3.337ns (Levels of Logic = 1)
+  Source:            RESET (PAD)
+  Destination:       ODDR2_LVDS_CLOC_BUFFER_OUT_INST (FF)
+  Destination Clock: MSBDAT rising
+
+  Data Path: RESET to ODDR2_LVDS_CLOC_BUFFER_OUT_INST
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     IBUF:I->O           618   1.222   2.115  RESET_IBUF (RESET_IBUF)
+     ODDR2:R                   0.000          ODDR2_LVDS_CLOC_BUFFER_OUT_INST
     ----------------------------------------
     Total                      3.337ns (1.222ns logic, 2.115ns route)
                                        (36.6% logic, 63.4% route)
@@ -1987,9 +2005,9 @@ Offset:              5.106ns (Levels of Logic = 2)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'PLL_DESER_INST/pll_base_inst/CLKOUT0'
-  Total number of paths / destination ports: 64 / 64
+  Total number of paths / destination ports: 66 / 66
 -------------------------------------------------------------------------
-Offset:              5.256ns (Levels of Logic = 2)
+Offset:              5.284ns (Levels of Logic = 2)
   Source:            RESET (PAD)
   Destination:       DIGIF_INST/falling_edge_process.sck_counter_0 (FF)
   Destination Clock: PLL_DESER_INST/pll_base_inst/CLKOUT0 falling
@@ -1999,17 +2017,17 @@ Offset:              5.256ns (Levels of Logic = 2)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      IBUF:I->O           618   1.222   2.115  RESET_IBUF (RESET_IBUF)
-     INV:I->O             39   0.206   1.391  DIGIF_INST/RESET_inv1_INV_0 (DIGIF_INST/RESET_inv)
+     INV:I->O             41   0.206   1.419  DIGIF_INST/RESET_inv1_INV_0 (DIGIF_INST/RESET_inv)
      FDSE_1:CE                 0.322          DIGIF_INST/falling_edge_process.preamble_var_2
     ----------------------------------------
-    Total                      5.256ns (1.750ns logic, 3.506ns route)
-                                       (33.3% logic, 66.7% route)
+    Total                      5.284ns (1.750ns logic, 3.534ns route)
+                                       (33.1% logic, 66.9% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'PLL_DESER_INST/pll_base_inst/CLKOUT1'
   Total number of paths / destination ports: 93 / 93
 -------------------------------------------------------------------------
-Offset:              5.256ns (Levels of Logic = 2)
+Offset:              5.284ns (Levels of Logic = 2)
   Source:            RESET (PAD)
   Destination:       G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/valid_data_d (FF)
   Destination Clock: PLL_DESER_INST/pll_base_inst/CLKOUT1 rising
@@ -2019,11 +2037,11 @@ Offset:              5.256ns (Levels of Logic = 2)
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
      IBUF:I->O           618   1.222   2.115  RESET_IBUF (RESET_IBUF)
-     INV:I->O             39   0.206   1.391  DIGIF_INST/RESET_inv1_INV_0 (DIGIF_INST/RESET_inv)
+     INV:I->O             41   0.206   1.419  DIGIF_INST/RESET_inv1_INV_0 (DIGIF_INST/RESET_inv)
      FDE:CE                    0.322          G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/incdec_data_d
     ----------------------------------------
-    Total                      5.256ns (1.750ns logic, 3.506ns route)
-                                       (33.3% logic, 66.7% route)
+    Total                      5.284ns (1.750ns logic, 3.534ns route)
+                                       (33.1% logic, 66.9% route)
 
 =========================================================================
 Timing constraint: Default OFFSET IN BEFORE for Clock 'SPI_ADC_CLK_OBUF'
@@ -4588,7 +4606,7 @@ Offset:              4.323ns (Levels of Logic = 1)
 Timing constraint: Default OFFSET OUT AFTER for Clock 'CLOCK'
   Total number of paths / destination ports: 28 / 28
 -------------------------------------------------------------------------
-Offset:              5.329ns (Levels of Logic = 2)
+Offset:              5.378ns (Levels of Logic = 2)
   Source:            BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_init.ram/SP.SIMPLE_PRIM18.ram (RAM)
   Destination:       d_digif_serial_rst (PAD)
   Source Clock:      CLOCK falling
@@ -4597,12 +4615,12 @@ Offset:              5.329ns (Levels of Logic = 2)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     RAMB16BWER:CLKA->DOA6   12   1.850   0.908  U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_init.ram/SP.SIMPLE_PRIM18.ram (douta<6>)
+     RAMB16BWER:CLKA->DOA6   14   1.850   0.957  U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_init.ram/SP.SIMPLE_PRIM18.ram (douta<6>)
      end scope: 'BLOCKMEM_INST:douta<6>'
      OBUF:I->O                 2.571          d_digif_serial_rst_OBUF (d_digif_serial_rst)
     ----------------------------------------
-    Total                      5.329ns (4.421ns logic, 0.908ns route)
-                                       (83.0% logic, 17.0% route)
+    Total                      5.378ns (4.421ns logic, 0.957ns route)
+                                       (82.2% logic, 17.8% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'SREG_CONTROL_INST/SREG_CORE_INST/CLOCK_DIV_REG_16'
@@ -4727,8 +4745,8 @@ Clock to Setup on destination clock PLL_DESER_INST/pll_base_inst/CLKOUT0
                                     | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock                        |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ------------------------------------+---------+---------+---------+---------+
-CLOCK                               |         |    4.138|    4.210|         |
-PLL_DESER_INST/pll_base_inst/CLKOUT0|    3.468|    1.984|    3.734|         |
+CLOCK                               |         |    4.187|    4.259|         |
+PLL_DESER_INST/pll_base_inst/CLKOUT0|    3.468|    2.048|    3.734|         |
 ------------------------------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock PLL_DESER_INST/pll_base_inst/CLKOUT1
@@ -5942,14 +5960,14 @@ CLOCK          |    5.552|         |         |         |
 
 
 Total REAL time to Xst completion: 10.00 secs
-Total CPU time to Xst completion: 9.80 secs
+Total CPU time to Xst completion: 9.98 secs
  
 --> 
 
 
-Total memory usage is 415316 kilobytes
+Total memory usage is 415248 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :   75 (   0 filtered)
-Number of infos    :   94 (   0 filtered)
+Number of warnings :   73 (   0 filtered)
+Number of infos    :   93 (   0 filtered)
 
