@@ -420,8 +420,8 @@ begin
       SRTYPE => "SYNC") -- Specifies "SYNC" or "ASYNC" set/reset
    port map (
       Q  => CLOCK_COUNT_OBUFDS, -- 1-bit output data
-      C0 => MSBDAT, -- 1-bit clock input
-      C1 => not MSBDAT, -- 1-bit clock input
+      C0 => LSBDAT, -- 1-bit clock input
+      C1 => not LSBDAT, -- 1-bit clock input
       CE => '1',   -- 1-bit clock enable input
       D0 => '0',   -- 1-bit data input (associated with C0)
       D1 => '1',   -- 1-bit data input (associated with C1)
