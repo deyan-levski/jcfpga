@@ -760,7 +760,7 @@ begin
 
 	DIGIF_INST : DIGIF
 	port map ( 
-		d_digif_sck => CLOCK_100,
+		d_digif_sck => CLOCK_DESER_1BIT, --CLOCK_100,
 		d_digif_rst => d_digif_serial_rst,
 		RESET	    => RESET,
 		d_digif_msb_data => MSBDAT,
