@@ -224,26 +224,26 @@ architecture Behavioral of ADC_CTRL is
 
 	component OPTO_SEG_IF is
 	generic (
-	       G_SIMULATION:               boolean:= false;                                -- simulation mode
-	       C_TP:                       std_logic_vector:=x"D3D3D3D3");                 -- training pattern
+	       G_SIMULATION:               boolean:= false;                   -- simulation mode
+	       C_TP:                       std_logic_vector:=x"D3D3D3D3");    -- training pattern
 	port (
-	       G_INVERT_MSB:               in boolean:= false;                             -- invert MSB sensor data
-	       G_INVERT_LSB:               in boolean:= false;                             -- invert LSB sensor data
+	       G_INVERT_MSB:               in boolean:= false;                -- invert MSB sensor data
+	       G_INVERT_LSB:               in boolean:= false;                -- invert LSB sensor data
 	       -- system signals
-	       RESET:                      in  std_logic;                                  -- async. reset
-	       ENABLE:                     in  std_logic;                                  -- module activation
-	       IO_CLK:                     in  std_logic;                                  -- bit clock
-	       DIV_CLK:                    in  std_logic;                                  -- bit clock / 4
-	       BYTE_CLK:                   in  std_logic;                                  -- word clock
-	       SERDESSTROBE_IN:            in  std_logic;                                  -- strobe to ISERDES
+	       RESET:                      in  std_logic;                     -- async. reset
+	       ENABLE:                     in  std_logic;                     -- module activation
+	       IO_CLK:                     in  std_logic;                     -- bit clock
+	       DIV_CLK:                    in  std_logic;                     -- bit clock / 4
+	       BYTE_CLK:                   in  std_logic;                     -- word clock
+	       SERDESSTROBE_IN:            in  std_logic;                     -- strobe to ISERDES
 	       -- serial interconnect
-	       DIGIF_MSB_P:                in  std_logic;                                  -- serial data for segment MS-Byte (LVDS+)
-	       DIGIF_MSB_N:                in  std_logic;                                  -- serial data for segment MS-Byte (LVDS-)
-	       DIGIF_LSB_P:                in  std_logic;                                  -- serial data for segment LS-Byte (LVDS+)
-	       DIGIF_LSB_N:                in  std_logic;                                  -- serial data for segment LS-Byte (LVDS+)
+	       DIGIF_MSB_P:                in  std_logic;                     -- serial data for segment MS-Byte (LVDS+)
+	       DIGIF_MSB_N:                in  std_logic;                     -- serial data for segment MS-Byte (LVDS-)
+	       DIGIF_LSB_P:                in  std_logic;                     -- serial data for segment LS-Byte (LVDS+)
+	       DIGIF_LSB_N:                in  std_logic;                     -- serial data for segment LS-Byte (LVDS+)
 	       -- image data interface
-	       DATA:                       out std_logic_vector(15 downto 0);              -- data output
-	       DATA_EN:                    out std_logic;                                  -- DATA_IN data valid
+	       DATA:                       out std_logic_vector(15 downto 0); -- data output
+	       DATA_EN:                    out std_logic;                     -- DATA_IN data valid
 	       -- debug
 	       DIV_CLK_CS:                 out std_logic;
 	       DEBUG_IN:                   in  std_logic_vector(7 downto 0);
@@ -777,7 +777,7 @@ begin
 
 	DIGIF_INST : DIGIF
 	port map ( 
-		d_digif_sck => CLOCK_DESER_1BIT, --CLOCK_100,
+		d_digif_sck => CLOCK_100,
 		d_digif_rst => d_digif_serial_rst,
 		RESET    => RESET,
 		d_digif_msb_data => MSBDAT,
@@ -840,7 +840,7 @@ begin
 	elsif (rising_edge(CLOCK_DESER_WORD)) then
 		if (I_BIT_SLIP_AUTO ='1') then
 
-			if ((DIGIF_SER_RST_DLY(8) = '1') and (I_BIT_SLIP_1A_LSB_FLAG = '0')) then
+			if ((DIGIF_SER_RST_DLY(7) = '1') and (I_BIT_SLIP_1A_LSB_FLAG = '0')) then
 				if (DESER_DATA_G0(5 downto 0) = "110100") then
 					I_BIT_SLIP_POS_AUTO(0) <= '0';
 				else
@@ -851,7 +851,7 @@ begin
 				I_BIT_SLIP_POS_AUTO(0) <= '0';
 			end if;
 
-			if ((DIGIF_SER_RST_DLY(8) = '1') and (I_BIT_SLIP_1A_MSB_FLAG = '0')) then
+			if ((DIGIF_SER_RST_DLY(7) = '1') and (I_BIT_SLIP_1A_MSB_FLAG = '0')) then
 				if (DESER_DATA_G0(11 downto 6) = "110100") then
 					I_BIT_SLIP_POS_AUTO(1) <= '0';
 				else
