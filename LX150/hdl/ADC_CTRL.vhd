@@ -905,8 +905,8 @@ end process BIT_SLIP_SEG1A_PROC;
 --|-------------------|
 
 --GPIO2 <= not CLOCK_100; -- scope triggering clock
-GPIO3 <= '0';
-GPIO4 <= '0';
+GPIO3 <= MSBDAT;
+GPIO4 <= LSBDAT;
 SHUTDOWN_VDD <= '0';
 SHUTDOWN_VDA <= '0';
 SPI_ADC_CS   <= '0';

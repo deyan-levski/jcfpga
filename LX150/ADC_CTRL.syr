@@ -5,7 +5,7 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.03 secs
+Total CPU time to Xst completion: 0.04 secs
  
 --> 
 Parameter xsthdpdir set to xst
@@ -1454,9 +1454,9 @@ Clock Signal                                                                    
 -----------------------------------------------------------------------------------------------------------------------------------------------------+---------------------------------------------------------------------------------------------------------------------------------------------------------+-------+
 PLL_DESER_INST/pll_base_inst/CLKOUT2                                                                                                                 | BUFG                                                                                                                                                    | 498   |
 CLOCK                                                                                                                                                | DCM_SP:CLK0+BUFG                                                                                                                                        | 222   |
-LSBDAT(DIGIF_INST/Mmux_d_digif_lsb_data11:O)                                                                                                         | NONE(*)(ODDR2_LSBDATTX_INST)                                                                                                                            | 1     |
+GPIO4_OBUF(DIGIF_INST/Mmux_d_digif_lsb_data11:O)                                                                                                     | NONE(*)(ODDR2_LSBDATTX_INST)                                                                                                                            | 1     |
 LSBDAT_INV_2_o(LSBDAT_INV_2_o1:O)                                                                                                                    | NONE(*)(ODDR2_LSBDATTX_INST)                                                                                                                            | 1     |
-MSBDAT(DIGIF_INST/Mmux_d_digif_msb_data11:O)                                                                                                         | NONE(*)(ODDR2_LVDS_CLOC_BUFFER_OUT_INST)                                                                                                                | 1     |
+GPIO3_OBUF(DIGIF_INST/Mmux_d_digif_msb_data11:O)                                                                                                     | NONE(*)(ODDR2_LVDS_CLOC_BUFFER_OUT_INST)                                                                                                                | 1     |
 MSBDAT_INV_4_o(MSBDAT_INV_4_o1:O)                                                                                                                    | NONE(*)(ODDR2_LVDS_CLOC_BUFFER_OUT_INST)                                                                                                                | 1     |
 SPI_ADC_CLK_OBUF                                                                                                                                     | NONE(FX3_SLAVE_INST/FX3_SLAVE_INST/I_ODDR2)                                                                                                             | 91    |
 I_BIT_SLIP_AUTO                                                                                                                                      | NONE(FX3_SLAVE_INST/FX3_SLAVE_INST/I_ODDR2)                                                                                                             | 1     |
@@ -1866,13 +1866,13 @@ Offset:              4.769ns (Levels of Logic = 2)
                                        (36.6% logic, 63.4% route)
 
 =========================================================================
-Timing constraint: Default OFFSET IN BEFORE for Clock 'LSBDAT'
+Timing constraint: Default OFFSET IN BEFORE for Clock 'GPIO4_OBUF'
   Total number of paths / destination ports: 1 / 1
 -------------------------------------------------------------------------
 Offset:              3.337ns (Levels of Logic = 1)
   Source:            RESET (PAD)
   Destination:       ODDR2_LSBDATTX_INST (FF)
-  Destination Clock: LSBDAT rising
+  Destination Clock: GPIO4_OBUF rising
 
   Data Path: RESET to ODDR2_LSBDATTX_INST
                                 Gate     Net
@@ -1885,13 +1885,13 @@ Offset:              3.337ns (Levels of Logic = 1)
                                        (36.6% logic, 63.4% route)
 
 =========================================================================
-Timing constraint: Default OFFSET IN BEFORE for Clock 'MSBDAT'
+Timing constraint: Default OFFSET IN BEFORE for Clock 'GPIO3_OBUF'
   Total number of paths / destination ports: 1 / 1
 -------------------------------------------------------------------------
 Offset:              3.337ns (Levels of Logic = 1)
   Source:            RESET (PAD)
   Destination:       ODDR2_LVDS_CLOC_BUFFER_OUT_INST (FF)
-  Destination Clock: MSBDAT rising
+  Destination Clock: GPIO3_OBUF rising
 
   Data Path: RESET to ODDR2_LVDS_CLOC_BUFFER_OUT_INST
                                 Gate     Net
@@ -4680,6 +4680,26 @@ Offset:              3.597ns (Levels of Logic = 1)
                                        (83.9% logic, 16.1% route)
 
 =========================================================================
+Timing constraint: Default OFFSET OUT AFTER for Clock 'PLL_DESER_INST/pll_base_inst/CLKOUT0'
+  Total number of paths / destination ports: 8 / 2
+-------------------------------------------------------------------------
+Offset:              4.713ns (Levels of Logic = 2)
+  Source:            DIGIF_INST/mux_sck_fall (FF)
+  Destination:       GPIO3 (PAD)
+  Source Clock:      PLL_DESER_INST/pll_base_inst/CLKOUT0 falling
+
+  Data Path: DIGIF_INST/mux_sck_fall to GPIO3
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FDE_1:C->Q            4   0.447   0.912  DIGIF_INST/mux_sck_fall (DIGIF_INST/mux_sck_fall)
+     LUT4:I1->O            1   0.205   0.579  DIGIF_INST/Mmux_d_digif_lsb_data11 (GPIO4_OBUF)
+     OBUF:I->O                 2.571          GPIO4_OBUF (GPIO4)
+    ----------------------------------------
+    Total                      4.713ns (3.223ns logic, 1.490ns route)
+                                       (68.4% logic, 31.6% route)
+
+=========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'PLL_DESER_INST/pll_base_inst/CLKOUT1'
   Total number of paths / destination ports: 16 / 16
 -------------------------------------------------------------------------
@@ -5960,7 +5980,7 @@ CLOCK          |    5.552|         |         |         |
 
 
 Total REAL time to Xst completion: 10.00 secs
-Total CPU time to Xst completion: 9.93 secs
+Total CPU time to Xst completion: 9.79 secs
  
 --> 
 
