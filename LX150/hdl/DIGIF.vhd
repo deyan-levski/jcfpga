@@ -66,13 +66,14 @@ begin
 		variable sck_toggle : STD_LOGIC;
 	begin
 
-		if rising_edge(d_digif_sck) then			-- on rising edge
+		if (RESET = '1') then
 
-			if (RESET = '1') then
+		sck_toggle := '0';
 
-				sck_toggle := '0';
+		elsif rising_edge(d_digif_sck) then			-- on rising edge
 
-			elsif (d_digif_rst = '1') then			-- if reset is high
+		
+			if (d_digif_rst = '1') then			-- if reset is high
 
 				if F_EDGE_FLAG = '1' then		-- if reset was encountered high on falling edge process 
 					R_EDGE_FLAG <= '0';		-- then rising edge encounter flag = '0'
@@ -160,14 +161,14 @@ begin
 
 	begin
 
-
-		if falling_edge(d_digif_sck) then
-
-			if (RESET = '1') then
+		if (RESET = '1') then
 
 				sck_toggle := '0';
 
-			elsif (d_digif_rst = '1') then
+		elsif falling_edge(d_digif_sck) then
+
+
+			if (d_digif_rst = '1') then
 
 				if R_EDGE_FLAG = '1' then
 					F_EDGE_FLAG <= '0';
