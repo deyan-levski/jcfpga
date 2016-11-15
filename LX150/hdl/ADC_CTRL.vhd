@@ -825,7 +825,7 @@ begin
 		if (I_BIT_SLIP_AUTO ='1') then
 
 			if ((DIGIF_SER_RST_DLY(15) = '1') and (I_BIT_SLIP_1A_LSB_FLAG = '0')) then
-				if (DESER_DATA_G0(5 downto 0) = "001011") then --110100
+				if (DESER_DATA_G0(5 downto 0) = "110100") then
 					I_BIT_SLIP_POS_AUTO(0) <= '0';
 				else
 					I_BIT_SLIP_POS_AUTO(0) <= '1';
@@ -836,7 +836,7 @@ begin
 			end if;
 
 			if ((DIGIF_SER_RST_DLY(15) = '1') and (I_BIT_SLIP_1A_MSB_FLAG = '0')) then
-				if (DESER_DATA_G0(11 downto 6) = "001011") then --110100
+				if (DESER_DATA_G0(11 downto 6) = "110100") then
 					I_BIT_SLIP_POS_AUTO(1) <= '0';
 				else
 					I_BIT_SLIP_POS_AUTO(1) <= '1';
@@ -852,7 +852,7 @@ begin
 			I_BIT_SLIP_1A_MSB_FLAG <= '0';
 		end if;
 
-		if (DIGIF_SER_RST_DLY(15) = '0') then
+		if (d_digif_serial_rst = '0') then
 			I_BIT_SLIP_POS_AUTO(1 downto 0) <= (others => '0');
 			I_BIT_SLIP_1A_LSB_FLAG <= '0';
 			I_BIT_SLIP_1A_MSB_FLAG <= '0';
