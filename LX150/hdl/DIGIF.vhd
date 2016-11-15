@@ -52,8 +52,8 @@ begin
 	--|--------------------------------------------|
 
 	PREAMBLE <= "110100";	    --"001011" LSB FIRST LSB--->MSB		-- mirrored word
-	DATA0	 <= "000000000101"; --"100000000101"; --"010101010101"; --"101010101010" LSB FIRST LSB--->MSB	-- mirrored word
-	DATA1	 <= "000000000101"; --"100000001101"; --"011000101111"; --"111101000110" LSB FIRST LSB--->MSB	-- mirrored word
+	DATA0	 <= "000000000001"; --"100000000101"; --"010101010101"; --"101010101010" LSB FIRST LSB--->MSB	-- mirrored word
+	DATA1	 <= "000000000001"; --"100000001101"; --"011000101111"; --"111101000110" LSB FIRST LSB--->MSB	-- mirrored word
 
 
 	rising_edge_process : process(d_digif_sck)
