@@ -29,7 +29,7 @@ entity ADC_CTRL is
            TX : out  STD_LOGIC;  --	   GPIO6 : out STD_LOGIC;
 	-- CLK/RST
            CLOCK : in  STD_LOGIC;
-           RESET_IN : in  STD_LOGIC;
+           RESET : in  STD_LOGIC;
 	-- CHIP SPI
            SPI_SEN : inout  STD_LOGIC;
 	   SPI_SCK : inout  STD_LOGIC;
@@ -275,8 +275,6 @@ architecture Behavioral of ADC_CTRL is
 	end component;
 
 	signal CLOCK_I 	 : std_logic;
-	signal RESET_IMM : std_logic;
-	signal RESET	 : std_logic;
 	signal CLOCK_100 : std_logic;
 	signal CLOCK_250 : std_logic;
 	signal CLOCK_100_PCLK : std_logic;
@@ -335,14 +333,14 @@ begin
 --	I => RESET_IN
 --	);
 
-	RST_PROC : process(CLOCK_I)
-	begin
-		if (rising_edge(CLOCK_I)) then
-			RESET_IMM <= RESET_IN;
-		end if;
-	end process;
-
-	RESET <= RESET_IMM or RESET_IN;
+--	RST_PROC : process(CLOCK_I)
+--	begin
+--		if (rising_edge(CLOCK_I)) then
+--			RESET_IMM <= RESET_IN;
+--		end if;
+--	end process;
+--	
+--	RESET <= RESET_IMM or RESET_IN;
 
 
 	PAD_CLOCK_BUFFER : IBUFG
