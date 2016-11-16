@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.58f on Wed Nov 16 09:18:27 2016
+// Written by: Map P.58f on Wed Nov 16 16:33:59 2016
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -115,6 +115,14 @@ COMP "d_count_updn" LOCATE = SITE "Y10" LEVEL 1;
 PIN PLL_250_INST/clkout1_buf_pin<1> = BEL "PLL_250_INST/clkout1_buf" PINNAME
         O;
 PIN "PLL_250_INST/clkout1_buf_pin<1>" CLOCK_DEDICATED_ROUTE = FALSE;
+PIN G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_m_pins<2> = BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_m" PINNAME CLK;
+PIN G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_s_pins<3> = BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_s" PINNAME CLK;
+PIN G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iodelay2_bus_m_pins<2> = BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iodelay2_bus_m" PINNAME CLK;
+PIN G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iodelay2_bus_s_pins<3> = BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iodelay2_bus_s" PINNAME CLK;
 PIN
         FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[4].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram_pins<28>
         = BEL
@@ -260,8 +268,24 @@ PIN
         = BEL
         "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[28].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram"
         PINNAME CLKA;
-TIMEGRP PLL_DESER_INST_clkout2 = BEL "I_BIT_SLIP_POS_AUTO_0" BEL
-        "I_BIT_SLIP_POS_AUTO_1" BEL "PLL_DESER_INST/clkout3_buf" BEL
+PIN G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iserdes2_master_pins<3> = BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iserdes2_master" PINNAME
+        CLKDIV;
+PIN G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iserdes2_slave_pins<3> = BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iserdes2_slave" PINNAME
+        CLKDIV;
+PIN G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_master_pins<3> = BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_master" PINNAME
+        CLKDIV;
+PIN G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_slave_pins<3> = BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_slave" PINNAME
+        CLKDIV;
+TIMEGRP PLL_DESER_INST_clkout1 = BEL "I_BIT_SLIP_POS_AUTO_0" BEL
+        "I_BIT_SLIP_POS_AUTO_1" BEL "PLL_DESER_INST/clkout2_buf" PIN
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_m_pins<2>" PIN
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_s_pins<3>" PIN
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iodelay2_bus_m_pins<2>" PIN
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iodelay2_bus_s_pins<3>" BEL
         "G0LTX_DESER_INST/I_DATA_11" BEL "G0LTX_DESER_INST/I_DATA_10" BEL
         "G0LTX_DESER_INST/I_DATA_9" BEL "G0LTX_DESER_INST/I_DATA_8" BEL
         "G0LTX_DESER_INST/I_DATA_7" BEL "G0LTX_DESER_INST/I_DATA_6" BEL
@@ -271,6 +295,48 @@ TIMEGRP PLL_DESER_INST_clkout2 = BEL "I_BIT_SLIP_POS_AUTO_0" BEL
         "G0LTX_DESER_INST/I_DEBUG_IN1_2" BEL "G0LTX_DESER_INST/I_DEBUG_IN0_2"
         BEL "G0LTX_DESER_INST/I_DEBUG_IN1_1" BEL
         "G0LTX_DESER_INST/I_DEBUG_IN0_1" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/state_FSM_FFd2" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/state_FSM_FFd3" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/state_FSM_FFd1" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_11" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_10" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_9" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_8" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_7" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_6" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_5" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_4" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_3" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_2" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_1" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_0" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/state_FSM_FFd4" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/pdcounter_5" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/pdcounter_4" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/pdcounter_3" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/pdcounter_2" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/pdcounter_1" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/pdcounter_0" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/ce_data_inta" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/inc_data_int" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/valid_data_d" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/busy_data_d" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/incdec_data_d" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/state_FSM_FFd2" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/state_FSM_FFd3" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/state_FSM_FFd1" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/state_FSM_FFd4" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/pdcounter_5" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/pdcounter_4" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/pdcounter_3" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/pdcounter_2" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/pdcounter_1" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/pdcounter_0" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/ce_data_inta" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/inc_data_int" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/valid_data_d" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/busy_data_d" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/incdec_data_d" BEL
         "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PDAT_OUT_5" BEL
         "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PDAT_OUT_4" BEL
         "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PDAT_OUT_3" BEL
@@ -288,6 +354,12 @@ TIMEGRP PLL_DESER_INST_clkout2 = BEL "I_BIT_SLIP_POS_AUTO_0" BEL
         "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PREG_2" BEL
         "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PREG_1" BEL
         "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_PREG_0" BEL
+        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_5" BEL
+        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_4" BEL
+        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_3" BEL
+        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_2" BEL
+        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_1" BEL
+        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_0" BEL
         "G0LTX_DESER_INST/I_DESERIALIZER_LSB/PDAT_OUT_EVAL.v_pdat_index_2" BEL
         "G0LTX_DESER_INST/I_DESERIALIZER_LSB/PDAT_OUT_EVAL.v_pdat_index_1" BEL
         "G0LTX_DESER_INST/I_DESERIALIZER_LSB/PDAT_OUT_EVAL.v_pdat_index_0" BEL
@@ -308,6 +380,12 @@ TIMEGRP PLL_DESER_INST_clkout2 = BEL "I_BIT_SLIP_POS_AUTO_0" BEL
         "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_PREG_2" BEL
         "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_PREG_1" BEL
         "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_PREG_0" BEL
+        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_5" BEL
+        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_4" BEL
+        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_3" BEL
+        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_2" BEL
+        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_1" BEL
+        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_0" BEL
         "G0LTX_DESER_INST/I_DESERIALIZER_MSB/PDAT_OUT_EVAL.v_pdat_index_2" BEL
         "G0LTX_DESER_INST/I_DESERIALIZER_MSB/PDAT_OUT_EVAL.v_pdat_index_1" BEL
         "G0LTX_DESER_INST/I_DESERIALIZER_MSB/PDAT_OUT_EVAL.v_pdat_index_0" BEL
@@ -444,8 +522,19 @@ TIMEGRP PLL_DESER_INST_clkout2 = BEL "I_BIT_SLIP_POS_AUTO_0" BEL
         "FX3_SLAVE_INST/IMAGE_OUT_INST/I_TIMESTAMP_REG_1" BEL
         "FX3_SLAVE_INST/IMAGE_OUT_INST/I_TIMESTAMP_REG_0" BEL
         "FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WREN_WORD" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/inc_data_int_d_0" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/ce_data_0" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/inc_data_int_d_0" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/ce_data_0" BEL
         "I_BIT_SLIP_1A_LSB_FLAG" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/cal_data_master" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/cal_data_sint" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/enable" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/cal_data_master" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/cal_data_sint" BEL
         "FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WREN" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/rst_data" BEL
+        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/rst_data" BEL
         "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/wr_rst_asreg"
         BEL
         "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/wr_rst_asreg_d2"
@@ -728,7 +817,11 @@ TIMEGRP PLL_DESER_INST_clkout2 = BEL "I_BIT_SLIP_POS_AUTO_0" BEL
         BEL
         "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_1"
         BEL
-        "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_0";
+        "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_0"
+        PIN "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iserdes2_master_pins<3>"
+        PIN "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iserdes2_slave_pins<3>"
+        PIN "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_master_pins<3>"
+        PIN "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_slave_pins<3>";
 PIN
         BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_init.ram/SP.SIMPLE_PRIM18.ram_pins<28>
         = BEL
@@ -751,7 +844,33 @@ TIMEGRP PLL_250_INST_clk0 = BEL "DIGIF_SER_RST_DLY_0" BEL
         "DIGIF_SER_RST_DLY_5" BEL "DIGIF_SER_RST_DLY_6" BEL
         "DIGIF_SER_RST_DLY_7" BEL "DIGIF_SER_RST_DLY_8" BEL
         "DIGIF_SER_RST_DLY_9" BEL "DIGIF_SER_RST_DLY_10" BEL
-        "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_0" BEL
+        "DIGIF_SER_RST_DLY_11" BEL "DIGIF_SER_RST_DLY_12" BEL
+        "DIGIF_SER_RST_DLY_13" BEL "DIGIF_SER_RST_DLY_14" BEL
+        "DIGIF_SER_RST_DLY_15" BEL "DIGIF_SER_RST_DLY_16" BEL
+        "DIGIF_SER_RST_DLY_17" BEL "DIGIF_SER_RST_DLY_18" BEL
+        "DIGIF_SER_RST_DLY_19" BEL "DIGIF_SER_RST_DLY_20" BEL
+        "DIGIF_SER_RST_DLY_21" BEL "DIGIF_SER_RST_DLY_22" BEL
+        "DIGIF_SER_RST_DLY_23" BEL "DIGIF_SER_RST_DLY_24" BEL
+        "DIGIF_SER_RST_DLY_25" BEL "DIGIF_SER_RST_DLY_26" BEL
+        "DIGIF_SER_RST_DLY_27" BEL "DIGIF_SER_RST_DLY_28" BEL
+        "DIGIF_SER_RST_DLY_29" BEL "DIGIF_SER_RST_DLY_30" BEL
+        "DIGIF_SER_RST_DLY_31" BEL "DIGIF_SER_RST_DLY_32" BEL
+        "DIGIF_SER_RST_DLY_33" BEL "DIGIF_SER_RST_DLY_34" BEL
+        "DIGIF_SER_RST_DLY_35" BEL "DIGIF_SER_RST_DLY_36" BEL
+        "DIGIF_SER_RST_DLY_37" BEL "DIGIF_SER_RST_DLY_38" BEL
+        "DIGIF_SER_RST_DLY_39" BEL "DIGIF_SER_RST_DLY_40" BEL
+        "DIGIF_SER_RST_DLY_41" BEL "DIGIF_SER_RST_DLY_42" BEL
+        "DIGIF_SER_RST_DLY_43" BEL "DIGIF_SER_RST_DLY_44" BEL
+        "DIGIF_SER_RST_DLY_45" BEL "DIGIF_SER_RST_DLY_46" BEL
+        "DIGIF_SER_RST_DLY_47" BEL "DIGIF_SER_RST_DLY_48" BEL
+        "DIGIF_SER_RST_DLY_49" BEL "DIGIF_SER_RST_DLY_50" BEL
+        "DIGIF_SER_RST_DLY_51" BEL "DIGIF_SER_RST_DLY_52" BEL
+        "DIGIF_SER_RST_DLY_53" BEL "DIGIF_SER_RST_DLY_54" BEL
+        "DIGIF_SER_RST_DLY_55" BEL "DIGIF_SER_RST_DLY_56" BEL
+        "DIGIF_SER_RST_DLY_57" BEL "DIGIF_SER_RST_DLY_58" BEL
+        "DIGIF_SER_RST_DLY_59" BEL "DIGIF_SER_RST_DLY_60" BEL
+        "DIGIF_SER_RST_DLY_61" BEL "DIGIF_SER_RST_DLY_62" BEL
+        "DIGIF_SER_RST_DLY_63" BEL "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_0" BEL
         "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_1" BEL
         "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_2" BEL
         "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_3" BEL
@@ -977,16 +1096,19 @@ TIMEGRP PLL_250_INST_clk0 = BEL "DIGIF_SER_RST_DLY_0" BEL
         "SREG_CONTROL_INST/SREG_CORE_INST/CLOCK_DIV_REG_12" BEL
         "SREG_CONTROL_INST/SREG_CORE_INST/CLOCK_DIV_REG_11" BEL
         "SREG_CONTROL_INST/SREG_CORE_INST/CLOCK_DIV_REG_10" BEL
-        "DIGIF_INST/d_digif_lsb_data" BEL "DIGIF_INST/d_digif_msb_data" BEL
-        "DIGIF_INST/txbuf_l_5" BEL "DIGIF_INST/txbuf_l_4" BEL
-        "DIGIF_INST/txbuf_l_3" BEL "DIGIF_INST/txbuf_l_2" BEL
-        "DIGIF_INST/txbuf_l_1" BEL "DIGIF_INST/txbuf_l_0" BEL
-        "DIGIF_INST/txbuf_m_5" BEL "DIGIF_INST/txbuf_m_4" BEL
-        "DIGIF_INST/txbuf_m_3" BEL "DIGIF_INST/txbuf_m_2" BEL
-        "DIGIF_INST/txbuf_m_1" BEL "DIGIF_INST/txbuf_m_0" BEL
+        "DIGIF_INST/SERIALIZE.wrd_cntr_2" BEL
+        "DIGIF_INST/SERIALIZE.wrd_cntr_1" BEL
+        "DIGIF_INST/SERIALIZE.wrd_cntr_0" BEL "DIGIF_INST/d_digif_lsb_data"
+        BEL "DIGIF_INST/d_digif_msb_data" BEL "DIGIF_INST/txbuf_l_5" BEL
+        "DIGIF_INST/txbuf_l_4" BEL "DIGIF_INST/txbuf_l_3" BEL
+        "DIGIF_INST/txbuf_l_2" BEL "DIGIF_INST/txbuf_l_1" BEL
+        "DIGIF_INST/txbuf_l_0" BEL "DIGIF_INST/txbuf_m_5" BEL
+        "DIGIF_INST/txbuf_m_4" BEL "DIGIF_INST/txbuf_m_3" BEL
+        "DIGIF_INST/txbuf_m_2" BEL "DIGIF_INST/txbuf_m_1" BEL
+        "DIGIF_INST/txbuf_m_0" BEL
         "SREG_CONTROL_INST/T_SERIAL_INST/BASIC_UART_INST/tx_state_ready" BEL
-        "SREG_CONTROL_INST/SPI_FLUSH" BEL "DIGIF_INST/flag_data" BEL
-        "DIGIF_INST/flag_pream" PIN
+        "DIGIF_INST/flag_pream" BEL "DIGIF_INST/flag_data" BEL
+        "SREG_CONTROL_INST/SPI_FLUSH" PIN
         "BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_init.ram/SP.SIMPLE_PRIM18.ram_pins<28>"
         PIN
         "BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_init.ram/SP.SIMPLE_PRIM18.ram_pins<28>"
@@ -995,110 +1117,6 @@ TIMEGRP PLL_250_INST_clk0 = BEL "DIGIF_SER_RST_DLY_0" BEL
         "PLL_250_INST/clkout1_buf" PIN
         "SP6_INS_BUFIO2FB_DCM_ML_BUFIO2FB_3_pins<1>" PIN
         "PLL_250_INST/dcm_sp_inst_pins<1>";
-PIN G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_m_pins<2> = BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_m" PINNAME CLK;
-PIN G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_s_pins<3> = BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_s" PINNAME CLK;
-PIN G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iodelay2_bus_m_pins<2> = BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iodelay2_bus_m" PINNAME CLK;
-PIN G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iodelay2_bus_s_pins<3> = BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iodelay2_bus_s" PINNAME CLK;
-PIN G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iserdes2_master_pins<3> = BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iserdes2_master" PINNAME
-        CLKDIV;
-PIN G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iserdes2_slave_pins<3> = BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iserdes2_slave" PINNAME
-        CLKDIV;
-PIN G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_master_pins<3> = BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_master" PINNAME
-        CLKDIV;
-PIN G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_slave_pins<3> = BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_slave" PINNAME
-        CLKDIV;
-TIMEGRP PLL_DESER_INST_clkout1 = BEL "PLL_DESER_INST/clkout2_buf" PIN
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_m_pins<2>" PIN
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_s_pins<3>" PIN
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iodelay2_bus_m_pins<2>" PIN
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iodelay2_bus_s_pins<3>" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/state_FSM_FFd2" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/state_FSM_FFd3" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/state_FSM_FFd1" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_11" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_10" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_9" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_8" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_7" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_6" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_5" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_4" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_3" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_2" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_1" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/counter_0" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/state_FSM_FFd4" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/pdcounter_5" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/pdcounter_4" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/pdcounter_3" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/pdcounter_2" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/pdcounter_1" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/pdcounter_0" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/ce_data_inta" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/inc_data_int" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/valid_data_d" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/busy_data_d" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/incdec_data_d" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/state_FSM_FFd2" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/state_FSM_FFd3" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/state_FSM_FFd1" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/state_FSM_FFd4" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/pdcounter_5" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/pdcounter_4" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/pdcounter_3" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/pdcounter_2" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/pdcounter_1" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/pdcounter_0" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/ce_data_inta" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/inc_data_int" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/valid_data_d" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/busy_data_d" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/incdec_data_d" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_10" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_9" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_8" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_7" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_6" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_5" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_4" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_3" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_2" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_1" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_LSB/I_SREG_0" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_10" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_9" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_8" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_7" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_6" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_5" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_4" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_3" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_2" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_1" BEL
-        "G0LTX_DESER_INST/I_DESERIALIZER_MSB/I_SREG_0" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/inc_data_int_d_0" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/ce_data_0" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/inc_data_int_d_0" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/ce_data_0" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/cal_data_master" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/cal_data_sint" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/enable" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/cal_data_master" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/cal_data_sint" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pd_inst/rst_data" BEL
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pd_inst/rst_data" PIN
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iserdes2_master_pins<3>" PIN
-        "G0LTX_DESER_INST/I_SAMPLING_LSB/pins[0].iserdes2_slave_pins<3>" PIN
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_master_pins<3>" PIN
-        "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_slave_pins<3>";
 PIN G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_m_pins<6> = BEL
         "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_m" PINNAME
         IOCLK0;
@@ -1145,10 +1163,7 @@ TIMEGRP CLOCK = PIN "SP6_BUFIO2_INSERT_PLL1_ML_BUFIO2_2_pins<0>" PIN
 TS_CLOCK = PERIOD TIMEGRP "CLOCK" 10 ns HIGH 50%;
 TS_PLL_250_INST_clk0 = PERIOD TIMEGRP "PLL_250_INST_clk0" TS_CLOCK HIGH 50%;
 TS_PLL_DESER_INST_clkout1 = PERIOD TIMEGRP "PLL_DESER_INST_clkout1" TS_CLOCK /
-        0.125 HIGH 50%;
-TS_CLOCK_DESER_1BIT = PERIOD TIMEGRP "CLOCK_DESER_1BIT" TS_CLOCK / 0.5 HIGH
-        50%;
-TS_PLL_DESER_INST_clkout2 = PERIOD TIMEGRP "PLL_DESER_INST_clkout2" TS_CLOCK /
         0.166666667 HIGH 50%;
+TS_CLOCK_DESER_1BIT = PERIOD TIMEGRP "CLOCK_DESER_1BIT" TS_CLOCK HIGH 50%;
 SCHEMATIC END;
 

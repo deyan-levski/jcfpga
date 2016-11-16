@@ -170,7 +170,6 @@ architecture Behavioral of ADC_CTRL is
 		  -- Clock out ports
 		  CLK_OUT1          : out    std_logic;
 		  CLK_OUT2          : out    std_logic;
-		  CLK_OUT3          : out    std_logic;
 		  CLKFB_OUT         : out    std_logic;
 		  -- Status and control signals
 		  RESET             : in     std_logic;
@@ -278,17 +277,18 @@ architecture Behavioral of ADC_CTRL is
 	signal CLOCK_100 : std_logic;
 	signal CLOCK_250 : std_logic;
 	signal CLOCK_100_PCLK : std_logic;
+	signal CLOCK_100_PCLK_N : std_logic;
 	signal FX3_CLK	 : std_logic;
 	signal MEMCLK    : std_logic;
 	signal MEMDATA   : std_logic_vector(31 downto 0);
 	signal MEMADDR   : std_logic_vector(31 downto 0);
 	signal PLL_DESER_FB : std_logic;
 	signal PLL_DESER_LOCKED : std_logic;
-	signal IO_CLK_BANK0 : std_logic;
-	signal BUFPLL_LOCKED_BANK0 : std_logic;
-	signal SERDESSTROBE_BANK0 : std_logic;
+	signal IO_CLK_BANK2 : std_logic;
+	signal BUFPLL_LOCKED_BANK2 : std_logic;
+	signal SERDESSTROBE_BANK2 : std_logic;
 	signal CLOCK_DESER_1BIT : std_logic;
-	signal CLOCK_DESER_4BIT : std_logic;
+	signal CLOCK_DESER_6BIT : std_logic;
 	signal CLOCK_DESER_WORD : std_logic; 
 	signal DESER_DATA_G0 : std_logic_vector(15 downto 0);
 	signal I_BIT_SLIP_POS : std_logic_vector(1 downto 0);
@@ -319,7 +319,10 @@ architecture Behavioral of ADC_CTRL is
 	signal G7HTX	 : std_logic;
 	signal LSBDAT	 : std_logic;
 	signal MSBDAT	 : std_logic;
-	signal DIGIF_SER_RST_DLY : std_logic_vector(15 downto 0);
+	signal LSBDAT_N	 : std_logic;
+	signal MSBDAT_N	 : std_logic;
+	signal DEBUG_OPTO_SEG_IF : std_logic_vector(7 downto 0);
+	signal DIGIF_SER_RST_DLY : std_logic_vector(63 downto 0);
 
 begin
 
@@ -372,24 +375,25 @@ begin
 	CLKFB_IN => PLL_DESER_FB,
 	-- Clock out ports
 	CLK_OUT1 => CLOCK_DESER_1BIT,
-	CLK_OUT2 => CLOCK_DESER_4BIT,
-	CLK_OUT3 => CLOCK_DESER_WORD,
+	CLK_OUT2 => CLOCK_DESER_6BIT,
 	CLKFB_OUT => PLL_DESER_FB,
 	-- Status and control signals
 	RESET  => '0',
 	LOCKED => PLL_DESER_LOCKED
 	);
 
+	CLOCK_DESER_WORD <= CLOCK_DESER_6BIT;
+
    -- End of PLL Core instantiation
 
-	I_BUFPLL_BANK0: BUFPLL
+	I_BUFPLL_BANK2: BUFPLL
 	generic map (
-	  DIVIDE                      => 4)
+	  DIVIDE                      => 6)
 	port map (
-	  IOCLK                       => IO_CLK_BANK0,		-- Deser_1bit_clk output clock
-	  LOCK                        => BUFPLL_LOCKED_BANK0,	-- Synchronized Lock output
-	  SERDESSTROBE                => SERDESSTROBE_BANK0,	-- SERDES Strobe signal
-	  GCLK                        => CLOCK_DESER_4BIT,
+	  IOCLK                       => IO_CLK_BANK2,		-- Deser_1bit_clk output clock
+	  LOCK                        => BUFPLL_LOCKED_BANK2,	-- Synchronized Lock output
+	  SERDESSTROBE                => SERDESSTROBE_BANK2,	-- SERDES Strobe signal
+	  GCLK                        => CLOCK_DESER_6BIT,
 	  LOCKED                      => PLL_DESER_LOCKED,
 	  PLLIN                       => CLOCK_DESER_1BIT
   	);
@@ -408,7 +412,7 @@ begin
    port map (
       Q  => CLOCK_DIGIF_OBUFDS, -- 1-bit output data
       C0 => LSBDAT, -- 1-bit clock input
-      C1 => not LSBDAT, -- 1-bit clock input
+      C1 => LSBDAT_N, -- 1-bit clock input
       CE => '1',   -- 1-bit clock enable input
       D0 => '0',   -- 1-bit data input (associated with C0)
       D1 => '1',   -- 1-bit data input (associated with C1)
@@ -438,7 +442,7 @@ begin
    port map (
       Q  => CLOCK_COUNT_OBUFDS, -- 1-bit output data
       C0 => MSBDAT, -- 1-bit clock input
-      C1 => not MSBDAT, -- 1-bit clock input
+      C1 => MSBDAT_N, -- 1-bit clock input
       CE => '1',   -- 1-bit clock enable input
       D0 => '0',   -- 1-bit data input (associated with C0)
       D1 => '1',   -- 1-bit data input (associated with C1)
@@ -782,6 +786,8 @@ begin
 		RESET    => RESET,
 		d_digif_msb_data => MSBDAT,
 		d_digif_lsb_data => LSBDAT);
+	MSBDAT_N <= not MSBDAT;
+	LSBDAT_N <= not LSBDAT;
 
 --|---------------|
 --| DESERIALIZERS |
@@ -797,10 +803,10 @@ begin
 		-- system signals
 		RESET                  => RESET,  -- async. reset
 		ENABLE                 => '1',				-- module activation
-		IO_CLK                 => IO_CLK_BANK0,			-- bit clock
-		DIV_CLK                => CLOCK_DESER_4BIT,		-- bit clock / 4
+		IO_CLK                 => IO_CLK_BANK2,			-- bit clock
+		DIV_CLK                => CLOCK_DESER_6BIT,		-- bit clock / 6
 		BYTE_CLK               => CLOCK_DESER_WORD,		-- word clock
-		SERDESSTROBE_IN        => SERDESSTROBE_BANK0,		-- strobe to ISERDES
+		SERDESSTROBE_IN        => SERDESSTROBE_BANK2,		-- strobe to ISERDES
 		-- serial interconnect
 		DIGIF_MSB_P            => G0HTX_P,			-- serial data for segment MS-Byte (LVDS+)
 		DIGIF_MSB_N            => G0HTX_N,			-- serial data for segment MS-Byte (LVDS-)
@@ -811,8 +817,11 @@ begin
 		DATA_EN                => open,				-- DATA_IN data valid
 		-- debug
 		DIV_CLK_CS             => open,
-		DEBUG_IN               => (("000000" & I_BIT_SLIP_POS(1 downto 0)) or ("000000" & I_BIT_SLIP_POS_AUTO(1 downto 0))),
+		DEBUG_IN               => DEBUG_OPTO_SEG_IF,
 		DEBUG_OUT              => open);
+
+DEBUG_OPTO_SEG_IF <= (("000000" & I_BIT_SLIP_POS(1 downto 0)) or ("000000" & I_BIT_SLIP_POS_AUTO(1 downto 0)));
+
 
 I_BIT_SLIP_AUTO <= '1';
 I_BIT_SLIP_POS <= "00";
@@ -821,10 +830,10 @@ DIGIF_SERIAL_RST_DLY_PROC: process(RESET,CLOCK_100)
 begin
 
 	if (RESET = '1') then
-	DIGIF_SER_RST_DLY <= "0000000000000000";
+	DIGIF_SER_RST_DLY <= "0000000000000000000000000000000000000000000000000000000000000000";
 	elsif (rising_edge(CLOCK_100)) then
 		DIGIF_SER_RST_DLY(0) <= d_digif_serial_rst;
-		DIGIF_SER_RST_DLY(15 downto 1) <= DIGIF_SER_RST_DLY(14 downto 0);
+		DIGIF_SER_RST_DLY(63 downto 1) <= DIGIF_SER_RST_DLY(62 downto 0);
 	end if;
 
 end process DIGIF_SERIAL_RST_DLY_PROC;
@@ -840,8 +849,8 @@ begin
 	elsif (rising_edge(CLOCK_DESER_WORD)) then
 		if (I_BIT_SLIP_AUTO ='1') then
 
-			if ((DIGIF_SER_RST_DLY(10) = '1') and (I_BIT_SLIP_1A_LSB_FLAG = '0')) then
-				if (DESER_DATA_G0(5 downto 0) = "110100") then
+			if ((DIGIF_SER_RST_DLY(63) = '1') and (I_BIT_SLIP_1A_LSB_FLAG = '0')) then
+				if (DESER_DATA_G0(5 downto 0) = "101011") then --110100
 					I_BIT_SLIP_POS_AUTO(0) <= '0';
 				else
 					I_BIT_SLIP_POS_AUTO(0) <= '1';
@@ -851,8 +860,8 @@ begin
 				I_BIT_SLIP_POS_AUTO(0) <= '0';
 			end if;
 
-			if ((DIGIF_SER_RST_DLY(10) = '1') and (I_BIT_SLIP_1A_MSB_FLAG = '0')) then
-				if (DESER_DATA_G0(11 downto 6) = "110100") then
+			if ((DIGIF_SER_RST_DLY(63) = '1') and (I_BIT_SLIP_1A_MSB_FLAG = '0')) then
+				if (DESER_DATA_G0(11 downto 6) = "101011") then --110100
 					I_BIT_SLIP_POS_AUTO(1) <= '0';
 				else
 					I_BIT_SLIP_POS_AUTO(1) <= '1';
@@ -912,6 +921,7 @@ end process BIT_SLIP_SEG1A_PROC;
 	    O	=> CLOCK_100_PCLK,
 	    I	=> CLOCK_100);
 
+	  CLOCK_100_PCLK_N <= not CLOCK_100_PCLK;
 
        	ODDR2_GPIFII_PCLK : ODDR2
 	generic map(
@@ -921,7 +931,7 @@ end process BIT_SLIP_SEG1A_PROC;
 	port map (
 	   Q  => GPIFII_PCLK, -- 1-bit output data
 	   C0 => CLOCK_100_PCLK, -- 1-bit clock input
-	   C1 => not CLOCK_100_PCLK, -- 1-bit clock input
+	   C1 => CLOCK_100_PCLK_N, -- 1-bit clock input
 	   CE => '1',   -- 1-bit clock enable input
 	   D0 => '1',   -- 1-bit data input (associated with C0)
 	   D1 => '0',   -- 1-bit data input (associated with C1)

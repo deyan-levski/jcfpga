@@ -54,9 +54,8 @@
 -- "Output    Output      Phase     Duty      Pk-to-Pk        Phase"
 -- "Clock    Freq (MHz) (degrees) Cycle (%) Jitter (ps)  Error (ps)"
 ------------------------------------------------------------------------------
--- CLK_OUT1____50.000______0.000______50.0______198.618____235.738
--- CLK_OUT2____12.500______0.000______50.0______263.141____235.738
--- CLK_OUT3____16.667______0.000______50.0______248.337____235.738
+-- CLK_OUT1___100.000______0.000______50.0______178.597____160.159
+-- CLK_OUT2____16.667______0.000______50.0______255.315____160.159
 --
 ------------------------------------------------------------------------------
 -- "Input Clock   Freq (MHz)    Input Jitter (UI)"
@@ -74,7 +73,6 @@ port
   -- Clock out ports
   CLK_OUT1          : out    std_logic;
   CLK_OUT2          : out    std_logic;
-  CLK_OUT3          : out    std_logic;
   CLKFB_OUT         : out    std_logic;
   -- Status and control signals
   RESET             : in     std_logic;
@@ -94,7 +92,6 @@ your_instance_name : PLL_DESER
     -- Clock out ports
     CLK_OUT1 => CLK_OUT1,
     CLK_OUT2 => CLK_OUT2,
-    CLK_OUT3 => CLK_OUT3,
     CLKFB_OUT => CLKFB_OUT,
     -- Status and control signals
     RESET  => RESET,

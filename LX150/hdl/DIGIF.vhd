@@ -43,7 +43,7 @@ begin
 	--| Alternate transmission with two data words |
 	--|--------------------------------------------|
 
-	PREAMBLE <= "110100";	    --"001011" LSB FIRST LSB--->MSB		-- mirrored word
+	PREAMBLE <= "101011";	    --"001011" LSB FIRST LSB--->MSB		-- mirrored word
 	DATA0	 <= "000000000001"; --"100000000101"; --"010101010101"; --"101010101010" LSB FIRST LSB--->MSB	-- mirrored word
 	DATA1	 <= "000000000001"; --"100000001101"; --"011000101111"; --"111101000110" LSB FIRST LSB--->MSB	-- mirrored word
 
@@ -51,7 +51,7 @@ begin
 
 
 	SERIALIZE : process (d_digif_sck, RESET)
-
+	variable wrd_cntr : integer range 0 to 5;
 	begin
 
 		if (RESET = '1') then
@@ -62,13 +62,14 @@ begin
 			flag_pream <= '0';
 			d_digif_msb_data <= '0';
 			d_digif_lsb_data <= '0';
+			wrd_cntr := 0;
 
 
 		elsif rising_edge(d_digif_sck) then
 
 			if d_digif_rst = '1' then
 
-				if flag_pream = '0' then
+				if flag_pream = '0' and wrd_cntr = 0 then
 					txbuf_m <= PREAMBLE;
 					txbuf_l <= PREAMBLE;
 					flag_pream <= '1';
@@ -81,7 +82,7 @@ begin
 				end if;
 			else
 
-				if flag_data = '0' then
+				if flag_data = '0' and wrd_cntr = 0 then
 					txbuf_m <= DATA0(11 downto 6);
 					txbuf_l <= DATA0(5 downto 0);
 					flag_data <= '1';
@@ -97,6 +98,12 @@ begin
 
 			d_digif_msb_data <= txbuf_m(5);
 			d_digif_lsb_data <= txbuf_l(5);
+
+		 if (wrd_cntr = 5) then
+		        wrd_cntr := 0;
+		 else
+			wrd_cntr := wrd_cntr+1;
+    		 end if;
 
 		end if;
 
