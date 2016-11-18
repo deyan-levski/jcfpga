@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.58f on Thu Nov 17 15:29:26 2016
+// Written by: Map P.58f on Fri Nov 18 11:45:11 2016
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -129,7 +129,7 @@ PIN ODDR2_GPIFII_PCLK_pins<1> = BEL "ODDR2_GPIFII_PCLK" PINNAME CK0;
 PIN ODDR2_GPIFII_PCLK_pins<2> = BEL "ODDR2_GPIFII_PCLK" PINNAME CK1;
 PIN SP6_INS_BUFIO2FB_DCM_ML_BUFIO2FB_3_pins<1> = BEL
         "SP6_INS_BUFIO2FB_DCM_ML_BUFIO2FB_3" PINNAME O;
-PIN PLL_250_INST/dcm_sp_inst_pins<1> = BEL "PLL_250_INST/dcm_sp_inst" PINNAME
+PIN PLL_250_INST/dcm_sp_inst_pins<2> = BEL "PLL_250_INST/dcm_sp_inst" PINNAME
         CLKFB;
 TIMEGRP PLL_250_INST_clk0 = BEL "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_0" BEL
         "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_1" BEL
@@ -357,12 +357,6 @@ TIMEGRP PLL_250_INST_clk0 = BEL "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_0" BEL
         "SREG_CONTROL_INST/SREG_CORE_INST/CLOCK_DIV_REG_12" BEL
         "SREG_CONTROL_INST/SREG_CORE_INST/CLOCK_DIV_REG_11" BEL
         "SREG_CONTROL_INST/SREG_CORE_INST/CLOCK_DIV_REG_10" BEL
-        "DIGIF_INST/SERIALIZE.wrd_cntr_2" BEL
-        "DIGIF_INST/SERIALIZE.wrd_cntr_1" BEL
-        "DIGIF_INST/SERIALIZE.wrd_cntr_0" BEL "DIGIF_INST/d_digif_lsb_data"
-        BEL "DIGIF_INST/txbuf_l_5" BEL "DIGIF_INST/txbuf_l_4" BEL
-        "DIGIF_INST/txbuf_l_3" BEL "DIGIF_INST/txbuf_l_2" BEL
-        "DIGIF_INST/txbuf_l_1" BEL "DIGIF_INST/txbuf_l_0" BEL
         "G0LTX_DESER_INST/DIGIF_SER_RST_DLY_63" BEL
         "G0LTX_DESER_INST/DIGIF_SER_RST_DLY_62" BEL
         "G0LTX_DESER_INST/DIGIF_SER_RST_DLY_61" BEL
@@ -428,7 +422,6 @@ TIMEGRP PLL_250_INST_clk0 = BEL "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_0" BEL
         "G0LTX_DESER_INST/DIGIF_SER_RST_DLY_1" BEL
         "G0LTX_DESER_INST/DIGIF_SER_RST_DLY_0" BEL
         "SREG_CONTROL_INST/T_SERIAL_INST/BASIC_UART_INST/tx_state_ready" BEL
-        "DIGIF_INST/flag_pream" BEL "DIGIF_INST/flag_data" BEL
         "SREG_CONTROL_INST/SPI_FLUSH" PIN
         "BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_init.ram/SP.SIMPLE_PRIM18.ram_pins<28>"
         PIN
@@ -437,7 +430,19 @@ TIMEGRP PLL_250_INST_clk0 = BEL "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_0" BEL
         "ODDR2_GPIFII_PCLK_pins<1>" PIN "ODDR2_GPIFII_PCLK_pins<2>" BEL
         "PLL_250_INST/clkout1_buf" PIN
         "SP6_INS_BUFIO2FB_DCM_ML_BUFIO2FB_3_pins<1>" PIN
-        "PLL_250_INST/dcm_sp_inst_pins<1>";
+        "PLL_250_INST/dcm_sp_inst_pins<2>";
+TIMEGRP PLL_250_INST_clk2x = BEL "PLL_250_INST/clkout3_buf" BEL
+        "DIGIF_INST/SERIALIZE.wrd_cntr_2" BEL
+        "DIGIF_INST/SERIALIZE.wrd_cntr_1" BEL
+        "DIGIF_INST/SERIALIZE.wrd_cntr_0" BEL "DIGIF_INST/d_digif_lsb_data"
+        BEL "DIGIF_INST/d_digif_msb_data" BEL "DIGIF_INST/txbuf_l_5" BEL
+        "DIGIF_INST/txbuf_l_4" BEL "DIGIF_INST/txbuf_l_3" BEL
+        "DIGIF_INST/txbuf_l_2" BEL "DIGIF_INST/txbuf_l_1" BEL
+        "DIGIF_INST/txbuf_l_0" BEL "DIGIF_INST/txbuf_m_5" BEL
+        "DIGIF_INST/txbuf_m_4" BEL "DIGIF_INST/txbuf_m_3" BEL
+        "DIGIF_INST/txbuf_m_2" BEL "DIGIF_INST/txbuf_m_1" BEL
+        "DIGIF_INST/txbuf_m_0" BEL "DIGIF_INST/flag_pream" BEL
+        "DIGIF_INST/flag_data";
 PIN G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_m_pins<2> = BEL
         "G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_m" PINNAME CLK;
 PIN G0LTX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_s_pins<3> = BEL
@@ -1182,16 +1187,18 @@ PIN PLL_DESER_INST/pll_base_inst/PLL_ADV_pins<2> = BEL
         "PLL_DESER_INST/pll_base_inst/PLL_ADV" PINNAME CLKIN1;
 PIN SP6_BUFIO_INSERT_ML_BUFIO2_0_pins<0> = BEL "SP6_BUFIO_INSERT_ML_BUFIO2_0"
         PINNAME DIVCLK;
-PIN PLL_250_INST/dcm_sp_inst_pins<2> = BEL "PLL_250_INST/dcm_sp_inst" PINNAME
+PIN PLL_250_INST/dcm_sp_inst_pins<3> = BEL "PLL_250_INST/dcm_sp_inst" PINNAME
         CLKIN;
 TIMEGRP CLOCK = PIN "SP6_BUFIO2_INSERT_PLL1_ML_BUFIO2_2_pins<0>" PIN
         "PLL_DESER_INST/pll_base_inst/PLL_ADV_pins<2>" PIN
         "SP6_BUFIO_INSERT_ML_BUFIO2_0_pins<0>" PIN
-        "PLL_250_INST/dcm_sp_inst_pins<2>";
+        "PLL_250_INST/dcm_sp_inst_pins<3>";
 TS_CLOCK = PERIOD TIMEGRP "CLOCK" 10 ns HIGH 50%;
+TS_PLL_250_INST_clk2x = PERIOD TIMEGRP "PLL_250_INST_clk2x" TS_CLOCK / 2 HIGH
+        50%;
 TS_PLL_250_INST_clk0 = PERIOD TIMEGRP "PLL_250_INST_clk0" TS_CLOCK HIGH 50%;
 TS_PLL_DESER_INST_clkout1 = PERIOD TIMEGRP "PLL_DESER_INST_clkout1" TS_CLOCK /
-        0.166666667 HIGH 50%;
-TS_CLOCK_DESER_1BIT = PERIOD TIMEGRP "CLOCK_DESER_1BIT" TS_CLOCK HIGH 50%;
+        0.333333333 HIGH 50%;
+TS_CLOCK_DESER_1BIT = PERIOD TIMEGRP "CLOCK_DESER_1BIT" TS_CLOCK / 2 HIGH 50%;
 SCHEMATIC END;
 

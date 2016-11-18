@@ -149,7 +149,8 @@ architecture Behavioral of ADC_CTRL is
 			     CLK_IN1           : in     std_logic;
 		-- Clock out ports
 			     CLK_OUT1          : out    std_logic;
-			     CLK_OUT2          : out    std_logic
+			     CLK_OUT2          : out    std_logic;
+			     CLK_OUT3	       : out	std_logic
 		     );
 	end component;
 
@@ -241,8 +242,8 @@ architecture Behavioral of ADC_CTRL is
 	     DIGIF_LSB_P:                in  std_logic;                     -- LS-Byte (LVDS+)
 	     DIGIF_LSB_N:                in  std_logic;                     -- LS-Byte (LVDS+)
 	     -- image data interface
-	     DATA:                       out std_logic_vector(15 downto 0); -- data output
-	     DATA_EN:                    out std_logic;                     -- DATA_IN data valid
+	     DATA:                       inout std_logic_vector(15 downto 0); -- data output
+	     DATA_EN:                    inout std_logic;                     -- DATA_IN data valid
 	     -- bitslip
 	     I_BIT_SLIP_AUTO:		 in std_logic;		  	    -- auto bitslip
 	     I_BIT_SLIP_POS:		 in std_logic_vector(1 downto 0);   -- manual bitslip pos
@@ -281,6 +282,7 @@ architecture Behavioral of ADC_CTRL is
 
 	signal CLOCK_I 	 : std_logic;
 	signal CLOCK_100 : std_logic;
+	signal CLOCK_200 : std_logic;
 	signal CLOCK_250 : std_logic;
 	signal CLOCK_100_PCLK : std_logic;
 	signal CLOCK_100_PCLK_N : std_logic;
@@ -297,11 +299,6 @@ architecture Behavioral of ADC_CTRL is
 	signal CLOCK_DESER_6BIT : std_logic;
 	signal CLOCK_DESER_WORD : std_logic; 
 	signal DESER_DATA_G0 : std_logic_vector(15 downto 0);
---	signal I_BIT_SLIP_POS : std_logic_vector(1 downto 0);
---	signal I_BIT_SLIP_POS_AUTO : std_logic_vector(1 downto 0);
---	signal I_BIT_SLIP_1A_LSB_FLAG : std_logic;
---	signal I_BIT_SLIP_1A_MSB_FLAG : std_logic;
---	signal I_BIT_SLIP_AUTO : std_logic;
 	signal CLOCK_COUNT_OBUFDS : std_logic;
 	signal CLOCK_DIGIF_OBUFDS : std_logic;
 	signal FVAL_SEQ  : std_logic;
@@ -327,8 +324,6 @@ architecture Behavioral of ADC_CTRL is
 	signal MSBDAT	 : std_logic;
 	signal LSBDAT_N	 : std_logic;
 	signal MSBDAT_N	 : std_logic;
-	signal DEBUG_OPTO_SEG_IF : std_logic_vector(7 downto 0);
-	signal DIGIF_SER_RST_DLY : std_logic_vector(63 downto 0);
 
 begin
 
@@ -362,7 +357,8 @@ begin
 			 CLK_IN1           => CLOCK_I,
 	-- Clock out ports
 			 CLK_OUT1          => CLOCK_100,
-			 CLK_OUT2          => CLOCK_250
+			 CLK_OUT2          => CLOCK_250,
+			 CLK_OUT3	   => CLOCK_200
 		 );
 
 
@@ -605,7 +601,7 @@ begin
 
 	DIGIF_INST : DIGIF
 	port map ( 
-			 d_digif_sck => CLOCK_100,
+			 d_digif_sck => CLOCK_200,
 			 d_digif_rst => d_digif_serial_rst,
 			 RESET    => RESET,
 			 d_digif_msb_data => MSBDAT,
@@ -649,73 +645,6 @@ begin
 		 DIV_CLK_CS             => open,
 		 DEBUG_IN               => "00000000", --DEBUG_OPTO_SEG_IF,
 		 DEBUG_OUT              => open);
-
---		 DEBUG_OPTO_SEG_IF	<= (("000000" & I_BIT_SLIP_POS(1 downto 0)) or ("000000" & I_BIT_SLIP_POS_AUTO(1 downto 0)));
-
-
---	I_BIT_SLIP_AUTO <= '1';
---	I_BIT_SLIP_POS <= "00";
---	
---	DIGIF_SERIAL_RST_DLY_PROC: process(RESET,CLOCK_100)
---	begin
---	
---		if (RESET = '1') then
---			DIGIF_SER_RST_DLY <= "0000000000000000000000000000000000000000000000000000000000000000";
---		elsif (rising_edge(CLOCK_100)) then
---			DIGIF_SER_RST_DLY(0) <= d_digif_serial_rst;
---			DIGIF_SER_RST_DLY(63 downto 1) <= DIGIF_SER_RST_DLY(62 downto 0);
---		end if;
---	
---	end process DIGIF_SERIAL_RST_DLY_PROC;
---	
---	
---	BIT_SLIP_SEG1A_PROC: process(RESET,CLOCK_DESER_WORD)
---	begin
---		if (RESET = '1') then
---			I_BIT_SLIP_1A_LSB_FLAG <= '0';
---			I_BIT_SLIP_1A_MSB_FLAG <= '0';
---		--
---			I_BIT_SLIP_POS_AUTO(1 downto 0) <= (others => '0');
---		elsif (rising_edge(CLOCK_DESER_WORD)) then
---			if (I_BIT_SLIP_AUTO ='1') then
---	
---				if ((DIGIF_SER_RST_DLY(63) = '1') and (I_BIT_SLIP_1A_LSB_FLAG = '0')) then
---					if (DESER_DATA_G0(5 downto 0) = "101011") then --110100
---						I_BIT_SLIP_POS_AUTO(0) <= '0';
---					else
---						I_BIT_SLIP_POS_AUTO(0) <= '1';
---					end if;
---					I_BIT_SLIP_1A_LSB_FLAG <= '1';
---				else
---					I_BIT_SLIP_POS_AUTO(0) <= '0';
---				end if;
---	
---				if ((DIGIF_SER_RST_DLY(63) = '1') and (I_BIT_SLIP_1A_MSB_FLAG = '0')) then
---					if (DESER_DATA_G0(11 downto 6) = "101011") then --110100
---						I_BIT_SLIP_POS_AUTO(1) <= '0';
---					else
---						I_BIT_SLIP_POS_AUTO(1) <= '1';
---					end if;
---					I_BIT_SLIP_1A_MSB_FLAG <= '1';
---				else
---					I_BIT_SLIP_POS_AUTO(1) <= '0';
---				end if;
---	
---			else
---				I_BIT_SLIP_POS_AUTO(1 downto 0) <= (others => '0');
---				I_BIT_SLIP_1A_LSB_FLAG <= '0';
---				I_BIT_SLIP_1A_MSB_FLAG <= '0';
---			end if;
---	
---			if (d_digif_serial_rst = '0') then
---				I_BIT_SLIP_POS_AUTO(1 downto 0) <= (others => '0');
---				I_BIT_SLIP_1A_LSB_FLAG <= '0';
---				I_BIT_SLIP_1A_MSB_FLAG <= '0';
---			end if;
---		end if;
---	
---	end process BIT_SLIP_SEG1A_PROC;
-
 
 -- |----------------------------------------|
 -- | Instantiating IMAGE_OUT and FX3 DRIVER |
