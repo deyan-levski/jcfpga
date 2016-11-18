@@ -98,12 +98,12 @@ SET PAR
 NOP
 
 ; halt 1020 ns — wait for ramp buffer to settle
-NOP 70
+NOP 71
 LOAD PAR
 MOV LVAL 0x00 0 	; line off
 MOV SER 0x00 1		; stop data serialization out
 SET PAR
-NOP 32			; prehalt — wait for ramp buffer, toggle LVAL
+NOP 31			; prehalt — wait for ramp buffer, toggle LVAL
 MOV FVAL 0x00 0		; frame off
 
 MOV SHX 0x00 0		; complete shr sampling
