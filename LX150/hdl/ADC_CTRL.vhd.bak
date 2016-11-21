@@ -10,6 +10,13 @@
 --
 
 library IEEE;
+use IEEE.STD_LOGIC_1164.all;
+
+package LINE_COMBINE_PKG is
+  type T_DATA_SEG is array(natural range <>) of std_logic_vector(15 downto 0);
+end package;
+
+library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
@@ -21,6 +28,9 @@ use IEEE.STD_LOGIC_UNSIGNED.ALL;
 -- any Xilinx primitives in this code.
 library UNISIM;
 use UNISIM.VComponents.all;
+
+library WORK;
+use WORK.LINE_COMBINE_PKG.all;
 
 entity ADC_CTRL is
 	Port ( 
@@ -256,6 +266,24 @@ architecture Behavioral of ADC_CTRL is
 	     DEBUG_OUT:                  out std_logic_vector(15 downto 0));
 	end component;
 
+	component DUAL_FIFO_LINE_COMBINE is
+	generic (
+	     G_NBR_DATA_SEG:   integer := 8);-- Number of data segment fifo pairs
+	port (
+	     RESET:			in  std_logic;	-- Global system reset
+	     FIFO_ENABLE:		in  std_logic;	-- Enables the fifo control arbitrer
+	     --
+	     WRITE_CLOCK:		in  std_logic;	-- FIFO WRITE Clock - clock used on Sensor side
+	     DATA_SEG:       		in  T_DATA_SEG(0 to G_NBR_DATA_SEG-1); -- Segment Data
+	     LVAL_IN:			in  std_logic_vector(G_NBR_DATA_SEG-1 downto 0); -- LVAL signals from all segmants
+	     --
+	     READ_CLOCK:		in  std_logic;  -- FIFO READ Clock - clock used on Camera Link side
+	     DATA_LINE_OUT:		out std_logic_vector(15 downto 0); -- Output DATA from fifo to Camera Link
+	     FVAL_OUT:			out std_logic;
+	     LVAL_OUT:			out std_logic; -- Output LVAL from fifo to Camera Link
+	     DEBUG_OUT:      		out std_logic_vector(1 downto 0) -- Debug output
+	);
+	end component;
 
 	component FX3_SLAVE is
 	port (	CLOCK : in  std_logic;
@@ -299,27 +327,23 @@ architecture Behavioral of ADC_CTRL is
 	signal CLOCK_DESER_6BIT : std_logic;
 	signal CLOCK_DESER_WORD : std_logic; 
 	signal DESER_DATA_G0 : std_logic_vector(15 downto 0);
+	signal DESER_DATA_G1 : std_logic_vector(15 downto 0);
+	signal DESER_DATA_G2 : std_logic_vector(15 downto 0);
+	signal DESER_DATA_G3 : std_logic_vector(15 downto 0);
+	signal DESER_DATA_G4 : std_logic_vector(15 downto 0);
+	signal DESER_DATA_G5 : std_logic_vector(15 downto 0);
+	signal DESER_DATA_G6 : std_logic_vector(15 downto 0);
+	signal DESER_DATA_G7 : std_logic_vector(15 downto 0);
+	signal IMAGE_DATA_OUT: std_logic_vector(15 downto 0);
 	signal CLOCK_COUNT_OBUFDS : std_logic;
 	signal CLOCK_DIGIF_OBUFDS : std_logic;
 	signal FVAL_SEQ  : std_logic;
 	signal LVAL_SEQ  : std_logic;
+	signal LVAL_SEQ_OLD :std_logic;
+	signal LVAL_DLY  : std_logic_vector(7 downto 0);
+	signal FVAL_OUT	 : std_logic;
+	signal LVAL_OUT  : std_logic;
 	signal ROW_NEXT  : std_logic;
-	signal G0LTX	 : std_logic;
-	signal G0HTX	 : std_logic;
-	signal G1LTX	 : std_logic;
-	signal G1HTX	 : std_logic;
-	signal G2LTX	 : std_logic;
-	signal G2HTX	 : std_logic;
-	signal G3LTX	 : std_logic;
-	signal G3HTX	 : std_logic;
-	signal G4LTX	 : std_logic;
-	signal G4HTX	 : std_logic;
-	signal G5LTX	 : std_logic;
-	signal G5HTX	 : std_logic;
-	signal G6LTX	 : std_logic;
-	signal G6HTX	 : std_logic;
-	signal G7LTX	 : std_logic;
-	signal G7HTX	 : std_logic;
 	signal LSBDAT	 : std_logic;
 	signal MSBDAT	 : std_logic;
 	signal LSBDAT_N	 : std_logic;
@@ -590,10 +614,35 @@ begin
 	d_ref_vref_sh <= MEMDATA(9);
 	d_ref_vref_clamp_en <= MEMDATA(8);
 	d_ref_vref_ramp_ota_dyn_pon <= MEMDATA(7);
-	d_digif_serial_rst <= MEMDATA(6);
+--	d_digif_serial_rst <= MEMDATA(6);
 	FVAL_SEQ <= MEMDATA(5);
 	LVAL_SEQ <= MEMDATA(4);
 	d_row_addr(7 downto 0) <= "00000000";
+
+GENERATE_DIGIF_RST_LVAL_PROC: process(RESET, CLOCK_DESER_WORD)
+	variable digif_rst_cnt: integer range 0 to 128 :=0;
+	variable stflag: integer range 0 to 1 :=0;
+	begin
+	if RESET = '1' then
+		digif_rst_cnt := 0;
+		d_digif_serial_rst <= '1';
+		stflag := 0;
+	elsif (rising_edge(CLOCK_DESER_WORD)) then
+
+	if (LVAL_SEQ = '1' and LVAL_SEQ_OLD = '0') or (stflag = 1) then
+		if digif_rst_cnt = 128 then
+			digif_rst_cnt := 0;
+			d_digif_serial_rst <= '1';
+			stflag := 0;
+		else
+			d_digif_serial_rst <= '0';
+			digif_rst_cnt := digif_rst_cnt + 1;
+			stflag := 1;
+		end if;
+	end if;
+		LVAL_SEQ_OLD <= LVAL_SEQ;
+	end if;
+end process;
 
 --|-----------------|
 --| MOCK SERIALIZER |
@@ -601,7 +650,7 @@ begin
 
 	DIGIF_INST : DIGIF
 	port map ( 
-			 d_digif_sck => CLOCK_100,
+			 d_digif_sck => CLOCK_200,
 			 d_digif_rst => d_digif_serial_rst,
 			 RESET    => RESET,
 			 d_digif_msb_data => MSBDAT,
@@ -613,7 +662,7 @@ begin
 --| DESERIALIZERS |
 --|---------------|
 
-	G0LTX_DESER_INST : OPTO_SEG_IF
+	G0TX_DESER_INST : OPTO_SEG_IF
 	generic map (
 		 G_SIMULATION           => false,			-- simulation mode
 		 C_TP                   => x"D3D3D3D3")			-- training pattern
@@ -646,19 +695,281 @@ begin
 		 DEBUG_IN               => "00000000", --DEBUG_OPTO_SEG_IF,
 		 DEBUG_OUT              => open);
 
--- |----------------------------------------|
--- | Instantiating IMAGE_OUT and FX3 DRIVER |
--- |----------------------------------------|
+	G1TX_DESER_INST : OPTO_SEG_IF
+	generic map (
+		 G_SIMULATION           => false,			-- simulation mode
+		 C_TP                   => x"D3D3D3D3")			-- training pattern
+	port map (
+		 G_INVERT_MSB           => false,			-- invert MSB sensor data
+		 G_INVERT_LSB           => false,			-- invert LSB sensor data
+	 	-- system signals
+		 RESET                  => RESET,  -- async. reset
+		 ENABLE                 => '1',				-- module activation
+		 IO_CLK                 => IO_CLK_BANK2,		-- bit clock
+		 DIV_CLK                => CLOCK_DESER_6BIT,		-- bit clock / 6
+		 BYTE_CLK               => CLOCK_DESER_WORD,		-- word clock
+		 SERDESSTROBE_IN        => SERDESSTROBE_BANK2,		-- strobe to ISERDES
+									-- serial interconnect
+		 DIGIF_MSB_P            => G1HTX_P,			-- MS-Byte (LVDS+)
+		 DIGIF_MSB_N            => G1HTX_N,			-- MS-Byte (LVDS-)
+		 DIGIF_LSB_P            => G1LTX_P,			-- LS-Byte (LVDS+)
+		 DIGIF_LSB_N            => G1LTX_N,			-- LS-Byte (LVDS+)
+	       -- image data interface
+		 DATA                   => DESER_DATA_G1,		-- data output
+		 DATA_EN                => open,			-- DATA_IN data valid
+		 -- bitslip
+		 I_BIT_SLIP_AUTO	=> '1',
+		 I_BIT_SLIP_POS		=> "00",
+		 PREAMBLE		=> "101011",
+		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 CLOCK_RSTDLY		=> CLOCK_100,
+	       -- debug
+		 DIV_CLK_CS             => open,
+		 DEBUG_IN               => "00000000", --DEBUG_OPTO_SEG_IF,
+		 DEBUG_OUT              => open);
+
+	G2TX_DESER_INST : OPTO_SEG_IF
+	generic map (
+		 G_SIMULATION           => false,			-- simulation mode
+		 C_TP                   => x"D3D3D3D3")			-- training pattern
+	port map (
+		 G_INVERT_MSB           => false,			-- invert MSB sensor data
+		 G_INVERT_LSB           => false,			-- invert LSB sensor data
+	 	-- system signals
+		 RESET                  => RESET,  -- async. reset
+		 ENABLE                 => '1',				-- module activation
+		 IO_CLK                 => IO_CLK_BANK2,		-- bit clock
+		 DIV_CLK                => CLOCK_DESER_6BIT,		-- bit clock / 6
+		 BYTE_CLK               => CLOCK_DESER_WORD,		-- word clock
+		 SERDESSTROBE_IN        => SERDESSTROBE_BANK2,		-- strobe to ISERDES
+									-- serial interconnect
+		 DIGIF_MSB_P            => G2HTX_P,			-- MS-Byte (LVDS+)
+		 DIGIF_MSB_N            => G2HTX_N,			-- MS-Byte (LVDS-)
+		 DIGIF_LSB_P            => G2LTX_P,			-- LS-Byte (LVDS+)
+		 DIGIF_LSB_N            => G2LTX_N,			-- LS-Byte (LVDS+)
+	       -- image data interface
+		 DATA                   => DESER_DATA_G2,		-- data output
+		 DATA_EN                => open,			-- DATA_IN data valid
+		 -- bitslip
+		 I_BIT_SLIP_AUTO	=> '1',
+		 I_BIT_SLIP_POS		=> "00",
+		 PREAMBLE		=> "101011",
+		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 CLOCK_RSTDLY		=> CLOCK_100,
+	       -- debug
+		 DIV_CLK_CS             => open,
+		 DEBUG_IN               => "00000000", --DEBUG_OPTO_SEG_IF,
+		 DEBUG_OUT              => open);
+
+	G3TX_DESER_INST : OPTO_SEG_IF
+	generic map (
+		 G_SIMULATION           => false,			-- simulation mode
+		 C_TP                   => x"D3D3D3D3")			-- training pattern
+	port map (
+		 G_INVERT_MSB           => false,			-- invert MSB sensor data
+		 G_INVERT_LSB           => false,			-- invert LSB sensor data
+	 	-- system signals
+		 RESET                  => RESET,  -- async. reset
+		 ENABLE                 => '1',				-- module activation
+		 IO_CLK                 => IO_CLK_BANK2,		-- bit clock
+		 DIV_CLK                => CLOCK_DESER_6BIT,		-- bit clock / 6
+		 BYTE_CLK               => CLOCK_DESER_WORD,		-- word clock
+		 SERDESSTROBE_IN        => SERDESSTROBE_BANK2,		-- strobe to ISERDES
+									-- serial interconnect
+		 DIGIF_MSB_P            => G3HTX_P,			-- MS-Byte (LVDS+)
+		 DIGIF_MSB_N            => G3HTX_N,			-- MS-Byte (LVDS-)
+		 DIGIF_LSB_P            => G3LTX_P,			-- LS-Byte (LVDS+)
+		 DIGIF_LSB_N            => G3LTX_N,			-- LS-Byte (LVDS+)
+	       -- image data interface
+		 DATA                   => DESER_DATA_G3,		-- data output
+		 DATA_EN                => open,			-- DATA_IN data valid
+		 -- bitslip
+		 I_BIT_SLIP_AUTO	=> '1',
+		 I_BIT_SLIP_POS		=> "00",
+		 PREAMBLE		=> "101011",
+		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 CLOCK_RSTDLY		=> CLOCK_100,
+	       -- debug
+		 DIV_CLK_CS             => open,
+		 DEBUG_IN               => "00000000", --DEBUG_OPTO_SEG_IF,
+		 DEBUG_OUT              => open);
+
+	G4TX_DESER_INST : OPTO_SEG_IF
+	generic map (
+		 G_SIMULATION           => false,			-- simulation mode
+		 C_TP                   => x"D3D3D3D3")			-- training pattern
+	port map (
+		 G_INVERT_MSB           => false,			-- invert MSB sensor data
+		 G_INVERT_LSB           => false,			-- invert LSB sensor data
+	 	-- system signals
+		 RESET                  => RESET,  -- async. reset
+		 ENABLE                 => '1',				-- module activation
+		 IO_CLK                 => IO_CLK_BANK2,		-- bit clock
+		 DIV_CLK                => CLOCK_DESER_6BIT,		-- bit clock / 6
+		 BYTE_CLK               => CLOCK_DESER_WORD,		-- word clock
+		 SERDESSTROBE_IN        => SERDESSTROBE_BANK2,		-- strobe to ISERDES
+									-- serial interconnect
+		 DIGIF_MSB_P            => G4HTX_P,			-- MS-Byte (LVDS+)
+		 DIGIF_MSB_N            => G4HTX_N,			-- MS-Byte (LVDS-)
+		 DIGIF_LSB_P            => G4LTX_P,			-- LS-Byte (LVDS+)
+		 DIGIF_LSB_N            => G4LTX_N,			-- LS-Byte (LVDS+)
+	       -- image data interface
+		 DATA                   => DESER_DATA_G4,		-- data output
+		 DATA_EN                => open,			-- DATA_IN data valid
+		 -- bitslip
+		 I_BIT_SLIP_AUTO	=> '1',
+		 I_BIT_SLIP_POS		=> "00",
+		 PREAMBLE		=> "101011",
+		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 CLOCK_RSTDLY		=> CLOCK_100,
+	       -- debug
+		 DIV_CLK_CS             => open,
+		 DEBUG_IN               => "00000000", --DEBUG_OPTO_SEG_IF,
+		 DEBUG_OUT              => open);
+
+	G5TX_DESER_INST : OPTO_SEG_IF
+	generic map (
+		 G_SIMULATION           => false,			-- simulation mode
+		 C_TP                   => x"D3D3D3D3")			-- training pattern
+	port map (
+		 G_INVERT_MSB           => false,			-- invert MSB sensor data
+		 G_INVERT_LSB           => false,			-- invert LSB sensor data
+	 	-- system signals
+		 RESET                  => RESET,  -- async. reset
+		 ENABLE                 => '1',				-- module activation
+		 IO_CLK                 => IO_CLK_BANK2,		-- bit clock
+		 DIV_CLK                => CLOCK_DESER_6BIT,		-- bit clock / 6
+		 BYTE_CLK               => CLOCK_DESER_WORD,		-- word clock
+		 SERDESSTROBE_IN        => SERDESSTROBE_BANK2,		-- strobe to ISERDES
+									-- serial interconnect
+		 DIGIF_MSB_P            => G5HTX_P,			-- MS-Byte (LVDS+)
+		 DIGIF_MSB_N            => G5HTX_N,			-- MS-Byte (LVDS-)
+		 DIGIF_LSB_P            => G5LTX_P,			-- LS-Byte (LVDS+)
+		 DIGIF_LSB_N            => G5LTX_N,			-- LS-Byte (LVDS+)
+	       -- image data interface
+		 DATA                   => DESER_DATA_G5,		-- data output
+		 DATA_EN                => open,			-- DATA_IN data valid
+		 -- bitslip
+		 I_BIT_SLIP_AUTO	=> '1',
+		 I_BIT_SLIP_POS		=> "00",
+		 PREAMBLE		=> "101011",
+		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 CLOCK_RSTDLY		=> CLOCK_100,
+	       -- debug
+		 DIV_CLK_CS             => open,
+		 DEBUG_IN               => "00000000", --DEBUG_OPTO_SEG_IF,
+		 DEBUG_OUT              => open);
+
+	G6TX_DESER_INST : OPTO_SEG_IF
+	generic map (
+		 G_SIMULATION           => false,			-- simulation mode
+		 C_TP                   => x"D3D3D3D3")			-- training pattern
+	port map (
+		 G_INVERT_MSB           => false,			-- invert MSB sensor data
+		 G_INVERT_LSB           => false,			-- invert LSB sensor data
+	 	-- system signals
+		 RESET                  => RESET,  -- async. reset
+		 ENABLE                 => '1',				-- module activation
+		 IO_CLK                 => IO_CLK_BANK2,		-- bit clock
+		 DIV_CLK                => CLOCK_DESER_6BIT,		-- bit clock / 6
+		 BYTE_CLK               => CLOCK_DESER_WORD,		-- word clock
+		 SERDESSTROBE_IN        => SERDESSTROBE_BANK2,		-- strobe to ISERDES
+									-- serial interconnect
+		 DIGIF_MSB_P            => G6HTX_P,			-- MS-Byte (LVDS+)
+		 DIGIF_MSB_N            => G6HTX_N,			-- MS-Byte (LVDS-)
+		 DIGIF_LSB_P            => G6LTX_P,			-- LS-Byte (LVDS+)
+		 DIGIF_LSB_N            => G6LTX_N,			-- LS-Byte (LVDS+)
+	       -- image data interface
+		 DATA                   => DESER_DATA_G6,		-- data output
+		 DATA_EN                => open,			-- DATA_IN data valid
+		 -- bitslip
+		 I_BIT_SLIP_AUTO	=> '1',
+		 I_BIT_SLIP_POS		=> "00",
+		 PREAMBLE		=> "101011",
+		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 CLOCK_RSTDLY		=> CLOCK_100,
+	       -- debug
+		 DIV_CLK_CS             => open,
+		 DEBUG_IN               => "00000000", --DEBUG_OPTO_SEG_IF,
+		 DEBUG_OUT              => open);
+
+	G7TX_DESER_INST : OPTO_SEG_IF
+	generic map (
+		 G_SIMULATION           => false,			-- simulation mode
+		 C_TP                   => x"D3D3D3D3")			-- training pattern
+	port map (
+		 G_INVERT_MSB           => false,			-- invert MSB sensor data
+		 G_INVERT_LSB           => false,			-- invert LSB sensor data
+	 	-- system signals
+		 RESET                  => RESET,  -- async. reset
+		 ENABLE                 => '1',				-- module activation
+		 IO_CLK                 => IO_CLK_BANK2,		-- bit clock
+		 DIV_CLK                => CLOCK_DESER_6BIT,		-- bit clock / 6
+		 BYTE_CLK               => CLOCK_DESER_WORD,		-- word clock
+		 SERDESSTROBE_IN        => SERDESSTROBE_BANK2,		-- strobe to ISERDES
+									-- serial interconnect
+		 DIGIF_MSB_P            => G7HTX_P,			-- MS-Byte (LVDS+)
+		 DIGIF_MSB_N            => G7HTX_N,			-- MS-Byte (LVDS-)
+		 DIGIF_LSB_P            => G7LTX_P,			-- LS-Byte (LVDS+)
+		 DIGIF_LSB_N            => G7LTX_N,			-- LS-Byte (LVDS+)
+	       -- image data interface
+		 DATA                   => DESER_DATA_G7,		-- data output
+		 DATA_EN                => open,			-- DATA_IN data valid
+		 -- bitslip
+		 I_BIT_SLIP_AUTO	=> '1',
+		 I_BIT_SLIP_POS		=> "00",
+		 PREAMBLE		=> "101011",
+		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 CLOCK_RSTDLY		=> CLOCK_100,
+	       -- debug
+		 DIV_CLK_CS             => open,
+		 DEBUG_IN               => "00000000", --DEBUG_OPTO_SEG_IF,
+		 DEBUG_OUT              => open);
+
+--|------------|
+--| Frame FIFO |
+--|------------|
+
+LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst);
+
+	I_DUAL_FIFO_LINE_COMBINE : DUAL_FIFO_LINE_COMBINE
+	generic map (
+         	G_NBR_DATA_SEG 		=> 8)	-- Number of data segment fifo pairs
+        port map (
+	  	RESET			=> RESET,             
+          	FIFO_ENABLE		=> '1', -- active when the sensor becomes active
+          --
+		WRITE_CLOCK		=> CLOCK_DESER_WORD,
+		DATA_SEG(0)		=> "0000000000000000", --DESER_DATA_G0,
+		DATA_SEG(1)		=> "0000000000000001", --DESER_DATA_G1,
+		DATA_SEG(2)		=> "0000000000000010", --DESER_DATA_G2,
+		DATA_SEG(3)		=> "0000000000000100", --DESER_DATA_G3,
+		DATA_SEG(4)		=> "0000000000001000", --DESER_DATA_G4,
+		DATA_SEG(5)		=> "0000000000010000", --DESER_DATA_G5,
+		DATA_SEG(6)		=> "0000000000100000", --DESER_DATA_G6,
+		DATA_SEG(7)		=> "0000000001000000", --DESER_DATA_G7,
+		LVAL_IN			=> LVAL_DLY,
+	--
+		READ_CLOCK		=> CLOCK_100,
+		DATA_LINE_OUT		=> IMAGE_DATA_OUT,
+		FVAL_OUT		=> FVAL_OUT,
+		LVAL_OUT		=> LVAL_OUT,
+		DEBUG_OUT		=> open
+		);
+
+--|----------------------------------------|
+--| Instantiating IMAGE_OUT and FX3 DRIVER |
+--|----------------------------------------|
 
 	FX3_SLAVE_INST : FX3_SLAVE 
 	port map (	
 			 CLOCK 			=> FX3_CLK,
 			 RESET 			=> RESET,
-			 CLOCK_IMG		=> CLOCK_DESER_WORD,
+			 CLOCK_IMG		=> CLOCK_100, --CLOCK_DESER_WORD,
 			 LED   			=> open,
 			 FVAL_IN 		=> FVAL_SEQ,
-			 LVAL_IN			=> LVAL_SEQ,
-			 DATA_IN			=> DESER_DATA_G0,
+			 LVAL_IN		=> LVAL_OUT,
+			 DATA_IN		=> IMAGE_DATA_OUT,
 		     -- FX3 GPIFII Interface
 			 GPIFII_PCLK		=> open, --GPIFII_PCLK,	-- fx3 interface clock
 			 GPIFII_D		=> GPIFII_D,		-- fx3 data bus

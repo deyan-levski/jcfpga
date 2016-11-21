@@ -58,7 +58,6 @@ MOV CNT 0x05 1		; count_inc_one '1'
 MOV CNT 0x08 1		; count_lsb_clk '1'
 MOV MEM 0x00 1		; count_mem_wr '1'
 MOV FVAL 0x00 1 	; FVAL '1'
-MOV LVAL 0x00 1 	; LVAL '1'
 
 ;|-----------------|
 ;| Sequencer start |
@@ -99,12 +98,8 @@ NOP
 
 ; halt 1020 ns — wait for ramp buffer to settle
 NOP 69
-LOAD PAR
-MOV LVAL 0x00 0 	; line off
 MOV SER 0x00 1		; stop data serialization out
-SET PAR
-NOP 33			; prehalt — wait for ramp buffer, toggle LVAL
-MOV FVAL 0x00 0		; frame off
+NOP 34			; prehalt — wait for ramp buffer
 
 MOV SHX 0x00 0		; complete shr sampling
 NOP 2
@@ -115,10 +110,10 @@ MOV REF 0x00 0
 MOV CNT 0x00 1
 SET PAR
 
+NOP 48
+
 ; halt 1024 ns (ramp slew time)
-NOP 6
-MOV FVAL 0x00 0 	; frame off
-NOP 95
+NOP 102
 
 MOV CNT 0x00 0		; stop counter
 MOV REF 0x00 1		; stop ramp current
@@ -184,6 +179,7 @@ MOV CNT 0x06 0		; close jc_shift_en
 NOP 4
 
 ; start SHR DCDS inversion
+
 LOAD PAR
 MOV CNT 0x02 1		; inv_clk '1'
 MOV CNT 0x03 1		; hold '1'
@@ -300,6 +296,8 @@ NOP 4
 
 MOV ADX 0x01 0		; switch off d_ads
 
+MOV FVAL 0x00 0		; frame off
+
 ;write to memory
 MOV MEM 0x00 0		; write to SRAM
 NOP 8
@@ -308,10 +306,12 @@ NOP 4
 
 MOV FVAL 0x00 1		; frame on
 NOP 18
+
 LOAD PAR
 MOV SER 0x00 0		; start data serialization out
-MOV LVAL 0x00 1		; line on
+MOV LVAL 0x00 1		; line trigger pulse on
 SET PAR
+NOP 4
+MOV LVAL 0x00 0		; line trigger pulse off
 
-NOP 1024	; fill extra ROM /w NOP
-
+NOP 1080		; fill extra ROM /w NOP

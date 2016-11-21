@@ -36,12 +36,19 @@ begin
 --|-------------------|
 
 clockdiv : process (CLOCK, RESET)
-
+variable clk_div_cnt : integer range 0 to 1280 := 0;
 begin
 	if RESET = '1' then
 		CLOCK_DIV_REG <= (others => '0');
+		clk_div_cnt := 0;
 	elsif (CLOCK'event AND CLOCK = '1') then
+		if clk_div_cnt = 1080 then
+		CLOCK_DIV_REG <= (others => '0');
+		clk_div_cnt := 0;
+		else
 		CLOCK_DIV_REG <= CLOCK_DIV_REG + 1;
+		clk_div_cnt := clk_div_cnt + 1;
+		end if;
 	end if;
 end process;  
 

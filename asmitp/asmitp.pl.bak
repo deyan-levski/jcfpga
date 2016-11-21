@@ -325,7 +325,7 @@ my $ofpath = '';
 my $ofsuffix = '';
 
 my $ram_width = 32;
-my $ram_depth = 1024;
+my $ram_depth = 1080; #1024
 
 # Parse command line arguments
 GetOptions('h|help'     => \$help_flag,
