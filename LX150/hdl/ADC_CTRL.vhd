@@ -630,7 +630,7 @@ GENERATE_DIGIF_RST_LVAL_PROC: process(RESET, CLOCK_DESER_WORD)
 	elsif (rising_edge(CLOCK_DESER_WORD)) then
 
 	if (LVAL_SEQ = '1' and LVAL_SEQ_OLD = '0') or (stflag = 1) then
-		if digif_rst_cnt = 128 then
+		if digif_rst_cnt = 127 then
 			digif_rst_cnt := 0;
 			d_digif_serial_rst <= '1';
 			stflag := 0;
