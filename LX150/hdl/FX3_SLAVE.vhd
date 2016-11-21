@@ -113,7 +113,7 @@ CLOCK_IMG_N <= not CLOCK_IMG;
 			 CLOCK			=> CLOCK,
 			 FIFO_ENABLE		=> (others => '1'),
 			 --fifo interfaces
-			 FIFO_WR_CLK		=> CLOCK_IMG_N,
+			 FIFO_WR_CLK		=> CLOCK_IMG,
 			 FIFO0_WRDAT_I		=> TX_FIFO_WRDAT_O, --"10101011110011011110111100000001",
 			 FIFO0_WREN_I		=> TX_FIFO_WREN_O,
 			 FIFO0_FULL_O		=> open,

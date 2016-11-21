@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.03 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.03 secs
  
 --> 
 Reading design: ADC_CTRL.prj
@@ -3359,7 +3359,7 @@ Timing Summary:
 ---------------
 Speed Grade: -3
 
-   Minimum period: 5.833ns (Maximum Frequency: 171.442MHz)
+   Minimum period: 7.561ns (Maximum Frequency: 132.262MHz)
    Minimum input arrival time before clock: 6.187ns
    Maximum output required time after clock: 6.013ns
    Maximum combinational path delay: 3.465ns
@@ -3393,25 +3393,26 @@ Delay:               4.263ns (Levels of Logic = 2)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'CLOCK'
-  Clock period: 5.833ns (frequency: 171.442MHz)
+  Clock period: 7.561ns (frequency: 132.262MHz)
   Total number of paths / destination ports: 15155 / 5603
 -------------------------------------------------------------------------
-Delay:               2.916ns (Levels of Logic = 1)
-  Source:            I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT (FF)
-  Destination:       FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_31 (FF)
-  Source Clock:      CLOCK rising
-  Destination Clock: CLOCK falling
+Delay:               3.780ns (Levels of Logic = 2)
+  Source:            FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WREN_1 (FF)
+  Destination:       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1_13 (FF)
+  Source Clock:      CLOCK falling
+  Destination Clock: CLOCK rising
 
-  Data Path: I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT to FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_31
+  Data Path: FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WREN_1 to FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1_13
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDC:C->Q              3   0.447   0.651  I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT (I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT)
-     LUT5:I4->O           32   0.205   1.291  FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv1 (FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv)
-     FDCE:CE                   0.322          FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_0
+     FDC:C->Q              5   0.447   0.819  FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WREN_1 (FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WREN_1)
+     begin scope: 'FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO:wr_en'
+     LUT2:I0->O          143   0.203   1.989  U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1 (U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en)
+     FDPE:CE                   0.322          U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_1
     ----------------------------------------
-    Total                      2.916ns (0.974ns logic, 1.942ns route)
-                                       (33.4% logic, 66.6% route)
+    Total                      3.780ns (0.972ns logic, 2.808ns route)
+                                       (25.7% logic, 74.3% route)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'GPIFII_PCLK_IN'
@@ -6393,8 +6394,8 @@ Clock to Setup on destination clock CLOCK
                                                               | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock                                                  |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 --------------------------------------------------------------+---------+---------+---------+---------+
-CLOCK                                                         |    4.624|         |    4.137|         |
-GPIFII_PCLK_IN                                                |         |         |    1.128|         |
+CLOCK                                                         |    4.872|    3.780|    4.137|         |
+GPIFII_PCLK_IN                                                |    1.128|         |         |         |
 PLL_DESER_INST/pll_base_inst/CLKOUT1                          |    3.822|         |         |         |
 SREG_CONTROL_INST/T_SERIAL_INST/BASIC_UART_INST/tx_state_ready|    3.043|         |         |         |
 --------------------------------------------------------------+---------+---------+---------+---------+
@@ -6404,7 +6405,7 @@ Clock to Setup on destination clock GPIFII_PCLK_IN
                 | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock    |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ----------------+---------+---------+---------+---------+
-CLOCK           |         |    1.128|         |         |
+CLOCK           |    1.128|         |         |         |
 GPIFII_PCLK_IN  |    4.364|         |         |         |
 SPI_ADC_CLK_OBUF|    1.128|         |         |         |
 ----------------+---------+---------+---------+---------+
@@ -7609,13 +7610,13 @@ CLOCK          |    5.552|         |         |         |
 =========================================================================
 
 
-Total REAL time to Xst completion: 16.00 secs
-Total CPU time to Xst completion: 14.94 secs
+Total REAL time to Xst completion: 15.00 secs
+Total CPU time to Xst completion: 14.17 secs
  
 --> 
 
 
-Total memory usage is 433956 kilobytes
+Total memory usage is 433996 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings : 1317 (   0 filtered)
