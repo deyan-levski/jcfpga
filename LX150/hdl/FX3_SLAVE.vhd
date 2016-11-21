@@ -97,8 +97,11 @@ architecture Behavioral of FX3_SLAVE is
 
 	signal		     TX_FIFO_WREN_O:		 std_logic;					 -- tx fifo write enable
 	signal		     TX_FIFO_WRDAT_O:		 std_logic_vector(31 downto 0);			 -- tx fifo write data
+	signal		     CLOCK_IMG_N: 		 std_logic;
 
 begin
+
+CLOCK_IMG_N <= not CLOCK_IMG;
 
 	FX3_SLAVE_INST: FX3_SLAVE_IF
 	generic map (
@@ -110,7 +113,7 @@ begin
 			 CLOCK			=> CLOCK,
 			 FIFO_ENABLE		=> (others => '1'),
 			 --fifo interfaces
-			 FIFO_WR_CLK		=> CLOCK_IMG,
+			 FIFO_WR_CLK		=> CLOCK_IMG_N,
 			 FIFO0_WRDAT_I		=> TX_FIFO_WRDAT_O, --"10101011110011011110111100000001",
 			 FIFO0_WREN_I		=> TX_FIFO_WREN_O,
 			 FIFO0_FULL_O		=> open,
@@ -141,7 +144,7 @@ begin
 	port map (
 			 -- system signals
 			 RESET			  => RESET,
-			 CLOCK			  => CLOCK_IMG,
+			 CLOCK			  => CLOCK_IMG_N,
 			 ENABLE			  => '1',
 			 -- status inputs
 			 STATUS_IN		  => "0101010101010101",

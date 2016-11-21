@@ -145,7 +145,7 @@ begin
 			 ENABLE			  => '1',
 			 -- status inputs
 			 STATUS_IN		  => "0101010101010101",
-			 NO_COLS		  => "0000000010000000",
+			 NO_COLS		  => "0000010000000000",
 			 NO_ROWS		  => "0000000000000001",
 			 -- image data interface
 			 FVAL_IN		  => FVAL_IN, 
