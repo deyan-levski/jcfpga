@@ -940,7 +940,7 @@ LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_s
           	FIFO_ENABLE		=> '1', -- active when the sensor becomes active
           --
 		WRITE_CLOCK		=> CLOCK_DESER_WORD,
-		DATA_SEG(0)		=> "0000000000000000", --DESER_DATA_G0,
+		DATA_SEG(0)		=> DESER_DATA_G0,
 		DATA_SEG(1)		=> "0000000000000001", --DESER_DATA_G1,
 		DATA_SEG(2)		=> "0000000000000010", --DESER_DATA_G2,
 		DATA_SEG(3)		=> "0000000000000100", --DESER_DATA_G3,
