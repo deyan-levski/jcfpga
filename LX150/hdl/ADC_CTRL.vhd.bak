@@ -645,7 +645,7 @@ begin
 					stflag := 1;
 				end if;
 
-				if skip_clks = 6 then		-- skip 10 clocks, filling the pipeline of the serializer
+				if skip_clks = 7 then		-- skip 10 clocks, filling the pipeline of the serializer
 					LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst);
 				else
 				skip_clks := skip_clks + 1;
@@ -688,10 +688,10 @@ begin
 		 BYTE_CLK               => CLOCK_DESER_WORD,		-- word clock
 		 SERDESSTROBE_IN        => SERDESSTROBE_BANK2,		-- strobe to ISERDES
 									-- serial interconnect
-		 DIGIF_MSB_P            => G0HTX_P,			-- MS-Byte (LVDS+)
-		 DIGIF_MSB_N            => G0HTX_N,			-- MS-Byte (LVDS-)
-		 DIGIF_LSB_P            => G0LTX_P,			-- LS-Byte (LVDS+)
-		 DIGIF_LSB_N            => G0LTX_N,			-- LS-Byte (LVDS+)
+		 DIGIF_MSB_P            => COUNT_CLK_P, --G0HTX_P,			-- MS-Byte (LVDS+)
+		 DIGIF_MSB_N            => COUNT_CLK_N, --G0HTX_N,			-- MS-Byte (LVDS-)
+		 DIGIF_LSB_P            => SRX_P, --G0LTX_P,			-- LS-Byte (LVDS+)
+		 DIGIF_LSB_N            => SRX_N, --G0LTX_N,			-- LS-Byte (LVDS+)
 	       -- image data interface
 		 DATA                   => DESER_DATA_G0,		-- data output
 		 DATA_EN                => open,			-- DATA_IN data valid

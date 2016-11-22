@@ -645,7 +645,7 @@ begin
 					stflag := 1;
 				end if;
 
-				if skip_clks = 6 then		-- skip 10 clocks, filling the pipeline of the serializer
+				if skip_clks = 7 then		-- skip 10 clocks, filling the pipeline of the serializer
 					LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst);
 				else
 				skip_clks := skip_clks + 1;
