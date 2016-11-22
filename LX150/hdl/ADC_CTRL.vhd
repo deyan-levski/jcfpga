@@ -620,26 +620,37 @@ begin
 	d_row_addr(7 downto 0) <= "00000000";
 
 	GENERATE_DIGIF_RST_LVAL_PROC: process(RESET, CLOCK_DESER_WORD)
-		variable digif_rst_cnt: integer range 0 to 127 :=0;
+		variable digif_rst_cnt: integer range 0 to 255 :=0;
 		variable stflag: integer range 0 to 1 :=0;
+		variable skip_clks: integer range 0 to 31 :=0;
 		begin
 		if RESET = '1' then
 			digif_rst_cnt := 0;
 			d_digif_serial_rst <= '1';
 			stflag := 0;
+			LVAL_DLY <= (others => '0');
+			skip_clks :=0;
 		elsif (rising_edge(CLOCK_DESER_WORD)) then
 
-		if (LVAL_SEQ = '1' and LVAL_SEQ_OLD = '0') or (stflag = 1) then
-			if digif_rst_cnt = 127 then
-				digif_rst_cnt := 0;
-				d_digif_serial_rst <= '1';
-				stflag := 0;
-			else
-				d_digif_serial_rst <= '0';
-				digif_rst_cnt := digif_rst_cnt + 1;
-				stflag := 1;
+			if (LVAL_SEQ = '1' and LVAL_SEQ_OLD = '0') or (stflag = 1) then
+				if digif_rst_cnt = 135 then  --127+8
+					digif_rst_cnt := 0;
+					d_digif_serial_rst <= '1';
+					stflag := 0;
+					LVAL_DLY <= (others => '0');
+					skip_clks := 0;
+				else
+					d_digif_serial_rst <= '0';
+					digif_rst_cnt := digif_rst_cnt + 1;
+					stflag := 1;
+				end if;
+
+				if skip_clks = 8 then
+					LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst);
+				else
+				skip_clks := skip_clks + 1;
+				end if;
 			end if;
-		end if;
 			LVAL_SEQ_OLD <= LVAL_SEQ;
 		end if;
 	end process;
@@ -929,24 +940,6 @@ begin
 --|------------|
 --| Frame FIFO |
 --|------------|
-
-	LVAL_DLY_PROC : process(RESET,CLOCK_DESER_WORD)
-	variable skip_clks : integer range 0 to 7 :=0;
-
-	begin
-		if RESET = '1' then
-		LVAL_DLY <= (others => '0');
-		skip_clks := 0;
-		elsif (falling_edge(CLOCK_DESER_WORD)) then
-			if skip_clks = 1 then
-			LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst);
-			skip_clks := 0;
-			else
-			skip_clks := skip_clks + 1;
-			end if;
-		end if;
-	end process;
-
 
 	I_DUAL_FIFO_LINE_COMBINE : DUAL_FIFO_LINE_COMBINE
 	generic map (
