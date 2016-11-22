@@ -64,11 +64,11 @@ entity ADC_CTRL is
 		     SPI_ADC_CLK  : out STD_LOGIC;
 		     SPI_ADC_MISO : in STD_LOGIC;
 	   -- LVDS COUNT CLK
-		     COUNT_CLK_P : out STD_LOGIC;
-		     COUNT_CLK_N : out STD_LOGIC;
+		     COUNT_CLK_P : inout STD_LOGIC;
+		     COUNT_CLK_N : inout STD_LOGIC;
 	   -- LVDS DIGIF CLK
-		     SRX_P : out STD_LOGIC;
-		     SRX_N : out STD_LOGIC;
+		     SRX_P : inout STD_LOGIC;
+		     SRX_N : inout STD_LOGIC;
 	   -- CHIP sequencer
 	   -- row_drv
 		     d_row_addr : inout STD_LOGIC_VECTOR(7 downto 0);
@@ -633,7 +633,7 @@ begin
 		elsif (rising_edge(CLOCK_DESER_WORD)) then
 
 			if (LVAL_SEQ = '1' and LVAL_SEQ_OLD = '0') or (stflag = 1) then
-				if digif_rst_cnt = 136 then  --127+8
+				if digif_rst_cnt = 132 then  --127+5
 					digif_rst_cnt := 0;
 					d_digif_serial_rst <= '1';
 					stflag := 0;
@@ -645,7 +645,7 @@ begin
 					stflag := 1;
 				end if;
 
-				if skip_clks = 10 then
+				if skip_clks = 6 then		-- skip 10 clocks, filling the pipeline of the serializer
 					LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst);
 				else
 				skip_clks := skip_clks + 1;
