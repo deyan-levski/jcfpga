@@ -9,6 +9,7 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -32,10 +33,7 @@ architecture Behavioral of DIGIF is
 	signal PREAMBLE : STD_LOGIC_VECTOR(5 downto 0);
 	signal DATA0 	: STD_LOGIC_VECTOR(11 downto 0);
 	signal DATA1	: STD_LOGIC_VECTOR(11 downto 0);
-	signal DATA2 	: STD_LOGIC_VECTOR(11 downto 0);
-	signal DATA3	: STD_LOGIC_VECTOR(11 downto 0);
-	signal DATA4 	: STD_LOGIC_VECTOR(11 downto 0);
-	signal DATA5	: STD_LOGIC_VECTOR(11 downto 0);
+	signal DATAINC	: STD_LOGIC_VECTOR(11 downto 0);
 	signal txbuf_m  : STD_LOGIC_VECTOR(5 downto 0);
 	signal txbuf_l  : STD_LOGIC_VECTOR(5 downto 0);
 	signal flag_data : STD_LOGIC;
@@ -48,20 +46,14 @@ begin
 	--|--------------------------------------------|
 
 	PREAMBLE <= "101011";	    --"001011" LSB FIRST LSB--->MSB		-- mirrored word
-	DATA0	 <= "000000001100"; --"100000000101"; --"010101010101"; --"101010101010" LSB FIRST LSB--->MSB	-- mirrored word
-	DATA1	 <= "111111111110"; --"100000001101"; --"011000101111"; --"111101000110" LSB FIRST LSB--->MSB	-- mirrored word
-	DATA2	 <= "111000000000"; --"100000000101"; --"010101010101"; --"101010101010" LSB FIRST LSB--->MSB	-- mirrored word
-	DATA3	 <= "000000000000"; --"100000001101"; --"011000101111"; --"111101000110" LSB FIRST LSB--->MSB	-- mirrored word
-	DATA4	 <= "000000000000"; --"100000000101"; --"010101010101"; --"101010101010" LSB FIRST LSB--->MSB	-- mirrored word
-	DATA5	 <= "000000000000"; --"100000001101"; --"011000101111"; --"111101000110" LSB FIRST LSB--->MSB	-- mirrored word
+	DATA0	 <= "000001000001"; --"100000000101"; --"010101010101"; --"101010101010" LSB FIRST LSB--->MSB	-- mirrored word
+	DATA1	 <= "000001000001"; --"100000001101"; --"011000101111"; --"111101000110" LSB FIRST LSB--->MSB	-- mirrored word
 
 
 
 
 	SERIALIZE : process (d_digif_sck, RESET)
 	variable wrd_cntr : integer range 0 to 5;
-	variable data_cntr : integer range 0 to 5;
-
 	begin
 
 		if (RESET = '1') then
@@ -73,16 +65,17 @@ begin
 			d_digif_msb_data <= '0';
 			d_digif_lsb_data <= '0';
 			wrd_cntr := 0;
-			data_cntr := 0;
 
 
 		elsif rising_edge(d_digif_sck) then
 
 			if d_digif_rst = '1' then
 
-				if flag_pream = '0' or wrd_cntr = 0 then
+				if flag_pream = '0' and wrd_cntr = 0 then
 					txbuf_m <= PREAMBLE;
 					txbuf_l <= PREAMBLE;
+					DATAINC <= ( others => '0');
+					wrd_cntr := 0;
 					flag_pream <= '1';
 				else
 
@@ -93,35 +86,15 @@ begin
 				end if;
 			else
 
-				if flag_data = '0' or wrd_cntr = 0 then
+				if flag_data = '0' and wrd_cntr = 0 then
 
-					if data_cntr = 0 then
-					txbuf_m <= DATA0(11 downto 6);
-					txbuf_l <= DATA0(5 downto 0);
-					elsif data_cntr = 1 then
-					txbuf_m <= DATA1(11 downto 6);
-					txbuf_l <= DATA1(5 downto 0);
-					elsif data_cntr = 2 then
-					txbuf_m <= DATA2(11 downto 6);
-					txbuf_l <= DATA2(5 downto 0);
-					elsif data_cntr = 3 then
-					txbuf_m <= DATA3(11 downto 6);
-					txbuf_l <= DATA3(5 downto 0);
-					elsif data_cntr = 4 then
-					txbuf_m <= DATA4(11 downto 6);
-					txbuf_l <= DATA4(5 downto 0);
-					elsif data_cntr = 5 then
-					txbuf_m <= DATA5(11 downto 6);
-					txbuf_l <= DATA5(5 downto 0);
-					end if;
+					--txbuf_m <= DATA0(11 downto 6);
+					--txbuf_l <= DATA0(5 downto 0);
 
+					DATAINC <= DATAINC + 1;
+					txbuf_m <= DATAINC(11 downto 6);
+					txbuf_l <= DATAINC(5 downto 0);
 					flag_data <= '1';
-
-					if (data_cntr = 5) then
-						data_cntr := 0;
-					else
-						data_cntr := data_cntr + 1;
-					end if;
 
 				else
 
@@ -137,6 +110,7 @@ begin
 
 		 if (wrd_cntr = 5) then
 		        wrd_cntr := 0;
+			flag_data <= '0';
 		 else
 			wrd_cntr := wrd_cntr+1;
     		 end if;

@@ -619,10 +619,11 @@ begin
 	LVAL_SEQ <= MEMDATA(4);
 	d_row_addr(7 downto 0) <= "00000000";
 
-	GENERATE_DIGIF_RST_LVAL_PROC: process(RESET, CLOCK_DESER_WORD)
-		variable digif_rst_cnt: integer range 0 to 255 :=0;
+	GENERATE_DIGIF_RST_LVAL_PROC: process(RESET, CLOCK_100)
+		variable digif_rst_cnt: integer range 0 to 1023 :=0;
 		variable stflag: integer range 0 to 1 :=0;
-		variable skip_clks: integer range 0 to 31 :=0;
+		variable skip_clks: integer range 0 to 127 :=0;
+		constant sdrat : integer := 3;
 		begin
 		if RESET = '1' then
 			digif_rst_cnt := 0;
@@ -630,10 +631,10 @@ begin
 			stflag := 0;
 			LVAL_DLY <= (others => '0');
 			skip_clks :=0;
-		elsif (rising_edge(CLOCK_DESER_WORD)) then
+		elsif (rising_edge(CLOCK_100)) then
 
 			if (LVAL_SEQ = '1' and LVAL_SEQ_OLD = '0') or (stflag = 1) then
-				if digif_rst_cnt = 136 then  --127+5
+				if digif_rst_cnt = ((135*sdrat)+1) then  --127+5 / 134
 					digif_rst_cnt := 0;
 					d_digif_serial_rst <= '1';
 					stflag := 0;
@@ -645,7 +646,7 @@ begin
 					stflag := 1;
 				end if;
 
-				if skip_clks = 10 then		-- skip 10 clocks, filling the pipeline of the serializer
+				if skip_clks = ((7*sdrat)+2) then		-- skip clocks, filling the pipeline of the deserializer and imageout
 					LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst);
 				else
 				skip_clks := skip_clks + 1;
@@ -950,7 +951,7 @@ begin
           --
 		WRITE_CLOCK		=> CLOCK_DESER_WORD,
 		DATA_SEG(0)		=> DESER_DATA_G0,
-		DATA_SEG(1)		=> "0000000000000001", --DESER_DATA_G1,
+		DATA_SEG(1)		=> DESER_DATA_G0, --"0000000000000001", --DESER_DATA_G1,
 		DATA_SEG(2)		=> "0000000000000010", --DESER_DATA_G2,
 		DATA_SEG(3)		=> "0000000000000100", --DESER_DATA_G3,
 		DATA_SEG(4)		=> "0000000000001000", --DESER_DATA_G4,
