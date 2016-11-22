@@ -619,30 +619,30 @@ begin
 	LVAL_SEQ <= MEMDATA(4);
 	d_row_addr(7 downto 0) <= "00000000";
 
-GENERATE_DIGIF_RST_LVAL_PROC: process(RESET, CLOCK_DESER_WORD)
-	variable digif_rst_cnt: integer range 0 to 128 :=0;
-	variable stflag: integer range 0 to 1 :=0;
-	begin
-	if RESET = '1' then
-		digif_rst_cnt := 0;
-		d_digif_serial_rst <= '1';
-		stflag := 0;
-	elsif (rising_edge(CLOCK_DESER_WORD)) then
-
-	if (LVAL_SEQ = '1' and LVAL_SEQ_OLD = '0') or (stflag = 1) then
-		if digif_rst_cnt = 127 then
+	GENERATE_DIGIF_RST_LVAL_PROC: process(RESET, CLOCK_DESER_WORD)
+		variable digif_rst_cnt: integer range 0 to 127 :=0;
+		variable stflag: integer range 0 to 1 :=0;
+		begin
+		if RESET = '1' then
 			digif_rst_cnt := 0;
 			d_digif_serial_rst <= '1';
 			stflag := 0;
-		else
-			d_digif_serial_rst <= '0';
-			digif_rst_cnt := digif_rst_cnt + 1;
-			stflag := 1;
+		elsif (rising_edge(CLOCK_DESER_WORD)) then
+
+		if (LVAL_SEQ = '1' and LVAL_SEQ_OLD = '0') or (stflag = 1) then
+			if digif_rst_cnt = 127 then
+				digif_rst_cnt := 0;
+				d_digif_serial_rst <= '1';
+				stflag := 0;
+			else
+				d_digif_serial_rst <= '0';
+				digif_rst_cnt := digif_rst_cnt + 1;
+				stflag := 1;
+			end if;
 		end if;
-	end if;
-		LVAL_SEQ_OLD <= LVAL_SEQ;
-	end if;
-end process;
+			LVAL_SEQ_OLD <= LVAL_SEQ;
+		end if;
+	end process;
 
 --|-----------------|
 --| MOCK SERIALIZER |
@@ -930,7 +930,18 @@ end process;
 --| Frame FIFO |
 --|------------|
 
-LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst);
+	LVAL_DLY_PROC : process(RESET,CLOCK_DESER_WORD)
+
+	begin
+
+		if RESET = '1' then
+		LVAL_DLY <= (others => '0');
+		elsif (rising_edge(CLOCK_DESER_WORD)) then
+		LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst);
+		end if;
+
+	end process;
+
 
 	I_DUAL_FIFO_LINE_COMBINE : DUAL_FIFO_LINE_COMBINE
 	generic map (
