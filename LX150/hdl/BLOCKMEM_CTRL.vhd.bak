@@ -27,7 +27,7 @@ end BLOCKMEM_CTRL;
 
 architecture Behavioral of BLOCKMEM_CTRL is
 
-	signal CLOCK_DIV_REG : std_logic_vector(9 downto 0);
+	signal CLOCK_DIV_REG : std_logic_vector(10 downto 0);
 
 begin
 
@@ -36,7 +36,7 @@ begin
 --|-------------------|
 
 clockdiv : process (CLOCK, RESET)
-variable clk_div_cnt : integer range 0 to 1280 := 0;
+variable clk_div_cnt : integer range 0 to 1081 := 0;
 begin
 	if RESET = '1' then
 		CLOCK_DIV_REG <= (others => '0');
@@ -54,7 +54,7 @@ end process;
 
 --MEMCLK <= not CLOCK_DIV_REG(0); --f/2
 MEMCLK <= not CLOCK;
-MEMADDR <= "00000000000000000000" & CLOCK_DIV_REG(9 downto 0) & "00"; -- LSHIFT due to blockmem bug?
+MEMADDR <= "0000000000000000000" & CLOCK_DIV_REG(10 downto 0) & "00"; -- LSHIFT due to blockmem bug?
 --MEMADDR <= CLOCK_DIV_REG(31 downto 0);
 
 end Behavioral;

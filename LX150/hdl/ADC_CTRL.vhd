@@ -931,15 +931,20 @@ begin
 --|------------|
 
 	LVAL_DLY_PROC : process(RESET,CLOCK_DESER_WORD)
+	variable skip_clks : integer range 0 to 7 :=0;
 
 	begin
-
 		if RESET = '1' then
 		LVAL_DLY <= (others => '0');
+		skip_clks := 0;
 		elsif (rising_edge(CLOCK_DESER_WORD)) then
-		LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst);
+			if skip_clks = 1 then
+			LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst);
+			skip_clks := 0;
+			else
+			skip_clks := skip_clks + 1;
+			end if;
 		end if;
-
 	end process;
 
 

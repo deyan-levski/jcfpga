@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.58f on Tue Nov 22 10:30:10 2016
+// Written by: Map P.58f on Tue Nov 22 10:52:41 2016
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -215,8 +215,9 @@ PIN G0TX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_master_pins<3> = BEL
 PIN G0TX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_slave_pins<3> = BEL
         "G0TX_DESER_INST/I_SAMPLING_MSB/pins[0].iserdes2_slave" PINNAME
         CLKDIV;
-TIMEGRP PLL_DESER_INST_clkout1 = BEL "LVAL_DLY_0" BEL "d_digif_serial_rst" BEL
-        "LVAL_SEQ_OLD" BEL "GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_0" BEL
+TIMEGRP PLL_DESER_INST_clkout1 = BEL "d_digif_serial_rst" BEL "LVAL_SEQ_OLD"
+        BEL "LVAL_DLY_PROC.skip_clks_0" BEL
+        "GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_0" BEL
         "GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_1" BEL
         "GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_2" BEL
         "GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_3" BEL
@@ -352,8 +353,8 @@ TIMEGRP PLL_DESER_INST_clkout1 = BEL "LVAL_DLY_0" BEL "d_digif_serial_rst" BEL
         "G0TX_DESER_INST/I_SAMPLING_MSB/pd_inst/inc_data_int_d_0" BEL
         "G0TX_DESER_INST/I_SAMPLING_MSB/pd_inst/ce_data_0" BEL
         "G0TX_DESER_INST/I_SAMPLING_LSB/pd_inst/inc_data_int_d_0" BEL
-        "G0TX_DESER_INST/I_SAMPLING_LSB/pd_inst/ce_data_0" BEL
-        "G0TX_DESER_INST/I_BIT_SLIP_1A_MSB_FLAG" BEL
+        "G0TX_DESER_INST/I_SAMPLING_LSB/pd_inst/ce_data_0" BEL "LVAL_DLY_0"
+        BEL "G0TX_DESER_INST/I_BIT_SLIP_1A_MSB_FLAG" BEL
         "G0TX_DESER_INST/I_SAMPLING_MSB/pd_inst/cal_data_master" BEL
         "G0TX_DESER_INST/I_SAMPLING_MSB/pd_inst/cal_data_sint" BEL
         "G0TX_DESER_INST/I_SAMPLING_MSB/pd_inst/enable" BEL
@@ -3132,6 +3133,16 @@ PIN
         "BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_init.ram/SP.SIMPLE_PRIM9.ram"
         PINNAME CLKAWRCLK;
 PIN
+        BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_init.ram/SP.WIDE_PRIM9.ram_pins<26>
+        = BEL
+        "BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_init.ram/SP.WIDE_PRIM9.ram"
+        PINNAME CLKAWRCLK;
+PIN
+        BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_init.ram/SP.WIDE_PRIM9.ram_pins<27>
+        = BEL
+        "BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_init.ram/SP.WIDE_PRIM9.ram"
+        PINNAME CLKBRDCLK;
+PIN
         BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_init.ram/SP.SIMPLE_PRIM9.ram_pins<26>
         = BEL
         "BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_init.ram/SP.SIMPLE_PRIM9.ram"
@@ -3377,7 +3388,7 @@ TIMEGRP PLL_250_INST_clk0 = BEL "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_0" BEL
         "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_7" BEL
         "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_8" BEL
         "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_9" BEL
-        "BLOCKMEM_CTRL_INST/clockdiv.clk_div_cnt_10" BEL "CLOCK_100_BUFG" BEL
+        "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_10" BEL "CLOCK_100_BUFG" BEL
         "SREG_CONTROL_INST/flushproecss.WORD_COUNTER_4" BEL
         "SREG_CONTROL_INST/flushproecss.WORD_COUNTER_3" BEL
         "SREG_CONTROL_INST/flushproecss.WORD_COUNTER_2" BEL
@@ -3870,12 +3881,22 @@ TIMEGRP PLL_250_INST_clk0 = BEL "BLOCKMEM_CTRL_INST/CLOCK_DIV_REG_0" BEL
         "I_DUAL_FIFO_LINE_COMBINE/I_DATA_SEG_DLY_7_0_7" BEL
         "I_DUAL_FIFO_LINE_COMBINE/I_DATA_SEG_DLY_7_0_8" BEL
         "I_DUAL_FIFO_LINE_COMBINE/I_DATA_SEG_DLY_7_0_9" BEL
-        "G0TX_DESER_INST/DIGIF_SER_RST_DLY_63" PIN
+        "G0TX_DESER_INST/DIGIF_SER_RST_DLY_63" BEL
+        "BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/sel_pipe_0"
+        BEL
+        "BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/sel_pipe_1"
+        BEL
+        "BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/sel_pipe_2"
+        PIN
         "BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[4].ram.r/s6_init.ram/SP.SIMPLE_PRIM9.ram_pins<26>"
         PIN
         "BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[3].ram.r/s6_init.ram/SP.SIMPLE_PRIM9.ram_pins<26>"
         PIN
         "BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_init.ram/SP.SIMPLE_PRIM9.ram_pins<26>"
+        PIN
+        "BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_init.ram/SP.WIDE_PRIM9.ram_pins<26>"
+        PIN
+        "BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_init.ram/SP.WIDE_PRIM9.ram_pins<27>"
         PIN
         "BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_init.ram/SP.SIMPLE_PRIM9.ram_pins<26>"
         BEL
