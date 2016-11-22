@@ -5,14 +5,14 @@ Parameter TMPDIR set to xst/projnav.tmp
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.03 secs
+Total CPU time to Xst completion: 0.02 secs
  
 --> 
 Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.04 secs
+Total CPU time to Xst completion: 0.03 secs
  
 --> 
 Reading design: ADC_CTRL.prj
@@ -3057,11 +3057,11 @@ Top Level Output File Name         : ADC_CTRL.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 5120
+# BELS                             : 5132
 #      GND                         : 39
-#      INV                         : 119
+#      INV                         : 120
 #      LUT1                        : 123
-#      LUT2                        : 775
+#      LUT2                        : 786
 #      LUT3                        : 721
 #      LUT4                        : 911
 #      LUT5                        : 562
@@ -3072,8 +3072,8 @@ Primitive and Black Box Usage:
 #      XORCY                       : 178
 # FlipFlops/Latches                : 5283
 #      FD                          : 314
-#      FDC                         : 2191
-#      FDC_1                       : 112
+#      FDC                         : 2190
+#      FDC_1                       : 113
 #      FDCE                        : 1570
 #      FDE                         : 74
 #      FDP                         : 361
@@ -3117,17 +3117,17 @@ Selected Device : 6slx150fgg484-3
 
 Slice Logic Utilization: 
  Number of Slice Registers:            5282  out of  184304     2%  
- Number of Slice LUTs:                 4113  out of  92152     4%  
-    Number used as Logic:              4095  out of  92152     4%  
+ Number of Slice LUTs:                 4125  out of  92152     4%  
+    Number used as Logic:              4107  out of  92152     4%  
     Number used as Memory:               18  out of  21680     0%  
        Number used as SRL:               18
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:   6911
-   Number with an unused Flip Flop:    1629  out of   6911    23%  
-   Number with an unused LUT:          2798  out of   6911    40%  
-   Number of fully used LUT-FF pairs:  2484  out of   6911    35%  
-   Number of unique control sets:       793
+ Number of LUT Flip Flop pairs used:   6922
+   Number with an unused Flip Flop:    1640  out of   6922    23%  
+   Number with an unused LUT:          2797  out of   6922    40%  
+   Number of fully used LUT-FF pairs:  2485  out of   6922    35%  
+   Number of unique control sets:       794
 
 IO Utilization: 
  Number of IOs:                         137
@@ -3326,26 +3326,25 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'PLL_DESER_INST/pll_base_inst/CLKOUT1'
-  Clock period: 4.802ns (frequency: 208.238MHz)
+  Clock period: 5.866ns (frequency: 170.468MHz)
   Total number of paths / destination ports: 13196 / 3966
 -------------------------------------------------------------------------
-Delay:               2.401ns (Levels of Logic = 2)
-  Source:            G0TX_DESER_INST/I_DATA_11 (FF)
-  Destination:       G0TX_DESER_INST/I_BIT_SLIP_POS_AUTO_1 (FF)
+Delay:               2.933ns (Levels of Logic = 1)
+  Source:            LVAL_DLY_0 (FF)
+  Destination:       I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[7].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM_FFd1 (FF)
   Source Clock:      PLL_DESER_INST/pll_base_inst/CLKOUT1 falling
   Destination Clock: PLL_DESER_INST/pll_base_inst/CLKOUT1 rising
 
-  Data Path: G0TX_DESER_INST/I_DATA_11 to G0TX_DESER_INST/I_BIT_SLIP_POS_AUTO_1
+  Data Path: LVAL_DLY_0 to I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[7].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM_FFd1
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FDC_1:C->Q            2   0.447   0.864  G0TX_DESER_INST/I_DATA_11 (G0TX_DESER_INST/I_DATA_11)
-     LUT4:I0->O            1   0.203   0.580  G0TX_DESER_INST/Mmux_GND_39_o_GND_39_o_mux_8_OUT2_SW0 (N52)
-     LUT6:I5->O            1   0.205   0.000  G0TX_DESER_INST/Mmux_GND_39_o_GND_39_o_mux_8_OUT2 (G0TX_DESER_INST/GND_39_o_GND_39_o_mux_8_OUT<1>)
-     FDC:D                     0.102          G0TX_DESER_INST/I_BIT_SLIP_POS_AUTO_1
+     FDC_1:C->Q          128   0.447   2.179  LVAL_DLY_0 (LVAL_DLY_0)
+     LUT4:I1->O            1   0.205   0.000  I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[7].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM_FFd1-In1 (I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[7].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM_FFd1-In)
+     FDC:D                     0.102          I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[7].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM_FFd1
     ----------------------------------------
-    Total                      2.401ns (0.957ns logic, 1.444ns route)
-                                       (39.9% logic, 60.1% route)
+    Total                      2.933ns (0.754ns logic, 2.179ns route)
+                                       (25.7% logic, 74.3% route)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'CLOCK'
@@ -6352,7 +6351,7 @@ Source Clock                                                  |Dest:Rise|Dest:Ri
 --------------------------------------------------------------+---------+---------+---------+---------+
 CLOCK                                                         |    4.603|    3.780|    4.137|         |
 GPIFII_PCLK_IN                                                |    1.128|         |         |         |
-PLL_DESER_INST/pll_base_inst/CLKOUT1                          |    3.834|    1.063|         |         |
+PLL_DESER_INST/pll_base_inst/CLKOUT1                          |    3.879|    3.047|         |         |
 SREG_CONTROL_INST/T_SERIAL_INST/BASIC_UART_INST/tx_state_ready|    3.043|         |         |         |
 --------------------------------------------------------------+---------+---------+---------+---------+
 
@@ -6372,7 +6371,7 @@ Clock to Setup on destination clock PLL_DESER_INST/pll_base_inst/CLKOUT1
 Source Clock                        |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ------------------------------------+---------+---------+---------+---------+
 CLOCK                               |    3.493|    4.728|         |         |
-PLL_DESER_INST/pll_base_inst/CLKOUT1|    4.234|    2.401|    1.405|         |
+PLL_DESER_INST/pll_base_inst/CLKOUT1|    4.179|    2.933|    2.705|         |
 ------------------------------------+---------+---------+---------+---------+
 
 Clock to Setup on destination clock SPI_ADC_CLK_OBUF
@@ -7567,12 +7566,12 @@ CLOCK          |    5.552|         |         |         |
 
 
 Total REAL time to Xst completion: 15.00 secs
-Total CPU time to Xst completion: 14.46 secs
+Total CPU time to Xst completion: 14.50 secs
  
 --> 
 
 
-Total memory usage is 435908 kilobytes
+Total memory usage is 435832 kilobytes
 
 Number of errors   :    0 (   0 filtered)
 Number of warnings : 1236 (   0 filtered)

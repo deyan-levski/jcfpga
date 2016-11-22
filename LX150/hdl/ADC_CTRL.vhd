@@ -937,7 +937,7 @@ begin
 		if RESET = '1' then
 		LVAL_DLY <= (others => '0');
 		skip_clks := 0;
-		elsif (rising_edge(CLOCK_DESER_WORD)) then
+		elsif (falling_edge(CLOCK_DESER_WORD)) then
 			if skip_clks = 1 then
 			LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst);
 			skip_clks := 0;
