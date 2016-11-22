@@ -646,7 +646,7 @@ begin
 					stflag := 1;
 				end if;
 
-				if skip_clks = ((7*sdrat)+2) then		-- skip clocks, filling the pipeline of the deserializer and imageout
+				if skip_clks = ((7*sdrat)+1) then		-- skip clocks, filling the pipeline of the deserializer and imageout
 					LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst);
 				else
 				skip_clks := skip_clks + 1;
