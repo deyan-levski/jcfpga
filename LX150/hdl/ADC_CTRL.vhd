@@ -633,7 +633,7 @@ begin
 		elsif (rising_edge(CLOCK_DESER_WORD)) then
 
 			if (LVAL_SEQ = '1' and LVAL_SEQ_OLD = '0') or (stflag = 1) then
-				if digif_rst_cnt = 135 then  --127+8
+				if digif_rst_cnt = 136 then  --127+8
 					digif_rst_cnt := 0;
 					d_digif_serial_rst <= '1';
 					stflag := 0;
@@ -645,7 +645,7 @@ begin
 					stflag := 1;
 				end if;
 
-				if skip_clks = 8 then
+				if skip_clks = 9 then
 					LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst);
 				else
 				skip_clks := skip_clks + 1;
