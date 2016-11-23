@@ -310,6 +310,7 @@ architecture Behavioral of ADC_CTRL is
 
 	signal CLOCK_I 	 : std_logic;
 	signal CLOCK_100 : std_logic;
+	signal CLOCK_100_N : std_logic;
 	signal CLOCK_200 : std_logic;
 	signal CLOCK_250 : std_logic;
 	signal CLOCK_100_PCLK : std_logic;
@@ -326,6 +327,7 @@ architecture Behavioral of ADC_CTRL is
 	signal CLOCK_DESER_1BIT : std_logic;
 	signal CLOCK_DESER_6BIT : std_logic;
 	signal CLOCK_DESER_WORD : std_logic; 
+
 	signal DESER_DATA_G0 : std_logic_vector(15 downto 0);
 	signal DESER_DATA_G1 : std_logic_vector(15 downto 0);
 	signal DESER_DATA_G2 : std_logic_vector(15 downto 0);
@@ -634,7 +636,7 @@ begin
 		elsif (rising_edge(CLOCK_100)) then
 
 			if (LVAL_SEQ = '1' and LVAL_SEQ_OLD = '0') or (stflag = 1) then
-				if digif_rst_cnt = ((137*sdrat)+1) then  --127+5 / 134
+				if digif_rst_cnt = ((133*sdrat)+1) then  --137+1
 					digif_rst_cnt := 0;
 					d_digif_serial_rst <= '1';
 					stflag := 0;
@@ -646,8 +648,8 @@ begin
 					stflag := 1;
 				end if;
 
-				if skip_clks = ((10*sdrat)+1) then	-- skip clocks, fill deser + imageout pipeline
-					LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst);
+				if skip_clks = ((5*sdrat)+1) then	-- skip clocks, fill deser + imageout pipeline 10+1
+					LVAL_DLY <= (others => '1');
 				else
 				skip_clks := skip_clks + 1;
 				end if;
@@ -952,12 +954,12 @@ begin
 		WRITE_CLOCK		=> CLOCK_DESER_WORD,
 		DATA_SEG(0)		=> DESER_DATA_G0,
 		DATA_SEG(1)		=> DESER_DATA_G0, --"0000000000000001", --DESER_DATA_G1,
-		DATA_SEG(2)		=> "0000000000000010", --DESER_DATA_G2,
-		DATA_SEG(3)		=> "0000000000000100", --DESER_DATA_G3,
-		DATA_SEG(4)		=> "0000000000001000", --DESER_DATA_G4,
-		DATA_SEG(5)		=> "0000000000010000", --DESER_DATA_G5,
-		DATA_SEG(6)		=> "0000000000100000", --DESER_DATA_G6,
-		DATA_SEG(7)		=> "0000000001000000", --DESER_DATA_G7,
+		DATA_SEG(2)		=> DESER_DATA_G0, --DESER_DATA_G2,
+		DATA_SEG(3)		=> DESER_DATA_G0, --DESER_DATA_G3,
+		DATA_SEG(4)		=> DESER_DATA_G0, --DESER_DATA_G4,
+		DATA_SEG(5)		=> DESER_DATA_G0, --DESER_DATA_G5,
+		DATA_SEG(6)		=> DESER_DATA_G0, --DESER_DATA_G6,
+		DATA_SEG(7)		=> DESER_DATA_G0, --DESER_DATA_G7,
 		LVAL_IN			=> LVAL_DLY,
 	--
 		READ_CLOCK		=> CLOCK_100,

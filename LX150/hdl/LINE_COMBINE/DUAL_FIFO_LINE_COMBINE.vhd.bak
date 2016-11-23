@@ -198,7 +198,7 @@ begin
 			i := 0;
 			I_DATA_SEG(j) <= I_DATA_SEG_DLY(i,j);
 		else
-			i := 7; --3?
+			i := 0; --3?
 			I_DATA_SEG(j) <= I_DATA_SEG_DLY(i,j);
 		end if;
 	end loop;
@@ -212,7 +212,7 @@ GROUP1_FIFOS: for i in 0 to G_NBR_DATA_SEG-1 generate
 
 I_FIFO_WRITE_SM: FIFO_WRITE_SM 
 generic map (
-	C_NBR_OF_SEG_PIXELS => 127)		-- Number of segment pixels
+	C_NBR_OF_SEG_PIXELS => 128)		-- Number of segment pixels
 port map (
 	 RESET			=> RESET,	-- Global system reset
 	WRITE_CLOCK		=> WRITE_CLOCK,	-- Clock used on Sensor side
@@ -251,7 +251,7 @@ GROUP2_FIFOS: for i in 0 to G_NBR_DATA_SEG-1 generate
 
 I_FIFO_WRITE_SM: FIFO_WRITE_SM 
 generic map (
-	C_NBR_OF_SEG_PIXELS => 127)		-- Number of segment pixels
+	C_NBR_OF_SEG_PIXELS => 128)		-- Number of segment pixels
 port map (
 	RESET			=> RESET,	-- Global system reset
 	WRITE_CLOCK		=> WRITE_CLOCK, -- Clock used on Sensor side
@@ -262,7 +262,7 @@ port map (
 	LVAL_IN			=> LVAL_IN(i),	-- LVAL signals from all segmants
 	LVAL_FLAG		=> I_SEG_LVAL_FLAG(i+G_NBR_DATA_SEG), -- Flag to indicate to Arbitrer that LVAL edge was detected
 	FIFO_FULL_ACK		=> I_FIFO_FULL_SEG(i+G_NBR_DATA_SEG), -- FLAG from the write counter
-	ERROR_OUT		=> I_ERROR(i)
+	ERROR_OUT		=> I_ERROR(i+G_NBR_DATA_SEG)
 );
 ---------------------------------
 I_SEG_FIFO: SEG_FIFO
@@ -707,7 +707,7 @@ READ_CRTL_SIGNAL_PROC: process(RESET,READ_CLOCK,I_PRESENT_STATE_RD_AR)
 begin
 	if (RESET = '1') then
 		I_READ_FROM_SEG <= (others => '0');
-	elsif (rising_edge(READ_CLOCK)) then
+	elsif (falling_edge(READ_CLOCK)) then
 	-- FIFO Group 1
 	if (I_PRESENT_STATE_RD_AR = GROUP1_READ_FIFO1) then
 		I_READ_FROM_SEG(0) <= '1';
