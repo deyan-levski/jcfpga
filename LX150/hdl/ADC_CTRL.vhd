@@ -634,7 +634,7 @@ begin
 		elsif (rising_edge(CLOCK_100)) then
 
 			if (LVAL_SEQ = '1' and LVAL_SEQ_OLD = '0') or (stflag = 1) then
-				if digif_rst_cnt = ((136*sdrat)+1) then  --127+5 / 134
+				if digif_rst_cnt = ((137*sdrat)+1) then  --127+5 / 134
 					digif_rst_cnt := 0;
 					d_digif_serial_rst <= '1';
 					stflag := 0;
@@ -646,7 +646,7 @@ begin
 					stflag := 1;
 				end if;
 
-				if skip_clks = ((8*sdrat)+1) then		-- skip clocks, filling the pipeline of the deserializer and imageout
+				if skip_clks = ((9*sdrat)+1) then		-- skip clocks, filling the pipeline of the deserializer and imageout
 					LVAL_DLY <= (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst) & (not d_digif_serial_rst);
 				else
 				skip_clks := skip_clks + 1;
