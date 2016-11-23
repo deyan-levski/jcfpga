@@ -310,7 +310,6 @@ architecture Behavioral of ADC_CTRL is
 
 	signal CLOCK_I 	 : std_logic;
 	signal CLOCK_100 : std_logic;
-	signal CLOCK_100_N : std_logic;
 	signal CLOCK_200 : std_logic;
 	signal CLOCK_250 : std_logic;
 	signal CLOCK_100_PCLK : std_logic;
@@ -636,7 +635,7 @@ begin
 		elsif (rising_edge(CLOCK_100)) then
 
 			if (LVAL_SEQ = '1' and LVAL_SEQ_OLD = '0') or (stflag = 1) then
-				if digif_rst_cnt = ((134*sdrat)+2) then  --137+1
+				if digif_rst_cnt = ((134*sdrat)+2) then	-- 134-6=128 words + offset 2
 					digif_rst_cnt := 0;
 					d_digif_serial_rst <= '1';
 					stflag := 0;
@@ -648,7 +647,7 @@ begin
 					stflag := 1;
 				end if;
 
-				if skip_clks = ((6*sdrat)+2) then	-- skip clocks, fill deser + imageout pipeline 10+1
+				if skip_clks = ((6*sdrat)+2) then	-- skip 6 words, fill deser + imageout pipeline + offset
 					LVAL_DLY <= (others => '1');
 				else
 				skip_clks := skip_clks + 1;

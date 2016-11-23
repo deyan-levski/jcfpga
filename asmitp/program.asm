@@ -110,8 +110,6 @@ MOV REF 0x00 0
 MOV CNT 0x00 1
 SET PAR
 
-NOP 48
-
 ; halt 1024 ns (ramp slew time)
 NOP 102
 
@@ -303,6 +301,8 @@ MOV MEM 0x00 0		; write to SRAM
 NOP 8
 MOV MEM 0x00 1		; write to SRAM
 NOP 4
+
+NOP 48
 
 MOV FVAL 0x00 1		; frame on
 NOP 18
