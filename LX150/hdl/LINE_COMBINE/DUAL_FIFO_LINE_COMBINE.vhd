@@ -707,7 +707,7 @@ READ_CRTL_SIGNAL_PROC: process(RESET,READ_CLOCK,I_PRESENT_STATE_RD_AR)
 begin
 	if (RESET = '1') then
 		I_READ_FROM_SEG <= (others => '0');
-	elsif (falling_edge(READ_CLOCK)) then			--- fall edge to fix dual col0 transmission, dlevski 23.11.16
+	elsif (falling_edge(READ_CLOCK)) then --- fall edge to fix dual col0 transmission, dlevski 23.11.16
 	-- FIFO Group 1
 	if (I_PRESENT_STATE_RD_AR = GROUP1_READ_FIFO1) then
 		I_READ_FROM_SEG(0) <= '1';

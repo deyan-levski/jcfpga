@@ -636,7 +636,7 @@ begin
 		elsif (rising_edge(CLOCK_100)) then
 
 			if (LVAL_SEQ = '1' and LVAL_SEQ_OLD = '0') or (stflag = 1) then
-				if digif_rst_cnt = ((134*sdrat)+1) then  --137+1
+				if digif_rst_cnt = ((135*sdrat)+1) then  --137+1
 					digif_rst_cnt := 0;
 					d_digif_serial_rst <= '1';
 					stflag := 0;
@@ -648,7 +648,7 @@ begin
 					stflag := 1;
 				end if;
 
-				if skip_clks = ((6*sdrat)+1) then	-- skip clocks, fill deser + imageout pipeline 10+1
+				if skip_clks = ((7*sdrat)+1) then	-- skip clocks, fill deser + imageout pipeline 10+1
 					LVAL_DLY <= (others => '1');
 				else
 				skip_clks := skip_clks + 1;
