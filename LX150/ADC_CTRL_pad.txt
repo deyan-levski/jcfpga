@@ -1,7 +1,7 @@
 Release 14.5 - par P.58f (lin64)
 Copyright (c) 1995-2012 Xilinx, Inc.  All rights reserved.
 
-Thu Nov 24 16:41:19 2016
+Thu Nov 24 16:47:13 2016
 
 
 INFO: The IO information is provided in three file formats as part of the Place and Route (PAR) process.  These formats are:
@@ -24,7 +24,7 @@ Pinout by Pin Number:
 |A2        |                           |IOBM     |IO_L83P_3                    |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
 |A3        |                           |IOBM     |IO_L1P_HSWAPEN_0             |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |A4        |                           |IOBS     |IO_L1N_VREF_0                |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
-|A5        |                           |IOBS     |IO_L2N_0                     |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
+|A5        |SPI_DAC_SDA                |IOB      |IO_L2N_0                     |OUTPUT   |LVCMOS33   |0             |12        |SLOW     |           |         |         |LOCATED   |NO         |NONE            |
 |A6        |                           |IOBS     |IO_L4N_0                     |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |A7        |SPI_ADC_MOSI               |IOB      |IO_L5N_0                     |OUTPUT   |LVCMOS33   |0             |12        |SLOW     |           |         |         |LOCATED   |NO         |NONE            |
 |A8        |                           |IOBS     |IO_L6N_0                     |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
@@ -112,11 +112,11 @@ Pinout by Pin Number:
 |C2        |                           |         |VCCO_3                       |         |           |3             |          |         |           |         |2.50     |          |           |                |
 |C3        |                           |IOBM     |IO_L54P_M3RESET_3            |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
 |C4        |                           |IOBS     |IO_L81N_3                    |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
-|C5        |                           |IOBM     |IO_L2P_0                     |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
-|C6        |SPI_DAC_SDA                |IOB      |IO_L3N_0                     |OUTPUT   |LVCMOS33   |0             |12        |SLOW     |           |         |         |LOCATED   |NO         |NONE            |
+|C5        |SPI_DAC_SCK                |IOB      |IO_L2P_0                     |OUTPUT   |LVCMOS33   |0             |12        |SLOW     |           |         |         |LOCATED   |NO         |NONE            |
+|C6        |                           |IOBS     |IO_L3N_0                     |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |C7        |SPI_ADC_CS                 |IOB      |IO_L5P_0                     |OUTPUT   |LVCMOS33   |0             |12        |SLOW     |           |         |         |LOCATED   |NO         |NONE            |
-|C8        |                           |IOBS     |IO_L7N_0                     |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
-|C9        |SPI_ADC_CLK                |IOB      |IO_L8P_0                     |OUTPUT   |LVCMOS33   |0             |12        |SLOW     |           |         |         |LOCATED   |NO         |NONE            |
+|C8        |SPI_DAC_B_SYNC             |IOB      |IO_L7N_0                     |OUTPUT   |LVCMOS33   |0             |12        |SLOW     |           |         |         |LOCATED   |NO         |NONE            |
+|C9        |SPI_DAC_A_SYNC             |IOB      |IO_L8P_0                     |OUTPUT   |LVCMOS33   |0             |12        |SLOW     |           |         |         |LOCATED   |NO         |NONE            |
 |C10       |                           |IOBS     |IO_L33N_0                    |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |C11       |COUNT_CLK_N                |IOBM     |IO_L35P_GCLK17_0             |OUTPUT   |LVDS_33    |0             |          |         |           |         |         |LOCATED   |YES        |NONE            |
 |C12       |SRX_P                      |IOBS     |IO_L36N_GCLK14_0             |         |LVDS_33    |0             |          |         |           |         |         |LOCATED   |NO         |                |
@@ -135,7 +135,7 @@ Pinout by Pin Number:
 |D3        |                           |IOBM     |IO_L81P_3                    |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
 |D4        |                           |         |GND                          |         |           |              |          |         |           |         |         |          |           |                |
 |D5        |                           |IOBM     |IO_L58P_3                    |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
-|D6        |SPI_DAC_SCK                |IOB      |IO_L3P_0                     |OUTPUT   |LVCMOS33   |0             |12        |SLOW     |           |         |         |LOCATED   |NO         |NONE            |
+|D6        |                           |IOBM     |IO_L3P_0                     |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |D7        |                           |IOBM     |IO_L32P_0                    |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |D8        |                           |IOBS     |IO_L32N_0                    |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |D9        |                           |IOBM     |IO_L7P_0                     |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
@@ -185,7 +185,7 @@ Pinout by Pin Number:
 |F9        |                           |IOBS     |IO_L15N_0                    |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |F10       |                           |IOBS     |IO_L17N_0                    |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |F11       |                           |         |VCCAUX                       |         |           |              |          |         |           |         |2.5      |          |           |                |
-|F12       |SPI_DAC_B_SYNC             |IOB      |IO_L44N_0                    |OUTPUT   |LVCMOS33   |0             |12        |SLOW     |           |         |         |LOCATED   |NO         |NONE            |
+|F12       |                           |IOBS     |IO_L44N_0                    |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |F13       |G0LTX_P                    |IOB      |IO_L45P_0                    |INPUT    |LVDS_33    |0             |          |         |           |NONE     |         |LOCATED   |NO         |DIFF_TERM       |
 |F14       |                           |IOBM     |IO_L48P_0                    |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |F15       |                           |IOBS     |IO_L47N_0                    |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
@@ -229,7 +229,7 @@ Pinout by Pin Number:
 |H9        |                           |         |VCCAUX                       |         |           |              |          |         |           |         |2.5      |          |           |                |
 |H10       |                           |IOBS     |IO_L16N_0                    |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |H11       |                           |IOBS     |IO_L18N_0                    |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
-|H12       |SPI_DAC_A_SYNC             |IOB      |IO_L44P_0                    |OUTPUT   |LVCMOS33   |0             |12        |SLOW     |           |         |         |LOCATED   |NO         |NONE            |
+|H12       |                           |IOBM     |IO_L44P_0                    |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |H13       |                           |IOBM     |IO_L46P_0                    |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |H14       |                           |IOBS     |IO_L48N_0                    |UNUSED   |           |0             |          |         |           |         |         |          |           |                |
 |H15       |                           |         |VCCAUX                       |         |           |              |          |         |           |         |2.5      |          |           |                |
@@ -333,8 +333,8 @@ Pinout by Pin Number:
 |N3        |                           |IOBM     |IO_L37P_M3DQ0_3              |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
 |N4        |                           |IOBS     |IO_L26N_3                    |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
 |N5        |                           |         |VCCO_3                       |         |           |3             |          |         |           |         |2.50     |          |           |                |
-|N6        |d_count_inv_clk            |IOB      |IO_L11P_3                    |OUTPUT   |LVCMOS25*  |3             |12        |SLOW     |           |         |         |UNLOCATED |NO         |NONE            |
-|N7        |d_count_jc_shift_en        |IOB      |IO_L11N_3                    |OUTPUT   |LVCMOS25*  |3             |12        |SLOW     |           |         |         |UNLOCATED |NO         |NONE            |
+|N6        |d_count_jc_shift_en        |IOB      |IO_L11P_3                    |OUTPUT   |LVCMOS25*  |3             |12        |SLOW     |           |         |         |UNLOCATED |NO         |NONE            |
+|N7        |d_count_inv_clk            |IOB      |IO_L11N_3                    |OUTPUT   |LVCMOS25*  |3             |12        |SLOW     |           |         |         |UNLOCATED |NO         |NONE            |
 |N8        |                           |         |VCCAUX                       |         |           |              |          |         |           |         |2.5      |          |           |                |
 |N9        |                           |         |GND                          |         |           |              |          |         |           |         |         |          |           |                |
 |N10       |                           |         |VCCINT                       |         |           |              |          |         |           |         |1.2      |          |           |                |
@@ -462,7 +462,7 @@ Pinout by Pin Number:
 |V22       |                           |IOBS     |IO_L52N_M1DQ15_1             |UNUSED   |           |1             |          |         |           |         |         |          |           |                |
 |W1        |                           |IOBS     |IO_L2N_3                     |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
 |W2        |                           |         |VCCO_3                       |         |           |3             |          |         |           |         |2.50     |          |           |                |
-|W3        |                           |IOBM     |IO_L2P_3                     |UNUSED   |           |3             |          |         |           |         |         |          |           |                |
+|W3        |SPI_ADC_CLK                |IOB      |IO_L2P_3                     |OUTPUT   |LVCMOS25*  |3             |12        |SLOW     |           |         |         |UNLOCATED |NO         |NONE            |
 |W4        |GPIFII_D<5>                |IOB      |IO_L62P_D5_2                 |TRISTATE |LVCMOS33   |2             |12        |SLOW     |           |         |         |LOCATED   |NO         |NONE            |
 |W5        |                           |         |VCCO_2                       |         |           |2             |          |         |           |         |3.30     |          |           |                |
 |W6        |d_col_vln_sh               |IOB      |IO_L53P_2                    |OUTPUT   |LVCMOS33   |2             |12        |SLOW     |           |         |         |LOCATED   |NO         |NONE            |
