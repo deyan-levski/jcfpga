@@ -58,6 +58,7 @@ MOV CNT 0x05 1		; count_inc_one '1'
 MOV CNT 0x08 1		; count_lsb_clk '1'
 MOV MEM 0x00 1		; count_mem_wr '1'
 MOV FVAL 0x00 1 	; FVAL '1'
+MOV COM 0x01 1		; comp_dyn_pon always @ '1'
 
 ;|-----------------|
 ;| Sequencer start |
