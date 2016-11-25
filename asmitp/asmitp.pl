@@ -1,23 +1,26 @@
 #!/usr/bin/perl
-#==============================================================================
+#|------------------------------------------------------------|
+#| asmitp.pl: ADC Instruction Decoder for FPGA ROM            |
+#|------------------------------------------------------------|
+#| DESCRIPTION                                                |
+#| Usage: asmitp.pl <file> [options]                          |
+#|                                                            |
+#|                                                            |
+#| Example: ./asmitp.pl program.asm -o machinecode.bin        |
+#|                                                            |
+#| Program file must always begin with the START command.     |
+#| Instruction list is found under the parse_line subroutine. |
+#|                                                            |
+#|                                                            |
+#| AUTHOR:                                                    |
+#| Deyan Levski, deyan.levski@eng.ox.ac.uk                    |
+#|------------------------------------------------------------|
+#|------------------------------------------------------------|
+#| Version: A, 25-11-2016                                     |
+#|------------------------------------------------------------|
 #
-# asmitp.pl: ADC Instruction Decoder for FPGA ROM
 #
-# DESCRIPTION
-#
-#   Usage: asmitp.pl <file> [options]
-#
-#   Example: ./asmitp.pl program.asm -o machinecode.bin
-#
-#   Program file must always begin with the START command.
-#   Instruction list is found under the parse_line subroutine.
-#
-# AUTHOR
-#   Deyan Levski, deyan.levski@eng.ox.ac.uk
-#
-#==============================================================================
-# Version: A, 2016-11-05
-#==============================================================================
+
 use strict;
 use warnings;
 use Getopt::Long;
@@ -27,10 +30,9 @@ use Fcntl qw(SEEK_END);
 use Fcntl qw(SEEK_CUR);
 use Fcntl qw(SEEK_SET);
 
-
-#=============
-# Subroutines
-#=============
+#|-------------|
+#| Subroutines |
+#|-------------|
 
 # Print help message
 sub print_help
@@ -40,9 +42,9 @@ sub print_help
 Usage: $0 <file> [--output=<file>] [--help]
 
 Options:
-    <file>             Input netlist file name.
-    -o|--output <file> Output netlist file (default same as "input file name".bin[.asm])
-    -h|--help          Print this help message
+    <file>             Input assembler instruction list.
+    -o|--output <file> Output ROM content 
+    -h|--help          Help
 
 EOM
 }
@@ -64,8 +66,17 @@ sub get_line
 # Parse line,
 sub parse_line
 {
-# INSTRUCTION TABLE
-# Bit Positions from Left to Right 0 = MSB
+
+#|------------------------------------------|
+#| INSTRUCTION TABLE                        |
+#|------------------------------------------|
+#| Bit Positions from Left to Right 0 = MSB |
+#|------------------------------------------|
+#| $ram_width and $ram_depth in the main    |
+#| routine control the machine code width   |
+#| and length                               |
+#|------------------------------------------|
+
 	#
 	my $ROW_00 = 0;
 	my $ROW_01 = 1;
@@ -111,6 +122,10 @@ sub parse_line
 	my $parsd_line = '';
 	my $prnt_flag = '';
 	my $ld_flag = $_[3]; # load flag, contrlled by LD PAR & LD SET
+
+#|-------------------------|
+#| Instruction Regex Match |
+#|-------------------------|
 
 	if ($topars_line =~ /(^NOP\s*$)|(^NOP\s*;.*$)/) {
 		$parsd_line = $lst_line;
@@ -298,7 +313,7 @@ sub parse_line
 	return ($parsd_line, $prnt_flag, $ld_flag);
 }
 
-# Print line and fold if too long
+# Print line and fold
 sub print_line
 {
 	my($filehandle, $line) = @_;
@@ -312,9 +327,10 @@ sub print_line
 	}
 }
 
-#=============
-# Main
-#=============
+#|------|
+#| Main |
+#|------|
+#
 my $help_flag = '';
 my $ofile_flag = '';
 my $ifname = '';
