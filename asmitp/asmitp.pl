@@ -34,7 +34,7 @@ use Fcntl qw(SEEK_SET);
 #| Subroutines |
 #|-------------|
 
-# Print help message
+# Print help
 sub print_help
 {
 	print<<EOM;
@@ -67,15 +67,17 @@ sub get_line
 sub parse_line
 {
 
-#|------------------------------------------|
-#| INSTRUCTION TABLE                        |
-#|------------------------------------------|
-#| Bit Positions from Left to Right 0 = MSB |
-#|------------------------------------------|
-#| $ram_width and $ram_depth in the main    |
-#| routine control the machine code width   |
-#| and length                               |
-#|------------------------------------------|
+#|------------------------------------------------|
+#| INSTRUCTION TABLE                              |
+#|------------------------------------------------|
+#| Bit Positions from Left (n) to Right (0) = MSB |
+#|------------------------------------------------|
+#| $ram_width and $ram_depth in the main          |
+#| routine control the machine code width         |
+#| and length                                     |
+#|------------------------------------------------|
+#| e.g. $ROW_00 is in bit position 0, $ROW_01 - 1 |
+#|------------------------------------------------|
 
 	#
 	my $ROW_00 = 0;
@@ -114,14 +116,14 @@ sub parse_line
 	my $FVAL_00 = 26;
 	my $LVAL_00 = 27;
 
-############################################################
+#|-+-|
 
-	my $topars_line = $_[0];
-	my $lst_line = $_[1];
-	my $ram_width = $_[2];
-	my $parsd_line = '';
-	my $prnt_flag = '';
-	my $ld_flag = $_[3]; # load flag, contrlled by LD PAR & LD SET
+	my $topars_line = $_[0]; # line to parse from asm file
+	my $lst_line = $_[1];  # last line/instruction (used for NOP operation)
+	my $ram_width = $_[2]; # internal ram_width (defined in main)
+	my $parsd_line = '';   # output parsed line
+	my $prnt_flag = '';    # flag placed here to stop printing beginning and START of file
+	my $ld_flag = $_[3];   # load flag, contrlled by LD PAR & LD SET
 
 #|-------------------------|
 #| Instruction Regex Match |
@@ -160,8 +162,11 @@ sub parse_line
 	}
 
 	elsif ($topars_line =~ /^MOV\s*ROW\s*0x00\s*(\d+)(\s*|\s*;.*)$/) {
+		# last line, $ROW_00 position, 1-bit, fetch regex falue from asm code
 		substr($lst_line, $ROW_00, 1, $1);
+		# push substituted string to parsed line
 		$parsd_line = $lst_line;
+		# print flag on / off, based on LOAD PAR/SET PAR or none
 		$prnt_flag = $ld_flag;
 	}
 	elsif ($topars_line =~ /^MOV\s*ROW\s*0x01\s*(\d+)(\s*|\s*;.*)$/) {
@@ -339,10 +344,13 @@ my $ifsuffix = '';
 my $ofname = '';
 my $ofpath = '';
 my $ofsuffix = '';
-
+#|---------------------|
+#| ROM width and depth |
+#|---------------------|
 my $ram_width = 32;
-my $ram_depth = 1080; #1024
-
+my $ram_depth = 1080;
+#|---------------------|
+#
 # Parse command line arguments
 GetOptions('h|help'     => \$help_flag,
 	'o|output=s' => \$ofile_flag)
@@ -357,7 +365,7 @@ if ($help_flag || $#ARGV lt 0)
 ($ifname, $ifpath, $ifsuffix) = fileparse($ARGV[0],'.asm') or exit 1;
 if ($ofile_flag)
 {
-	($ofname, $ofpath, $ofsuffix) = fileparse($ofile_flag,'.bin') or exit 1;
+	($ofname, $ofpath, $ofsuffix) = fileparse($ofile_flag,'.bin') or exit 1; # default extension
 }
 else
 {
@@ -379,15 +387,20 @@ my $prnt_flag = '';
 my $ld_flag = '';
 my $ld_flag_old = '';
 
-# Prepare header
+#|----------------|
+#| Prepare header |
+#|----------------|
+#
 print_line($ofile,"memory_initialization_radix=2;");
 print_line($ofile,"memory_initialization_vector=");
+#
+#|----------------|
 
-while (defined($line = get_line($ifile, \$prev_line)))
+while (defined($line = get_line($ifile, \$prev_line)))    # for every line
 { 
 	($parsd_line, $prnt_flag, $ld_flag) = parse_line($line,$lst_line,$ram_width,$ld_flag_old);
 	$ld_flag_old = $ld_flag;
-	$lst_line = substr($parsd_line, $ram_width*(-1));
+	$lst_line = substr($parsd_line, $ram_width*(-1)); # 
 	if ($prnt_flag =~ /1/){
 		print_line($ofile,$parsd_line . ",");
 	}
