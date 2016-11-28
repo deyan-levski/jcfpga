@@ -444,7 +444,7 @@ while (defined($line = get_line($ifile, \$prev_line)))    # for every line
 }
 
 if($oformat_flag){
-seek $ofile, -1, SEEK_END; # add stop character (AF)
+#seek $ofile, -1, SEEK_END; # add stop character (AF)
 print $ofile "AF";
 }
 else{
