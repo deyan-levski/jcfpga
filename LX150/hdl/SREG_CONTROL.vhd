@@ -184,15 +184,19 @@ begin
 
 		RX_ACK_OLD <= RX_ACK;
 
-		if (WORD_COUNTER = 17 and MEM_FLAG = '0') then
+		if (WORD_COUNTER = 17) then
+			if MEM_FLAG = '0' then
 			SPI_FLUSH <= '1';
 			SPI_DAC_FLUSH <= '1';
+			end if;
 		end if;
 
-		if (WORD_COUNTER = 5 and MEM_FLAG = '1') then
+		if (WORD_COUNTER = 5) then
+			if MEM_FLAG = '1' then
 			MEM_DATA <= MEM_DATA_BUFFER;
 			INC_MEM_ADD <= '1';
 			WORD_COUNTER := 0;
+			end if;
 		end if;
 
 		if RX_WORD = "10101010" then    -- reset word: 0xAA
