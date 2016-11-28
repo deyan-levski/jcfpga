@@ -185,20 +185,20 @@ begin
 
 		RX_ACK_OLD <= RX_ACK;
 
-		if (WORD_COUNTER = 17) then
-			if MEM_FLAG = '0' then
-			SPI_FLUSH <= '1';
-			SPI_DAC_FLUSH <= '1';
-			end if;
-		end if;
-
 		if (WORD_COUNTER = 5) then
 			if MEM_FLAG = '1' then
 			MEM_DATA <= MEM_DATA_BUFFER;
 			INC_MEM_ADD <= '1';
 			WORD_COUNTER := 0;
 			end if;
+		elsif (WORD_COUNTER = 17) then
+			if MEM_FLAG = '0' then
+			SPI_FLUSH <= '1';
+			SPI_DAC_FLUSH <= '1';
+			end if;
 		end if;
+
+
 
 		if RX_WORD = "10101010" then    -- reset word: 0xAA
 			SPI_DATA_BUFFER <= (others => '0');
@@ -208,9 +208,8 @@ begin
 
 			MEM_FLAG <= '0';
 			INC_MEM_ADD <= '0';
-		end if;
 
-		if RX_WORD = "10101110" then	-- reset word: 0xAE
+		elsif RX_WORD = "10101110" then	-- reset word: 0xAE
 			SPI_DATA_BUFFER <= (others => '0');
 			SPI_FLUSH <= '0';
 			SPI_DAC_FLUSH <= '0';
@@ -220,9 +219,7 @@ begin
 			INC_MEM_ADD <= '0';
 			WORD_COUNTER := 0;
 
-		end if;
-
-		if RX_WORD = "10101111" then	-- stop word: 0xAF
+		elsif RX_WORD = "10101111" then	-- stop word: 0xAF
 			SPI_DATA_BUFFER <= (others => '0');
 			SPI_FLUSH <= '0';
 			SPI_DAC_FLUSH <= '0';
