@@ -45,7 +45,9 @@ ENTITY BLOCKMEM IS
     clka : IN STD_LOGIC;
     rsta : IN STD_LOGIC;
     ena : IN STD_LOGIC;
+    wea : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
     addra : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    dina : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
     douta : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
   );
 END BLOCKMEM;
@@ -57,7 +59,9 @@ COMPONENT wrapped_BLOCKMEM
     clka : IN STD_LOGIC;
     rsta : IN STD_LOGIC;
     ena : IN STD_LOGIC;
+    wea : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
     addra : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+    dina : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
     douta : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
   );
 END COMPONENT;
@@ -98,7 +102,7 @@ END COMPONENT;
       c_initb_val => "0",
       c_interface_type => 0,
       c_load_init_file => 1,
-      c_mem_type => 3,
+      c_mem_type => 0,
       c_mux_pipeline_stages => 0,
       c_prim_type => 1,
       c_read_depth_a => 1080,
@@ -112,13 +116,13 @@ END COMPONENT;
       c_rstram_b => 0,
       c_sim_collision_check => "ALL",
       c_use_bram_block => 0,
-      c_use_byte_wea => 0,
-      c_use_byte_web => 0,
-      c_use_default_data => 1,
+      c_use_byte_wea => 1,
+      c_use_byte_web => 1,
+      c_use_default_data => 0,
       c_use_ecc => 0,
       c_use_softecc => 0,
-      c_wea_width => 1,
-      c_web_width => 1,
+      c_wea_width => 4,
+      c_web_width => 4,
       c_write_depth_a => 1080,
       c_write_depth_b => 1080,
       c_write_mode_a => "WRITE_FIRST",
@@ -135,7 +139,9 @@ U0 : wrapped_BLOCKMEM
     clka => clka,
     rsta => rsta,
     ena => ena,
+    wea => wea,
     addra => addra,
+    dina => dina,
     douta => douta
   );
 -- synthesis translate_on

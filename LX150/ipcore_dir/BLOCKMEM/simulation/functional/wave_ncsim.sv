@@ -14,6 +14,8 @@ waveform  using  "Waves for BMG Example Design"
       waveform add -signals /BLOCKMEM_tb/BLOCKMEM_synth_inst/bmg_port/RSTA
       waveform add -signals /BLOCKMEM_tb/BLOCKMEM_synth_inst/bmg_port/CLKA
       waveform add -signals /BLOCKMEM_tb/BLOCKMEM_synth_inst/bmg_port/ADDRA
+      waveform add -signals /BLOCKMEM_tb/BLOCKMEM_synth_inst/bmg_port/DINA
+      waveform add -signals /BLOCKMEM_tb/BLOCKMEM_synth_inst/bmg_port/WEA
       waveform add -signals /BLOCKMEM_tb/BLOCKMEM_synth_inst/bmg_port/ENA
       waveform add -signals /BLOCKMEM_tb/BLOCKMEM_synth_inst/bmg_port/DOUTA
 

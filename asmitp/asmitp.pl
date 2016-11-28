@@ -44,6 +44,7 @@ Usage: $0 <file> [--output=<file>] [--help]
 Options:
     <file>             Input assembler instruction list.
     -o|--output <file> Output ROM content 
+    -h|--hex	       Output in hex format
     -h|--help          Help
 
 EOM
@@ -321,15 +322,34 @@ sub parse_line
 # Print line and fold
 sub print_line
 {
-	my($filehandle, $line) = @_;
-	$Text::Wrap::columns = 80;
-	$Text::Wrap::separator2 = "\n+";
+
+	my($filehandle, $line, $oformat_flag) = @_;
 	if ($line =~/^\s*$/){	# don't print empty lines / unrecognized instructions
 	}
 	else
 	{
-		print {$filehandle} wrap('', '', $line) . "\n";
+		if ($oformat_flag) { print {$filehandle} $line; }
+		else { print {$filehandle} wrap('', '', $line) . "\n"; }
 	}
+}
+
+sub b2h {
+    my $num   = shift;
+    my $WIDTH = 32;
+    my $index = length($num) - $WIDTH;
+    my $hex = '';
+    do {
+        my $width = $WIDTH;
+        if ($index < 0) {
+            $width += $index;
+            $index = 0;
+        }
+        my $cut_string = substr($num, $index, $width);
+        $hex = sprintf('%8X', oct("0b$cut_string")) . $hex;
+	$hex=~ tr/ /0/; # add leading zeros
+        $index -= $WIDTH;
+    } while ($index > (-1 * $WIDTH));
+    return $hex;
 }
 
 #|------|
@@ -338,6 +358,7 @@ sub print_line
 #
 my $help_flag = '';
 my $ofile_flag = '';
+my $oformat_flag = '';
 my $ifname = '';
 my $ifpath = '';
 my $ifsuffix = '';
@@ -353,7 +374,8 @@ my $ram_depth = 1080;
 #
 # Parse command line arguments
 GetOptions('h|help'     => \$help_flag,
-	'o|output=s' => \$ofile_flag)
+	'o|output=s' => \$ofile_flag,
+	'h|hex'	=> \$oformat_flag)
 	or exit 1;
 
 if ($help_flag || $#ARGV lt 0)
@@ -391,8 +413,15 @@ my $ld_flag_old = '';
 #| Prepare header |
 #|----------------|
 #
+if ($oformat_flag){
+print_line($ofile,"AE"); # add start character AE
+seek $ofile, -1, SEEK_END; # (nasty hack) removes \n after start character (AE)
+}
+else
+{
 print_line($ofile,"memory_initialization_radix=2;");
 print_line($ofile,"memory_initialization_vector=");
+}
 #
 #|----------------|
 
@@ -402,17 +431,33 @@ while (defined($line = get_line($ifile, \$prev_line)))    # for every line
 	$ld_flag_old = $ld_flag;
 	$lst_line = substr($parsd_line, $ram_width*(-1)); # 
 	if ($prnt_flag =~ /1/){
-		print_line($ofile,$parsd_line . ",");
+		if ($oformat_flag){
+			$parsd_line=~ s/,//g; # add remove trailing commas from NOP
+			$parsd_line=~ s/\n//g; # add remove trailing commas from NOP
+			my $parsd_line_hex = b2h($parsd_line);
+			print_line($ofile,$parsd_line_hex,$oformat_flag);
+		}
+		else {
+			print_line($ofile,$parsd_line . ",",$oformat_flag);
+		}
 	}
 }
 
+if($oformat_flag){
+seek $ofile, -1, SEEK_END; # add stop character (AF)
+print $ofile "AF";
+}
+else{
 seek $ofile, -2, SEEK_END; # replaces last , character with ;
 print $ofile ";\n";
+}
 
 # Close files
 close($ifile);
 close($ofile);
 
+if (!$oformat_flag)
+{
 # Open machine code and read number of extra lines over ram depth
 # Reopening files, for sake of code flexibility
 open(my $ofilerd, "<" . $ofpath . $ofname . $ofsuffix) or die $!;
@@ -439,3 +484,4 @@ close($ofilechp);
 # Overwrite old file
 use File::Copy;
 move($ofpath . $ofname . $ofsuffix . ".chp", $ofpath . $ofname . $ofsuffix) or die $!;
+}

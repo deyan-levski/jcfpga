@@ -201,6 +201,12 @@ architecture Behavioral of ADC_CTRL is
 			     SPI_DAC_SDA : inout STD_LOGIC;
 			     SPI_DAC_A_SYNC : inout STD_LOGIC;
 			     SPI_DAC_B_SYNC : inout STD_LOGIC;
+
+			     MEM_FLAG : inout STD_LOGIC;
+			     MEM_DATA : inout STD_LOGIC_VECTOR(31 downto 0);
+			     INC_MEM_ADD : inout STD_LOGIC;
+
+
 			     DEBUG_PIN : out STD_LOGIC
 		     );
 	end component;
@@ -210,7 +216,9 @@ architecture Behavioral of ADC_CTRL is
 			     clka : IN STD_LOGIC;
 			     rsta : IN STD_LOGIC;
 			     ena : IN STD_LOGIC;
+			     wea : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
 			     addra : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+			     dina : IN STD_LOGIC_VECTOR(31 DOWNTO 0);			     
 			     douta : OUT STD_LOGIC_VECTOR(31 DOWNTO 0)
 		     );
 	end component;
@@ -219,6 +227,8 @@ architecture Behavioral of ADC_CTRL is
 		Port ( 
 			     CLOCK : in  STD_LOGIC;
 			     RESET : in  STD_LOGIC;
+			     MEM_FLAG : in STD_LOGIC;
+			     INC_MEM_ADD : in STD_LOGIC;
 			     MEMCLK : out  STD_LOGIC;
 			     MEMADDR : out  STD_LOGIC_VECTOR (31 downto 0)
 		     );
@@ -315,9 +325,15 @@ architecture Behavioral of ADC_CTRL is
 	signal CLOCK_100_PCLK : std_logic;
 	signal CLOCK_100_PCLK_N : std_logic;
 	signal FX3_CLK	 : std_logic;
+
 	signal MEMCLK    : std_logic;
 	signal MEMDATA   : std_logic_vector(31 downto 0);
 	signal MEMADDR   : std_logic_vector(31 downto 0);
+	signal MEM_DINA	 : std_logic_vector(31 downto 0);
+	signal MEM_FLAG	 : std_logic;
+	signal MEM_WEA	 : std_logic_vector(3 downto 0);
+	signal INC_MEM_ADD : std_logic;
+
 	signal PLL_DESER_FB : std_logic;
 	signal PLL_DESER_LOCKED : std_logic;
 	signal IO_CLK_BANK2 : std_logic;
@@ -350,6 +366,43 @@ architecture Behavioral of ADC_CTRL is
 	signal LSBDAT_N	 : std_logic;
 	signal MSBDAT_N	 : std_logic;
 
+--|--------------------------|
+--| UART Testbench Constants |
+--|--------------------------|
+  -- Test Bench uses a 100 MHz Clock
+  constant c_CLK_PERIOD : time := 10 ns;
+  
+  -- Want to interface to 2400 baud UART
+  -- 25000000 / 2400 = 10417 Clocks Per Bit.
+  constant c_CLKS_PER_BIT : integer := 10417;
+
+  -- 1/2400:
+  constant c_BIT_PERIOD : time := 416.666 us;
+  
+  signal Test_RX_Serial : std_logic := '1';
+
+  
+  -- Low-level byte-write
+  procedure UART_WRITE_BYTE (
+    i_Data_In       : in  std_logic_vector(7 downto 0);
+    signal o_Serial : out std_logic) is
+  begin
+
+    -- Send Start Bit
+    o_Serial <= '0';
+    wait for c_BIT_PERIOD;
+
+    -- Send Data Byte
+    for ii in 0 to 7 loop
+      o_Serial <= i_Data_In(ii);
+      wait for c_BIT_PERIOD;
+    end loop;  -- ii
+
+    -- Send Stop Bit
+    o_Serial <= '1';
+    wait for c_BIT_PERIOD;
+  end UART_WRITE_BYTE;
+ 
 begin
 
 --|----------------------|
@@ -549,9 +602,36 @@ begin
 --| Instantiating SREG_CONTROL |
 --|----------------------------|
 
+	--TEST_PROC : process
+	--begin
+	--wait until rising_edge(CLOCK_100);
+	--wait for 10 us;
+	--	UART_WRITE_BYTE(X"AE", Test_RX_Serial);
+	--	UART_WRITE_BYTE(X"01", Test_RX_Serial);
+	--	UART_WRITE_BYTE(X"02", Test_RX_Serial);
+	--	UART_WRITE_BYTE(X"03", Test_RX_Serial);
+	--	UART_WRITE_BYTE(X"04", Test_RX_Serial);
+	--	UART_WRITE_BYTE(X"05", Test_RX_Serial);
+	--	UART_WRITE_BYTE(X"06", Test_RX_Serial);
+	--	UART_WRITE_BYTE(X"07", Test_RX_Serial);
+	--	UART_WRITE_BYTE(X"08", Test_RX_Serial);
+	--	UART_WRITE_BYTE(X"09", Test_RX_Serial);
+	--	UART_WRITE_BYTE(X"10", Test_RX_Serial);
+	--	UART_WRITE_BYTE(X"11", Test_RX_Serial);
+	--	UART_WRITE_BYTE(X"12", Test_RX_Serial);
+	--	UART_WRITE_BYTE(X"13", Test_RX_Serial);
+	--	UART_WRITE_BYTE(X"14", Test_RX_Serial);
+	--	UART_WRITE_BYTE(X"15", Test_RX_Serial);
+	--	UART_WRITE_BYTE(X"16", Test_RX_Serial);
+	--
+	--	UART_WRITE_BYTE(X"AF", Test_RX_Serial);
+	--wait for 10 us;
+	--wait until rising_edge(CLOCK_100);
+	--end process;
+
 	SREG_CONTROL_INST: SREG_CONTROL
 	port map (
-			 RX => RX,
+			 RX => RX, --Test_RX_Serial, --RX,
 			 TX => TX,
 			 CLOCK => CLOCK_100,
 			 RESET => RESET,
@@ -562,6 +642,9 @@ begin
 			 SPI_DAC_SDA => SPI_DAC_SDA,
 			 SPI_DAC_A_SYNC => SPI_DAC_A_SYNC,
 			 SPI_DAC_B_SYNC => SPI_DAC_B_SYNC,
+			 MEM_FLAG => MEM_FLAG,
+			 MEM_DATA => MEM_DINA,
+			 INC_MEM_ADD => INC_MEM_ADD,
 			 DEBUG_PIN => GPIO1
 		 );
 
@@ -571,12 +654,16 @@ begin
 --| Instantiating SEQUENCER |
 --|-------------------------|
 
+	MEM_WEA <= MEM_FLAG & MEM_FLAG & MEM_FLAG & MEM_FLAG;
+
 	BLOCKMEM_INST : BLOCKMEM
 	port map (
 			 clka => MEMCLK,
 			 rsta => RESET,
 			 ena  => '1',
+			 wea => MEM_WEA,
 			 addra => MEMADDR,
+			 dina => MEM_DINA,
 			 douta => MEMDATA
 		 );
 
@@ -586,6 +673,8 @@ begin
 	port map ( 
 			 CLOCK => CLOCK_100,
 			 RESET => RESET,
+			 MEM_FLAG => MEM_FLAG,
+			 INC_MEM_ADD => INC_MEM_ADD,
 			 MEMCLK => MEMCLK,
 			 MEMADDR => MEMADDR
 		 );

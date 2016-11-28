@@ -56,6 +56,8 @@ wave add /BLOCKMEM_tb/status
       wave add  /BLOCKMEM_tb/BLOCKMEM_synth_inst/BMG_PORT/RSTA
       wave add  /BLOCKMEM_tb/BLOCKMEM_synth_inst/BMG_PORT/CLKA
       wave add  /BLOCKMEM_tb/BLOCKMEM_synth_inst/BMG_PORT/ADDRA
+      wave add  /BLOCKMEM_tb/BLOCKMEM_synth_inst/BMG_PORT/DINA
+      wave add  /BLOCKMEM_tb/BLOCKMEM_synth_inst/BMG_PORT/WEA
       wave add  /BLOCKMEM_tb/BLOCKMEM_synth_inst/BMG_PORT/ENA
       wave add  /BLOCKMEM_tb/BLOCKMEM_synth_inst/BMG_PORT/DOUTA
 run all

@@ -90,7 +90,11 @@ ENTITY BLOCKMEM_exdes IS
       --Inputs - Port A
     RSTA           : IN STD_LOGIC;  --opt port
     ENA            : IN STD_LOGIC;  --opt port
+  
+    WEA            : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
     ADDRA          : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+  
+    DINA           : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
   
     DOUTA          : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
     CLKA       : IN STD_LOGIC
@@ -115,7 +119,11 @@ ARCHITECTURE xilinx OF BLOCKMEM_exdes IS
       --Port A
     RSTA       : IN STD_LOGIC;  --opt port
     ENA        : IN STD_LOGIC;  --opt port
+  
+    WEA        : IN STD_LOGIC_VECTOR(3 DOWNTO 0);
     ADDRA      : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
+  
+    DINA       : IN STD_LOGIC_VECTOR(31 DOWNTO 0);
   
     DOUTA      : OUT STD_LOGIC_VECTOR(31 DOWNTO 0);
 
@@ -145,7 +153,11 @@ BEGIN
       --Port A
       RSTA       => RSTA,
       ENA        => ENA,
+  
+      WEA        => WEA,
       ADDRA      => ADDRA,
+  
+      DINA       => DINA,
   
       DOUTA      => DOUTA,
 

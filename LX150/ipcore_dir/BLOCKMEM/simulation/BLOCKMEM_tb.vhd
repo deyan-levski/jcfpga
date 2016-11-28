@@ -125,7 +125,6 @@ PROCESS BEGIN
 END PROCESS;	 
   
   BLOCKMEM_synth_inst:ENTITY work.BLOCKMEM_synth
-  GENERIC MAP (C_ROM_SYNTH => 0)
   PORT MAP(
            CLK_IN   => CLK,
      	   RESET_IN => RESET,

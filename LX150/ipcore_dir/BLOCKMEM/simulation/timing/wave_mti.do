@@ -14,6 +14,8 @@ quietly WaveActivateNextPane {} 0
       add wave -noupdate /BLOCKMEM_tb/BLOCKMEM_synth_inst/bmg_port/RSTA
       add wave -noupdate /BLOCKMEM_tb/BLOCKMEM_synth_inst/bmg_port/CLKA
       add wave -noupdate /BLOCKMEM_tb/BLOCKMEM_synth_inst/bmg_port/ADDRA
+      add wave -noupdate /BLOCKMEM_tb/BLOCKMEM_synth_inst/bmg_port/DINA
+      add wave -noupdate /BLOCKMEM_tb/BLOCKMEM_synth_inst/bmg_port/WEA
       add wave -noupdate /BLOCKMEM_tb/BLOCKMEM_synth_inst/bmg_port/ENA
       add wave -noupdate /BLOCKMEM_tb/BLOCKMEM_synth_inst/bmg_port/DOUTA
 TreeUpdate [SetDefaultTree]

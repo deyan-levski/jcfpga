@@ -36,6 +36,10 @@ entity SREG_CONTROL is
 	   SPI_DAC_SDA : inout STD_LOGIC;
 	   SPI_DAC_A_SYNC : inout STD_LOGIC;
 	   SPI_DAC_B_SYNC : inout STD_LOGIC;
+	   
+    	   MEM_FLAG : inout STD_LOGIC;
+    	   MEM_DATA : inout STD_LOGIC_VECTOR(31 downto 0);
+    	   INC_MEM_ADD : inout STD_LOGIC;
 
     	   DEBUG_PIN : out STD_LOGIC
 );
@@ -91,6 +95,9 @@ architecture Behavioral of SREG_CONTROL is
 	signal INT_CONTROL_WORD : STD_LOGIC_VECTOR(7 downto 0);
 	signal RX_WORD : STD_LOGIC_VECTOR(7 downto 0);
 	signal RX_ACK  : STD_LOGIC;
+	signal RX_ACK_OLD : STD_LOGIC;
+
+	signal MEM_DATA_BUFFER : STD_LOGIC_VECTOR(31 downto 0);
 
 begin
 
@@ -145,7 +152,7 @@ begin
 --|------------------------------------|
 
 	flushproecss : process (CLOCK)
-	variable WORD_COUNTER : integer range 0 to 31;
+	variable WORD_COUNTER : integer :=0;
 	begin
 	
 	
@@ -157,25 +164,68 @@ begin
 			SPI_FLUSH <= '0';
 			SPI_DAC_FLUSH <= '0';
 			WORD_COUNTER := 0;
+
+			MEM_DATA_BUFFER <= (others => '0');
+			MEM_DATA <= (others => '0');
+			MEM_FLAG <= '0';
+			INC_MEM_ADD <= '0';
 	
-		elsif (RX_ACK'event and RX_ACK = '1') then
+		elsif RX_ACK = '1' and RX_ACK_OLD = '0' then -- elsif (RX_ACK'event and RX_ACK = '1') then
 	
 			SPI_DATA_BUFFER(127 downto 0) <= SPI_DATA_BUFFER(135 downto 8);
 			SPI_DATA_BUFFER(135 downto 128) <= RX_WORD(7 downto 0);
+			
+			MEM_DATA_BUFFER(23 downto 0) <= MEM_DATA_BUFFER(31 downto 8);
+			MEM_DATA_BUFFER(31 downto 24) <= RX_WORD(7 downto 0);
 
 			WORD_COUNTER := WORD_COUNTER + 1;
+			INC_MEM_ADD <= '0';
 		end if;
 
-		if WORD_COUNTER = 17 then
+		RX_ACK_OLD <= RX_ACK;
+
+		if (WORD_COUNTER = 17) and MEM_FLAG = '0' then
 			SPI_FLUSH <= '1';
 			SPI_DAC_FLUSH <= '1';
 		end if;
 
+		if (WORD_COUNTER = 5) and MEM_FLAG = '1' then
+			MEM_DATA <= MEM_DATA_BUFFER;
+			INC_MEM_ADD <= '1';
+			WORD_COUNTER := 0;
+		end if;
+
 		if RX_WORD = "10101010" then    -- reset word: 0xAA
-		SPI_DATA_BUFFER <= (others => '0');
-		SPI_FLUSH <= '0';
-		SPI_DAC_FLUSH <= '0';
-		WORD_COUNTER := 0;
+			SPI_DATA_BUFFER <= (others => '0');
+			SPI_FLUSH <= '0';
+			SPI_DAC_FLUSH <= '0';
+			WORD_COUNTER := 0;
+
+			MEM_FLAG <= '0';
+			INC_MEM_ADD <= '0';
+		end if;
+
+		if RX_WORD = "10101110" then	-- reset word: 0xAE
+			SPI_DATA_BUFFER <= (others => '0');
+			SPI_FLUSH <= '0';
+			SPI_DAC_FLUSH <= '0';
+
+			MEM_DATA_BUFFER <= (others => '0');
+			MEM_FLAG <= '1';
+			INC_MEM_ADD <= '0';
+			WORD_COUNTER := 0;
+
+		end if;
+
+		if RX_WORD = "10101111" then	-- stop word: 0xAF
+			SPI_DATA_BUFFER <= (others => '0');
+			SPI_FLUSH <= '0';
+			SPI_DAC_FLUSH <= '0';
+
+			MEM_DATA_BUFFER <= (others => '0');
+			MEM_FLAG <= '0';
+			INC_MEM_ADD <= '0';
+			WORD_COUNTER := 0;
 		end if;
 
 	end if;
