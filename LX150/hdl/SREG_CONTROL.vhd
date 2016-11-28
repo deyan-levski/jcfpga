@@ -210,9 +210,9 @@ begin
 			INC_MEM_ADD <= '0';
 
 		elsif RX_WORD = "10101110" then	-- reset word: 0xAE
-			SPI_DATA_BUFFER <= (others => '0');
-			SPI_FLUSH <= '0';
-			SPI_DAC_FLUSH <= '0';
+			--SPI_DATA_BUFFER <= (others => '0');
+			--SPI_FLUSH <= '0';
+			--SPI_DAC_FLUSH <= '0';
 
 			MEM_DATA_BUFFER <= (others => '0');
 			MEM_FLAG <= '1';
@@ -220,9 +220,9 @@ begin
 			WORD_COUNTER := 0;
 
 		elsif RX_WORD = "10101111" then	-- stop word: 0xAF
-			SPI_DATA_BUFFER <= (others => '0');
-			SPI_FLUSH <= '0';
-			SPI_DAC_FLUSH <= '0';
+		--	SPI_DATA_BUFFER <= (others => '0');
+		--	SPI_FLUSH <= '0';
+		--	SPI_DAC_FLUSH <= '0';
 
 			MEM_DATA_BUFFER <= (others => '0');
 			MEM_FLAG <= '0';
