@@ -239,6 +239,6 @@ begin
 		CSEL_I <= INT_CONTROL_WORD(0); -- dac chip select tap
 
 
-DEBUG_PIN <= RX_ACK;--SPI_FLUSH;
+DEBUG_PIN <= INC_MEM_ADD; --RX_ACK;--SPI_FLUSH;
 
 end Behavioral;
