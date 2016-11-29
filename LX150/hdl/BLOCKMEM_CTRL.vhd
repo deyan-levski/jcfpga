@@ -66,6 +66,9 @@ begin
 			if clk_div_cnt = 1079 then
 			CLOCK_DIV_REG <= (others => '0');
 			clk_div_cnt := 0;
+			elsif clk_div_cnt = 0 then
+			CLOCK_DIV_REG <= (others => '0');
+			clk_div_cnt := clk_div_cnt + 1;
 			else
 			CLOCK_DIV_REG <= CLOCK_DIV_REG + 1;
 			clk_div_cnt := clk_div_cnt + 1;

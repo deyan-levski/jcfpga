@@ -40,7 +40,7 @@ begin
 
 clockdiv : process (CLOCK, RESET)
 variable clk_div_cnt : integer range 0 to 1080 := 0;
-variable 1st_entry : integer range 0 to 1 := 0;
+variable fst_entry : integer range 0 to 1 := 0;
 begin
 	if RESET = '1' then
 		CLOCK_DIV_REG <= (others => '0');
@@ -54,18 +54,21 @@ begin
 		CLOCK_DIV_REG <= CLOCK_DIV_REG + 1;
 		clk_div_cnt := clk_div_cnt + 1;
 		end if;
-		1st_entry := 1;
+		fst_entry := 1;
 	else
-		if 1st_entry = 1 then
+		if fst_entry = 1 then
 			CLOCK_DIV_REG <= (others => '0');
 			clk_div_cnt := 0;
-			1st_entry := 0;
+			fst_entry := 0;
 		end if;
 
 		if INC_MEM_ADD = '1' and INC_MEM_ADD_PREV = '0' then
 			if clk_div_cnt = 1079 then
 			CLOCK_DIV_REG <= (others => '0');
 			clk_div_cnt := 0;
+			elsif clk_div_cnt = 0 then
+			CLOCK_DIV_REG <= (others => '0');
+			clk_div_cnt <= clk_div_cnt + 1;
 			else
 			CLOCK_DIV_REG <= CLOCK_DIV_REG + 1;
 			clk_div_cnt := clk_div_cnt + 1;
