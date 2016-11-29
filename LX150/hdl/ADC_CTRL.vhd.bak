@@ -1104,10 +1104,11 @@ begin
 
 -- Feeding out USB PCLK (GPIFII_PCLK)
 
-	CLOCK_100_BUFG : BUFG
-	port map (
-			 O	=> CLOCK_100_PCLK,
-			 I	=> CLOCK_100);
+--	CLOCK_100_BUFG : BUFG
+--	port map (
+--			 O	=> CLOCK_100_PCLK,
+--			 I	=> CLOCK_100);
+	CLOCK_100_PCLK <= CLOCK_100;
 
 	CLOCK_100_PCLK_N <= not CLOCK_100_PCLK;
 
@@ -1132,7 +1133,7 @@ begin
 --| STATIC SIGNALLING |
 --|-------------------|
 
-	GPIO2 <= '0'; --not CLOCK_100; -- scope triggering clock
+	--GPIO2 <= '0'; --not CLOCK_100; -- scope triggering clock
 	GPIO3 <= '0';
 	GPIO4 <= '0';
 	SHUTDOWN_VDD <= '0';

@@ -1104,10 +1104,11 @@ begin
 
 -- Feeding out USB PCLK (GPIFII_PCLK)
 
-	CLOCK_100_BUFG : BUFG
-	port map (
-			 O	=> CLOCK_100_PCLK,
-			 I	=> CLOCK_100);
+--	CLOCK_100_BUFG : BUFG
+--	port map (
+--			 O	=> CLOCK_100_PCLK,
+--			 I	=> CLOCK_100);
+	CLOCK_100_PCLK <= CLOCK_100;
 
 	CLOCK_100_PCLK_N <= not CLOCK_100_PCLK;
 
