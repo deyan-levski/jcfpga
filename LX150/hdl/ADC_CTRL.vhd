@@ -369,39 +369,39 @@ architecture Behavioral of ADC_CTRL is
 --|--------------------------|
 --| UART Testbench Constants |
 --|--------------------------|
--- -- Test Bench uses a 100 MHz Clock
--- constant c_CLK_PERIOD : time := 10 ns;
--- 
--- -- Want to interface to 2400 baud UART
--- -- 25000000 / 2400 = 10417 Clocks Per Bit.
--- constant c_CLKS_PER_BIT : integer := 10417;
---
--- -- 1/2400:
--- constant c_BIT_PERIOD : time := 416.666 us;
--- 
--- signal Test_RX_Serial : std_logic := '1';
---
--- 
--- -- Low-level byte-write
--- procedure UART_WRITE_BYTE (
---   i_Data_In       : in  std_logic_vector(7 downto 0);
---   signal o_Serial : out std_logic) is
--- begin
---
---   -- Send Start Bit
---   o_Serial <= '0';
---   wait for c_BIT_PERIOD;
---
---   -- Send Data Byte
---   for ii in 0 to 7 loop
---     o_Serial <= i_Data_In(ii);
---     wait for c_BIT_PERIOD;
---   end loop;  -- ii
---
---   -- Send Stop Bit
---   o_Serial <= '1';
---   wait for c_BIT_PERIOD;
--- end UART_WRITE_BYTE;
+--	-- Test Bench uses a 100 MHz Clock
+--	constant c_CLK_PERIOD : time := 10 ns;
+--	
+--	-- Want to interface to 2400 baud UART
+--	-- 25000000 / 2400 = 10417 Clocks Per Bit.
+--	constant c_CLKS_PER_BIT : integer := 10417;
+--	
+--	-- 1/2400:
+--	constant c_BIT_PERIOD : time := 416.666 us;
+--	
+--	signal Test_RX_Serial : std_logic := '1';
+--	
+--	
+--	-- Low-level byte-write
+--	procedure UART_WRITE_BYTE (
+--	  i_Data_In       : in  std_logic_vector(7 downto 0);
+--	  signal o_Serial : out std_logic) is
+--	begin
+--	
+--	  -- Send Start Bit
+--	  o_Serial <= '0';
+--	  wait for c_BIT_PERIOD;
+--	
+--	  -- Send Data Byte
+--	  for ii in 0 to 7 loop
+--	    o_Serial <= i_Data_In(ii);
+--	    wait for c_BIT_PERIOD;
+--	  end loop;  -- ii
+--	
+--	  -- Send Stop Bit
+--	  o_Serial <= '1';
+--	  wait for c_BIT_PERIOD;
+--	end UART_WRITE_BYTE;
  
 begin
 
@@ -602,32 +602,48 @@ begin
 --| Instantiating SREG_CONTROL |
 --|----------------------------|
 
-	--TEST_PROC : process
-	--begin
-	--wait until rising_edge(CLOCK_100);
-	--wait for 10 us;
-	--	UART_WRITE_BYTE(X"AE", Test_RX_Serial);
-	--	UART_WRITE_BYTE(X"01", Test_RX_Serial);
-	--	UART_WRITE_BYTE(X"02", Test_RX_Serial);
-	--	UART_WRITE_BYTE(X"03", Test_RX_Serial);
-	--	UART_WRITE_BYTE(X"04", Test_RX_Serial);
-	--	UART_WRITE_BYTE(X"05", Test_RX_Serial);
-	--	UART_WRITE_BYTE(X"06", Test_RX_Serial);
-	--	UART_WRITE_BYTE(X"07", Test_RX_Serial);
-	--	UART_WRITE_BYTE(X"08", Test_RX_Serial);
-	--	UART_WRITE_BYTE(X"09", Test_RX_Serial);
-	--	UART_WRITE_BYTE(X"10", Test_RX_Serial);
-	--	UART_WRITE_BYTE(X"11", Test_RX_Serial);
-	--	UART_WRITE_BYTE(X"12", Test_RX_Serial);
-	--	UART_WRITE_BYTE(X"13", Test_RX_Serial);
-	--	UART_WRITE_BYTE(X"14", Test_RX_Serial);
-	--	UART_WRITE_BYTE(X"15", Test_RX_Serial);
-	--	UART_WRITE_BYTE(X"16", Test_RX_Serial);
-	--
-	--	UART_WRITE_BYTE(X"AF", Test_RX_Serial);
-	--wait for 10 us;
-	--wait until rising_edge(CLOCK_100);
-	--end process;
+--	TEST_PROC : process
+--	begin
+--	wait until rising_edge(CLOCK_100);
+--	wait for 10 us;
+--		UART_WRITE_BYTE(X"AE", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"01", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"02", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"03", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"04", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"05", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"06", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"07", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"08", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"09", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"10", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"11", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"12", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"13", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"14", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"15", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"16", Test_RX_Serial);
+--	wait for 500 us;
+--		UART_WRITE_BYTE(X"AF", Test_RX_Serial);
+--	wait for 10 us;
+--	wait until rising_edge(CLOCK_100);
+--	end process;
 
 	SREG_CONTROL_INST: SREG_CONTROL
 	port map (
