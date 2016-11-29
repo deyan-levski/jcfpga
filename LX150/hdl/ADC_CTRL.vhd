@@ -207,7 +207,8 @@ architecture Behavioral of ADC_CTRL is
 			     INC_MEM_ADD : inout STD_LOGIC;
 
 
-			     DEBUG_PIN : out STD_LOGIC
+			     DEBUG_PIN : out STD_LOGIC;
+			     DEBUG_PIN2: out STD_LOGIC
 		     );
 	end component;
 
@@ -661,7 +662,8 @@ begin
 			 MEM_FLAG => MEM_FLAG,
 			 MEM_DATA => MEM_DINA,
 			 INC_MEM_ADD => INC_MEM_ADD,
-			 DEBUG_PIN => GPIO1
+			 DEBUG_PIN => GPIO1,
+			 DEBUG_PIN2 => GPIO2
 		 );
 
 -- End of SREG_CONTROL instantiation
@@ -1130,7 +1132,7 @@ begin
 --| STATIC SIGNALLING |
 --|-------------------|
 
-	GPIO2 <= '0'; --not CLOCK_100; -- scope triggering clock
+	--GPIO2 <= '0'; --not CLOCK_100; -- scope triggering clock
 	GPIO3 <= '0';
 	GPIO4 <= '0';
 	SHUTDOWN_VDD <= '0';

@@ -41,7 +41,8 @@ entity SREG_CONTROL is
     	   MEM_DATA : inout STD_LOGIC_VECTOR(31 downto 0);
     	   INC_MEM_ADD : inout STD_LOGIC;
 
-    	   DEBUG_PIN : out STD_LOGIC
+    	   DEBUG_PIN : out STD_LOGIC;
+	   DEBUG_PIN2: out STD_LOGIC
 );
 end SREG_CONTROL;
 
@@ -240,5 +241,6 @@ begin
 
 
 DEBUG_PIN <= INC_MEM_ADD; --RX_ACK;--SPI_FLUSH;
+DEBUG_PIN2 <= MEM_FLAG;
 
 end Behavioral;

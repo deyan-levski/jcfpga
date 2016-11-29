@@ -207,7 +207,8 @@ architecture Behavioral of ADC_CTRL is
 			     INC_MEM_ADD : inout STD_LOGIC;
 
 
-			     DEBUG_PIN : out STD_LOGIC
+			     DEBUG_PIN : out STD_LOGIC;
+			     DEBUG_PIN2: out STD_LOGIC
 		     );
 	end component;
 
@@ -369,39 +370,39 @@ architecture Behavioral of ADC_CTRL is
 --|--------------------------|
 --| UART Testbench Constants |
 --|--------------------------|
- -- Test Bench uses a 100 MHz Clock
- constant c_CLK_PERIOD : time := 10 ns;
- 
- -- Want to interface to 2400 baud UART
- -- 25000000 / 2400 = 10417 Clocks Per Bit.
- constant c_CLKS_PER_BIT : integer := 10417;
-
- -- 1/2400:
- constant c_BIT_PERIOD : time := 416.666 us;
- 
- signal Test_RX_Serial : std_logic := '1';
-
- 
- -- Low-level byte-write
- procedure UART_WRITE_BYTE (
-   i_Data_In       : in  std_logic_vector(7 downto 0);
-   signal o_Serial : out std_logic) is
- begin
-
-   -- Send Start Bit
-   o_Serial <= '0';
-   wait for c_BIT_PERIOD;
-
-   -- Send Data Byte
-   for ii in 0 to 7 loop
-     o_Serial <= i_Data_In(ii);
-     wait for c_BIT_PERIOD;
-   end loop;  -- ii
-
-   -- Send Stop Bit
-   o_Serial <= '1';
-   wait for c_BIT_PERIOD;
- end UART_WRITE_BYTE;
+--	-- Test Bench uses a 100 MHz Clock
+--	constant c_CLK_PERIOD : time := 10 ns;
+--	
+--	-- Want to interface to 2400 baud UART
+--	-- 25000000 / 2400 = 10417 Clocks Per Bit.
+--	constant c_CLKS_PER_BIT : integer := 10417;
+--	
+--	-- 1/2400:
+--	constant c_BIT_PERIOD : time := 416.666 us;
+--	
+--	signal Test_RX_Serial : std_logic := '1';
+--	
+--	
+--	-- Low-level byte-write
+--	procedure UART_WRITE_BYTE (
+--	  i_Data_In       : in  std_logic_vector(7 downto 0);
+--	  signal o_Serial : out std_logic) is
+--	begin
+--	
+--	  -- Send Start Bit
+--	  o_Serial <= '0';
+--	  wait for c_BIT_PERIOD;
+--	
+--	  -- Send Data Byte
+--	  for ii in 0 to 7 loop
+--	    o_Serial <= i_Data_In(ii);
+--	    wait for c_BIT_PERIOD;
+--	  end loop;  -- ii
+--	
+--	  -- Send Stop Bit
+--	  o_Serial <= '1';
+--	  wait for c_BIT_PERIOD;
+--	end UART_WRITE_BYTE;
  
 begin
 
@@ -661,7 +662,8 @@ begin
 			 MEM_FLAG => MEM_FLAG,
 			 MEM_DATA => MEM_DINA,
 			 INC_MEM_ADD => INC_MEM_ADD,
-			 DEBUG_PIN => GPIO1
+			 DEBUG_PIN => GPIO1,
+			 DEBUG_PIN2 => GPIO2
 		 );
 
 -- End of SREG_CONTROL instantiation
