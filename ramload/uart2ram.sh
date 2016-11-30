@@ -53,14 +53,14 @@ update_progress_bar()
   fi
 }
 
-ttyPort="ttyACM0"
+ttyPort=$3
 silenceTime="0.0005"
 
 word=$1
 rate=$2
 device=$3
 
-echo -ne "Port is: $ttyPort, Stop bits: 1, Parity: none, Speed: "
+echo -ne "Port is: $ttyPort, Stop bits: 1, Parity: none, Silence time: $silenceTime, Speed: "
 
 stty -F $device speed $rate cs8 -echo  ## Set port settings
 

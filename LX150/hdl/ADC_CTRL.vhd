@@ -64,11 +64,11 @@ entity ADC_CTRL is
 		     SPI_ADC_CLK  : out STD_LOGIC;
 		     SPI_ADC_MISO : in STD_LOGIC;
 	   -- LVDS COUNT CLK
-		     COUNT_CLK_P : inout STD_LOGIC;
-		     COUNT_CLK_N : inout STD_LOGIC;
+		     COUNT_CLK_P : out STD_LOGIC;
+		     COUNT_CLK_N : out STD_LOGIC;
 	   -- LVDS DIGIF CLK
-		     SRX_P : inout STD_LOGIC;
-		     SRX_N : inout STD_LOGIC;
+		     SRX_P : out STD_LOGIC;
+		     SRX_N : out STD_LOGIC;
 	   -- CHIP sequencer
 	   -- row_drv
 		     d_row_addr : inout STD_LOGIC_VECTOR(7 downto 0);
