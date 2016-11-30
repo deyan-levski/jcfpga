@@ -37,7 +37,7 @@ entity ADC_CTRL is
 	   -- UART
 		     RX : in  STD_LOGIC;   -- GPIO5 : out STD_LOGIC;
 		     TX : out  STD_LOGIC;  -- GPIO6 : out STD_LOGIC;
-					   -- CLK/RST
+	   -- CLK/RST
 		     CLOCK : in  STD_LOGIC;
 		     RESET : in  STD_LOGIC;
 	   -- CHIP SPI
@@ -403,6 +403,9 @@ architecture Behavioral of ADC_CTRL is
 --	  o_Serial <= '1';
 --	  wait for c_BIT_PERIOD;
 --	end UART_WRITE_BYTE;
+--|--------------------|
+--| End UART Testbench |
+--|--------------------|
  
 begin
 
@@ -416,6 +419,7 @@ begin
 --	I => RESET_IN
 --	);
 
+--	Synchronize Reset
 --	RST_PROC : process(CLOCK_I)
 --	begin
 --		if (rising_edge(CLOCK_I)) then
@@ -447,7 +451,6 @@ begin
 	  -- Clock out ports
 			 CLK_OUT1        => FX3_CLK
 		 );
-	--	FX3_CLK <= GPIFII_PCLK_IN;
 
 	PLL_DESER_INST: PLL_DESER
 	port map (-- Clock in ports
@@ -602,7 +605,9 @@ begin
 --|----------------------------|
 --| Instantiating SREG_CONTROL |
 --|----------------------------|
-
+--
+-- 	UART TEST process
+--
 --	TEST_PROC : process
 --	begin
 --	wait until rising_edge(CLOCK_100);
@@ -648,7 +653,7 @@ begin
 
 	SREG_CONTROL_INST: SREG_CONTROL
 	port map (
-			 RX => RX, --Test_RX_Serial, --RX,
+			 RX => RX, --Test_RX_Serial, -- swap for simulation mode
 			 TX => TX,
 			 CLOCK => CLOCK_100,
 			 RESET => RESET,
@@ -665,8 +670,6 @@ begin
 			 DEBUG_PIN => GPIO1,
 			 DEBUG_PIN2 => GPIO2
 		 );
-
--- End of SREG_CONTROL instantiation
 
 --|-------------------------|
 --| Instantiating SEQUENCER |
