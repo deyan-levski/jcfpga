@@ -59,14 +59,20 @@ silenceTime="0.0005"
 word=$1
 rate=$2
 device=$3
+clear
+echo -ne "|----------------------------------------------------|
+| asm2uart2ram (ASM to UART to RAM)                  |
+|----------------------------------------------------|
+| Version A, Deyan Levski, deyan.levski@eng.ox.ac.uk |
+|----------------------------------------------------|
+\n"
 
 echo -ne "Port is: $ttyPort, Stop bits: 1, Parity: none, Silence time: $silenceTime, Speed: "
 
 stty -F $device speed $rate cs8 -echo  ## Set port settings
 
-#size=`wc -c < $word`
-size=8648 #+ 1 extra word (8 ASCII chars)
-#echo $size
+size=`wc -c < $word`
+echo -ne "\nRAM size: $(($size/2)) bytes \n\n"
 
 start_byte="AE"
 stop_byte="AF"
@@ -96,7 +102,7 @@ c2=$(($c2+1))
 
 echo -ne "\nStop Byte: $c2    , $stop_byte \n"
 echo -en "\x$stop_byte" > $device
-
+echo -ne " \n"
 
 #update_progress_bar 0
 #update_progress_bar 100
