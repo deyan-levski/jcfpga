@@ -63,7 +63,7 @@ begin
 		end if;
 
 		if INC_MEM_ADD = '1' and INC_MEM_ADD_PREV = '0' then
-			if clk_div_cnt = 1079 then
+			if clk_div_cnt = 1080 then	-- one word extra (overwrite word 0)
 			CLOCK_DIV_REG <= (others => '0');
 			clk_div_cnt := 0;
 			elsif clk_div_cnt = 0 then
