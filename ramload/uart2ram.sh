@@ -41,7 +41,7 @@ update_progress_bar()
             fi
           done
 
-          echo -ne "Transferring Byte: $2, $3 "$val"%\r"
+          echo -ne "Byte: $2, $3 "$val"%\r"
 
           if [ $val -eq $max ];
           then
