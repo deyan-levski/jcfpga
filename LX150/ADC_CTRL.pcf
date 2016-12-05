@@ -1,5 +1,5 @@
 //! **************************************************************************
-// Written by: Map P.58f on Wed Nov 30 14:10:07 2016
+// Written by: Map P.58f on Mon Dec 05 13:40:17 2016
 //! **************************************************************************
 
 SCHEMATIC START;
@@ -61,9 +61,8 @@ COMP "CLOCK" LOCATE = SITE "W12" LEVEL 1;
 COMP "GPIO1" LOCATE = SITE "A13" LEVEL 1;
 COMP "GPIO2" LOCATE = SITE "C13" LEVEL 1;
 COMP "GPIO3" LOCATE = SITE "A14" LEVEL 1;
-COMP "GPIO4" LOCATE = SITE "B14" LEVEL 1;
 COMP "d_count_en" LOCATE = SITE "W13" LEVEL 1;
-COMP "RESET" LOCATE = SITE "R19" LEVEL 1;
+COMP "RESET" LOCATE = SITE "B14" LEVEL 1;
 COMP "SRX_N" LOCATE = SITE "D11" LEVEL 1;
 COMP "SRX_P" LOCATE = SITE "C12" LEVEL 1;
 COMP "SPI_ADC_CS" LOCATE = SITE "C7" LEVEL 1;
@@ -357,11 +356,13 @@ PIN
         = BEL
         "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[28].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram"
         PINNAME CLKA;
+PIN ODDR2_DIGIF_INST_pins<1> = BEL "ODDR2_DIGIF_INST" PINNAME CK0;
+PIN ODDR2_DIGIF_INST_pins<2> = BEL "ODDR2_DIGIF_INST" PINNAME CK1;
 PIN ODDR2_GPIFII_PCLK_pins<1> = BEL "ODDR2_GPIFII_PCLK" PINNAME CK0;
 PIN ODDR2_GPIFII_PCLK_pins<2> = BEL "ODDR2_GPIFII_PCLK" PINNAME CK1;
 PIN SP6_INS_BUFIO2FB_DCM_ML_BUFIO2FB_3_pins<1> = BEL
         "SP6_INS_BUFIO2FB_DCM_ML_BUFIO2FB_3" PINNAME O;
-PIN PLL_250_INST/dcm_sp_inst_pins<2> = BEL "PLL_250_INST/dcm_sp_inst" PINNAME
+PIN PLL_250_INST/dcm_sp_inst_pins<1> = BEL "PLL_250_INST/dcm_sp_inst" PINNAME
         CLKFB;
 TIMEGRP PLL_250_INST_clk0 = BEL "LVAL_SEQ_OLD" BEL
         "SREG_CONTROL_INST/flushproecss.WORD_COUNTER_31" BEL
@@ -4325,29 +4326,22 @@ TIMEGRP PLL_250_INST_clk0 = BEL "LVAL_SEQ_OLD" BEL
         "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_1"
         BEL
         "FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[1].wr_stg_inst/Q_reg_0"
-        PIN "ODDR2_GPIFII_PCLK_pins<1>" PIN "ODDR2_GPIFII_PCLK_pins<2>" PIN
+        PIN "ODDR2_DIGIF_INST_pins<1>" PIN "ODDR2_DIGIF_INST_pins<2>" PIN
+        "ODDR2_DIGIF_INST_pins<1>" PIN "ODDR2_DIGIF_INST_pins<2>" PIN
+        "ODDR2_GPIFII_PCLK_pins<1>" PIN "ODDR2_GPIFII_PCLK_pins<2>" PIN
         "ODDR2_GPIFII_PCLK_pins<1>" PIN "ODDR2_GPIFII_PCLK_pins<2>" BEL
         "PLL_250_INST/clkout1_buf" PIN
         "SP6_INS_BUFIO2FB_DCM_ML_BUFIO2FB_3_pins<1>" PIN
-        "PLL_250_INST/dcm_sp_inst_pins<2>";
-TIMEGRP PLL_250_INST_clk2x = BEL "PLL_250_INST/clkout3_buf" BEL
-        "DIGIF_INST/DATAINC_11" BEL "DIGIF_INST/DATAINC_10" BEL
-        "DIGIF_INST/DATAINC_9" BEL "DIGIF_INST/DATAINC_8" BEL
-        "DIGIF_INST/DATAINC_7" BEL "DIGIF_INST/DATAINC_6" BEL
-        "DIGIF_INST/DATAINC_5" BEL "DIGIF_INST/DATAINC_4" BEL
-        "DIGIF_INST/DATAINC_3" BEL "DIGIF_INST/DATAINC_2" BEL
-        "DIGIF_INST/DATAINC_1" BEL "DIGIF_INST/DATAINC_0" BEL
-        "DIGIF_INST/d_digif_lsb_data" BEL "DIGIF_INST/d_digif_msb_data" BEL
-        "DIGIF_INST/SERIALIZE.wrd_cntr_2" BEL
-        "DIGIF_INST/SERIALIZE.wrd_cntr_1" BEL
-        "DIGIF_INST/SERIALIZE.wrd_cntr_0" BEL "DIGIF_INST/txbuf_l_5" BEL
-        "DIGIF_INST/txbuf_l_4" BEL "DIGIF_INST/txbuf_l_3" BEL
-        "DIGIF_INST/txbuf_l_2" BEL "DIGIF_INST/txbuf_l_1" BEL
-        "DIGIF_INST/txbuf_l_0" BEL "DIGIF_INST/txbuf_m_5" BEL
-        "DIGIF_INST/txbuf_m_4" BEL "DIGIF_INST/txbuf_m_3" BEL
-        "DIGIF_INST/txbuf_m_2" BEL "DIGIF_INST/txbuf_m_1" BEL
-        "DIGIF_INST/txbuf_m_0" BEL "DIGIF_INST/flag_data" BEL
-        "DIGIF_INST/flag_pream";
+        "PLL_250_INST/dcm_sp_inst_pins<1>";
+PIN ODDR2_LVDS_CLOC_BUFFER_OUT_INST_pins<1> = BEL
+        "ODDR2_LVDS_CLOC_BUFFER_OUT_INST" PINNAME CK0;
+PIN ODDR2_LVDS_CLOC_BUFFER_OUT_INST_pins<2> = BEL
+        "ODDR2_LVDS_CLOC_BUFFER_OUT_INST" PINNAME CK1;
+TIMEGRP PLL_250_INST_clkfx = BEL "PLL_250_INST/clkout2_buf" PIN
+        "ODDR2_LVDS_CLOC_BUFFER_OUT_INST_pins<1>" PIN
+        "ODDR2_LVDS_CLOC_BUFFER_OUT_INST_pins<2>" PIN
+        "ODDR2_LVDS_CLOC_BUFFER_OUT_INST_pins<1>" PIN
+        "ODDR2_LVDS_CLOC_BUFFER_OUT_INST_pins<2>";
 PIN G0TX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_m_pins<2> = BEL
         "G0TX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_m" PINNAME CLK;
 PIN G0TX_DESER_INST/I_SAMPLING_MSB/pins[0].iodelay2_bus_s_pins<3> = BEL
@@ -7382,8 +7376,8 @@ TIMEGRP CLOCK = PIN "SP6_BUFIO2_INSERT_PLL1_ML_BUFIO2_2_pins<0>" PIN
         "SP6_BUFIO_INSERT_ML_BUFIO2_0_pins<0>" PIN
         "PLL_250_INST/dcm_sp_inst_pins<3>";
 TS_CLOCK = PERIOD TIMEGRP "CLOCK" 10 ns HIGH 50%;
-TS_PLL_250_INST_clk2x = PERIOD TIMEGRP "PLL_250_INST_clk2x" TS_CLOCK / 2 HIGH
-        50%;
+TS_PLL_250_INST_clkfx = PERIOD TIMEGRP "PLL_250_INST_clkfx" TS_CLOCK / 2.5
+        HIGH 50%;
 TS_PLL_250_INST_clk0 = PERIOD TIMEGRP "PLL_250_INST_clk0" TS_CLOCK HIGH 50%;
 TS_PLL_DESER_INST_clkout1 = PERIOD TIMEGRP "PLL_DESER_INST_clkout1" TS_CLOCK /
         0.333333333 HIGH 50%;

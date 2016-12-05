@@ -53,7 +53,7 @@ entity ADC_CTRL is
 		     GPIO1 : out STD_LOGIC; -- DEBUG_PIN / SREG LOADED
 		     GPIO2 : out STD_LOGIC; -- SYNC_CLOCK / Scope Trigger
 		     GPIO3 : out STD_LOGIC;
-		     GPIO4 : out STD_LOGIC;
+		  -- GPIO4 : out STD_LOGIC; -- RESET
 	   	  -- GPIO5 : out STD_LOGIC;
 		  -- GPIO6 : out STD_LOGIC;
 	   -- BOARD CTRL
@@ -321,8 +321,10 @@ architecture Behavioral of ADC_CTRL is
 
 	signal CLOCK_I 	 : std_logic;
 	signal CLOCK_100 : std_logic;
+	signal CLOCK_100_N : std_logic;
 	signal CLOCK_200 : std_logic;
 	signal CLOCK_250 : std_logic;
+	signal CLOCK_250_N : std_logic;
 	signal CLOCK_100_PCLK : std_logic;
 	signal CLOCK_100_PCLK_N : std_logic;
 	signal FX3_CLK	 : std_logic;
@@ -484,18 +486,20 @@ begin
    -- End BUFPLL Core instantiation
 
 --|---------------------------------|
---| Test LVDS drivers and Receivers |
+--| OBUFDS_DIGIF: LVDS driver       |
 --|---------------------------------|
 
-	ODDR2_LSBDATTX_INST : ODDR2
+	CLOCK_100_N <= not CLOCK_100;
+
+	ODDR2_DIGIF_INST : ODDR2
 	generic map(
 			 DDR_ALIGNMENT => "NONE", -- Sets output alignment to "NONE", "C0", "C1" 
 			 INIT => '0', -- Sets initial state of the Q output to '0' or '1'
 			 SRTYPE => "SYNC") -- Specifies "SYNC" or "ASYNC" set/reset
 	port map (
 			 Q  => CLOCK_DIGIF_OBUFDS, -- 1-bit output data
-			 C0 => LSBDAT, -- 1-bit clock input
-			 C1 => LSBDAT_N, -- 1-bit clock input
+			 C0 => CLOCK_100, -- LSBDAT, -- 1-bit clock input
+			 C1 => CLOCK_100_N, -- LSBDAT_N, -- 1-bit clock input
 			 CE => '1',   -- 1-bit clock enable input
 			 D0 => '0',   -- 1-bit data input (associated with C0)
 			 D1 => '1',   -- 1-bit data input (associated with C1)
@@ -503,7 +507,7 @@ begin
 			 S => '0'     -- 1-bit set input
 		 ); 
 
-	OBUFDS_LSBDAT_TX : OBUFDS
+	OBUFDS_DIGIF_TX : OBUFDS
 	generic map (
 			 IOSTANDARD => "LVDS_33")
 	port map (
@@ -517,6 +521,8 @@ begin
 --| OBUFDS: Differential Output Count Clock Buffer |
 --|------------------------------------------------|
 
+	CLOCK_250_N <= not CLOCK_250;
+
 	ODDR2_LVDS_CLOC_BUFFER_OUT_INST : ODDR2
 	generic map(
 			 DDR_ALIGNMENT => "NONE", -- Sets output alignment to "NONE", "C0", "C1" 
@@ -524,8 +530,8 @@ begin
 			 SRTYPE => "SYNC") -- Specifies "SYNC" or "ASYNC" set/reset
 	port map (
 			 Q  => CLOCK_COUNT_OBUFDS, -- 1-bit output data
-			 C0 => MSBDAT, -- 1-bit clock input
-			 C1 => MSBDAT_N, -- 1-bit clock input
+			 C0 => CLOCK_250, --MSBDAT, -- 1-bit clock input
+			 C1 => CLOCK_250_N, --MSBDAT_N, -- 1-bit clock input
 			 CE => '1',   -- 1-bit clock enable input
 			 D0 => '0',   -- 1-bit data input (associated with C0)
 			 D1 => '1',   -- 1-bit data input (associated with C1)
@@ -541,37 +547,6 @@ begin
 			 OB => COUNT_CLK_P,    -- Diff_n output (connect directly to top-level port)
 			 I => CLOCK_COUNT_OBUFDS -- Buffer input 
 		 );
-
--- End of OBUFDS_inst instantiation
-
---|----------------------------------------------------|
---| OBUFDS: Differential Digif Serializer Clock Buffer |
---|----------------------------------------------------|
-
---  ODDR2_LVDS_CLOC_DIGIF_BUFFER_OUT_INST : ODDR2
---  generic map(
---     DDR_ALIGNMENT => "NONE", -- Sets output alignment to "NONE", "C0", "C1" 
---     INIT => '0', -- Sets initial state of the Q output to '0' or '1'
---     SRTYPE => "SYNC") -- Specifies "SYNC" or "ASYNC" set/reset
---  port map (
---     Q  => CLOCK_DIGIF_OBUFDS, -- 1-bit output data
---     C0 => CLOCK_100, -- 1-bit clock input
---     C1 => not CLOCK_100, -- 1-bit clock input
---     CE => '1',   -- 1-bit clock enable input
---     D0 => '0',   -- 1-bit data input (associated with C0)
---     D1 => '1',   -- 1-bit data input (associated with C1)
---     R => RESET,  -- 1-bit reset input
---     S => '0'     -- 1-bit set input
---  ); 
---
---  OBUFDS_DIGIF_CLK : OBUFDS
---  generic map (
---     IOSTANDARD => "LVDS_33")
---  port map (
---     O => SRX_N,     -- Diff_p output (connect directly to top-level port)
---     OB => SRX_P,    -- Diff_n output (connect directly to top-level port)
---     I => CLOCK_DIGIF_OBUFDS  -- Buffer input
---  );
 
 -- End of OBUFDS_inst instantiation
 
@@ -771,15 +746,15 @@ begin
 --| MOCK SERIALIZER |
 --|-----------------|
 
-	DIGIF_INST : DIGIF
-	port map ( 
-			 d_digif_sck => CLOCK_200,
-			 d_digif_rst => d_digif_serial_rst,
-			 RESET    => RESET,
-			 d_digif_msb_data => MSBDAT,
-			 d_digif_lsb_data => LSBDAT);
-	MSBDAT_N <= not MSBDAT;
-	LSBDAT_N <= not LSBDAT;
+--	DIGIF_INST : DIGIF
+--	port map ( 
+--			 d_digif_sck => CLOCK_200,
+--			 d_digif_rst => d_digif_serial_rst,
+--			 RESET    => RESET,
+--			 d_digif_msb_data => MSBDAT,
+--			 d_digif_lsb_data => LSBDAT);
+--	MSBDAT_N <= not MSBDAT;
+--	LSBDAT_N <= not LSBDAT;
 
 --|---------------|
 --| DESERIALIZERS |
@@ -1133,7 +1108,7 @@ begin
 
 	--GPIO2 <= '0'; --not CLOCK_100; -- scope triggering clock
 	GPIO3 <= '0';
-	GPIO4 <= '0';
+	--GPIO4 <= '0';
 	SHUTDOWN_VDD <= '0';
 	SHUTDOWN_VDA <= '0';
 	SPI_ADC_CS   <= '0';

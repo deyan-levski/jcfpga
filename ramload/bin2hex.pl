@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 #|------------------------------------------------------------|
-#| asmitp.pl: ADC Instruction Decoder for FPGA ROM            |
+#| bin2hex.pl: binary.coe to hex converter tool               |
 #|------------------------------------------------------------|
 #|                                                            |
-#| Example: ./asmitp.pl machine.bin -o machinecode.hex        |
+#| Example: ./bin2hex.pl machine.coe -o machinecode.hex       |
 #|                                                            |
 #| AUTHOR:                                                    |
 #| Deyan Levski, deyan.levski@eng.ox.ac.uk                    |
