@@ -1109,8 +1109,8 @@ begin
 	--GPIO2 <= '0'; --not CLOCK_100; -- scope triggering clock
 	GPIO3 <= '0';
 	--GPIO4 <= '0';
-	SHUTDOWN_VDD <= '0';
-	SHUTDOWN_VDA <= '0';
+	SHUTDOWN_VDD <= '1';
+	SHUTDOWN_VDA <= '1';
 	SPI_ADC_CS   <= '0';
 	SPI_ADC_MOSI <= '0';
 	SPI_ADC_CLK  <= '0';
