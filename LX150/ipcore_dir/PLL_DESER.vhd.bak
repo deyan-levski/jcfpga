@@ -55,8 +55,8 @@
 -- "Output    Output      Phase     Duty      Pk-to-Pk        Phase"
 -- "Clock    Freq (MHz) (degrees) Cycle (%) Jitter (ps)  Error (ps)"
 ------------------------------------------------------------------------------
--- CLK_OUT1___200.000______0.000______50.0______156.582____160.159
--- CLK_OUT2____33.333______0.000______50.0______223.277____160.159
+-- CLK_OUT1___100.000______0.000______50.0______178.597____160.159
+-- CLK_OUT2____16.667______0.000______50.0______255.315____160.159
 --
 ------------------------------------------------------------------------------
 -- "Input Clock   Freq (MHz)    Input Jitter (UI)"
@@ -107,13 +107,8 @@ begin
 
   -- Input buffering
   --------------------------------------
---  clkin1_buf : IBUFG
---  port map
---   (O => clkin1,
---    I => CLK_IN1);
 
-   clkin1 <= CLK_IN1;
-
+clkin1 <= CLK_IN1;
 
   -- Clocking primitive
   --------------------------------------
@@ -129,10 +124,10 @@ begin
     DIVCLK_DIVIDE        => 1,
     CLKFBOUT_MULT        => 10,
     CLKFBOUT_PHASE       => 0.000,
-    CLKOUT0_DIVIDE       => 5,
+    CLKOUT0_DIVIDE       => 10,
     CLKOUT0_PHASE        => 0.000,
     CLKOUT0_DUTY_CYCLE   => 0.500,
-    CLKOUT1_DIVIDE       => 30,
+    CLKOUT1_DIVIDE       => 60,
     CLKOUT1_PHASE        => 0.000,
     CLKOUT1_DUTY_CYCLE   => 0.500,
     CLKIN_PERIOD         => 10.000,
