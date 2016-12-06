@@ -127,7 +127,7 @@ begin
 		CLOCK => CLOCK,
 		RESET => RESET,
 		SPI_SEN => SPI_SEN,
-		SPI_DATA => SPI_DATA,
+		SPI_DATA => "000000000000000000100000011111101111100111001000000111001010100010100110111001111000001011111111", --SPI_DATA,
 		SPI_SCK => SPI_SCK,
 		SPI_SDA => SPI_SDA,
 		SPI_DATA_LOAD => SPI_FLUSH
@@ -188,13 +188,13 @@ begin
 	
 --		elsif RX_ACK = '1' and RX_ACK_OLD = '0' then
 --		elsif (RX_ACK'event and RX_ACK = '1') then
-		elsif (RX_ACK'event and RX_ACK = '1') then
+		elsif rising_edge(RX_ACK) then
 			if MEM_FLAG = '0' then
 			SPI_DATA_BUFFER(127 downto 0) <= SPI_DATA_BUFFER(135 downto 8);
 			SPI_DATA_BUFFER(135 downto 128) <= RX_WORD(7 downto 0);
 			end if;
-			WORD_COUNTER := WORD_COUNTER + 1;
-			INC_MEM_ADD <= '0';
+		--	WORD_COUNTER := WORD_COUNTER + 1;
+		--	INC_MEM_ADD <= '0';
 		end if;
 
 		if RX_ACK = '1' and RX_ACK_OLD = '0' then
@@ -202,12 +202,10 @@ begin
 			if MEM_FLAG = '1' then
 			MEM_DATA_BUFFER(23 downto 0) <= MEM_DATA_BUFFER(31 downto 8);
 			MEM_DATA_BUFFER(31 downto 24) <= RX_WORD(7 downto 0);
---			WORD_COUNTER := WORD_COUNTER + 1;
---			INC_MEM_ADD <= '0';
 			end if;
 
---		WORD_COUNTER := WORD_COUNTER + 1;
---		INC_MEM_ADD <= '0';
+		WORD_COUNTER := WORD_COUNTER + 1;
+		INC_MEM_ADD <= '0';
 		
 		end if;
 
