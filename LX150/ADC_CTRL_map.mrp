@@ -10,23 +10,23 @@ Target Device  : xc6slx150
 Target Package : fgg484
 Target Speed   : -3
 Mapper Version : spartan6 -- $Revision: 1.55 $
-Mapped Date    : Tue Dec  6 18:10:27 2016
+Mapped Date    : Tue Dec  6 18:17:13 2016
 
 Design Summary
 --------------
 Number of errors:      0
 Number of warnings:  129
 Slice Logic Utilization:
-  Number of Slice Registers:                 4,511 out of 184,304    2%
-    Number used as Flip Flops:               4,382
+  Number of Slice Registers:                 4,510 out of 184,304    2%
+    Number used as Flip Flops:               4,381
     Number used as Latches:                    129
     Number used as Latch-thrus:                  0
     Number used as AND/OR logics:                0
-  Number of Slice LUTs:                      3,088 out of  92,152    3%
-    Number used as logic:                    2,632 out of  92,152    2%
-      Number using O6 output only:           1,490
+  Number of Slice LUTs:                      3,098 out of  92,152    3%
+    Number used as logic:                    2,616 out of  92,152    2%
+      Number using O6 output only:           1,491
       Number using O5 output only:             143
-      Number using O5 and O6:                  999
+      Number using O5 and O6:                  982
       Number used as ROM:                        0
     Number used as Memory:                       2 out of  21,680    1%
       Number used as Dual Port RAM:              0
@@ -35,21 +35,21 @@ Slice Logic Utilization:
         Number using O6 output only:             2
         Number using O5 output only:             0
         Number using O5 and O6:                  0
-    Number used exclusively as route-thrus:    454
-      Number with same-slice register load:    444
+    Number used exclusively as route-thrus:    480
+      Number with same-slice register load:    470
       Number with same-slice carry load:        10
       Number with other load:                    0
 
 Slice Logic Distribution:
-  Number of occupied Slices:                 1,768 out of  23,038    7%
+  Number of occupied Slices:                 1,771 out of  23,038    7%
   Number of MUXCYs used:                       752 out of  46,076    1%
-  Number of LUT Flip Flop pairs used:        4,516
-    Number with an unused Flip Flop:           903 out of   4,516   19%
-    Number with an unused LUT:               1,428 out of   4,516   31%
-    Number of fully used LUT-FF pairs:       2,185 out of   4,516   48%
+  Number of LUT Flip Flop pairs used:        4,491
+    Number with an unused Flip Flop:           893 out of   4,491   19%
+    Number with an unused LUT:               1,393 out of   4,491   31%
+    Number of fully used LUT-FF pairs:       2,205 out of   4,491   49%
     Number of unique control sets:             642
     Number of slice register sites lost
-      to control set restrictions:           3,591 out of 184,304    1%
+      to control set restrictions:           3,592 out of 184,304    1%
 
   A LUT Flip Flop pair for this architecture represents one LUT paired with
   one Flip Flop within a slice.  A control set is a unique combination of
@@ -104,9 +104,9 @@ Specific Feature Utilization:
 
 Average Fanout of Non-Clock Nets:                3.28
 
-Peak Memory Usage:  1109 MB
-Total REAL time to MAP completion:  1 mins 46 secs 
-Total CPU time to MAP completion (all processors):   1 mins 48 secs 
+Peak Memory Usage:  1173 MB
+Total REAL time to MAP completion:  1 mins 43 secs 
+Total CPU time to MAP completion (all processors):   1 mins 45 secs 
 
 Table of Contents
 -----------------
@@ -132,10 +132,6 @@ Section 2 - Warnings
 WARNING:Security:42 - Your software subscription period has lapsed. Your current
 version of Xilinx tools will continue to function, but you no longer qualify for
 Xilinx software updates or new releases.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/RESET_GND_27_o_AND_321_o is sourced by a combinatorial pin.
-   This is not good design practice. Use the CE pin to control the loading of
-   data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
    SREG_CONTROL_INST/SPI_CORE_INST/Mcount_spiclkgen.sck_counter_val is sourced
    by a combinatorial pin. This is not good design practice. Use the CE pin to
@@ -449,6 +445,10 @@ WARNING:PhysDesignRules:372 - Gated clock. Clock net
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/RESET_GND_27_o_AND_321_o is sourced by a combinatorial pin.
+   This is not good design practice. Use the CE pin to control the loading of
+   data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
    SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[49]_AND_94_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
@@ -613,10 +613,6 @@ WARNING:PhysDesignRules:372 - Gated clock. Clock net
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[4]_AND_184_o is
-   sourced by a combinatorial pin. This is not good design practice. Use the CE
-   pin to control the loading of data into the flip-flop.
-WARNING:PhysDesignRules:372 - Gated clock. Clock net
    SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[2]_AND_188_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
@@ -625,11 +621,15 @@ WARNING:PhysDesignRules:372 - Gated clock. Clock net
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
-   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[7]_AND_178_o is
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[4]_AND_184_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
    SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[5]_AND_182_o is
+   sourced by a combinatorial pin. This is not good design practice. Use the CE
+   pin to control the loading of data into the flip-flop.
+WARNING:PhysDesignRules:372 - Gated clock. Clock net
+   SREG_CONTROL_INST/SREG_CORE_INST/SPI_MASTER_RESET_SPI_DATA[7]_AND_178_o is
    sourced by a combinatorial pin. This is not good design practice. Use the CE
    pin to control the loading of data into the flip-flop.
 WARNING:PhysDesignRules:372 - Gated clock. Clock net
@@ -9083,10 +9083,10 @@ unused and has been removed.
 " (BUF) removed.
   The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[7].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o" is unused and has been removed.
+44_o" is unused and has been removed.
    Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[7].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o1" (ROM) removed.
+44_o1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[7].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM
 _FFd3" is unused and has been removed.
@@ -9149,10 +9149,10 @@ _FFd2-In" is unused and has been removed.
 _FFd2-In1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[7].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o_bdd1" is unused and has been removed.
+44_o_bdd1" is unused and has been removed.
      Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[7].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o21" (ROM) removed.
+44_o21" (ROM) removed.
       The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[7].I_FIFO_WRITE_SM/I_PIX_count<3>" is
 unused and has been removed.
@@ -9271,10 +9271,10 @@ unused and has been removed.
 " (BUF) removed.
   The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[6].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o" is unused and has been removed.
+44_o" is unused and has been removed.
    Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[6].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o1" (ROM) removed.
+44_o1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[6].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM
 _FFd3" is unused and has been removed.
@@ -9331,10 +9331,10 @@ _FFd2-In" is unused and has been removed.
 _FFd2-In1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[6].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o_bdd1" is unused and has been removed.
+44_o_bdd1" is unused and has been removed.
      Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[6].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o21" (ROM) removed.
+44_o21" (ROM) removed.
       The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[6].I_FIFO_WRITE_SM/I_PIX_count<3>" is
 unused and has been removed.
@@ -9449,10 +9449,10 @@ unused and has been removed.
 " (BUF) removed.
   The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[5].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o" is unused and has been removed.
+44_o" is unused and has been removed.
    Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[5].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o1" (ROM) removed.
+44_o1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[5].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM
 _FFd3" is unused and has been removed.
@@ -9509,10 +9509,10 @@ _FFd2-In" is unused and has been removed.
 _FFd2-In1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[5].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o_bdd1" is unused and has been removed.
+44_o_bdd1" is unused and has been removed.
      Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[5].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o21" (ROM) removed.
+44_o21" (ROM) removed.
       The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[5].I_FIFO_WRITE_SM/I_PIX_count<3>" is
 unused and has been removed.
@@ -9627,10 +9627,10 @@ unused and has been removed.
 " (BUF) removed.
   The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[4].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o" is unused and has been removed.
+44_o" is unused and has been removed.
    Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[4].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o1" (ROM) removed.
+44_o1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[4].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM
 _FFd3" is unused and has been removed.
@@ -9687,10 +9687,10 @@ _FFd2-In" is unused and has been removed.
 _FFd2-In1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[4].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o_bdd1" is unused and has been removed.
+44_o_bdd1" is unused and has been removed.
      Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[4].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o21" (ROM) removed.
+44_o21" (ROM) removed.
       The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[4].I_FIFO_WRITE_SM/I_PIX_count<3>" is
 unused and has been removed.
@@ -9805,10 +9805,10 @@ unused and has been removed.
 " (BUF) removed.
   The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[3].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o" is unused and has been removed.
+44_o" is unused and has been removed.
    Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[3].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o1" (ROM) removed.
+44_o1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[3].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM
 _FFd3" is unused and has been removed.
@@ -9865,10 +9865,10 @@ _FFd2-In" is unused and has been removed.
 _FFd2-In1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[3].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o_bdd1" is unused and has been removed.
+44_o_bdd1" is unused and has been removed.
      Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[3].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o21" (ROM) removed.
+44_o21" (ROM) removed.
       The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[3].I_FIFO_WRITE_SM/I_PIX_count<3>" is
 unused and has been removed.
@@ -9983,10 +9983,10 @@ unused and has been removed.
 " (BUF) removed.
   The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[2].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o" is unused and has been removed.
+44_o" is unused and has been removed.
    Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[2].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o1" (ROM) removed.
+44_o1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[2].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM
 _FFd3" is unused and has been removed.
@@ -10043,10 +10043,10 @@ _FFd2-In" is unused and has been removed.
 _FFd2-In1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[2].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o_bdd1" is unused and has been removed.
+44_o_bdd1" is unused and has been removed.
      Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[2].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o21" (ROM) removed.
+44_o21" (ROM) removed.
       The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[2].I_FIFO_WRITE_SM/I_PIX_count<3>" is
 unused and has been removed.
@@ -10161,10 +10161,10 @@ unused and has been removed.
 " (BUF) removed.
   The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o" is unused and has been removed.
+44_o" is unused and has been removed.
    Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o1" (ROM) removed.
+44_o1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM
 _FFd3" is unused and has been removed.
@@ -10221,10 +10221,10 @@ _FFd2-In" is unused and has been removed.
 _FFd2-In1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o_bdd1" is unused and has been removed.
+44_o_bdd1" is unused and has been removed.
      Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o21" (ROM) removed.
+44_o21" (ROM) removed.
       The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_FIFO_WRITE_SM/I_PIX_count<3>" is
 unused and has been removed.
@@ -10339,10 +10339,10 @@ unused and has been removed.
 " (BUF) removed.
   The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o" is unused and has been removed.
+44_o" is unused and has been removed.
    Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o1" (ROM) removed.
+44_o1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM
 _FFd3" is unused and has been removed.
@@ -10399,10 +10399,10 @@ _FFd2-In" is unused and has been removed.
 _FFd2-In1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o_bdd1" is unused and has been removed.
+44_o_bdd1" is unused and has been removed.
      Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o21" (ROM) removed.
+44_o21" (ROM) removed.
       The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_FIFO_WRITE_SM/I_PIX_count<3>" is
 unused and has been removed.
@@ -10517,10 +10517,10 @@ unused and has been removed.
 " (BUF) removed.
   The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[3].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o" is unused and has been removed.
+44_o" is unused and has been removed.
    Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[3].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o1" (ROM) removed.
+44_o1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[3].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM
 _FFd3" is unused and has been removed.
@@ -10577,10 +10577,10 @@ _FFd2-In" is unused and has been removed.
 _FFd2-In1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[3].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o_bdd1" is unused and has been removed.
+44_o_bdd1" is unused and has been removed.
      Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[3].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o21" (ROM) removed.
+44_o21" (ROM) removed.
       The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[3].I_FIFO_WRITE_SM/I_PIX_count<3>" is
 unused and has been removed.
@@ -10695,10 +10695,10 @@ unused and has been removed.
 " (BUF) removed.
   The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[2].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o" is unused and has been removed.
+44_o" is unused and has been removed.
    Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[2].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o1" (ROM) removed.
+44_o1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[2].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM
 _FFd3" is unused and has been removed.
@@ -10755,10 +10755,10 @@ _FFd2-In" is unused and has been removed.
 _FFd2-In1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[2].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o_bdd1" is unused and has been removed.
+44_o_bdd1" is unused and has been removed.
      Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[2].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o21" (ROM) removed.
+44_o21" (ROM) removed.
       The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[2].I_FIFO_WRITE_SM/I_PIX_count<3>" is
 unused and has been removed.
@@ -10873,10 +10873,10 @@ unused and has been removed.
 " (BUF) removed.
   The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o" is unused and has been removed.
+44_o" is unused and has been removed.
    Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o1" (ROM) removed.
+44_o1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM
 _FFd3" is unused and has been removed.
@@ -10933,10 +10933,10 @@ _FFd2-In" is unused and has been removed.
 _FFd2-In1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o_bdd1" is unused and has been removed.
+44_o_bdd1" is unused and has been removed.
      Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o21" (ROM) removed.
+44_o21" (ROM) removed.
       The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_FIFO_WRITE_SM/I_PIX_count<3>" is
 unused and has been removed.
@@ -11051,10 +11051,10 @@ unused and has been removed.
 " (BUF) removed.
   The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[0].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o" is unused and has been removed.
+44_o" is unused and has been removed.
    Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[0].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o1" (ROM) removed.
+44_o1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[0].I_FIFO_WRITE_SM/I_PRESENT_STATE_WR_FSM
 _FFd3" is unused and has been removed.
@@ -11111,10 +11111,10 @@ _FFd2-In" is unused and has been removed.
 _FFd2-In1" (ROM) removed.
     The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[0].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o_bdd1" is unused and has been removed.
+44_o_bdd1" is unused and has been removed.
      Unused block
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[0].I_FIFO_WRITE_SM/GND_77_o_LVAL_IN_MUX_5
-45_o21" (ROM) removed.
+44_o21" (ROM) removed.
       The signal
 "I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[0].I_FIFO_WRITE_SM/I_PIX_count<3>" is
 unused and has been removed.
