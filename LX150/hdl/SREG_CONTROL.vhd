@@ -202,8 +202,8 @@ begin
 			if MEM_FLAG = '1' then
 			MEM_DATA_BUFFER(23 downto 0) <= MEM_DATA_BUFFER(31 downto 8);
 			MEM_DATA_BUFFER(31 downto 24) <= RX_WORD(7 downto 0);
-			WORD_COUNTER := WORD_COUNTER + 1;
-			INC_MEM_ADD <= '0';
+--			WORD_COUNTER := WORD_COUNTER + 1;
+--			INC_MEM_ADD <= '0';
 			end if;
 
 --		WORD_COUNTER := WORD_COUNTER + 1;
