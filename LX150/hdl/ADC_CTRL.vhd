@@ -773,7 +773,7 @@ begin
 		 C_TP                   => x"D3D3D3D3")			-- training pattern
 	port map (
 		 G_INVERT_MSB           => false,			-- invert MSB sensor data
-		 G_INVERT_LSB           => false,			-- invert LSB sensor data
+		 G_INVERT_LSB           => true,			-- invert LSB sensor data
 	 	-- system signals
 		 RESET                  => RESET,  -- async. reset
 		 ENABLE                 => '1',				-- module activation
@@ -794,7 +794,7 @@ begin
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
 		 d_digif_serial_rst	=> d_digif_serial_rst,
-		 CLOCK_RSTDLY		=> CLOCK_100,
+		 CLOCK_RSTDLY		=> CLOCK_50, -- CLOCK_100
 	       -- debug
 		 DIV_CLK_CS             => open,
 		 DEBUG_IN               => "00000000", --DEBUG_OPTO_SEG_IF,
