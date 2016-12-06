@@ -188,7 +188,7 @@ begin
 	
 --		elsif RX_ACK = '1' and RX_ACK_OLD = '0' then
 --		elsif (RX_ACK'event and RX_ACK = '1') then
-		elsif rising_edge(RX_ACK) then
+		elsif (RX_ACK'event and RX_ACK = '1') then
 			if MEM_FLAG = '0' then
 			SPI_DATA_BUFFER(127 downto 0) <= SPI_DATA_BUFFER(135 downto 8);
 			SPI_DATA_BUFFER(135 downto 128) <= RX_WORD(7 downto 0);
