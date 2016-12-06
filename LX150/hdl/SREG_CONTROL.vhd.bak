@@ -73,7 +73,7 @@ architecture Behavioral of SREG_CONTROL is
 		uart_rx: in STD_LOGIC;
 		uart_tx: out STD_LOGIC;
 
-		ack_flag: out STD_LOGIC -- all is okay
+		ack_flag: out STD_LOGIC -- all is okay (transmission/reception done)
 	);
 	end component;
 
@@ -94,13 +94,13 @@ architecture Behavioral of SREG_CONTROL is
 		port ( 
 		CLOCK 		: in  STD_LOGIC;
 		RESET 		: in  STD_LOGIC;
-		SPI_DATA 	: in  STD_LOGIC_VECTOR(31 downto 0);		-- SPI data
-		CSEL_I 		: in  STD_LOGIC;				-- low load DAC_A; high DAC_B
-		SPI_DATA_LOAD 	: in STD_LOGIC;					-- Load SPI data
-		SPI_SCK 	: inout  STD_LOGIC;				-- SPI clock
-		SPI_SDA 	: inout  STD_LOGIC;				-- SPI data
-		SYNC_DAC_A 	: out  STD_LOGIC;				-- controlled by CSEL_I
-		SYNC_DAC_B 	: out  STD_LOGIC);				-- controlled by CSEL_I
+		SPI_DATA 	: in  STD_LOGIC_VECTOR(31 downto 0);	-- SPI data
+		CSEL_I 		: in  STD_LOGIC;		    	-- low load DAC_A; high DAC_B
+		SPI_DATA_LOAD 	: in STD_LOGIC;			    	-- Load SPI data
+		SPI_SCK 	: inout  STD_LOGIC;		    	-- SPI clock
+		SPI_SDA 	: inout  STD_LOGIC;		    	-- SPI data
+		SYNC_DAC_A 	: out  STD_LOGIC;		    	-- controlled by CSEL_I
+		SYNC_DAC_B 	: out  STD_LOGIC);		    	-- controlled by CSEL_I
 	end component;
 
 	signal SPI_DATA_BUFFER : std_logic_vector(135 downto 0);
@@ -187,8 +187,8 @@ begin
 			MEM_FLAG <= '0';
 			INC_MEM_ADD <= '0';
 	
-		elsif RX_ACK = '1' and RX_ACK_OLD = '0' then
---		elsif (RX_ACK'event and RX_ACK = '1') then
+--		elsif RX_ACK = '1' and RX_ACK_OLD = '0' then
+		elsif (RX_ACK'event and RX_ACK = '1') then
 			if MEM_FLAG = '0' then
 			SPI_DATA_BUFFER(127 downto 0) <= SPI_DATA_BUFFER(135 downto 8);
 			SPI_DATA_BUFFER(135 downto 128) <= RX_WORD(7 downto 0);
