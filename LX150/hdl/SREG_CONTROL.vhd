@@ -188,13 +188,15 @@ begin
 	
 --		elsif RX_ACK = '1' and RX_ACK_OLD = '0' then
 --		elsif (RX_ACK'event and RX_ACK = '1') then
-		elsif (RX_ACK'event and RX_ACK = '1') then
+		elsif rising_edge(RX_ACK) then
 			if MEM_FLAG = '0' then
 			SPI_DATA_BUFFER(127 downto 0) <= SPI_DATA_BUFFER(135 downto 8);
 			SPI_DATA_BUFFER(135 downto 128) <= RX_WORD(7 downto 0);
+			WORD_COUNTER := WORD_COUNTER + 1;
+			INC_MEM_ADD <= '0';
 			end if;
-		--	WORD_COUNTER := WORD_COUNTER + 1;
-		--	INC_MEM_ADD <= '0';
+--			WORD_COUNTER := WORD_COUNTER + 1;
+--			INC_MEM_ADD <= '0';
 		end if;
 
 		if RX_ACK = '1' and RX_ACK_OLD = '0' then
@@ -202,9 +204,12 @@ begin
 			if MEM_FLAG = '1' then
 			MEM_DATA_BUFFER(23 downto 0) <= MEM_DATA_BUFFER(31 downto 8);
 			MEM_DATA_BUFFER(31 downto 24) <= RX_WORD(7 downto 0);
+			WORD_COUNTER := WORD_COUNTER + 1;
+			INC_MEM_ADD <= '0';
 			end if;
-		WORD_COUNTER := WORD_COUNTER + 1;
-		INC_MEM_ADD <= '0';
+
+--		WORD_COUNTER := WORD_COUNTER + 1;
+--		INC_MEM_ADD <= '0';
 		
 		end if;
 
