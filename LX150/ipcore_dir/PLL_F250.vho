@@ -57,6 +57,7 @@
 -- CLK_OUT1___100.000______0.000______50.0______200.000____150.000
 -- CLK_OUT2___250.000______0.000______50.0______280.000____150.000
 -- CLK_OUT3___200.000______0.000______50.0______300.000____150.000
+-- CLK_OUT4____50.000______0.000______50.0______300.000____150.000
 --
 ------------------------------------------------------------------------------
 -- "Input Clock   Freq (MHz)    Input Jitter (UI)"
@@ -73,7 +74,8 @@ port
   -- Clock out ports
   CLK_OUT1          : out    std_logic;
   CLK_OUT2          : out    std_logic;
-  CLK_OUT3          : out    std_logic
+  CLK_OUT3          : out    std_logic;
+  CLK_OUT4          : out    std_logic
  );
 end component;
 
@@ -88,5 +90,6 @@ your_instance_name : PLL_F250
     -- Clock out ports
     CLK_OUT1 => CLK_OUT1,
     CLK_OUT2 => CLK_OUT2,
-    CLK_OUT3 => CLK_OUT3);
+    CLK_OUT3 => CLK_OUT3,
+    CLK_OUT4 => CLK_OUT4);
 -- INST_TAG_END ------ End INSTANTIATION Template ------------

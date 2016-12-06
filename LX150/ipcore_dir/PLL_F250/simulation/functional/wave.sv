@@ -90,7 +90,8 @@ group clear 0 end
 
 group insert \
     {PLL_F250_tb.dut.clk[1]} \
-    {PLL_F250_tb.dut.clk[2]}  \     {PLL_F250_tb.dut.clk[3]} 
+    {PLL_F250_tb.dut.clk[2]}  \     {PLL_F250_tb.dut.clk[3]}  \     {PLL_F250_tb.dut.clk[4]}  
+
 group using {Counters}
 group set -overlay 0
 group set -comment {}
@@ -98,7 +99,8 @@ group clear 0 end
 
 group insert \
     {PLL_F250_tb.dut.counter[1]} \
-    {PLL_F250_tb.dut.counter[2]}  \     {PLL_F250_tb.dut.counter[3]} 
+    {PLL_F250_tb.dut.counter[2]}  \     {PLL_F250_tb.dut.counter[3]}  \     {PLL_F250_tb.dut.counter[4]}  
+
 
 set id [waveform add -signals [list {nc::PLL_F250_tb.COUNT} ]]
 

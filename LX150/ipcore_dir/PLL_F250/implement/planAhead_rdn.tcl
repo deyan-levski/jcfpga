@@ -47,7 +47,7 @@
 # PART OF THIS FILE AT ALL TIMES.
 # 
 
-set device xc6slx45csg324-3
+set device xc6slx150fgg484-3
 set projName PLL_F250
 set design PLL_F250
 set projDir [file dirname [info script]]

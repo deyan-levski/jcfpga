@@ -160,7 +160,8 @@ architecture Behavioral of ADC_CTRL is
 		-- Clock out ports
 			     CLK_OUT1          : out    std_logic;
 			     CLK_OUT2          : out    std_logic;
-			     CLK_OUT3	       : out	std_logic
+			     CLK_OUT3	       : out	std_logic;
+			     CLK_OUT4	       : out	std_logic
 		     );
 	end component;
 
@@ -320,6 +321,8 @@ architecture Behavioral of ADC_CTRL is
 	end component;
 
 	signal CLOCK_I 	 : std_logic;
+	signal CLOCK_50  : std_logic;
+	signal CLOCK_50_N: std_logic;
 	signal CLOCK_100 : std_logic;
 	signal CLOCK_100_N : std_logic;
 	signal CLOCK_200 : std_logic;
@@ -444,7 +447,8 @@ begin
 	-- Clock out ports
 			 CLK_OUT1          => CLOCK_100,
 			 CLK_OUT2          => CLOCK_250,
-			 CLK_OUT3	   => CLOCK_200
+			 CLK_OUT3	   => CLOCK_200,
+			 CLK_OUT4	   => CLOCK_50
 		 );
 
 
@@ -492,6 +496,7 @@ begin
 
 	CLOCK_100_N <= not CLOCK_100;
 	CLOCK_200_N <= not CLOCK_200;
+	CLOCK_50_N <= not CLOCK_50;
 
 	ODDR2_DIGIF_INST : ODDR2
 	generic map(
@@ -500,8 +505,8 @@ begin
 			 SRTYPE => "SYNC") -- Specifies "SYNC" or "ASYNC" set/reset
 	port map (
 			 Q  => CLOCK_DIGIF_OBUFDS, -- 1-bit output data
-			 C0 => CLOCK_200, -- LSBDAT, -- 1-bit clock input
-			 C1 => CLOCK_200_N, -- LSBDAT_N, -- 1-bit clock input
+			 C0 => CLOCK_50, -- LSBDAT, -- 1-bit clock input
+			 C1 => CLOCK_50_N, -- LSBDAT_N, -- 1-bit clock input
 			 CE => '1',   -- 1-bit clock enable input
 			 D0 => '0',   -- 1-bit data input (associated with C0)
 			 D1 => '1',   -- 1-bit data input (associated with C1)
