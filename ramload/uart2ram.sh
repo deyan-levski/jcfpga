@@ -54,7 +54,7 @@ update_progress_bar()
 }
 
 ttyPort=$3
-silenceTime="0.05"
+silenceTime="0.0005"
 
 word=$1
 rate=$2

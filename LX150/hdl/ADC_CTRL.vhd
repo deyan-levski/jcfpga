@@ -323,6 +323,7 @@ architecture Behavioral of ADC_CTRL is
 	signal CLOCK_100 : std_logic;
 	signal CLOCK_100_N : std_logic;
 	signal CLOCK_200 : std_logic;
+	signal CLOCK_200_N : std_logic;
 	signal CLOCK_250 : std_logic;
 	signal CLOCK_250_N : std_logic;
 	signal CLOCK_100_PCLK : std_logic;
@@ -490,6 +491,7 @@ begin
 --|---------------------------------|
 
 	CLOCK_100_N <= not CLOCK_100;
+	CLOCK_200_N <= not CLOCK_200;
 
 	ODDR2_DIGIF_INST : ODDR2
 	generic map(
@@ -498,8 +500,8 @@ begin
 			 SRTYPE => "SYNC") -- Specifies "SYNC" or "ASYNC" set/reset
 	port map (
 			 Q  => CLOCK_DIGIF_OBUFDS, -- 1-bit output data
-			 C0 => CLOCK_100, -- LSBDAT, -- 1-bit clock input
-			 C1 => CLOCK_100_N, -- LSBDAT_N, -- 1-bit clock input
+			 C0 => CLOCK_200, -- LSBDAT, -- 1-bit clock input
+			 C1 => CLOCK_200_N, -- LSBDAT_N, -- 1-bit clock input
 			 CE => '1',   -- 1-bit clock enable input
 			 D0 => '0',   -- 1-bit data input (associated with C0)
 			 D1 => '1',   -- 1-bit data input (associated with C1)
