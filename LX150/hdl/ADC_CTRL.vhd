@@ -712,7 +712,7 @@ begin
 	LVAL_SEQ <= MEMDATA(4);
 	d_row_addr(7 downto 0) <= "00000000";
 
-	GENERATE_DIGIF_RST_LVAL_PROC: process(RESET, CLOCK_100)
+	GENERATE_DIGIF_RST_LVAL_PROC: process(RESET, CLOCK_50)
 		variable digif_rst_cnt: integer range 0 to 1023 :=0;
 		variable stflag: integer range 0 to 1 :=0;
 		variable skip_clks: integer range 0 to 127 :=0;
@@ -724,7 +724,7 @@ begin
 			stflag := 0;
 			LVAL_DLY <= (others => '0');
 			skip_clks :=0;
-		elsif (rising_edge(CLOCK_100)) then
+		elsif (rising_edge(CLOCK_50)) then
 
 			if (LVAL_SEQ = '1' and LVAL_SEQ_OLD = '0') or (stflag = 1) then
 				if digif_rst_cnt = ((134*sdrat)+2) then	-- 134-6=128 words + offset 2
