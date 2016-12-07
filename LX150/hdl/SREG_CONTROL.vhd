@@ -193,7 +193,7 @@ begin
 --			SPI_DATA_BUFFER(127 downto 0) <= SPI_DATA_BUFFER(135 downto 8);
 --			SPI_DATA_BUFFER(135 downto 128) <= RX_WORD(7 downto 0);
 
-			SPI_DATA_BUFFER(135 downto 0) <= RX_WORD(7 downto 0) & SPI_DATA_BUFFER(127 downto 0);
+			SPI_DATA_BUFFER(135 downto 0) <= RX_WORD(7 downto 0) & SPI_DATA_BUFFER(135 downto 8);
 			end if;
 
 			if MEM_FLAG = '1' then
