@@ -108,19 +108,19 @@ For more information, see Period Analysis in the Timing Closure User Guide (UG61
 
  55798 paths analyzed, 8796 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
- Minimum period is   9.522ns.
+ Minimum period is   9.798ns.
 --------------------------------------------------------------------------------
 
-Paths for end point FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[19].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAMB16_X5Y38.DIA0), 1 path
+Paths for end point FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_3 (SLICE_X91Y68.CE), 5 paths
 --------------------------------------------------------------------------------
-Slack (setup path):     0.239ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_14 (FF)
-  Destination:          FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[19].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAM)
+Slack (setup path):     0.101ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT (FF)
+  Destination:          FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_3 (FF)
   Requirement:          5.000ns
-  Data Path Delay:      4.551ns (Levels of Logic = 0)
-  Clock Path Skew:      -0.075ns (0.695 - 0.770)
-  Source Clock:         CLOCK_100 falling at 5.000ns
-  Destination Clock:    CLOCK_100 rising at 10.000ns
+  Data Path Delay:      4.678ns (Levels of Logic = 1)
+  Clock Path Skew:      -0.086ns (0.776 - 0.862)
+  Source Clock:         CLOCK_100 rising at 0.000ns
+  Destination Clock:    CLOCK_100 falling at 5.000ns
   Clock Uncertainty:    0.135ns
 
   Clock Uncertainty:          0.135ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
@@ -129,31 +129,133 @@ Slack (setup path):     0.239ns (requirement - (data path - clock path skew + un
     Discrete Jitter (DJ):       0.200ns
     Phase Error (PE):           0.000ns
 
-  Maximum Data Path at Slow Process Corner: FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_14 to FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[19].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+  Maximum Data Path at Slow Process Corner: I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT to FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_3
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X76Y95.AQ      Tcko                  0.447   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<14>
-                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_14
-    RAMB16_X5Y38.DIA0    net (fanout=9)        3.804   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<14>
-    RAMB16_X5Y38.CLKA    Trdck_DIA             0.300   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[19].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
-                                                       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[19].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+    SLICE_X91Y111.CQ     Tcko                  0.391   I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT
+                                                       I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT
+    SLICE_X91Y66.C5      net (fanout=4)        3.199   I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT
+    SLICE_X91Y66.C       Tilo                  0.259   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<24>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv1
+    SLICE_X91Y68.CE      net (fanout=11)       0.489   FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv
+    SLICE_X91Y68.CLK     Tceck                 0.340   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<2>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_3
     -------------------------------------------------  ---------------------------
-    Total                                      4.551ns (0.747ns logic, 3.804ns route)
-                                                       (16.4% logic, 83.6% route)
+    Total                                      4.678ns (0.990ns logic, 3.688ns route)
+                                                       (21.2% logic, 78.8% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     5.866ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd1 (FF)
+  Destination:          FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_3 (FF)
+  Requirement:          10.000ns
+  Data Path Delay:      3.872ns (Levels of Logic = 1)
+  Clock Path Skew:      -0.127ns (0.687 - 0.814)
+  Source Clock:         CLOCK_100 falling at 5.000ns
+  Destination Clock:    CLOCK_100 falling at 15.000ns
+  Clock Uncertainty:    0.135ns
+
+  Clock Uncertainty:          0.135ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.200ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd1 to FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_3
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X65Y61.BQ      Tcko                  0.391   FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd3
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd1
+    SLICE_X91Y66.C3      net (fanout=50)       2.393   FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd1
+    SLICE_X91Y66.C       Tilo                  0.259   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<24>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv1
+    SLICE_X91Y68.CE      net (fanout=11)       0.489   FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv
+    SLICE_X91Y68.CLK     Tceck                 0.340   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<2>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_3
+    -------------------------------------------------  ---------------------------
+    Total                                      3.872ns (0.990ns logic, 2.882ns route)
+                                                       (25.6% logic, 74.4% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     6.198ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd4 (FF)
+  Destination:          FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_3 (FF)
+  Requirement:          10.000ns
+  Data Path Delay:      3.540ns (Levels of Logic = 1)
+  Clock Path Skew:      -0.127ns (0.687 - 0.814)
+  Source Clock:         CLOCK_100 falling at 5.000ns
+  Destination Clock:    CLOCK_100 falling at 15.000ns
+  Clock Uncertainty:    0.135ns
+
+  Clock Uncertainty:          0.135ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.200ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd4 to FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_3
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X65Y61.DMUX    Tshcko                0.461   FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd3
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd4
+    SLICE_X91Y66.C4      net (fanout=41)       1.991   FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd4
+    SLICE_X91Y66.C       Tilo                  0.259   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<24>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv1
+    SLICE_X91Y68.CE      net (fanout=11)       0.489   FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv
+    SLICE_X91Y68.CLK     Tceck                 0.340   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<2>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_3
+    -------------------------------------------------  ---------------------------
+    Total                                      3.540ns (1.060ns logic, 2.480ns route)
+                                                       (29.9% logic, 70.1% route)
 
 --------------------------------------------------------------------------------
 
-Paths for end point FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[20].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAMB16_X4Y32.ENA), 5 paths
+Paths for end point FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_2 (SLICE_X91Y68.CE), 5 paths
 --------------------------------------------------------------------------------
-Slack (setup path):     0.240ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WREN_1 (FF)
-  Destination:          FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[20].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAM)
+Slack (setup path):     0.125ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT (FF)
+  Destination:          FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_2 (FF)
   Requirement:          5.000ns
-  Data Path Delay:      4.549ns (Levels of Logic = 2)
-  Clock Path Skew:      -0.076ns (0.690 - 0.766)
+  Data Path Delay:      4.654ns (Levels of Logic = 1)
+  Clock Path Skew:      -0.086ns (0.776 - 0.862)
+  Source Clock:         CLOCK_100 rising at 0.000ns
+  Destination Clock:    CLOCK_100 falling at 5.000ns
+  Clock Uncertainty:    0.135ns
+
+  Clock Uncertainty:          0.135ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.200ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT to FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_2
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X91Y111.CQ     Tcko                  0.391   I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT
+                                                       I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT
+    SLICE_X91Y66.C5      net (fanout=4)        3.199   I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT
+    SLICE_X91Y66.C       Tilo                  0.259   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<24>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv1
+    SLICE_X91Y68.CE      net (fanout=11)       0.489   FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv
+    SLICE_X91Y68.CLK     Tceck                 0.316   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<2>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_2
+    -------------------------------------------------  ---------------------------
+    Total                                      4.654ns (0.966ns logic, 3.688ns route)
+                                                       (20.8% logic, 79.2% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     5.890ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd1 (FF)
+  Destination:          FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_2 (FF)
+  Requirement:          10.000ns
+  Data Path Delay:      3.848ns (Levels of Logic = 1)
+  Clock Path Skew:      -0.127ns (0.687 - 0.814)
   Source Clock:         CLOCK_100 falling at 5.000ns
-  Destination Clock:    CLOCK_100 rising at 10.000ns
+  Destination Clock:    CLOCK_100 falling at 15.000ns
   Clock Uncertainty:    0.135ns
 
   Clock Uncertainty:          0.135ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
@@ -162,34 +264,31 @@ Slack (setup path):     0.240ns (requirement - (data path - clock path skew + un
     Discrete Jitter (DJ):       0.200ns
     Phase Error (PE):           0.000ns
 
-  Maximum Data Path at Slow Process Corner: FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WREN_1 to FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[20].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+  Maximum Data Path at Slow Process Corner: FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd1 to FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_2
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X78Y84.CQ      Tcko                  0.408   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WREN_1
-                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WREN_1
-    SLICE_X79Y84.A6      net (fanout=4)        0.299   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WREN_1
-    SLICE_X79Y84.A       Tilo                  0.259   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ena_array<7>
-                                                       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_2
-    SLICE_X79Y84.B6      net (fanout=13)       0.158   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_1
-    SLICE_X79Y84.B       Tilo                  0.259   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ena_array<7>
-                                                       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/bindec_a.bindec_inst_a/Mmux_ENOUT<7>11
-    RAMB16_X4Y32.ENA     net (fanout=3)        2.946   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ena_array<7>
-    RAMB16_X4Y32.CLKA    Trcck_ENA             0.220   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[20].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
-                                                       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[20].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+    SLICE_X65Y61.BQ      Tcko                  0.391   FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd3
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd1
+    SLICE_X91Y66.C3      net (fanout=50)       2.393   FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd1
+    SLICE_X91Y66.C       Tilo                  0.259   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<24>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv1
+    SLICE_X91Y68.CE      net (fanout=11)       0.489   FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv
+    SLICE_X91Y68.CLK     Tceck                 0.316   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<2>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_2
     -------------------------------------------------  ---------------------------
-    Total                                      4.549ns (1.146ns logic, 3.403ns route)
-                                                       (25.2% logic, 74.8% route)
+    Total                                      3.848ns (0.966ns logic, 2.882ns route)
+                                                       (25.1% logic, 74.9% route)
 
 --------------------------------------------------------------------------------
-Slack (setup path):     5.163ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i (FF)
-  Destination:          FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[20].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAM)
+Slack (setup path):     6.222ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd4 (FF)
+  Destination:          FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_2 (FF)
   Requirement:          10.000ns
-  Data Path Delay:      4.626ns (Levels of Logic = 2)
-  Clock Path Skew:      -0.076ns (0.690 - 0.766)
-  Source Clock:         CLOCK_100 rising at 0.000ns
-  Destination Clock:    CLOCK_100 rising at 10.000ns
+  Data Path Delay:      3.516ns (Levels of Logic = 1)
+  Clock Path Skew:      -0.127ns (0.687 - 0.814)
+  Source Clock:         CLOCK_100 falling at 5.000ns
+  Destination Clock:    CLOCK_100 falling at 15.000ns
   Clock Uncertainty:    0.135ns
 
   Clock Uncertainty:          0.135ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
@@ -198,70 +297,34 @@ Slack (setup path):     5.163ns (requirement - (data path - clock path skew + un
     Discrete Jitter (DJ):       0.200ns
     Phase Error (PE):           0.000ns
 
-  Maximum Data Path at Slow Process Corner: FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i to FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[20].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+  Maximum Data Path at Slow Process Corner: FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd4 to FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_2
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X77Y84.AQ      Tcko                  0.391   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg<13>
-                                                       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
-    SLICE_X79Y84.A5      net (fanout=4)        0.393   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
-    SLICE_X79Y84.A       Tilo                  0.259   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ena_array<7>
-                                                       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_2
-    SLICE_X79Y84.B6      net (fanout=13)       0.158   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_1
-    SLICE_X79Y84.B       Tilo                  0.259   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ena_array<7>
-                                                       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/bindec_a.bindec_inst_a/Mmux_ENOUT<7>11
-    RAMB16_X4Y32.ENA     net (fanout=3)        2.946   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ena_array<7>
-    RAMB16_X4Y32.CLKA    Trcck_ENA             0.220   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[20].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
-                                                       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[20].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+    SLICE_X65Y61.DMUX    Tshcko                0.461   FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd3
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd4
+    SLICE_X91Y66.C4      net (fanout=41)       1.991   FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd4
+    SLICE_X91Y66.C       Tilo                  0.259   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<24>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv1
+    SLICE_X91Y68.CE      net (fanout=11)       0.489   FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv
+    SLICE_X91Y68.CLK     Tceck                 0.316   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<2>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_2
     -------------------------------------------------  ---------------------------
-    Total                                      4.626ns (1.129ns logic, 3.497ns route)
-                                                       (24.4% logic, 75.6% route)
-
---------------------------------------------------------------------------------
-Slack (setup path):     5.291ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_11 (FF)
-  Destination:          FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[20].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAM)
-  Requirement:          10.000ns
-  Data Path Delay:      4.498ns (Levels of Logic = 1)
-  Clock Path Skew:      -0.076ns (0.690 - 0.766)
-  Source Clock:         CLOCK_100 rising at 0.000ns
-  Destination Clock:    CLOCK_100 rising at 10.000ns
-  Clock Uncertainty:    0.135ns
-
-  Clock Uncertainty:          0.135ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.200ns
-    Phase Error (PE):           0.000ns
-
-  Maximum Data Path at Slow Process Corner: FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_11 to FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[20].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    SLICE_X81Y84.BQ      Tcko                  0.391   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3<13>
-                                                       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_11
-    SLICE_X79Y84.B3      net (fanout=15)       0.682   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3<11>
-    SLICE_X79Y84.B       Tilo                  0.259   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ena_array<7>
-                                                       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/bindec_a.bindec_inst_a/Mmux_ENOUT<7>11
-    RAMB16_X4Y32.ENA     net (fanout=3)        2.946   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ena_array<7>
-    RAMB16_X4Y32.CLKA    Trcck_ENA             0.220   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[20].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
-                                                       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[20].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
-    -------------------------------------------------  ---------------------------
-    Total                                      4.498ns (0.870ns logic, 3.628ns route)
-                                                       (19.3% logic, 80.7% route)
+    Total                                      3.516ns (1.036ns logic, 2.480ns route)
+                                                       (29.5% logic, 70.5% route)
 
 --------------------------------------------------------------------------------
 
-Paths for end point FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[9].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAMB16_X4Y50.WEA0), 2 paths
+Paths for end point FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_1 (SLICE_X91Y68.CE), 5 paths
 --------------------------------------------------------------------------------
-Slack (setup path):     0.240ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WREN_1 (FF)
-  Destination:          FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[9].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAM)
+Slack (setup path):     0.146ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT (FF)
+  Destination:          FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_1 (FF)
   Requirement:          5.000ns
-  Data Path Delay:      4.589ns (Levels of Logic = 1)
-  Clock Path Skew:      -0.036ns (0.824 - 0.860)
-  Source Clock:         CLOCK_100 falling at 5.000ns
-  Destination Clock:    CLOCK_100 rising at 10.000ns
+  Data Path Delay:      4.633ns (Levels of Logic = 1)
+  Clock Path Skew:      -0.086ns (0.776 - 0.862)
+  Source Clock:         CLOCK_100 rising at 0.000ns
+  Destination Clock:    CLOCK_100 falling at 5.000ns
   Clock Uncertainty:    0.135ns
 
   Clock Uncertainty:          0.135ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
@@ -270,31 +333,31 @@ Slack (setup path):     0.240ns (requirement - (data path - clock path skew + un
     Discrete Jitter (DJ):       0.200ns
     Phase Error (PE):           0.000ns
 
-  Maximum Data Path at Slow Process Corner: FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WREN_1 to FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[9].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+  Maximum Data Path at Slow Process Corner: I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT to FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_1
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X78Y84.CQ      Tcko                  0.408   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WREN_1
-                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WREN_1
-    SLICE_X77Y85.B5      net (fanout=4)        0.418   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WREN_1
-    SLICE_X77Y85.B       Tilo                  0.259   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1<0>
-                                                       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
-    RAMB16_X4Y50.WEA0    net (fanout=124)      3.254   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
-    RAMB16_X4Y50.CLKA    Trcck_WEA             0.250   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[9].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
-                                                       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[9].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+    SLICE_X91Y111.CQ     Tcko                  0.391   I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT
+                                                       I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT
+    SLICE_X91Y66.C5      net (fanout=4)        3.199   I_DUAL_FIFO_LINE_COMBINE/I_LVAL_OUT
+    SLICE_X91Y66.C       Tilo                  0.259   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<24>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv1
+    SLICE_X91Y68.CE      net (fanout=11)       0.489   FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv
+    SLICE_X91Y68.CLK     Tceck                 0.295   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<2>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_1
     -------------------------------------------------  ---------------------------
-    Total                                      4.589ns (0.917ns logic, 3.672ns route)
-                                                       (20.0% logic, 80.0% route)
+    Total                                      4.633ns (0.945ns logic, 3.688ns route)
+                                                       (20.4% logic, 79.6% route)
 
 --------------------------------------------------------------------------------
-Slack (setup path):     5.382ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i (FF)
-  Destination:          FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[9].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAM)
+Slack (setup path):     5.911ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd1 (FF)
+  Destination:          FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_1 (FF)
   Requirement:          10.000ns
-  Data Path Delay:      4.447ns (Levels of Logic = 1)
-  Clock Path Skew:      -0.036ns (0.824 - 0.860)
-  Source Clock:         CLOCK_100 rising at 0.000ns
-  Destination Clock:    CLOCK_100 rising at 10.000ns
+  Data Path Delay:      3.827ns (Levels of Logic = 1)
+  Clock Path Skew:      -0.127ns (0.687 - 0.814)
+  Source Clock:         CLOCK_100 falling at 5.000ns
+  Destination Clock:    CLOCK_100 falling at 15.000ns
   Clock Uncertainty:    0.135ns
 
   Clock Uncertainty:          0.135ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
@@ -303,105 +366,138 @@ Slack (setup path):     5.382ns (requirement - (data path - clock path skew + un
     Discrete Jitter (DJ):       0.200ns
     Phase Error (PE):           0.000ns
 
-  Maximum Data Path at Slow Process Corner: FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i to FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[9].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+  Maximum Data Path at Slow Process Corner: FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd1 to FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_1
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X77Y84.AQ      Tcko                  0.391   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gcx.clkx/gsync_stage[2].wr_stg_inst/Q_reg<13>
-                                                       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
-    SLICE_X77Y85.B6      net (fanout=4)        0.293   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
-    SLICE_X77Y85.B       Tilo                  0.259   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d1<0>
-                                                       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
-    RAMB16_X4Y50.WEA0    net (fanout=124)      3.254   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
-    RAMB16_X4Y50.CLKA    Trcck_WEA             0.250   FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[9].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
-                                                       FX3_SLAVE_INST/FX3_SLAVE_INST/I0_DATA_TO_GPIFII_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[9].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+    SLICE_X65Y61.BQ      Tcko                  0.391   FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd3
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd1
+    SLICE_X91Y66.C3      net (fanout=50)       2.393   FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd1
+    SLICE_X91Y66.C       Tilo                  0.259   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<24>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv1
+    SLICE_X91Y68.CE      net (fanout=11)       0.489   FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv
+    SLICE_X91Y68.CLK     Tceck                 0.295   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<2>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_1
     -------------------------------------------------  ---------------------------
-    Total                                      4.447ns (0.900ns logic, 3.547ns route)
-                                                       (20.2% logic, 79.8% route)
+    Total                                      3.827ns (0.945ns logic, 2.882ns route)
+                                                       (24.7% logic, 75.3% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     6.243ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd4 (FF)
+  Destination:          FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_1 (FF)
+  Requirement:          10.000ns
+  Data Path Delay:      3.495ns (Levels of Logic = 1)
+  Clock Path Skew:      -0.127ns (0.687 - 0.814)
+  Source Clock:         CLOCK_100 falling at 5.000ns
+  Destination Clock:    CLOCK_100 falling at 15.000ns
+  Clock Uncertainty:    0.135ns
+
+  Clock Uncertainty:          0.135ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.200ns
+    Phase Error (PE):           0.000ns
+
+  Maximum Data Path at Slow Process Corner: FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd4 to FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_1
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X65Y61.DMUX    Tshcko                0.461   FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd3
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd4
+    SLICE_X91Y66.C4      net (fanout=41)       1.991   FX3_SLAVE_INST/IMAGE_OUT_INST/I_PRESENT_STATE_FSM_FFd4
+    SLICE_X91Y66.C       Tilo                  0.259   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<24>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv1
+    SLICE_X91Y68.CE      net (fanout=11)       0.489   FX3_SLAVE_INST/IMAGE_OUT_INST/_n0122_inv
+    SLICE_X91Y68.CLK     Tceck                 0.295   FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT<2>
+                                                       FX3_SLAVE_INST/IMAGE_OUT_INST/I_TX_FIFO_WRDAT_1
+    -------------------------------------------------  ---------------------------
+    Total                                      3.495ns (1.015ns logic, 2.480ns route)
+                                                       (29.0% logic, 71.0% route)
 
 --------------------------------------------------------------------------------
 
 Hold Paths: TS_PLL_250_INST_clk0 = PERIOD TIMEGRP "PLL_250_INST_clk0" TS_CLOCK HIGH 50%;
 --------------------------------------------------------------------------------
 
-Paths for end point I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_0 (SLICE_X83Y133.SR), 1 path
+Paths for end point I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAMB16_X4Y64.ADDRB13), 1 path
 --------------------------------------------------------------------------------
-Slack (hold path):      0.354ns (requirement - (clock path skew + uncertainty - data path))
-  Source:               I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0 (FF)
-  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_0 (FF)
+Slack (hold path):      0.265ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc1.count_d2_9 (FF)
+  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAM)
   Requirement:          0.000ns
-  Data Path Delay:      0.362ns (Levels of Logic = 0)
-  Clock Path Skew:      0.008ns (0.071 - 0.063)
+  Data Path Delay:      0.271ns (Levels of Logic = 0)
+  Clock Path Skew:      0.006ns (0.077 - 0.071)
   Source Clock:         CLOCK_100 rising at 10.000ns
   Destination Clock:    CLOCK_100 rising at 10.000ns
   Clock Uncertainty:    0.000ns
 
-  Minimum Data Path at Fast Process Corner: I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0 to I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_0
+  Minimum Data Path at Fast Process Corner: I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc1.count_d2_9 to I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X80Y135.BQ     Tcko                  0.234   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg<2>
-                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0
-    SLICE_X83Y133.SR     net (fanout=6)        0.259   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg<0>
-    SLICE_X83Y133.CLK    Tcksr       (-Th)     0.131   I_DUAL_FIFO_LINE_COMBINE/I_DATA_OUT_SEG<1><3>
-                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_0
+    SLICE_X102Y131.DQ    Tcko                  0.200   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc1.count_d2<9>
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc1.count_d2_9
+    RAMB16_X4Y64.ADDRB13 net (fanout=4)        0.137   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc1.count_d2<9>
+    RAMB16_X4Y64.CLKB    Trckc_ADDRB (-Th)     0.066   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
     -------------------------------------------------  ---------------------------
-    Total                                      0.362ns (0.103ns logic, 0.259ns route)
-                                                       (28.5% logic, 71.5% route)
+    Total                                      0.271ns (0.134ns logic, 0.137ns route)
+                                                       (49.4% logic, 50.6% route)
 
 --------------------------------------------------------------------------------
 
-Paths for end point I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_1 (SLICE_X83Y133.SR), 1 path
+Paths for end point I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAMB16_X4Y64.ADDRB4), 1 path
 --------------------------------------------------------------------------------
-Slack (hold path):      0.357ns (requirement - (clock path skew + uncertainty - data path))
-  Source:               I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0 (FF)
-  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_1 (FF)
+Slack (hold path):      0.346ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc1.count_d2_0 (FF)
+  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAM)
   Requirement:          0.000ns
-  Data Path Delay:      0.365ns (Levels of Logic = 0)
-  Clock Path Skew:      0.008ns (0.071 - 0.063)
+  Data Path Delay:      0.351ns (Levels of Logic = 0)
+  Clock Path Skew:      0.005ns (0.077 - 0.072)
   Source Clock:         CLOCK_100 rising at 10.000ns
   Destination Clock:    CLOCK_100 rising at 10.000ns
   Clock Uncertainty:    0.000ns
 
-  Minimum Data Path at Fast Process Corner: I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0 to I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_1
+  Minimum Data Path at Fast Process Corner: I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc1.count_d2_0 to I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X80Y135.BQ     Tcko                  0.234   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg<2>
-                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0
-    SLICE_X83Y133.SR     net (fanout=6)        0.259   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg<0>
-    SLICE_X83Y133.CLK    Tcksr       (-Th)     0.128   I_DUAL_FIFO_LINE_COMBINE/I_DATA_OUT_SEG<1><3>
-                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_1
+    SLICE_X100Y130.AQ    Tcko                  0.234   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc1.count_d2<0>
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc1.count_d2_0
+    RAMB16_X4Y64.ADDRB4  net (fanout=9)        0.183   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc1.count_d2<0>
+    RAMB16_X4Y64.CLKB    Trckc_ADDRB (-Th)     0.066   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
     -------------------------------------------------  ---------------------------
-    Total                                      0.365ns (0.106ns logic, 0.259ns route)
-                                                       (29.0% logic, 71.0% route)
+    Total                                      0.351ns (0.168ns logic, 0.183ns route)
+                                                       (47.9% logic, 52.1% route)
 
 --------------------------------------------------------------------------------
 
-Paths for end point I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_3 (SLICE_X83Y133.SR), 1 path
+Paths for end point I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAMB16_X4Y64.ADDRB6), 1 path
 --------------------------------------------------------------------------------
 Slack (hold path):      0.358ns (requirement - (clock path skew + uncertainty - data path))
-  Source:               I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0 (FF)
-  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_3 (FF)
+  Source:               I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc1.count_d2_2 (FF)
+  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAM)
   Requirement:          0.000ns
-  Data Path Delay:      0.366ns (Levels of Logic = 0)
-  Clock Path Skew:      0.008ns (0.071 - 0.063)
+  Data Path Delay:      0.361ns (Levels of Logic = 0)
+  Clock Path Skew:      0.003ns (0.077 - 0.074)
   Source Clock:         CLOCK_100 rising at 10.000ns
   Destination Clock:    CLOCK_100 rising at 10.000ns
   Clock Uncertainty:    0.000ns
 
-  Minimum Data Path at Fast Process Corner: I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0 to I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_3
+  Minimum Data Path at Fast Process Corner: I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc1.count_d2_2 to I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X80Y135.BQ     Tcko                  0.234   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg<2>
-                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg_0
-    SLICE_X83Y133.SR     net (fanout=6)        0.259   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/rstblk/ngwrdrst.grst.rd_rst_reg<0>
-    SLICE_X83Y133.CLK    Tcksr       (-Th)     0.127   I_DUAL_FIFO_LINE_COMBINE/I_DATA_OUT_SEG<1><3>
-                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/dout_i_3
+    SLICE_X102Y129.BQ    Tcko                  0.200   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc1.count_d2<4>
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc1.count_d2_2
+    RAMB16_X4Y64.ADDRB6  net (fanout=4)        0.227   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.rd/rpntr/gc1.count_d2<2>
+    RAMB16_X4Y64.CLKB    Trckc_ADDRB (-Th)     0.066   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
     -------------------------------------------------  ---------------------------
-    Total                                      0.366ns (0.107ns logic, 0.259ns route)
-                                                       (29.2% logic, 70.8% route)
+    Total                                      0.361ns (0.134ns logic, 0.227ns route)
+                                                       (37.1% logic, 62.9% route)
 
 --------------------------------------------------------------------------------
 
@@ -412,7 +508,7 @@ Slack: 6.876ns (period - min period limit)
   Min period limit: 3.124ns (320.102MHz) (Trper_CLKA(Fmax))
   Physical resource: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram/CLKA
   Logical resource: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram/CLKA
-  Location pin: RAMB16_X2Y26.CLKA
+  Location pin: RAMB16_X1Y24.CLKA
   Clock network: CLOCK_100
 --------------------------------------------------------------------------------
 Slack: 6.876ns (period - min period limit)
@@ -420,7 +516,7 @@ Slack: 6.876ns (period - min period limit)
   Min period limit: 3.124ns (320.102MHz) (Trper_CLKA(Fmax))
   Physical resource: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram/CLKA
   Logical resource: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram/CLKA
-  Location pin: RAMB16_X2Y24.CLKA
+  Location pin: RAMB16_X1Y22.CLKA
   Clock network: CLOCK_100
 --------------------------------------------------------------------------------
 Slack: 6.876ns (period - min period limit)
@@ -428,7 +524,7 @@ Slack: 6.876ns (period - min period limit)
   Min period limit: 3.124ns (320.102MHz) (Trper_CLKA(Fmax))
   Physical resource: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram/CLKAWRCLK
   Logical resource: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram/CLKAWRCLK
-  Location pin: RAMB8_X2Y23.CLKAWRCLK
+  Location pin: RAMB8_X1Y26.CLKAWRCLK
   Clock network: CLOCK_100
 --------------------------------------------------------------------------------
 
@@ -439,17 +535,17 @@ For more information, see Period Analysis in the Timing Closure User Guide (UG61
 
  1121 paths analyzed, 167 endpoints analyzed, 0 failing endpoints
  0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
- Minimum period is  19.996ns.
+ Minimum period is  19.264ns.
 --------------------------------------------------------------------------------
 
-Paths for end point LVAL_DLY_0 (SLICE_X43Y58.D6), 6 paths
+Paths for end point LVAL_DLY_0 (SLICE_X33Y52.A6), 6 paths
 --------------------------------------------------------------------------------
-Slack (setup path):     0.001ns (requirement - (data path - clock path skew + uncertainty))
+Slack (setup path):     0.184ns (requirement - (data path - clock path skew + uncertainty))
   Source:               BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram (RAM)
   Destination:          LVAL_DLY_0 (FF)
   Requirement:          5.000ns
-  Data Path Delay:      4.271ns (Levels of Logic = 2)
-  Clock Path Skew:      -0.403ns (2.245 - 2.648)
+  Data Path Delay:      4.082ns (Levels of Logic = 2)
+  Clock Path Skew:      -0.409ns (2.247 - 2.656)
   Source Clock:         CLOCK_100 falling at 15.000ns
   Destination Clock:    CLOCK_50 rising at 20.000ns
   Clock Uncertainty:    0.325ns
@@ -464,60 +560,26 @@ Slack (setup path):     0.001ns (requirement - (data path - clock path skew + un
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    RAMB16_X2Y24.DOA4    Trcko_DOA             1.850   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
+    RAMB16_X1Y22.DOA4    Trcko_DOA             1.850   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
                                                        BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
-    SLICE_X43Y52.A6      net (fanout=1)        0.846   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.ram_douta<4>
-    SLICE_X43Y52.A       Tilo                  0.259   LVAL_SEQ_OLD
+    SLICE_X31Y49.A6      net (fanout=1)        1.082   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.ram_douta<4>
+    SLICE_X31Y49.A       Tilo                  0.259   LVAL_SEQ_OLD
                                                        BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux271
-    SLICE_X43Y58.D6      net (fanout=19)       0.994   MEMDATA<4>
-    SLICE_X43Y58.CLK     Tas                   0.322   LVAL_DLY<0>
+    SLICE_X33Y52.A6      net (fanout=19)       0.569   MEMDATA<4>
+    SLICE_X33Y52.CLK     Tas                   0.322   LVAL_DLY<0>
                                                        LVAL_DLY_0_rstpot
                                                        LVAL_DLY_0
     -------------------------------------------------  ---------------------------
-    Total                                      4.271ns (2.431ns logic, 1.840ns route)
-                                                       (56.9% logic, 43.1% route)
+    Total                                      4.082ns (2.431ns logic, 1.651ns route)
+                                                       (59.6% logic, 40.4% route)
 
 --------------------------------------------------------------------------------
-Slack (setup path):     0.003ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram (RAM)
-  Destination:          LVAL_DLY_0 (FF)
-  Requirement:          5.000ns
-  Data Path Delay:      4.262ns (Levels of Logic = 2)
-  Clock Path Skew:      -0.410ns (2.245 - 2.655)
-  Source Clock:         CLOCK_100 falling at 15.000ns
-  Destination Clock:    CLOCK_50 rising at 20.000ns
-  Clock Uncertainty:    0.325ns
-
-  Clock Uncertainty:          0.325ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.300ns
-    Phase Error (PE):           0.140ns
-
-  Maximum Data Path at Slow Process Corner: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram to LVAL_DLY_0
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB8_X2Y23.DOADO4   Trcko_DOA             1.650   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram
-                                                       BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram
-    SLICE_X43Y52.A4      net (fanout=1)        1.037   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.ram_douta<4>
-    SLICE_X43Y52.A       Tilo                  0.259   LVAL_SEQ_OLD
-                                                       BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux271
-    SLICE_X43Y58.D6      net (fanout=19)       0.994   MEMDATA<4>
-    SLICE_X43Y58.CLK     Tas                   0.322   LVAL_DLY<0>
-                                                       LVAL_DLY_0_rstpot
-                                                       LVAL_DLY_0
-    -------------------------------------------------  ---------------------------
-    Total                                      4.262ns (2.231ns logic, 2.031ns route)
-                                                       (52.3% logic, 47.7% route)
-
---------------------------------------------------------------------------------
-Slack (setup path):     0.070ns (requirement - (data path - clock path skew + uncertainty))
+Slack (setup path):     0.288ns (requirement - (data path - clock path skew + uncertainty))
   Source:               BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram (RAM)
   Destination:          LVAL_DLY_0 (FF)
   Requirement:          5.000ns
-  Data Path Delay:      4.209ns (Levels of Logic = 2)
-  Clock Path Skew:      -0.396ns (2.245 - 2.641)
+  Data Path Delay:      3.983ns (Levels of Logic = 2)
+  Clock Path Skew:      -0.404ns (2.247 - 2.651)
   Source Clock:         CLOCK_100 falling at 15.000ns
   Destination Clock:    CLOCK_50 rising at 20.000ns
   Clock Uncertainty:    0.325ns
@@ -532,63 +594,26 @@ Slack (setup path):     0.070ns (requirement - (data path - clock path skew + un
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    RAMB16_X2Y26.DOA4    Trcko_DOA             1.850   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
+    RAMB16_X1Y24.DOA4    Trcko_DOA             1.850   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
                                                        BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
-    SLICE_X43Y52.A1      net (fanout=1)        0.784   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.ram_douta<4>
-    SLICE_X43Y52.A       Tilo                  0.259   LVAL_SEQ_OLD
+    SLICE_X31Y49.A3      net (fanout=1)        0.983   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.ram_douta<4>
+    SLICE_X31Y49.A       Tilo                  0.259   LVAL_SEQ_OLD
                                                        BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux271
-    SLICE_X43Y58.D6      net (fanout=19)       0.994   MEMDATA<4>
-    SLICE_X43Y58.CLK     Tas                   0.322   LVAL_DLY<0>
+    SLICE_X33Y52.A6      net (fanout=19)       0.569   MEMDATA<4>
+    SLICE_X33Y52.CLK     Tas                   0.322   LVAL_DLY<0>
                                                        LVAL_DLY_0_rstpot
                                                        LVAL_DLY_0
     -------------------------------------------------  ---------------------------
-    Total                                      4.209ns (2.431ns logic, 1.778ns route)
-                                                       (57.8% logic, 42.2% route)
+    Total                                      3.983ns (2.431ns logic, 1.552ns route)
+                                                       (61.0% logic, 39.0% route)
 
 --------------------------------------------------------------------------------
-
-Paths for end point GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_8 (SLICE_X43Y55.A6), 6 paths
---------------------------------------------------------------------------------
-Slack (setup path):     0.211ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram (RAM)
-  Destination:          GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_8 (FF)
-  Requirement:          5.000ns
-  Data Path Delay:      4.057ns (Levels of Logic = 2)
-  Clock Path Skew:      -0.407ns (2.241 - 2.648)
-  Source Clock:         CLOCK_100 falling at 15.000ns
-  Destination Clock:    CLOCK_50 rising at 20.000ns
-  Clock Uncertainty:    0.325ns
-
-  Clock Uncertainty:          0.325ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.300ns
-    Phase Error (PE):           0.140ns
-
-  Maximum Data Path at Slow Process Corner: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram to GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_8
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB16_X2Y24.DOA4    Trcko_DOA             1.850   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
-                                                       BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
-    SLICE_X43Y52.A6      net (fanout=1)        0.846   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.ram_douta<4>
-    SLICE_X43Y52.A       Tilo                  0.259   LVAL_SEQ_OLD
-                                                       BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux271
-    SLICE_X43Y55.A6      net (fanout=19)       0.780   MEMDATA<4>
-    SLICE_X43Y55.CLK     Tas                   0.322   GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt<9>
-                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_8_rstpot
-                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_8
-    -------------------------------------------------  ---------------------------
-    Total                                      4.057ns (2.431ns logic, 1.626ns route)
-                                                       (59.9% logic, 40.1% route)
-
---------------------------------------------------------------------------------
-Slack (setup path):     0.213ns (requirement - (data path - clock path skew + uncertainty))
+Slack (setup path):     0.397ns (requirement - (data path - clock path skew + uncertainty))
   Source:               BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram (RAM)
-  Destination:          GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_8 (FF)
+  Destination:          LVAL_DLY_0 (FF)
   Requirement:          5.000ns
-  Data Path Delay:      4.048ns (Levels of Logic = 2)
-  Clock Path Skew:      -0.414ns (2.241 - 2.655)
+  Data Path Delay:      3.881ns (Levels of Logic = 2)
+  Clock Path Skew:      -0.397ns (2.247 - 2.644)
   Source Clock:         CLOCK_100 falling at 15.000ns
   Destination Clock:    CLOCK_50 rising at 20.000ns
   Clock Uncertainty:    0.325ns
@@ -599,67 +624,33 @@ Slack (setup path):     0.213ns (requirement - (data path - clock path skew + un
     Discrete Jitter (DJ):       0.300ns
     Phase Error (PE):           0.140ns
 
-  Maximum Data Path at Slow Process Corner: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram to GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_8
+  Maximum Data Path at Slow Process Corner: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram to LVAL_DLY_0
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    RAMB8_X2Y23.DOADO4   Trcko_DOA             1.650   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram
+    RAMB8_X1Y26.DOADO4   Trcko_DOA             1.650   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram
                                                        BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram
-    SLICE_X43Y52.A4      net (fanout=1)        1.037   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.ram_douta<4>
-    SLICE_X43Y52.A       Tilo                  0.259   LVAL_SEQ_OLD
+    SLICE_X31Y49.A2      net (fanout=1)        1.081   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.ram_douta<4>
+    SLICE_X31Y49.A       Tilo                  0.259   LVAL_SEQ_OLD
                                                        BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux271
-    SLICE_X43Y55.A6      net (fanout=19)       0.780   MEMDATA<4>
-    SLICE_X43Y55.CLK     Tas                   0.322   GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt<9>
-                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_8_rstpot
-                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_8
+    SLICE_X33Y52.A6      net (fanout=19)       0.569   MEMDATA<4>
+    SLICE_X33Y52.CLK     Tas                   0.322   LVAL_DLY<0>
+                                                       LVAL_DLY_0_rstpot
+                                                       LVAL_DLY_0
     -------------------------------------------------  ---------------------------
-    Total                                      4.048ns (2.231ns logic, 1.817ns route)
-                                                       (55.1% logic, 44.9% route)
-
---------------------------------------------------------------------------------
-Slack (setup path):     0.280ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram (RAM)
-  Destination:          GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_8 (FF)
-  Requirement:          5.000ns
-  Data Path Delay:      3.995ns (Levels of Logic = 2)
-  Clock Path Skew:      -0.400ns (2.241 - 2.641)
-  Source Clock:         CLOCK_100 falling at 15.000ns
-  Destination Clock:    CLOCK_50 rising at 20.000ns
-  Clock Uncertainty:    0.325ns
-
-  Clock Uncertainty:          0.325ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.300ns
-    Phase Error (PE):           0.140ns
-
-  Maximum Data Path at Slow Process Corner: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram to GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_8
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB16_X2Y26.DOA4    Trcko_DOA             1.850   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
-                                                       BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
-    SLICE_X43Y52.A1      net (fanout=1)        0.784   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.ram_douta<4>
-    SLICE_X43Y52.A       Tilo                  0.259   LVAL_SEQ_OLD
-                                                       BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux271
-    SLICE_X43Y55.A6      net (fanout=19)       0.780   MEMDATA<4>
-    SLICE_X43Y55.CLK     Tas                   0.322   GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt<9>
-                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_8_rstpot
-                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_8
-    -------------------------------------------------  ---------------------------
-    Total                                      3.995ns (2.431ns logic, 1.564ns route)
-                                                       (60.9% logic, 39.1% route)
+    Total                                      3.881ns (2.231ns logic, 1.650ns route)
+                                                       (57.5% logic, 42.5% route)
 
 --------------------------------------------------------------------------------
 
-Paths for end point GENERATE_DIGIF_RST_LVAL_PROC.skip_clks_6 (SLICE_X39Y54.B6), 6 paths
+Paths for end point GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_9 (SLICE_X29Y51.B6), 6 paths
 --------------------------------------------------------------------------------
-Slack (setup path):     0.212ns (requirement - (data path - clock path skew + uncertainty))
+Slack (setup path):     0.197ns (requirement - (data path - clock path skew + uncertainty))
   Source:               BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram (RAM)
-  Destination:          GENERATE_DIGIF_RST_LVAL_PROC.skip_clks_6 (FF)
+  Destination:          GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_9 (FF)
   Requirement:          5.000ns
-  Data Path Delay:      4.057ns (Levels of Logic = 2)
-  Clock Path Skew:      -0.406ns (2.242 - 2.648)
+  Data Path Delay:      4.072ns (Levels of Logic = 2)
+  Clock Path Skew:      -0.406ns (2.250 - 2.656)
   Source Clock:         CLOCK_100 falling at 15.000ns
   Destination Clock:    CLOCK_50 rising at 20.000ns
   Clock Uncertainty:    0.325ns
@@ -670,64 +661,30 @@ Slack (setup path):     0.212ns (requirement - (data path - clock path skew + un
     Discrete Jitter (DJ):       0.300ns
     Phase Error (PE):           0.140ns
 
-  Maximum Data Path at Slow Process Corner: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram to GENERATE_DIGIF_RST_LVAL_PROC.skip_clks_6
+  Maximum Data Path at Slow Process Corner: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram to GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_9
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    RAMB16_X2Y24.DOA4    Trcko_DOA             1.850   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
+    RAMB16_X1Y22.DOA4    Trcko_DOA             1.850   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
                                                        BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
-    SLICE_X43Y52.A6      net (fanout=1)        0.846   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.ram_douta<4>
-    SLICE_X43Y52.A       Tilo                  0.259   LVAL_SEQ_OLD
+    SLICE_X31Y49.A6      net (fanout=1)        1.082   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.ram_douta<4>
+    SLICE_X31Y49.A       Tilo                  0.259   LVAL_SEQ_OLD
                                                        BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux271
-    SLICE_X39Y54.B6      net (fanout=19)       0.780   MEMDATA<4>
-    SLICE_X39Y54.CLK     Tas                   0.322   GENERATE_DIGIF_RST_LVAL_PROC.skip_clks<6>
-                                                       GENERATE_DIGIF_RST_LVAL_PROC.skip_clks_6_rstpot
-                                                       GENERATE_DIGIF_RST_LVAL_PROC.skip_clks_6
+    SLICE_X29Y51.B6      net (fanout=19)       0.559   MEMDATA<4>
+    SLICE_X29Y51.CLK     Tas                   0.322   GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt<9>
+                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_9_rstpot
+                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_9
     -------------------------------------------------  ---------------------------
-    Total                                      4.057ns (2.431ns logic, 1.626ns route)
-                                                       (59.9% logic, 40.1% route)
+    Total                                      4.072ns (2.431ns logic, 1.641ns route)
+                                                       (59.7% logic, 40.3% route)
 
 --------------------------------------------------------------------------------
-Slack (setup path):     0.214ns (requirement - (data path - clock path skew + uncertainty))
-  Source:               BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram (RAM)
-  Destination:          GENERATE_DIGIF_RST_LVAL_PROC.skip_clks_6 (FF)
-  Requirement:          5.000ns
-  Data Path Delay:      4.048ns (Levels of Logic = 2)
-  Clock Path Skew:      -0.413ns (2.242 - 2.655)
-  Source Clock:         CLOCK_100 falling at 15.000ns
-  Destination Clock:    CLOCK_50 rising at 20.000ns
-  Clock Uncertainty:    0.325ns
-
-  Clock Uncertainty:          0.325ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Total Input Jitter (TIJ):   0.000ns
-    Discrete Jitter (DJ):       0.300ns
-    Phase Error (PE):           0.140ns
-
-  Maximum Data Path at Slow Process Corner: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram to GENERATE_DIGIF_RST_LVAL_PROC.skip_clks_6
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    RAMB8_X2Y23.DOADO4   Trcko_DOA             1.650   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram
-                                                       BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram
-    SLICE_X43Y52.A4      net (fanout=1)        1.037   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.ram_douta<4>
-    SLICE_X43Y52.A       Tilo                  0.259   LVAL_SEQ_OLD
-                                                       BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux271
-    SLICE_X39Y54.B6      net (fanout=19)       0.780   MEMDATA<4>
-    SLICE_X39Y54.CLK     Tas                   0.322   GENERATE_DIGIF_RST_LVAL_PROC.skip_clks<6>
-                                                       GENERATE_DIGIF_RST_LVAL_PROC.skip_clks_6_rstpot
-                                                       GENERATE_DIGIF_RST_LVAL_PROC.skip_clks_6
-    -------------------------------------------------  ---------------------------
-    Total                                      4.048ns (2.231ns logic, 1.817ns route)
-                                                       (55.1% logic, 44.9% route)
-
---------------------------------------------------------------------------------
-Slack (setup path):     0.281ns (requirement - (data path - clock path skew + uncertainty))
+Slack (setup path):     0.301ns (requirement - (data path - clock path skew + uncertainty))
   Source:               BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram (RAM)
-  Destination:          GENERATE_DIGIF_RST_LVAL_PROC.skip_clks_6 (FF)
+  Destination:          GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_9 (FF)
   Requirement:          5.000ns
-  Data Path Delay:      3.995ns (Levels of Logic = 2)
-  Clock Path Skew:      -0.399ns (2.242 - 2.641)
+  Data Path Delay:      3.973ns (Levels of Logic = 2)
+  Clock Path Skew:      -0.401ns (2.250 - 2.651)
   Source Clock:         CLOCK_100 falling at 15.000ns
   Destination Clock:    CLOCK_50 rising at 20.000ns
   Clock Uncertainty:    0.325ns
@@ -738,22 +695,161 @@ Slack (setup path):     0.281ns (requirement - (data path - clock path skew + un
     Discrete Jitter (DJ):       0.300ns
     Phase Error (PE):           0.140ns
 
-  Maximum Data Path at Slow Process Corner: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram to GENERATE_DIGIF_RST_LVAL_PROC.skip_clks_6
+  Maximum Data Path at Slow Process Corner: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram to GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_9
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    RAMB16_X2Y26.DOA4    Trcko_DOA             1.850   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
+    RAMB16_X1Y24.DOA4    Trcko_DOA             1.850   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
                                                        BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
-    SLICE_X43Y52.A1      net (fanout=1)        0.784   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.ram_douta<4>
-    SLICE_X43Y52.A       Tilo                  0.259   LVAL_SEQ_OLD
+    SLICE_X31Y49.A3      net (fanout=1)        0.983   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.ram_douta<4>
+    SLICE_X31Y49.A       Tilo                  0.259   LVAL_SEQ_OLD
                                                        BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux271
-    SLICE_X39Y54.B6      net (fanout=19)       0.780   MEMDATA<4>
-    SLICE_X39Y54.CLK     Tas                   0.322   GENERATE_DIGIF_RST_LVAL_PROC.skip_clks<6>
-                                                       GENERATE_DIGIF_RST_LVAL_PROC.skip_clks_6_rstpot
-                                                       GENERATE_DIGIF_RST_LVAL_PROC.skip_clks_6
+    SLICE_X29Y51.B6      net (fanout=19)       0.559   MEMDATA<4>
+    SLICE_X29Y51.CLK     Tas                   0.322   GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt<9>
+                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_9_rstpot
+                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_9
     -------------------------------------------------  ---------------------------
-    Total                                      3.995ns (2.431ns logic, 1.564ns route)
-                                                       (60.9% logic, 39.1% route)
+    Total                                      3.973ns (2.431ns logic, 1.542ns route)
+                                                       (61.2% logic, 38.8% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     0.410ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram (RAM)
+  Destination:          GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_9 (FF)
+  Requirement:          5.000ns
+  Data Path Delay:      3.871ns (Levels of Logic = 2)
+  Clock Path Skew:      -0.394ns (2.250 - 2.644)
+  Source Clock:         CLOCK_100 falling at 15.000ns
+  Destination Clock:    CLOCK_50 rising at 20.000ns
+  Clock Uncertainty:    0.325ns
+
+  Clock Uncertainty:          0.325ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.300ns
+    Phase Error (PE):           0.140ns
+
+  Maximum Data Path at Slow Process Corner: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram to GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_9
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    RAMB8_X1Y26.DOADO4   Trcko_DOA             1.650   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram
+                                                       BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram
+    SLICE_X31Y49.A2      net (fanout=1)        1.081   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.ram_douta<4>
+    SLICE_X31Y49.A       Tilo                  0.259   LVAL_SEQ_OLD
+                                                       BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux271
+    SLICE_X29Y51.B6      net (fanout=19)       0.559   MEMDATA<4>
+    SLICE_X29Y51.CLK     Tas                   0.322   GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt<9>
+                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_9_rstpot
+                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_9
+    -------------------------------------------------  ---------------------------
+    Total                                      3.871ns (2.231ns logic, 1.640ns route)
+                                                       (57.6% logic, 42.4% route)
+
+--------------------------------------------------------------------------------
+
+Paths for end point GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_6 (SLICE_X29Y50.C3), 6 paths
+--------------------------------------------------------------------------------
+Slack (setup path):     0.200ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram (RAM)
+  Destination:          GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_6 (FF)
+  Requirement:          5.000ns
+  Data Path Delay:      4.070ns (Levels of Logic = 2)
+  Clock Path Skew:      -0.405ns (2.251 - 2.656)
+  Source Clock:         CLOCK_100 falling at 15.000ns
+  Destination Clock:    CLOCK_50 rising at 20.000ns
+  Clock Uncertainty:    0.325ns
+
+  Clock Uncertainty:          0.325ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.300ns
+    Phase Error (PE):           0.140ns
+
+  Maximum Data Path at Slow Process Corner: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram to GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_6
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    RAMB16_X1Y22.DOA4    Trcko_DOA             1.850   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
+                                                       BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
+    SLICE_X31Y49.A6      net (fanout=1)        1.082   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[1].ram.ram_douta<4>
+    SLICE_X31Y49.A       Tilo                  0.259   LVAL_SEQ_OLD
+                                                       BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux271
+    SLICE_X29Y50.C3      net (fanout=19)       0.557   MEMDATA<4>
+    SLICE_X29Y50.CLK     Tas                   0.322   GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt<7>
+                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_6_rstpot
+                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_6
+    -------------------------------------------------  ---------------------------
+    Total                                      4.070ns (2.431ns logic, 1.639ns route)
+                                                       (59.7% logic, 40.3% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     0.304ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram (RAM)
+  Destination:          GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_6 (FF)
+  Requirement:          5.000ns
+  Data Path Delay:      3.971ns (Levels of Logic = 2)
+  Clock Path Skew:      -0.400ns (2.251 - 2.651)
+  Source Clock:         CLOCK_100 falling at 15.000ns
+  Destination Clock:    CLOCK_50 rising at 20.000ns
+  Clock Uncertainty:    0.325ns
+
+  Clock Uncertainty:          0.325ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.300ns
+    Phase Error (PE):           0.140ns
+
+  Maximum Data Path at Slow Process Corner: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram to GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_6
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    RAMB16_X1Y24.DOA4    Trcko_DOA             1.850   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
+                                                       BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SP.SIMPLE_PRIM18.ram
+    SLICE_X31Y49.A3      net (fanout=1)        0.983   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[0].ram.ram_douta<4>
+    SLICE_X31Y49.A       Tilo                  0.259   LVAL_SEQ_OLD
+                                                       BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux271
+    SLICE_X29Y50.C3      net (fanout=19)       0.557   MEMDATA<4>
+    SLICE_X29Y50.CLK     Tas                   0.322   GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt<7>
+                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_6_rstpot
+                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_6
+    -------------------------------------------------  ---------------------------
+    Total                                      3.971ns (2.431ns logic, 1.540ns route)
+                                                       (61.2% logic, 38.8% route)
+
+--------------------------------------------------------------------------------
+Slack (setup path):     0.413ns (requirement - (data path - clock path skew + uncertainty))
+  Source:               BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram (RAM)
+  Destination:          GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_6 (FF)
+  Requirement:          5.000ns
+  Data Path Delay:      3.869ns (Levels of Logic = 2)
+  Clock Path Skew:      -0.393ns (2.251 - 2.644)
+  Source Clock:         CLOCK_100 falling at 15.000ns
+  Destination Clock:    CLOCK_50 rising at 20.000ns
+  Clock Uncertainty:    0.325ns
+
+  Clock Uncertainty:          0.325ns  ((TSJ^2 + TIJ^2)^1/2 + DJ) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Total Input Jitter (TIJ):   0.000ns
+    Discrete Jitter (DJ):       0.300ns
+    Phase Error (PE):           0.140ns
+
+  Maximum Data Path at Slow Process Corner: BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram to GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_6
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    RAMB8_X1Y26.DOADO4   Trcko_DOA             1.650   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram
+                                                       BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.r/s6_noinit.ram/SP.WIDE_PRIM9.ram
+    SLICE_X31Y49.A2      net (fanout=1)        1.081   BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/ramloop[2].ram.ram_douta<4>
+    SLICE_X31Y49.A       Tilo                  0.259   LVAL_SEQ_OLD
+                                                       BLOCKMEM_INST/U0/xst_blk_mem_generator/gnative_mem_map_bmg.native_mem_map_blk_mem_gen/valid.cstr/has_mux_a.A/Mmux_dout_mux271
+    SLICE_X29Y50.C3      net (fanout=19)       0.557   MEMDATA<4>
+    SLICE_X29Y50.CLK     Tas                   0.322   GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt<7>
+                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_6_rstpot
+                                                       GENERATE_DIGIF_RST_LVAL_PROC.digif_rst_cnt_6
+    -------------------------------------------------  ---------------------------
+    Total                                      3.869ns (2.231ns logic, 1.638ns route)
+                                                       (57.7% logic, 42.3% route)
 
 --------------------------------------------------------------------------------
 
@@ -761,13 +857,67 @@ Hold Paths: TS_PLL_250_INST_clkdv = PERIOD TIMEGRP "PLL_250_INST_clkdv" TS_CLOCK
         50%;
 --------------------------------------------------------------------------------
 
-Paths for end point G7TX_DESER_INST/DIGIF_SER_RST_DLY_43 (SLICE_X70Y101.DX), 1 path
+Paths for end point G7TX_DESER_INST/DIGIF_SER_RST_DLY_55 (SLICE_X78Y93.DX), 1 path
 --------------------------------------------------------------------------------
 Slack (hold path):      0.379ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               G7TX_DESER_INST/DIGIF_SER_RST_DLY_54 (FF)
+  Destination:          G7TX_DESER_INST/DIGIF_SER_RST_DLY_55 (FF)
+  Requirement:          0.000ns
+  Data Path Delay:      0.379ns (Levels of Logic = 0)
+  Clock Path Skew:      0.000ns
+  Source Clock:         CLOCK_50 rising at 20.000ns
+  Destination Clock:    CLOCK_50 rising at 20.000ns
+  Clock Uncertainty:    0.000ns
+
+  Minimum Data Path at Fast Process Corner: G7TX_DESER_INST/DIGIF_SER_RST_DLY_54 to G7TX_DESER_INST/DIGIF_SER_RST_DLY_55
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X78Y93.CQ      Tcko                  0.200   G7TX_DESER_INST/DIGIF_SER_RST_DLY<55>
+                                                       G7TX_DESER_INST/DIGIF_SER_RST_DLY_54
+    SLICE_X78Y93.DX      net (fanout=1)        0.131   G7TX_DESER_INST/DIGIF_SER_RST_DLY<54>
+    SLICE_X78Y93.CLK     Tckdi       (-Th)    -0.048   G7TX_DESER_INST/DIGIF_SER_RST_DLY<55>
+                                                       G7TX_DESER_INST/DIGIF_SER_RST_DLY_55
+    -------------------------------------------------  ---------------------------
+    Total                                      0.379ns (0.248ns logic, 0.131ns route)
+                                                       (65.4% logic, 34.6% route)
+
+--------------------------------------------------------------------------------
+
+Paths for end point G7TX_DESER_INST/DIGIF_SER_RST_DLY_39 (SLICE_X65Y85.DX), 1 path
+--------------------------------------------------------------------------------
+Slack (hold path):      0.393ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               G7TX_DESER_INST/DIGIF_SER_RST_DLY_38 (FF)
+  Destination:          G7TX_DESER_INST/DIGIF_SER_RST_DLY_39 (FF)
+  Requirement:          0.000ns
+  Data Path Delay:      0.393ns (Levels of Logic = 0)
+  Clock Path Skew:      0.000ns
+  Source Clock:         CLOCK_50 rising at 20.000ns
+  Destination Clock:    CLOCK_50 rising at 20.000ns
+  Clock Uncertainty:    0.000ns
+
+  Minimum Data Path at Fast Process Corner: G7TX_DESER_INST/DIGIF_SER_RST_DLY_38 to G7TX_DESER_INST/DIGIF_SER_RST_DLY_39
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X65Y85.CQ      Tcko                  0.198   G7TX_DESER_INST/DIGIF_SER_RST_DLY<39>
+                                                       G7TX_DESER_INST/DIGIF_SER_RST_DLY_38
+    SLICE_X65Y85.DX      net (fanout=1)        0.136   G7TX_DESER_INST/DIGIF_SER_RST_DLY<38>
+    SLICE_X65Y85.CLK     Tckdi       (-Th)    -0.059   G7TX_DESER_INST/DIGIF_SER_RST_DLY<39>
+                                                       G7TX_DESER_INST/DIGIF_SER_RST_DLY_39
+    -------------------------------------------------  ---------------------------
+    Total                                      0.393ns (0.257ns logic, 0.136ns route)
+                                                       (65.4% logic, 34.6% route)
+
+--------------------------------------------------------------------------------
+
+Paths for end point G7TX_DESER_INST/DIGIF_SER_RST_DLY_43 (SLICE_X65Y88.DX), 1 path
+--------------------------------------------------------------------------------
+Slack (hold path):      0.393ns (requirement - (clock path skew + uncertainty - data path))
   Source:               G7TX_DESER_INST/DIGIF_SER_RST_DLY_42 (FF)
   Destination:          G7TX_DESER_INST/DIGIF_SER_RST_DLY_43 (FF)
   Requirement:          0.000ns
-  Data Path Delay:      0.379ns (Levels of Logic = 0)
+  Data Path Delay:      0.393ns (Levels of Logic = 0)
   Clock Path Skew:      0.000ns
   Source Clock:         CLOCK_50 rising at 20.000ns
   Destination Clock:    CLOCK_50 rising at 20.000ns
@@ -777,65 +927,11 @@ Slack (hold path):      0.379ns (requirement - (clock path skew + uncertainty - 
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X70Y101.CQ     Tcko                  0.200   G7TX_DESER_INST/DIGIF_SER_RST_DLY<43>
+    SLICE_X65Y88.CQ      Tcko                  0.198   G7TX_DESER_INST/DIGIF_SER_RST_DLY<43>
                                                        G7TX_DESER_INST/DIGIF_SER_RST_DLY_42
-    SLICE_X70Y101.DX     net (fanout=1)        0.131   G7TX_DESER_INST/DIGIF_SER_RST_DLY<42>
-    SLICE_X70Y101.CLK    Tckdi       (-Th)    -0.048   G7TX_DESER_INST/DIGIF_SER_RST_DLY<43>
+    SLICE_X65Y88.DX      net (fanout=1)        0.136   G7TX_DESER_INST/DIGIF_SER_RST_DLY<42>
+    SLICE_X65Y88.CLK     Tckdi       (-Th)    -0.059   G7TX_DESER_INST/DIGIF_SER_RST_DLY<43>
                                                        G7TX_DESER_INST/DIGIF_SER_RST_DLY_43
-    -------------------------------------------------  ---------------------------
-    Total                                      0.379ns (0.248ns logic, 0.131ns route)
-                                                       (65.4% logic, 34.6% route)
-
---------------------------------------------------------------------------------
-
-Paths for end point G7TX_DESER_INST/DIGIF_SER_RST_DLY_11 (SLICE_X69Y95.DX), 1 path
---------------------------------------------------------------------------------
-Slack (hold path):      0.393ns (requirement - (clock path skew + uncertainty - data path))
-  Source:               G7TX_DESER_INST/DIGIF_SER_RST_DLY_10 (FF)
-  Destination:          G7TX_DESER_INST/DIGIF_SER_RST_DLY_11 (FF)
-  Requirement:          0.000ns
-  Data Path Delay:      0.393ns (Levels of Logic = 0)
-  Clock Path Skew:      0.000ns
-  Source Clock:         CLOCK_50 rising at 20.000ns
-  Destination Clock:    CLOCK_50 rising at 20.000ns
-  Clock Uncertainty:    0.000ns
-
-  Minimum Data Path at Fast Process Corner: G7TX_DESER_INST/DIGIF_SER_RST_DLY_10 to G7TX_DESER_INST/DIGIF_SER_RST_DLY_11
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    SLICE_X69Y95.CQ      Tcko                  0.198   G7TX_DESER_INST/DIGIF_SER_RST_DLY<11>
-                                                       G7TX_DESER_INST/DIGIF_SER_RST_DLY_10
-    SLICE_X69Y95.DX      net (fanout=1)        0.136   G7TX_DESER_INST/DIGIF_SER_RST_DLY<10>
-    SLICE_X69Y95.CLK     Tckdi       (-Th)    -0.059   G7TX_DESER_INST/DIGIF_SER_RST_DLY<11>
-                                                       G7TX_DESER_INST/DIGIF_SER_RST_DLY_11
-    -------------------------------------------------  ---------------------------
-    Total                                      0.393ns (0.257ns logic, 0.136ns route)
-                                                       (65.4% logic, 34.6% route)
-
---------------------------------------------------------------------------------
-
-Paths for end point G7TX_DESER_INST/DIGIF_SER_RST_DLY_15 (SLICE_X69Y96.DX), 1 path
---------------------------------------------------------------------------------
-Slack (hold path):      0.393ns (requirement - (clock path skew + uncertainty - data path))
-  Source:               G7TX_DESER_INST/DIGIF_SER_RST_DLY_14 (FF)
-  Destination:          G7TX_DESER_INST/DIGIF_SER_RST_DLY_15 (FF)
-  Requirement:          0.000ns
-  Data Path Delay:      0.393ns (Levels of Logic = 0)
-  Clock Path Skew:      0.000ns
-  Source Clock:         CLOCK_50 rising at 20.000ns
-  Destination Clock:    CLOCK_50 rising at 20.000ns
-  Clock Uncertainty:    0.000ns
-
-  Minimum Data Path at Fast Process Corner: G7TX_DESER_INST/DIGIF_SER_RST_DLY_14 to G7TX_DESER_INST/DIGIF_SER_RST_DLY_15
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    SLICE_X69Y96.CQ      Tcko                  0.198   G7TX_DESER_INST/DIGIF_SER_RST_DLY<15>
-                                                       G7TX_DESER_INST/DIGIF_SER_RST_DLY_14
-    SLICE_X69Y96.DX      net (fanout=1)        0.136   G7TX_DESER_INST/DIGIF_SER_RST_DLY<14>
-    SLICE_X69Y96.CLK     Tckdi       (-Th)    -0.059   G7TX_DESER_INST/DIGIF_SER_RST_DLY<15>
-                                                       G7TX_DESER_INST/DIGIF_SER_RST_DLY_15
     -------------------------------------------------  ---------------------------
     Total                                      0.393ns (0.257ns logic, 0.136ns route)
                                                        (65.4% logic, 34.6% route)
@@ -875,19 +971,19 @@ Timing constraint: TS_PLL_DESER_INST_clkout1 = PERIOD TIMEGRP
 "PLL_DESER_INST_clkout1" TS_CLOCK /         0.166666667 HIGH 50%;
 For more information, see Period Analysis in the Timing Closure User Guide (UG612).
 
- 14341 paths analyzed, 7930 endpoints analyzed, 0 failing endpoints
- 0 timing errors detected. (0 setup errors, 0 hold errors, 0 component switching limit errors)
- Minimum period is  59.488ns.
+ 14341 paths analyzed, 7930 endpoints analyzed, 1 failing endpoint
+ 1 timing error detected. (1 setup error, 0 hold errors, 0 component switching limit errors)
+ Minimum period is  60.029ns.
 --------------------------------------------------------------------------------
 
-Paths for end point I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAMB16_X4Y62.ENA), 2 paths
+Paths for end point I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAMB16_X4Y56.WEA0), 2 paths
 --------------------------------------------------------------------------------
-Slack (setup path):     0.086ns (requirement - (data path - clock path skew + uncertainty))
+Slack (setup path):     -0.004ns (requirement - (data path - clock path skew + uncertainty))
   Source:               I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_9 (FF)
   Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAM)
   Requirement:          10.000ns
-  Data Path Delay:      12.851ns (Levels of Logic = 1)
-  Clock Path Skew:      3.384ns (3.074 - -0.310)
+  Data Path Delay:      12.857ns (Levels of Logic = 1)
+  Clock Path Skew:      3.300ns (3.075 - -0.225)
   Source Clock:         CLOCK_100 rising at 50.000ns
   Destination Clock:    CLOCK_DESER_6BIT rising at 60.000ns
   Clock Uncertainty:    0.447ns
@@ -901,25 +997,25 @@ Slack (setup path):     0.086ns (requirement - (data path - clock path skew + un
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X68Y132.BQ     Tcko                  0.447   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<9>
+    SLICE_X84Y114.BQ     Tcko                  0.447   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<9>
                                                        I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_9
-    SLICE_X96Y131.B3     net (fanout=6)        5.302   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<9>
-    SLICE_X96Y131.B      Tilo                  0.205   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_cepot
+    SLICE_X117Y116.A5    net (fanout=6)        4.438   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<9>
+    SLICE_X117Y116.A     Tilo                  0.259   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
                                                        I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
-    RAMB16_X4Y62.ENA     net (fanout=9)        6.677   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
-    RAMB16_X4Y62.CLKA    Trcck_ENA             0.220   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+    RAMB16_X4Y56.WEA0    net (fanout=9)        7.463   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
+    RAMB16_X4Y56.CLKA    Trcck_WEA             0.250   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
                                                        I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
     -------------------------------------------------  ---------------------------
-    Total                                     12.851ns (0.872ns logic, 11.979ns route)
-                                                       (6.8% logic, 93.2% route)
+    Total                                     12.857ns (0.956ns logic, 11.901ns route)
+                                                       (7.4% logic, 92.6% route)
 
 --------------------------------------------------------------------------------
-Slack (setup path):     51.636ns (requirement - (data path - clock path skew + uncertainty))
+Slack (setup path):     50.817ns (requirement - (data path - clock path skew + uncertainty))
   Source:               I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i (FF)
   Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAM)
   Requirement:          60.000ns
-  Data Path Delay:      8.292ns (Levels of Logic = 1)
-  Clock Path Skew:      0.057ns (0.689 - 0.632)
+  Data Path Delay:      9.039ns (Levels of Logic = 1)
+  Clock Path Skew:      -0.015ns (0.242 - 0.257)
   Source Clock:         CLOCK_DESER_6BIT rising at 0.000ns
   Destination Clock:    CLOCK_DESER_6BIT rising at 60.000ns
   Clock Uncertainty:    0.129ns
@@ -933,28 +1029,28 @@ Slack (setup path):     51.636ns (requirement - (data path - clock path skew + u
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X97Y131.DQ     Tcko                  0.391   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
+    SLICE_X116Y116.AQ    Tcko                  0.447   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
                                                        I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
-    SLICE_X96Y131.B2     net (fanout=4)        0.799   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
-    SLICE_X96Y131.B      Tilo                  0.205   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_cepot
+    SLICE_X117Y116.A1    net (fanout=4)        0.620   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
+    SLICE_X117Y116.A     Tilo                  0.259   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
                                                        I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
-    RAMB16_X4Y62.ENA     net (fanout=9)        6.677   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
-    RAMB16_X4Y62.CLKA    Trcck_ENA             0.220   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+    RAMB16_X4Y56.WEA0    net (fanout=9)        7.463   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
+    RAMB16_X4Y56.CLKA    Trcck_WEA             0.250   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
                                                        I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
     -------------------------------------------------  ---------------------------
-    Total                                      8.292ns (0.816ns logic, 7.476ns route)
-                                                       (9.8% logic, 90.2% route)
+    Total                                      9.039ns (0.956ns logic, 8.083ns route)
+                                                       (10.6% logic, 89.4% route)
 
 --------------------------------------------------------------------------------
 
-Paths for end point I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_1 (SLICE_X96Y130.CE), 2 paths
+Paths for end point I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAMB16_X4Y56.WEA1), 2 paths
 --------------------------------------------------------------------------------
-Slack (setup path):     1.472ns (requirement - (data path - clock path skew + uncertainty))
+Slack (setup path):     0.637ns (requirement - (data path - clock path skew + uncertainty))
   Source:               I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_9 (FF)
-  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_1 (FF)
+  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAM)
   Requirement:          10.000ns
-  Data Path Delay:      11.385ns (Levels of Logic = 1)
-  Clock Path Skew:      3.304ns (2.994 - -0.310)
+  Data Path Delay:      12.216ns (Levels of Logic = 1)
+  Clock Path Skew:      3.300ns (3.075 - -0.225)
   Source Clock:         CLOCK_100 rising at 50.000ns
   Destination Clock:    CLOCK_DESER_6BIT rising at 60.000ns
   Clock Uncertainty:    0.447ns
@@ -964,29 +1060,29 @@ Slack (setup path):     1.472ns (requirement - (data path - clock path skew + un
     Discrete Jitter (DJ):       0.449ns
     Phase Error (PE):           0.219ns
 
-  Maximum Data Path at Slow Process Corner: I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_9 to I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_1
+  Maximum Data Path at Slow Process Corner: I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_9 to I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X68Y132.BQ     Tcko                  0.447   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<9>
+    SLICE_X84Y114.BQ     Tcko                  0.447   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<9>
                                                        I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_9
-    SLICE_X96Y131.B3     net (fanout=6)        5.302   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<9>
-    SLICE_X96Y131.B      Tilo                  0.205   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_cepot
+    SLICE_X117Y116.A5    net (fanout=6)        4.438   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<9>
+    SLICE_X117Y116.A     Tilo                  0.259   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
                                                        I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
-    SLICE_X96Y130.CE     net (fanout=9)        5.096   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
-    SLICE_X96Y130.CLK    Tceck                 0.335   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<5>
-                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_1
+    RAMB16_X4Y56.WEA1    net (fanout=9)        6.822   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
+    RAMB16_X4Y56.CLKA    Trcck_WEA             0.250   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
     -------------------------------------------------  ---------------------------
-    Total                                     11.385ns (0.987ns logic, 10.398ns route)
-                                                       (8.7% logic, 91.3% route)
+    Total                                     12.216ns (0.956ns logic, 11.260ns route)
+                                                       (7.8% logic, 92.2% route)
 
 --------------------------------------------------------------------------------
-Slack (setup path):     53.038ns (requirement - (data path - clock path skew + uncertainty))
+Slack (setup path):     51.458ns (requirement - (data path - clock path skew + uncertainty))
   Source:               I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i (FF)
-  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_1 (FF)
+  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAM)
   Requirement:          60.000ns
-  Data Path Delay:      6.826ns (Levels of Logic = 1)
-  Clock Path Skew:      -0.007ns (0.154 - 0.161)
+  Data Path Delay:      8.398ns (Levels of Logic = 1)
+  Clock Path Skew:      -0.015ns (0.242 - 0.257)
   Source Clock:         CLOCK_DESER_6BIT rising at 0.000ns
   Destination Clock:    CLOCK_DESER_6BIT rising at 60.000ns
   Clock Uncertainty:    0.129ns
@@ -996,32 +1092,32 @@ Slack (setup path):     53.038ns (requirement - (data path - clock path skew + u
     Discrete Jitter (DJ):       0.249ns
     Phase Error (PE):           0.000ns
 
-  Maximum Data Path at Slow Process Corner: I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i to I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_1
+  Maximum Data Path at Slow Process Corner: I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i to I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X97Y131.DQ     Tcko                  0.391   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
+    SLICE_X116Y116.AQ    Tcko                  0.447   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
                                                        I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
-    SLICE_X96Y131.B2     net (fanout=4)        0.799   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
-    SLICE_X96Y131.B      Tilo                  0.205   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_cepot
+    SLICE_X117Y116.A1    net (fanout=4)        0.620   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
+    SLICE_X117Y116.A     Tilo                  0.259   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
                                                        I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
-    SLICE_X96Y130.CE     net (fanout=9)        5.096   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
-    SLICE_X96Y130.CLK    Tceck                 0.335   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<5>
-                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_1
+    RAMB16_X4Y56.WEA1    net (fanout=9)        6.822   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
+    RAMB16_X4Y56.CLKA    Trcck_WEA             0.250   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
     -------------------------------------------------  ---------------------------
-    Total                                      6.826ns (0.931ns logic, 5.895ns route)
-                                                       (13.6% logic, 86.4% route)
+    Total                                      8.398ns (0.956ns logic, 7.442ns route)
+                                                       (11.4% logic, 88.6% route)
 
 --------------------------------------------------------------------------------
 
-Paths for end point I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_5 (SLICE_X96Y130.CE), 2 paths
+Paths for end point I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAMB16_X4Y56.WEA2), 2 paths
 --------------------------------------------------------------------------------
-Slack (setup path):     1.492ns (requirement - (data path - clock path skew + uncertainty))
+Slack (setup path):     0.642ns (requirement - (data path - clock path skew + uncertainty))
   Source:               I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_9 (FF)
-  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_5 (FF)
+  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAM)
   Requirement:          10.000ns
-  Data Path Delay:      11.365ns (Levels of Logic = 1)
-  Clock Path Skew:      3.304ns (2.994 - -0.310)
+  Data Path Delay:      12.211ns (Levels of Logic = 1)
+  Clock Path Skew:      3.300ns (3.075 - -0.225)
   Source Clock:         CLOCK_100 rising at 50.000ns
   Destination Clock:    CLOCK_DESER_6BIT rising at 60.000ns
   Clock Uncertainty:    0.447ns
@@ -1031,29 +1127,29 @@ Slack (setup path):     1.492ns (requirement - (data path - clock path skew + un
     Discrete Jitter (DJ):       0.449ns
     Phase Error (PE):           0.219ns
 
-  Maximum Data Path at Slow Process Corner: I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_9 to I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_5
+  Maximum Data Path at Slow Process Corner: I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_9 to I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X68Y132.BQ     Tcko                  0.447   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<9>
+    SLICE_X84Y114.BQ     Tcko                  0.447   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<9>
                                                        I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_9
-    SLICE_X96Y131.B3     net (fanout=6)        5.302   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<9>
-    SLICE_X96Y131.B      Tilo                  0.205   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_cepot
+    SLICE_X117Y116.A5    net (fanout=6)        4.438   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<9>
+    SLICE_X117Y116.A     Tilo                  0.259   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
                                                        I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
-    SLICE_X96Y130.CE     net (fanout=9)        5.096   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
-    SLICE_X96Y130.CLK    Tceck                 0.315   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<5>
-                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_5
+    RAMB16_X4Y56.WEA2    net (fanout=9)        6.767   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
+    RAMB16_X4Y56.CLKA    Trcck_WEA             0.300   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
     -------------------------------------------------  ---------------------------
-    Total                                     11.365ns (0.967ns logic, 10.398ns route)
-                                                       (8.5% logic, 91.5% route)
+    Total                                     12.211ns (1.006ns logic, 11.205ns route)
+                                                       (8.2% logic, 91.8% route)
 
 --------------------------------------------------------------------------------
-Slack (setup path):     53.058ns (requirement - (data path - clock path skew + uncertainty))
+Slack (setup path):     51.463ns (requirement - (data path - clock path skew + uncertainty))
   Source:               I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i (FF)
-  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_5 (FF)
+  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram (RAM)
   Requirement:          60.000ns
-  Data Path Delay:      6.806ns (Levels of Logic = 1)
-  Clock Path Skew:      -0.007ns (0.154 - 0.161)
+  Data Path Delay:      8.393ns (Levels of Logic = 1)
+  Clock Path Skew:      -0.015ns (0.242 - 0.257)
   Source Clock:         CLOCK_DESER_6BIT rising at 0.000ns
   Destination Clock:    CLOCK_DESER_6BIT rising at 60.000ns
   Clock Uncertainty:    0.129ns
@@ -1063,21 +1159,21 @@ Slack (setup path):     53.058ns (requirement - (data path - clock path skew + u
     Discrete Jitter (DJ):       0.249ns
     Phase Error (PE):           0.000ns
 
-  Maximum Data Path at Slow Process Corner: I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i to I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_5
+  Maximum Data Path at Slow Process Corner: I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i to I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X97Y131.DQ     Tcko                  0.391   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
+    SLICE_X116Y116.AQ    Tcko                  0.447   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
                                                        I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
-    SLICE_X96Y131.B2     net (fanout=4)        0.799   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
-    SLICE_X96Y131.B      Tilo                  0.205   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_cepot
+    SLICE_X117Y116.A1    net (fanout=4)        0.620   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
+    SLICE_X117Y116.A     Tilo                  0.259   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
                                                        I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
-    SLICE_X96Y130.CE     net (fanout=9)        5.096   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
-    SLICE_X96Y130.CLK    Tceck                 0.315   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count<5>
-                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_5
+    RAMB16_X4Y56.WEA2    net (fanout=9)        6.767   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/ram_wr_en
+    RAMB16_X4Y56.CLKA    Trcck_WEA             0.300   I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP2_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram
     -------------------------------------------------  ---------------------------
-    Total                                      6.806ns (0.911ns logic, 5.895ns route)
-                                                       (13.4% logic, 86.6% route)
+    Total                                      8.393ns (1.006ns logic, 7.387ns route)
+                                                       (12.0% logic, 88.0% route)
 
 --------------------------------------------------------------------------------
 
@@ -1085,47 +1181,14 @@ Hold Paths: TS_PLL_DESER_INST_clkout1 = PERIOD TIMEGRP "PLL_DESER_INST_clkout1" 
         0.166666667 HIGH 50%;
 --------------------------------------------------------------------------------
 
-Paths for end point G3TX_DESER_INST/I_BIT_SLIP_POS_AUTO_0 (SLICE_X76Y90.A6), 1 path
+Paths for end point I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_2 (SLICE_X59Y145.CE), 2 paths
 --------------------------------------------------------------------------------
-Slack (hold path):      0.048ns (requirement - (clock path skew + uncertainty - data path))
-  Source:               d_digif_serial_rst (FF)
-  Destination:          G3TX_DESER_INST/I_BIT_SLIP_POS_AUTO_0 (FF)
-  Requirement:          0.000ns
-  Data Path Delay:      4.009ns (Levels of Logic = 1)
-  Clock Path Skew:      3.465ns (3.698 - 0.233)
-  Source Clock:         CLOCK_50 rising at 60.000ns
-  Destination Clock:    CLOCK_DESER_6BIT rising at 60.000ns
-  Clock Uncertainty:    0.496ns
-
-  Clock Uncertainty:          0.496ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
-    Total System Jitter (TSJ):  0.070ns
-    Discrete Jitter (DJ):       0.549ns
-    Phase Error (PE):           0.219ns
-
-  Minimum Data Path at Slow Process Corner: d_digif_serial_rst to G3TX_DESER_INST/I_BIT_SLIP_POS_AUTO_0
-    Location             Delay type         Delay(ns)  Physical Resource
-                                                       Logical Resource(s)
-    -------------------------------------------------  -------------------
-    SLICE_X43Y58.AQ      Tcko                  0.368   LVAL_DLY<0>
-                                                       d_digif_serial_rst
-    SLICE_X76Y90.A6      net (fanout=41)       3.400   d_digif_serial_rst_OBUF
-    SLICE_X76Y90.CLK     Tah         (-Th)    -0.241   G3TX_DESER_INST/I_BIT_SLIP_POS_AUTO<1>
-                                                       G3TX_DESER_INST/Mmux_GND_38_o_GND_38_o_mux_8_OUT1
-                                                       G3TX_DESER_INST/I_BIT_SLIP_POS_AUTO_0
-    -------------------------------------------------  ---------------------------
-    Total                                      4.009ns (0.609ns logic, 3.400ns route)
-                                                       (15.2% logic, 84.8% route)
-
---------------------------------------------------------------------------------
-
-Paths for end point I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_3 (SLICE_X94Y157.CE), 2 paths
---------------------------------------------------------------------------------
-Slack (hold path):      0.059ns (requirement - (clock path skew + uncertainty - data path))
+Slack (hold path):      0.045ns (requirement - (clock path skew + uncertainty - data path))
   Source:               I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_7 (FF)
-  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_3 (FF)
+  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_2 (FF)
   Requirement:          0.000ns
-  Data Path Delay:      4.022ns (Levels of Logic = 1)
-  Clock Path Skew:      3.516ns (3.576 - 0.060)
+  Data Path Delay:      4.105ns (Levels of Logic = 1)
+  Clock Path Skew:      3.613ns (3.758 - 0.145)
   Source Clock:         CLOCK_100 rising at 60.000ns
   Destination Clock:    CLOCK_DESER_6BIT rising at 60.000ns
   Clock Uncertainty:    0.447ns
@@ -1135,81 +1198,172 @@ Slack (hold path):      0.059ns (requirement - (clock path skew + uncertainty - 
     Discrete Jitter (DJ):       0.449ns
     Phase Error (PE):           0.219ns
 
-  Minimum Data Path at Slow Process Corner: I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_7 to I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_3
+  Minimum Data Path at Slow Process Corner: I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_7 to I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_2
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X68Y132.AMUX   Tshcko                0.460   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<9>
+    SLICE_X84Y114.AMUX   Tshcko                0.460   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<9>
                                                        I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_7
-    SLICE_X95Y157.A2     net (fanout=18)       2.837   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<7>
-    SLICE_X95Y157.A      Tilo                  0.244   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<5>
-                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_1
-    SLICE_X94Y157.CE     net (fanout=2)        0.786   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
-    SLICE_X94Y157.CLK    Tckce       (-Th)     0.305   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3<5>
-                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_3
+    SLICE_X59Y145.A4     net (fanout=18)       3.229   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<7>
+    SLICE_X59Y145.A      Tilo                  0.244   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<5>
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_1
+    SLICE_X59Y145.CE     net (fanout=3)        0.273   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
+    SLICE_X59Y145.CLK    Tckce       (-Th)     0.101   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<5>
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_2
     -------------------------------------------------  ---------------------------
-    Total                                      4.022ns (0.399ns logic, 3.623ns route)
-                                                       (9.9% logic, 90.1% route)
+    Total                                      4.105ns (0.603ns logic, 3.502ns route)
+                                                       (14.7% logic, 85.3% route)
 
 --------------------------------------------------------------------------------
-Slack (hold path):      1.210ns (requirement - (clock path skew + uncertainty - data path))
-  Source:               I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i (FF)
-  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_3 (FF)
+Slack (hold path):      1.216ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i (FF)
+  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_2 (FF)
   Requirement:          0.000ns
-  Data Path Delay:      1.136ns (Levels of Logic = 1)
-  Clock Path Skew:      -0.074ns (0.351 - 0.425)
+  Data Path Delay:      1.221ns (Levels of Logic = 1)
+  Clock Path Skew:      0.005ns (0.078 - 0.073)
   Source Clock:         CLOCK_DESER_6BIT rising at 60.000ns
   Destination Clock:    CLOCK_DESER_6BIT rising at 60.000ns
   Clock Uncertainty:    0.000ns
 
-  Minimum Data Path at Fast Process Corner: I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i to I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_3
+  Minimum Data Path at Fast Process Corner: I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i to I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_2
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X96Y160.AQ     Tcko                  0.200   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
-                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
-    SLICE_X95Y157.A4     net (fanout=4)        0.450   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
-    SLICE_X95Y157.A      Tilo                  0.156   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<5>
-                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_1
-    SLICE_X94Y157.CE     net (fanout=2)        0.432   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
-    SLICE_X94Y157.CLK    Tckce       (-Th)     0.102   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3<5>
-                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[7].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d3_3
+    SLICE_X54Y146.DQ     Tcko                  0.200   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
+    SLICE_X59Y145.A5     net (fanout=4)        0.541   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
+    SLICE_X59Y145.A      Tilo                  0.156   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<5>
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_1
+    SLICE_X59Y145.CE     net (fanout=3)        0.143   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
+    SLICE_X59Y145.CLK    Tckce       (-Th)    -0.181   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<5>
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_2
     -------------------------------------------------  ---------------------------
-    Total                                      1.136ns (0.254ns logic, 0.882ns route)
-                                                       (22.4% logic, 77.6% route)
+    Total                                      1.221ns (0.537ns logic, 0.684ns route)
+                                                       (44.0% logic, 56.0% route)
 
 --------------------------------------------------------------------------------
 
-Paths for end point G6TX_DESER_INST/I_BIT_SLIP_1A_MSB_FLAG (SLICE_X106Y127.A1), 1 path
+Paths for end point I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_5 (SLICE_X59Y145.CE), 2 paths
 --------------------------------------------------------------------------------
-Slack (hold path):      0.068ns (requirement - (clock path skew + uncertainty - data path))
-  Source:               G7TX_DESER_INST/DIGIF_SER_RST_DLY_63 (FF)
-  Destination:          G6TX_DESER_INST/I_BIT_SLIP_1A_MSB_FLAG (FF)
+Slack (hold path):      0.065ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_7 (FF)
+  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_5 (FF)
   Requirement:          0.000ns
-  Data Path Delay:      4.022ns (Levels of Logic = 1)
-  Clock Path Skew:      3.458ns (3.655 - 0.197)
-  Source Clock:         CLOCK_50 rising at 60.000ns
+  Data Path Delay:      4.125ns (Levels of Logic = 1)
+  Clock Path Skew:      3.613ns (3.758 - 0.145)
+  Source Clock:         CLOCK_100 rising at 60.000ns
   Destination Clock:    CLOCK_DESER_6BIT rising at 60.000ns
-  Clock Uncertainty:    0.496ns
+  Clock Uncertainty:    0.447ns
 
-  Clock Uncertainty:          0.496ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+  Clock Uncertainty:          0.447ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
     Total System Jitter (TSJ):  0.070ns
-    Discrete Jitter (DJ):       0.549ns
+    Discrete Jitter (DJ):       0.449ns
     Phase Error (PE):           0.219ns
 
-  Minimum Data Path at Slow Process Corner: G7TX_DESER_INST/DIGIF_SER_RST_DLY_63 to G6TX_DESER_INST/I_BIT_SLIP_1A_MSB_FLAG
+  Minimum Data Path at Slow Process Corner: I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_7 to I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_5
     Location             Delay type         Delay(ns)  Physical Resource
                                                        Logical Resource(s)
     -------------------------------------------------  -------------------
-    SLICE_X78Y111.DQ     Tcko                  0.384   G7TX_DESER_INST/DIGIF_SER_RST_DLY<63>
-                                                       G7TX_DESER_INST/DIGIF_SER_RST_DLY_63
-    SLICE_X106Y127.A1    net (fanout=20)       3.459   G7TX_DESER_INST/DIGIF_SER_RST_DLY<63>
-    SLICE_X106Y127.CLK   Tah         (-Th)    -0.179   G7TX_DESER_INST/I_BIT_SLIP_1A_MSB_FLAG
-                                                       G6TX_DESER_INST/I_BIT_SLIP_1A_MSB_FLAG_rstpot
-                                                       G6TX_DESER_INST/I_BIT_SLIP_1A_MSB_FLAG
+    SLICE_X84Y114.AMUX   Tshcko                0.460   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<9>
+                                                       I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_7
+    SLICE_X59Y145.A4     net (fanout=18)       3.229   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<7>
+    SLICE_X59Y145.A      Tilo                  0.244   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<5>
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_1
+    SLICE_X59Y145.CE     net (fanout=3)        0.273   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
+    SLICE_X59Y145.CLK    Tckce       (-Th)     0.081   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<5>
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_5
     -------------------------------------------------  ---------------------------
-    Total                                      4.022ns (0.563ns logic, 3.459ns route)
-                                                       (14.0% logic, 86.0% route)
+    Total                                      4.125ns (0.623ns logic, 3.502ns route)
+                                                       (15.1% logic, 84.9% route)
+
+--------------------------------------------------------------------------------
+Slack (hold path):      1.217ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i (FF)
+  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_5 (FF)
+  Requirement:          0.000ns
+  Data Path Delay:      1.222ns (Levels of Logic = 1)
+  Clock Path Skew:      0.005ns (0.078 - 0.073)
+  Source Clock:         CLOCK_DESER_6BIT rising at 60.000ns
+  Destination Clock:    CLOCK_DESER_6BIT rising at 60.000ns
+  Clock Uncertainty:    0.000ns
+
+  Minimum Data Path at Fast Process Corner: I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i to I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_5
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X54Y146.DQ     Tcko                  0.200   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
+    SLICE_X59Y145.A5     net (fanout=4)        0.541   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
+    SLICE_X59Y145.A      Tilo                  0.156   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<5>
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_1
+    SLICE_X59Y145.CE     net (fanout=3)        0.143   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
+    SLICE_X59Y145.CLK    Tckce       (-Th)    -0.182   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<5>
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_5
+    -------------------------------------------------  ---------------------------
+    Total                                      1.222ns (0.538ns logic, 0.684ns route)
+                                                       (44.0% logic, 56.0% route)
+
+--------------------------------------------------------------------------------
+
+Paths for end point I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_3 (SLICE_X59Y145.CE), 2 paths
+--------------------------------------------------------------------------------
+Slack (hold path):      0.073ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_7 (FF)
+  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_3 (FF)
+  Requirement:          0.000ns
+  Data Path Delay:      4.133ns (Levels of Logic = 1)
+  Clock Path Skew:      3.613ns (3.758 - 0.145)
+  Source Clock:         CLOCK_100 rising at 60.000ns
+  Destination Clock:    CLOCK_DESER_6BIT rising at 60.000ns
+  Clock Uncertainty:    0.447ns
+
+  Clock Uncertainty:          0.447ns  ((TSJ^2 + DJ^2)^1/2) / 2 + PE
+    Total System Jitter (TSJ):  0.070ns
+    Discrete Jitter (DJ):       0.449ns
+    Phase Error (PE):           0.219ns
+
+  Minimum Data Path at Slow Process Corner: I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_7 to I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_3
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X84Y114.AMUX   Tshcko                0.460   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<9>
+                                                       I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO_7
+    SLICE_X59Y145.A4     net (fanout=18)       3.229   I_DUAL_FIFO_LINE_COMBINE/I_ENA_WRITE_FIFO<7>
+    SLICE_X59Y145.A      Tilo                  0.244   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<5>
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_1
+    SLICE_X59Y145.CE     net (fanout=3)        0.273   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
+    SLICE_X59Y145.CLK    Tckce       (-Th)     0.073   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<5>
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_3
+    -------------------------------------------------  ---------------------------
+    Total                                      4.133ns (0.631ns logic, 3.502ns route)
+                                                       (15.3% logic, 84.7% route)
+
+--------------------------------------------------------------------------------
+Slack (hold path):      1.222ns (requirement - (clock path skew + uncertainty - data path))
+  Source:               I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i (FF)
+  Destination:          I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_3 (FF)
+  Requirement:          0.000ns
+  Data Path Delay:      1.227ns (Levels of Logic = 1)
+  Clock Path Skew:      0.005ns (0.078 - 0.073)
+  Source Clock:         CLOCK_DESER_6BIT rising at 60.000ns
+  Destination Clock:    CLOCK_DESER_6BIT rising at 60.000ns
+  Clock Uncertainty:    0.000ns
+
+  Minimum Data Path at Fast Process Corner: I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i to I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_3
+    Location             Delay type         Delay(ns)  Physical Resource
+                                                       Logical Resource(s)
+    -------------------------------------------------  -------------------
+    SLICE_X54Y146.DQ     Tcko                  0.200   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
+    SLICE_X59Y145.A5     net (fanout=4)        0.541   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/gwas.wsts/ram_full_fb_i
+    SLICE_X59Y145.A      Tilo                  0.156   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<5>
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1_1
+    SLICE_X59Y145.CE     net (fanout=3)        0.143   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/ram_wr_en_i1
+    SLICE_X59Y145.CLK    Tckce       (-Th)    -0.187   I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2<5>
+                                                       I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[4].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.gl0.wr/wpntr/gic0.gc1.count_d2_3
+    -------------------------------------------------  ---------------------------
+    Total                                      1.227ns (0.543ns logic, 0.684ns route)
+                                                       (44.3% logic, 55.7% route)
 
 --------------------------------------------------------------------------------
 
@@ -1221,7 +1375,7 @@ Slack: 56.876ns (period - min period limit)
   Min period limit: 3.124ns (320.102MHz) (Trper_CLKA(Fmax))
   Physical resource: I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram/CLKA
   Logical resource: I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[0].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram/CLKA
-  Location pin: RAMB16_X4Y60.CLKA
+  Location pin: RAMB16_X4Y52.CLKA
   Clock network: CLOCK_DESER_6BIT
 --------------------------------------------------------------------------------
 Slack: 56.876ns (period - min period limit)
@@ -1229,7 +1383,7 @@ Slack: 56.876ns (period - min period limit)
   Min period limit: 3.124ns (320.102MHz) (Trper_CLKA(Fmax))
   Physical resource: I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram/CLKA
   Logical resource: I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[1].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram/CLKA
-  Location pin: RAMB16_X4Y68.CLKA
+  Location pin: RAMB16_X4Y60.CLKA
   Clock network: CLOCK_DESER_6BIT
 --------------------------------------------------------------------------------
 Slack: 56.876ns (period - min period limit)
@@ -1237,7 +1391,7 @@ Slack: 56.876ns (period - min period limit)
   Min period limit: 3.124ns (320.102MHz) (Trper_CLKA(Fmax))
   Physical resource: I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[2].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram/CLKA
   Logical resource: I_DUAL_FIFO_LINE_COMBINE/GROUP1_FIFOS[2].I_SEG_FIFO/U0/xst_fifo_generator/gconvfifo.rf/grf.rf/gntv_or_sync_fifo.mem/gbm.gbmg.gbmga.ngecc.bmg/gnativebmg.native_blk_mem_gen/valid.cstr/ramloop[0].ram.r/s6_noinit.ram/SDP.SIMPLE_PRIM18.ram/CLKA
-  Location pin: RAMB16_X3Y62.CLKA
+  Location pin: RAMB16_X3Y52.CLKA
   Clock network: CLOCK_DESER_6BIT
 --------------------------------------------------------------------------------
 
@@ -1258,15 +1412,15 @@ Derived Constraints for TS_CLOCK
 |           Constraint          | Requirement |-------------+-------------|-------------+-------------|-------------+-------------|
 |                               |             |   Direct    | Derivative  |   Direct    | Derivative  |   Direct    | Derivative  |
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
-|TS_CLOCK                       |     10.000ns|      5.340ns|      9.998ns|            0|            0|            0|        71260|
+|TS_CLOCK                       |     10.000ns|      5.340ns|     10.005ns|            0|            1|            0|        71260|
 | TS_PLL_250_INST_clkfx         |      4.000ns|      1.730ns|          N/A|            0|            0|            0|            0|
-| TS_PLL_250_INST_clk0          |     10.000ns|      9.522ns|          N/A|            0|            0|        55798|            0|
-| TS_PLL_250_INST_clkdv         |     20.000ns|     19.996ns|          N/A|            0|            0|         1121|            0|
-| TS_PLL_DESER_INST_clkout1     |     60.000ns|     59.488ns|          N/A|            0|            0|        14341|            0|
+| TS_PLL_250_INST_clk0          |     10.000ns|      9.798ns|          N/A|            0|            0|        55798|            0|
+| TS_PLL_250_INST_clkdv         |     20.000ns|     19.264ns|          N/A|            0|            0|         1121|            0|
+| TS_PLL_DESER_INST_clkout1     |     60.000ns|     60.029ns|          N/A|            1|            0|        14341|            0|
 | TS_CLOCK_DESER_1BIT           |     10.000ns|          N/A|          N/A|            0|            0|            0|            0|
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 
-All constraints were met.
+1 constraint not met.
 
 
 Data Sheet report:
@@ -1278,25 +1432,25 @@ Clock to Setup on destination clock CLOCK
                | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock   |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ---------------+---------+---------+---------+---------+
-CLOCK          |    9.914|    6.757|    4.751|    8.049|
+CLOCK          |   10.004|    6.516|    4.899|    8.195|
 ---------------+---------+---------+---------+---------+
 
 
 Timing summary:
 ---------------
 
-Timing errors: 0  Score: 0  (Setup/Max: 0, Hold: 0)
+Timing errors: 1  Score: 5  (Setup/Max: 5, Hold: 0)
 
-Constraints cover 71260 paths, 0 nets, and 19239 connections
+Constraints cover 71260 paths, 0 nets, and 19273 connections
 
 Design statistics:
-   Minimum period:  59.488ns{1}   (Maximum frequency:  16.810MHz)
+   Minimum period:  60.029ns{1}   (Maximum frequency:  16.659MHz)
 
 
 ------------------------------------Footnotes-----------------------------------
 1)  The minimum period statistic assumes all single cycle delays.
 
-Analysis completed Fri Dec  9 16:21:30 2016 
+Analysis completed Fri Dec  9 16:33:40 2016 
 --------------------------------------------------------------------------------
 
 Trace Settings:
