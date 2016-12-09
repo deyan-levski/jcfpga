@@ -209,8 +209,8 @@ begin
 	DATA_OUT_EN                 => I_DESER_MSB_OUT_EN, -- '1' = DATA_OUT valid
 	DATA_OUT                    => I_DESER_MSB_OUT);   -- parallel data output
 
---	I_DESER_MSB_OUT_SEL <= (not I_DESER_MSB_OUT) when G_INVERT_MSB else I_DESER_MSB_OUT;
-	I_DESER_MSB_OUT_SEL <= I_DESER_MSB_OUT;
+	I_DESER_MSB_OUT_SEL <= (not I_DESER_MSB_OUT) when G_INVERT_MSB else I_DESER_MSB_OUT;
+--	I_DESER_MSB_OUT_SEL <= I_DESER_MSB_OUT;
 
 	I_DESERIALIZER_LSB: DESERIALIZER
 	generic map (
@@ -224,8 +224,8 @@ begin
 	DATA_OUT_EN                 => I_DESER_LSB_OUT_EN, -- '1' = DATA_OUT valid
 	DATA_OUT                    => I_DESER_LSB_OUT);   -- parallel data output
 
---	I_DESER_LSB_OUT_SEL <= (not I_DESER_LSB_OUT) when G_INVERT_LSB else I_DESER_LSB_OUT;
-	I_DESER_LSB_OUT_SEL <= I_DESER_LSB_OUT;
+	I_DESER_LSB_OUT_SEL <= (not I_DESER_LSB_OUT) when G_INVERT_LSB else I_DESER_LSB_OUT;
+--	I_DESER_LSB_OUT_SEL <= I_DESER_LSB_OUT;
 
 --|-----------------|
 --| Bitslip Control |
@@ -315,11 +315,10 @@ begin
 	I_BITSLIP_LSB_EN <= I_DEBUG_IN0_1 and not I_DEBUG_IN0_2;
 	I_BITSLIP_MSB_EN <= I_DEBUG_IN1_1 and not I_DEBUG_IN1_2;
 
---	DATA    <= I_DATA;
-	INV_MSB_DATA <= not I_DATA(11 downto 6) when G_INVERT_MSB else I_DATA(11 downto 6);
-	INV_LSB_DATA <= not I_DATA(5 downto 0)  when G_INVERT_LSB else I_DATA(5 downto 0);
-
-	DATA <= "0000" & INV_MSB_DATA & INV_LSB_DATA;
+	DATA    <= I_DATA;
+--	INV_MSB_DATA <= not I_DATA(11 downto 6) when G_INVERT_MSB else I_DATA(11 downto 6);
+--	INV_LSB_DATA <= not I_DATA(5 downto 0)  when G_INVERT_LSB else I_DATA(5 downto 0);
+--	DATA <= "0000" & INV_MSB_DATA & INV_LSB_DATA;
 
 	DATA_EN <= '1'; --I_DATA_EN;
 
