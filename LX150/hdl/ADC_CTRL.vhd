@@ -727,7 +727,7 @@ begin
 		elsif (rising_edge(CLOCK_50)) then
 
 			if (LVAL_SEQ = '1' and LVAL_SEQ_OLD = '0') or (stflag = 1) then
-				if digif_rst_cnt = ((134*sdrat)+2) then	-- 134-6=128 words + offset 2
+				if digif_rst_cnt = ((135*sdrat)+2) then	-- 134-6=128 words + offset 2
 					digif_rst_cnt := 0;
 					d_digif_serial_rst <= '1';
 					stflag := 0;
