@@ -1053,7 +1053,7 @@ begin
 		DATA_SEG(7)		=> DESER_DATA_G7,
 		LVAL_IN			=> LVAL_DLY,
 	--
-		READ_CLOCK		=> CLOCK_50,
+		READ_CLOCK		=> CLOCK_100,
 		DATA_LINE_OUT		=> IMAGE_DATA_OUT,
 		FVAL_OUT		=> FVAL_OUT,
 		LVAL_OUT		=> LVAL_OUT,
@@ -1068,7 +1068,7 @@ begin
 	port map (	
 			 CLOCK 			=> FX3_CLK,
 			 RESET 			=> RESET,
-			 CLOCK_IMG		=> CLOCK_50, --CLOCK_DESER_WORD,
+			 CLOCK_IMG		=> CLOCK_100, --CLOCK_DESER_WORD,
 			 LED   			=> open,
 			 FVAL_IN 		=> FVAL_SEQ,
 			 LVAL_IN		=> LVAL_OUT,
@@ -1114,7 +1114,7 @@ begin
 --|-------------------|
 
 	--GPIO2 <= '0'; --not CLOCK_100; -- scope triggering clock
-	GPIO3 <= '0';
+	GPIO3 <= LVAL_OUT;
 	--GPIO4 <= '0';
 	SHUTDOWN_VDD <= '1';
 	SHUTDOWN_VDA <= '1';
