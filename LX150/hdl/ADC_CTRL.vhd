@@ -740,7 +740,13 @@ begin
 				end if;
 
 				if skip_clks = ((6*sdrat)+3) then	-- skip 6 words, fill deser + imageout pipeline + offset
-					LVAL_DLY <= (others => '1');
+					LVAL_DLY <= "00011000";
+				elsif skip_clks = ((6*sdrat)+4) then
+					LVAL_DLY <= "00111100";
+				elsif skip_clks = ((6*sdrat)+5) then
+					LVAL_DLY <= "01111110";
+				elsif skip_clks = ((6*sdrat)+6) then
+					LVAL_DLY <= "11111111";
 				else
 				skip_clks := skip_clks + 1;
 				end if;
