@@ -82,7 +82,7 @@ architecture test of PLL_F250_tb is
 
 
   -- we'll be using the period in many locations
-  constant PER1        : time := 10.0 ns;
+  constant PER1        : time := 10.000 ns;
 
 
   -- Declare the input clock signals

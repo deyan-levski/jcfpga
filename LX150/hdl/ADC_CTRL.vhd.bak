@@ -373,6 +373,8 @@ architecture Behavioral of ADC_CTRL is
 	signal LSBDAT_N	 : std_logic;
 	signal MSBDAT_N	 : std_logic;
 
+	signal d_digif_serial_rst_dly: std_logic_vector(7 downto 0);
+
 --|--------------------------|
 --| UART Testbench Constants |
 --|--------------------------|
@@ -749,6 +751,26 @@ begin
 		end if;
 	end process;
 
+
+	DLY_DIGIF: process(RESET, CLOCK_100)
+
+	begin
+
+	if (rising_edge(CLOCK_100)) then
+
+		d_digif_serial_rst_dly(7) <= d_digif_serial_rst_dly(6);
+		d_digif_serial_rst_dly(6) <= d_digif_serial_rst_dly(5);
+		d_digif_serial_rst_dly(5) <= d_digif_serial_rst_dly(4);
+		d_digif_serial_rst_dly(4) <= d_digif_serial_rst_dly(3);
+		d_digif_serial_rst_dly(3) <= d_digif_serial_rst_dly(2);
+		d_digif_serial_rst_dly(2) <= d_digif_serial_rst_dly(1);
+		d_digif_serial_rst_dly(1) <= d_digif_serial_rst_dly(0);
+		d_digif_serial_rst_dly(0) <= d_digif_serial_rst;
+
+	end if;
+
+	end process;
+
 --|-----------------|
 --| MOCK SERIALIZER |
 --|-----------------|
@@ -793,7 +815,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 d_digif_serial_rst	=> d_digif_serial_rst_dly(4),
 		 CLOCK_RSTDLY		=> CLOCK_50, -- CLOCK_100
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -826,7 +848,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 d_digif_serial_rst	=> d_digif_serial_rst_dly(3),
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -859,7 +881,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 d_digif_serial_rst	=> d_digif_serial_rst_dly(2),
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -892,7 +914,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 d_digif_serial_rst	=> d_digif_serial_rst_dly(1),
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -925,7 +947,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 d_digif_serial_rst	=> d_digif_serial_rst_dly(1),
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -958,7 +980,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 d_digif_serial_rst	=> d_digif_serial_rst_dly(2),
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -991,7 +1013,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 d_digif_serial_rst	=> d_digif_serial_rst_dly(3),
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -1024,7 +1046,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 d_digif_serial_rst	=> d_digif_serial_rst_dly(4),
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -1114,7 +1136,7 @@ begin
 --|-------------------|
 
 	--GPIO2 <= '0'; --not CLOCK_100; -- scope triggering clock
-	GPIO3 <= LVAL_OUT;
+	GPIO3 <= '0'; -- LVAL_OUT;
 	--GPIO4 <= '0';
 	SHUTDOWN_VDD <= '1';
 	SHUTDOWN_VDA <= '1';
