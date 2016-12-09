@@ -102,6 +102,8 @@ architecture STRUCTURAL of OPTO_SEG_IF is
 	signal I_DEBUG_IN1_1: std_logic;
 	signal I_DEBUG_IN1_2: std_logic;
 	signal I_DATA:                  std_logic_vector(15 downto 0);
+	signal INV_MSB_DATA: 		std_logic_vector(5 downto 0);
+	signal INV_LSB_DATA:		std_logic_vector(5 downto 0);
 	signal I_DATA_EN:               std_logic;
 
 	signal I_BIT_SLIP_1A_LSB_FLAG : std_logic;
@@ -207,7 +209,8 @@ begin
 	DATA_OUT_EN                 => I_DESER_MSB_OUT_EN, -- '1' = DATA_OUT valid
 	DATA_OUT                    => I_DESER_MSB_OUT);   -- parallel data output
 
-	I_DESER_MSB_OUT_SEL <= (not I_DESER_MSB_OUT) when G_INVERT_MSB else I_DESER_MSB_OUT;
+--	I_DESER_MSB_OUT_SEL <= (not I_DESER_MSB_OUT) when G_INVERT_MSB else I_DESER_MSB_OUT;
+	I_DESER_MSB_OUT_SEL <= I_DESER_MSB_OUT;
 
 	I_DESERIALIZER_LSB: DESERIALIZER
 	generic map (
@@ -221,7 +224,8 @@ begin
 	DATA_OUT_EN                 => I_DESER_LSB_OUT_EN, -- '1' = DATA_OUT valid
 	DATA_OUT                    => I_DESER_LSB_OUT);   -- parallel data output
 
-	I_DESER_LSB_OUT_SEL <= (not I_DESER_LSB_OUT) when G_INVERT_LSB else I_DESER_LSB_OUT;
+--	I_DESER_LSB_OUT_SEL <= (not I_DESER_LSB_OUT) when G_INVERT_LSB else I_DESER_LSB_OUT;
+	I_DESER_LSB_OUT_SEL <= I_DESER_LSB_OUT;
 
 --|-----------------|
 --| Bitslip Control |
@@ -251,7 +255,7 @@ begin
 			if (I_BIT_SLIP_AUTO ='1') then
 
 				if ((DIGIF_SER_RST_DLY(63) = '1') and (I_BIT_SLIP_1A_LSB_FLAG = '0')) then
-					if (DATA(5 downto 0) = PREAMBLE) then --110100
+					if (I_DATA(5 downto 0) = PREAMBLE) then --110100
 						I_BIT_SLIP_POS_AUTO(0) <= '0';
 					else
 						I_BIT_SLIP_POS_AUTO(0) <= '1';
@@ -262,7 +266,7 @@ begin
 				end if;
 
 				if ((DIGIF_SER_RST_DLY(63) = '1') and (I_BIT_SLIP_1A_MSB_FLAG = '0')) then
-					if (DATA(11 downto 6) = PREAMBLE) then --110100
+					if (I_DATA(11 downto 6) = PREAMBLE) then --110100
 						I_BIT_SLIP_POS_AUTO(1) <= '0';
 					else
 						I_BIT_SLIP_POS_AUTO(1) <= '1';
@@ -311,7 +315,12 @@ begin
 	I_BITSLIP_LSB_EN <= I_DEBUG_IN0_1 and not I_DEBUG_IN0_2;
 	I_BITSLIP_MSB_EN <= I_DEBUG_IN1_1 and not I_DEBUG_IN1_2;
 
-	DATA    <= I_DATA;
+--	DATA    <= I_DATA;
+	INV_MSB_DATA <= not I_DATA(11 downto 6) when G_INVERT_MSB else I_DATA(11 downto 6);
+	INV_LSB_DATA <= not I_DATA(5 downto 0)  when G_INVERT_LSB else I_DATA(5 downto 0);
+
+	DATA <= "0000" & INV_MSB_DATA & INV_LSB_DATA;
+
 	DATA_EN <= '1'; --I_DATA_EN;
 
 	DEBUG_OUT <=  "00" & I_DIGIF_MSB & I_SAMPLING_MSB_OUT & I_DIGIF_LSB & I_SAMPLING_LSB_OUT;
