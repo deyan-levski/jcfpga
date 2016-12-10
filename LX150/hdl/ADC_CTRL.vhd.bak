@@ -741,7 +741,7 @@ begin
 					stflag := 1;
 				end if;
 
-				if skip_clks = ((6*sdrat)+2) then	-- skip 6 words, fill deser + imageout pipeline + offset
+				if skip_clks = ((4*sdrat)+2) then	-- skip 6 words, fill deser + imageout pipeline + offset
 					LVAL_DLY <= (others => '1');
 				else
 				skip_clks := skip_clks + 1;
@@ -751,7 +751,7 @@ begin
 		end if;
 	end process;
 
-	LVALSYNC: process(RESET, CLOCK_50)
+	FLVALSYNC: process(RESET, CLOCK_50)
 
 	begin
 		if rising_edge(CLOCK_50) then
