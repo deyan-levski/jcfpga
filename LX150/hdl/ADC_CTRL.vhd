@@ -369,7 +369,7 @@ architecture Behavioral of ADC_CTRL is
 	signal LVAL_DLY  : std_logic_vector(7 downto 0);
 	signal FVAL_OUT	 : std_logic;
 	signal LVAL_OUT  : std_logic;
-	signal LVAL_OUT_SYNC: std_logic;
+	signal LVAL_OUT_SYNC : std_logic;
 	signal ROW_NEXT  : std_logic;
 	signal LSBDAT	 : std_logic;
 	signal MSBDAT	 : std_logic;
@@ -759,7 +759,7 @@ begin
 			FVAL_SEQ_SYNC <= FVAL_SEQ;
 			LVAL_SEQ_SYNC <= LVAL_SEQ;
 			LVAL_SEQ_SYNC_OLD <= LVAL_SEQ_SYNC;
-			LVA_OUT_SYNC <= LVAL_OUT;
+			LVAL_OUT_SYNC <= LVAL_OUT;
 
 		end if;
 
