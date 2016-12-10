@@ -374,8 +374,6 @@ architecture Behavioral of ADC_CTRL is
 	signal LSBDAT_N	 : std_logic;
 	signal MSBDAT_N	 : std_logic;
 
-	signal d_digif_serial_rst_iso : std_logic;
-
 --|--------------------------|
 --| UART Testbench Constants |
 --|--------------------------|
@@ -808,7 +806,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_iso,
+		 d_digif_serial_rst	=> d_digif_serial_rst,
 		 CLOCK_RSTDLY		=> CLOCK_50, -- CLOCK_100
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -841,7 +839,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_iso,
+		 d_digif_serial_rst	=> d_digif_serial_rst,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -874,7 +872,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_iso,
+		 d_digif_serial_rst	=> d_digif_serial_rst,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -907,7 +905,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_iso,
+		 d_digif_serial_rst	=> d_digif_serial_rst,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -940,7 +938,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_iso,
+		 d_digif_serial_rst	=> d_digif_serial_rst,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -973,7 +971,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_iso,
+		 d_digif_serial_rst	=> d_digif_serial_rst,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -1006,7 +1004,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_iso,
+		 d_digif_serial_rst	=> d_digif_serial_rst,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -1039,7 +1037,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_iso,
+		 d_digif_serial_rst	=> d_digif_serial_rst,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
