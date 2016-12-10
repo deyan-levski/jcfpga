@@ -363,7 +363,8 @@ architecture Behavioral of ADC_CTRL is
 	signal CLOCK_DIGIF_OBUFDS : std_logic;
 	signal FVAL_SEQ  : std_logic;
 	signal LVAL_SEQ  : std_logic;
-	signal LVAL_SEQ_OLD :std_logic;
+	signal LVAL_SEQ_SYNC :std_logic;
+	signal LVAL_SEQ_SYNC_OLD :std_logic;
 	signal LVAL_DLY  : std_logic_vector(7 downto 0);
 	signal FVAL_OUT	 : std_logic;
 	signal LVAL_OUT  : std_logic;
@@ -373,7 +374,7 @@ architecture Behavioral of ADC_CTRL is
 	signal LSBDAT_N	 : std_logic;
 	signal MSBDAT_N	 : std_logic;
 
-	signal d_digif_serial_rst_dly: std_logic_vector(7 downto 0);
+	signal d_digif_serial_rst_iso : std_logic;
 
 --|--------------------------|
 --| UART Testbench Constants |
@@ -715,7 +716,7 @@ begin
 	d_row_addr(7 downto 0) <= "00000000";
 
 	GENERATE_DIGIF_RST_LVAL_PROC: process(RESET, CLOCK_50)
-		variable digif_rst_cnt: integer range 0 to 1023 :=0;
+		variable digif_rst_cnt: integer range 0 to 511 :=0;
 		variable stflag: integer range 0 to 1 :=0;
 		variable skip_clks: integer range 0 to 127 :=0;
 		constant sdrat : integer := 3; -- serial f/3
@@ -728,7 +729,7 @@ begin
 			skip_clks :=0;
 		elsif (rising_edge(CLOCK_50)) then
 
-			if (LVAL_SEQ = '1' and LVAL_SEQ_OLD = '0') or (stflag = 1) then
+			if (LVAL_SEQ_SYNC = '1' and LVAL_SEQ_SYNC_OLD = '0') or (stflag = 1) then
 				if digif_rst_cnt = ((134*sdrat)+2) then	-- 134-6=128 words + offset 2
 					digif_rst_cnt := 0;
 					d_digif_serial_rst <= '1';
@@ -747,29 +748,21 @@ begin
 				skip_clks := skip_clks + 1;
 				end if;
 			end if;
-			LVAL_SEQ_OLD <= LVAL_SEQ;
+		--	LVAL_SEQ_OLD <= LVAL_SEQ;
 		end if;
 	end process;
 
-
-	DLY_DIGIF: process(RESET, CLOCK_100)
+	LVLSYNC: process(RESET, CLOCK_50)
 
 	begin
-
-	if (rising_edge(CLOCK_100)) then
-
-		d_digif_serial_rst_dly(7) <= d_digif_serial_rst_dly(6);
-		d_digif_serial_rst_dly(6) <= d_digif_serial_rst_dly(5);
-		d_digif_serial_rst_dly(5) <= d_digif_serial_rst_dly(4);
-		d_digif_serial_rst_dly(4) <= d_digif_serial_rst_dly(3);
-		d_digif_serial_rst_dly(3) <= d_digif_serial_rst_dly(2);
-		d_digif_serial_rst_dly(2) <= d_digif_serial_rst_dly(1);
-		d_digif_serial_rst_dly(1) <= d_digif_serial_rst_dly(0);
-		d_digif_serial_rst_dly(0) <= d_digif_serial_rst;
-
-	end if;
+		if rising_edge(CLOCK_50) then
+			LVAL_SEQ_SYNC <= LVAL_SEQ;
+			LVAL_SEQ_SYNC_OLD <= LVAL_SEQ_SYNC;
+		end if;
 
 	end process;
+
+
 
 --|-----------------|
 --| MOCK SERIALIZER |
@@ -815,7 +808,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_dly(4),
+		 d_digif_serial_rst	=> d_digif_serial_rst_iso,
 		 CLOCK_RSTDLY		=> CLOCK_50, -- CLOCK_100
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -848,7 +841,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_dly(3),
+		 d_digif_serial_rst	=> d_digif_serial_rst_iso,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -881,7 +874,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_dly(2),
+		 d_digif_serial_rst	=> d_digif_serial_rst_iso,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -914,7 +907,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_dly(1),
+		 d_digif_serial_rst	=> d_digif_serial_rst_iso,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -947,7 +940,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_dly(1),
+		 d_digif_serial_rst	=> d_digif_serial_rst_iso,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -980,7 +973,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_dly(2),
+		 d_digif_serial_rst	=> d_digif_serial_rst_iso,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -1013,7 +1006,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_dly(3),
+		 d_digif_serial_rst	=> d_digif_serial_rst_iso,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -1046,7 +1039,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_dly(4),
+		 d_digif_serial_rst	=> d_digif_serial_rst_iso,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,

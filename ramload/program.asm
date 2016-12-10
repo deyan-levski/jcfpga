@@ -76,7 +76,7 @@ NOP 32			; halt 320 ns — phase 1 in vref_ramp
 
 LOAD PAR
 MOV REF 0x01 0		; d_ref_vref_sh
-MOV REF 0x02 1		; clamp on
+MOV REF 0x02 0		; clamp on
 SET PAR
 
 NOP 8			; halt 80 ns
@@ -211,7 +211,7 @@ NOP 32	      		; halt 320 ns — phase 1 in vref_ramp
 
 LOAD PAR
 MOV REF 0x01 0		; d_ref_vref_sh
-MOV REF 0x02 1		; clamp on
+MOV REF 0x02 0		; clamp on
 SET PAR
 NOP 8	      		; halt 80 ns
 MOV REF 0x02 0		; clamp off
