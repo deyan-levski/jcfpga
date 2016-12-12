@@ -754,7 +754,7 @@ begin
 			FVAL_SEQ_SYNC <= FVAL_SEQ;
 			LVAL_SEQ_SYNC <= LVAL_SEQ;
 			LVAL_SEQ_SYNC_OLD <= LVAL_SEQ_SYNC;
-			LVAL_OUT_SYNC <= LVAL_OUT;
+			--LVAL_OUT_SYNC <= LVAL_OUT;
 		end if;
 	end process;
 
@@ -1144,7 +1144,7 @@ begin
 			 CLOCK_IMG		=> CLOCK_100, --CLOCK_DESER_WORD,
 			 LED   			=> open,
 			 FVAL_IN 		=> FVAL_SEQ_SYNC,
-			 LVAL_IN		=> LVAL_OUT_SYNC,
+			 LVAL_IN		=> LVAL_OUT,
 			 DATA_IN		=> IMAGE_DATA_OUT,
 		     -- FX3 GPIFII Interface
 			 GPIFII_PCLK		=> open, --GPIFII_PCLK,	-- fx3 interface clock
