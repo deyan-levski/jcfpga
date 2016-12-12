@@ -378,6 +378,8 @@ architecture Behavioral of ADC_CTRL is
 	signal LSBDAT_OBUFDS : std_logic;
 	signal MSBDAT_OBUFDS : std_logic;
 
+	signal d_digif_serial_rst_180 : std_logic;
+
 
 
 --|--------------------------|
@@ -753,6 +755,7 @@ begin
 				end if;
 			end if;
 		--	LVAL_SEQ_OLD <= LVAL_SEQ;
+			d_digif_serial_rst_180 <= d_digif_serial_rst;
 			FVAL_SEQ_SYNC <= FVAL_SEQ;
 			LVAL_SEQ_SYNC <= LVAL_SEQ;
 			LVAL_SEQ_SYNC_OLD <= LVAL_SEQ_SYNC;
@@ -868,7 +871,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 d_digif_serial_rst	=> d_digif_serial_rst_180,
 		 CLOCK_RSTDLY		=> CLOCK_50, -- CLOCK_100
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -934,7 +937,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 d_digif_serial_rst	=> d_digif_serial_rst_180,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -1033,7 +1036,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 d_digif_serial_rst	=> d_digif_serial_rst_180,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -1099,7 +1102,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 d_digif_serial_rst	=> d_digif_serial_rst_180,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
