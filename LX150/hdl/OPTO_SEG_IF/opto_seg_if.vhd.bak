@@ -255,7 +255,7 @@ begin
 			if (I_BIT_SLIP_AUTO ='1') then
 
 				if ((DIGIF_SER_RST_DLY(63) = '1') and (I_BIT_SLIP_1A_LSB_FLAG = '0')) then
-					if (DATA(5 downto 0) = PREAMBLE) then --110100
+					if (I_DATA(5 downto 0) = PREAMBLE) then --110100
 						I_BIT_SLIP_POS_AUTO(0) <= '0';
 					else
 						I_BIT_SLIP_POS_AUTO(0) <= '1';
@@ -266,7 +266,7 @@ begin
 				end if;
 
 				if ((DIGIF_SER_RST_DLY(63) = '1') and (I_BIT_SLIP_1A_MSB_FLAG = '0')) then
-					if (DATA(11 downto 6) = PREAMBLE) then --110100
+					if (I_DATA(11 downto 6) = PREAMBLE) then --110100
 						I_BIT_SLIP_POS_AUTO(1) <= '0';
 					else
 						I_BIT_SLIP_POS_AUTO(1) <= '1';
@@ -315,7 +315,24 @@ begin
 	I_BITSLIP_LSB_EN <= I_DEBUG_IN0_1 and not I_DEBUG_IN0_2;
 	I_BITSLIP_MSB_EN <= I_DEBUG_IN1_1 and not I_DEBUG_IN1_2;
 
-	DATA    <= I_DATA(15 downto 13) & I_DATA(6) & I_DATA(7) & I_DATA(8) & I_DATA(9) & I_DATA(10) & I_DATA(11) & I_DATA(12) & I_DATA(0) & I_DATA(1) & I_DATA(2) & I_DATA(3) & I_DATA(4) & I_DATA(5);
+	--DATA    <= I_DATA(15 downto 13) & I_DATA(6) & I_DATA(7) & I_DATA(8) & I_DATA(9) & I_DATA(10) & I_DATA(11) & I_DATA(12) & I_DATA(0) & I_DATA(1) & I_DATA(2) & I_DATA(3) & I_DATA(4) & I_DATA(5);
+
+	DATA(15) <= '0';
+	DATA(14) <= '0';
+	DATA(13) <= '0';
+	DATA(12) <= '0';
+	DATA(11) <= I_DATA(6);
+	DATA(10) <= I_DATA(7);
+	DATA(9)  <= I_DATA(8);
+	DATA(8)  <= I_DATA(9);
+	DATA(7)  <= I_DATA(10);
+	DATA(6)  <= I_DATA(11);
+	DATA(5)  <= I_DATA(0);
+	DATA(4)  <= I_DATA(1);
+	DATA(3)  <= I_DATA(2);
+	DATA(2)  <= I_DATA(3);
+	DATA(1)  <= I_DATA(4);
+	DATA(0)  <= I_DATA(5);
 
 --	DATA <= I_DATA;
 
