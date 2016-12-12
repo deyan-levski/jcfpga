@@ -871,7 +871,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_180,
+		 d_digif_serial_rst	=> d_digif_serial_rst,
 		 CLOCK_RSTDLY		=> CLOCK_50, -- CLOCK_100
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -904,7 +904,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 d_digif_serial_rst	=> d_digif_serial_rst_180,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -937,7 +937,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_180,
+		 d_digif_serial_rst	=> d_digif_serial_rst,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -970,7 +970,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 d_digif_serial_rst	=> d_digif_serial_rst_180,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -1003,7 +1003,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 d_digif_serial_rst	=> d_digif_serial_rst_180,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -1036,7 +1036,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_180,
+		 d_digif_serial_rst	=> d_digif_serial_rst,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -1069,7 +1069,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst,
+		 d_digif_serial_rst	=> d_digif_serial_rst_180,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
@@ -1102,7 +1102,7 @@ begin
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
 		 PREAMBLE		=> "101011",
-		 d_digif_serial_rst	=> d_digif_serial_rst_180,
+		 d_digif_serial_rst	=> d_digif_serial_rst,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
 		 DIV_CLK_CS             => open,
