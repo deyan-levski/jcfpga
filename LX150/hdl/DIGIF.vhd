@@ -9,7 +9,6 @@
 
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_UNSIGNED.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
@@ -33,7 +32,6 @@ architecture Behavioral of DIGIF is
 	signal PREAMBLE : STD_LOGIC_VECTOR(5 downto 0);
 	signal DATA0 	: STD_LOGIC_VECTOR(11 downto 0);
 	signal DATA1	: STD_LOGIC_VECTOR(11 downto 0);
-	signal DATAINC	: STD_LOGIC_VECTOR(11 downto 0);
 	signal txbuf_m  : STD_LOGIC_VECTOR(5 downto 0);
 	signal txbuf_l  : STD_LOGIC_VECTOR(5 downto 0);
 	signal flag_data : STD_LOGIC;
@@ -74,8 +72,6 @@ begin
 				if flag_pream = '0' and wrd_cntr = 0 then
 					txbuf_m <= PREAMBLE;
 					txbuf_l <= PREAMBLE;
-					DATAINC <= ( others => '0');
-					wrd_cntr := 0;
 					flag_pream <= '1';
 				else
 
@@ -87,14 +83,10 @@ begin
 			else
 
 				if flag_data = '0' and wrd_cntr = 0 then
-
-					--txbuf_m <= DATA0(11 downto 6);
-					--txbuf_l <= DATA0(5 downto 0);
-
-					txbuf_m <= DATAINC(11 downto 6);
-					txbuf_l <= DATAINC(5 downto 0);
+					txbuf_m <= DATA0(11 downto 6);
+					txbuf_l <= DATA0(5 downto 0);
 					flag_data <= '1';
-					DATAINC <= DATAINC + 1;
+
 				else
 
 				txbuf_m(5 downto 0) <= txbuf_m(4 downto 0) & txbuf_m(5);
@@ -109,7 +101,6 @@ begin
 
 		 if (wrd_cntr = 5) then
 		        wrd_cntr := 0;
-			flag_data <= '0';
 		 else
 			wrd_cntr := wrd_cntr+1;
     		 end if;

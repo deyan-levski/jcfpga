@@ -315,7 +315,11 @@ begin
 	I_BITSLIP_LSB_EN <= I_DEBUG_IN0_1 and not I_DEBUG_IN0_2;
 	I_BITSLIP_MSB_EN <= I_DEBUG_IN1_1 and not I_DEBUG_IN1_2;
 
-	DATA    <= I_DATA(15 downto 13) & I_DATA(6) & I_DATA(7) & I_DATA(8) & I_DATA(9) & I_DATA(10) & I_DATA(11) & I_DATA(12) & I_DATA(0) & I_DATA(1) & I_DATA(2) & I_DATA(3) & I_DATA(4) & I_DATA(5);
+--	DATA    <= I_DATA(15 downto 13) & I_DATA(6) & I_DATA(7) & I_DATA(8) & I_DATA(9) & I_DATA(10) & I_DATA(11) & I_DATA(12) & I_DATA(0) & I_DATA(1) & I_DATA(2) & I_DATA(3) & I_DATA(4) & I_DATA(5);
+
+	DATA <= I_DATA;
+
+
 --	INV_MSB_DATA <= not I_DATA(11 downto 6) when G_INVERT_MSB else I_DATA(11 downto 6);
 --	INV_LSB_DATA <= not I_DATA(5 downto 0)  when G_INVERT_LSB else I_DATA(5 downto 0);
 --	DATA <= "0000" & INV_MSB_DATA & INV_LSB_DATA;

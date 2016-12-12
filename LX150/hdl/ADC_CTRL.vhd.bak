@@ -103,38 +103,38 @@ entity ADC_CTRL is
 		     d_ref_vref_ramp_ota_dyn_pon : inout  STD_LOGIC;
 	   -- digif
 		     d_digif_serial_rst : inout  STD_LOGIC;
-		     G0LTX_N : in STD_LOGIC;
-		     G0LTX_P : in STD_LOGIC;
-		     G0HTX_N : in STD_LOGIC;
-		     G0HTX_P : in STD_LOGIC;
-		     G1LTX_N : in STD_LOGIC;
-		     G1LTX_P : in STD_LOGIC;
-		     G1HTX_N : in STD_LOGIC;
-		     G1HTX_P : in STD_LOGIC;
-		     G2LTX_N : in STD_LOGIC;
-		     G2LTX_P : in STD_LOGIC;
-		     G2HTX_N : in STD_LOGIC;
-		     G2HTX_P : in STD_LOGIC;
-		     G3LTX_N : in STD_LOGIC;
-		     G3LTX_P : in STD_LOGIC;
-		     G3HTX_N : in STD_LOGIC;
-		     G3HTX_P : in STD_LOGIC;
-		     G4LTX_N : in STD_LOGIC;
-		     G4LTX_P : in STD_LOGIC;
-		     G4HTX_N : in STD_LOGIC;
-		     G4HTX_P : in STD_LOGIC;
-		     G5LTX_N : in STD_LOGIC;
-		     G5LTX_P : in STD_LOGIC;
-		     G5HTX_N : in STD_LOGIC;
-		     G5HTX_P : in STD_LOGIC;
-		     G6LTX_N : in STD_LOGIC;
-		     G6LTX_P : in STD_LOGIC;
-		     G6HTX_N : in STD_LOGIC;
-		     G6HTX_P : in STD_LOGIC;
-		     G7LTX_N : in STD_LOGIC;
-		     G7LTX_P : in STD_LOGIC;
-		     G7HTX_N : in STD_LOGIC;
-		     G7HTX_P : in STD_LOGIC;
+		     G0LTX_N : inout STD_LOGIC;
+		     G0LTX_P : inout STD_LOGIC;
+		     G0HTX_N : inout STD_LOGIC;
+		     G0HTX_P : inout STD_LOGIC;
+		     G1LTX_N : inout STD_LOGIC;
+		     G1LTX_P : inout STD_LOGIC;
+		     G1HTX_N : inout STD_LOGIC;
+		     G1HTX_P : inout STD_LOGIC;
+		     G2LTX_N : inout STD_LOGIC;
+		     G2LTX_P : inout STD_LOGIC;
+		     G2HTX_N : inout STD_LOGIC;
+		     G2HTX_P : inout STD_LOGIC;
+		     G3LTX_N : inout STD_LOGIC;
+		     G3LTX_P : inout STD_LOGIC;
+		     G3HTX_N : inout STD_LOGIC;
+		     G3HTX_P : inout STD_LOGIC;
+		     G4LTX_N : inout STD_LOGIC;
+		     G4LTX_P : inout STD_LOGIC;
+		     G4HTX_N : inout STD_LOGIC;
+		     G4HTX_P : inout STD_LOGIC;
+		     G5LTX_N : inout STD_LOGIC;
+		     G5LTX_P : inout STD_LOGIC;
+		     G5HTX_N : inout STD_LOGIC;
+		     G5HTX_P : inout STD_LOGIC;
+		     G6LTX_N : inout STD_LOGIC;
+		     G6LTX_P : inout STD_LOGIC;
+		     G6HTX_N : inout STD_LOGIC;
+		     G6HTX_P : inout STD_LOGIC;
+		     G7LTX_N : inout STD_LOGIC;
+		     G7LTX_P : inout STD_LOGIC;
+		     G7HTX_N : inout STD_LOGIC;
+		     G7HTX_P : inout STD_LOGIC;
 	   -- FX3 GPIFII Interface
 		     GPIFII_PCLK_IN : in   std_logic;			-- fx3 interface clock
 		     GPIFII_PCLK : out   std_logic;			-- fx3 interface clock
@@ -375,6 +375,10 @@ architecture Behavioral of ADC_CTRL is
 	signal MSBDAT	 : std_logic;
 	signal LSBDAT_N	 : std_logic;
 	signal MSBDAT_N	 : std_logic;
+	signal LSBDAT_OBUFDS : std_logic;
+	signal MSBDAT_OBUFDS : std_logic;
+
+
 
 --|--------------------------|
 --| UART Testbench Constants |
@@ -755,7 +759,7 @@ begin
 	FLVALSYNC: process(RESET, CLOCK_100)
 
 	begin
-		if rising_edge(CLOCK_100) then
+		if rising_edge(CLOCK_50) then
 			FVAL_SEQ_SYNC <= FVAL_SEQ;
 			LVAL_SEQ_SYNC <= LVAL_SEQ;
 			LVAL_SEQ_SYNC_OLD <= LVAL_SEQ_SYNC;
@@ -771,15 +775,67 @@ begin
 --| MOCK SERIALIZER |
 --|-----------------|
 
---	DIGIF_INST : DIGIF
---	port map ( 
---			 d_digif_sck => CLOCK_200,
---			 d_digif_rst => d_digif_serial_rst,
---			 RESET    => RESET,
---			 d_digif_msb_data => MSBDAT,
---			 d_digif_lsb_data => LSBDAT);
---	MSBDAT_N <= not MSBDAT;
---	LSBDAT_N <= not LSBDAT;
+	DIGIF_INST : DIGIF
+	port map ( 
+			 d_digif_sck => CLOCK_100,
+			 d_digif_rst => d_digif_serial_rst,
+			 RESET    => RESET,
+			 d_digif_msb_data => MSBDAT,
+			 d_digif_lsb_data => LSBDAT);
+
+	MSBDAT_N <= not MSBDAT;
+	LSBDAT_N <= not LSBDAT;
+
+	DIGIF_LSBOUT_INST : ODDR2
+	generic map(
+			 DDR_ALIGNMENT => "NONE", -- Sets output alignment to "NONE", "C0", "C1" 
+			 INIT => '0', -- Sets initial state of the Q output to '0' or '1'
+			 SRTYPE => "SYNC") -- Specifies "SYNC" or "ASYNC" set/reset
+	port map (
+			 Q  => LSBDAT_OBUFDS, -- 1-bit output data
+			 C0 => LSBDAT, --MSBDAT, -- 1-bit clock input
+			 C1 => LSBDAT_N, --MSBDAT_N, -- 1-bit clock input
+			 CE => '1',   -- 1-bit clock enable input
+			 D0 => '0',   -- 1-bit data input (associated with C0)
+			 D1 => '1',   -- 1-bit data input (associated with C1)
+			 R => RESET,  -- 1-bit reset input
+			 S => '0'     -- 1-bit set input
+		 );
+
+	OBUFDS_DIGIF_LSB : OBUFDS
+	generic map (
+			 IOSTANDARD => "LVDS_33")
+	port map (
+			 O => G0LTX_P,     -- Diff_p output (connect directly to top-level port)
+			 OB => G0LTX_N,    -- Diff_n output (connect directly to top-level port)
+			 I => LSBDAT_OBUFDS -- Buffer input 
+		 );
+
+	DIGIF_MSBOUT_INST : ODDR2
+	generic map(
+			 DDR_ALIGNMENT => "NONE", -- Sets output alignment to "NONE", "C0", "C1" 
+			 INIT => '0', -- Sets initial state of the Q output to '0' or '1'
+			 SRTYPE => "SYNC") -- Specifies "SYNC" or "ASYNC" set/reset
+	port map (
+			 Q  => MSBDAT_OBUFDS, -- 1-bit output data
+			 C0 => MSBDAT, --MSBDAT, -- 1-bit clock input
+			 C1 => MSBDAT_N, --MSBDAT_N, -- 1-bit clock input
+			 CE => '1',   -- 1-bit clock enable input
+			 D0 => '0',   -- 1-bit data input (associated with C0)
+			 D1 => '1',   -- 1-bit data input (associated with C1)
+			 R => RESET,  -- 1-bit reset input
+			 S => '0'     -- 1-bit set input
+		 );
+
+	OBUFDS_DIGIF_MSB : OBUFDS
+	generic map (
+			 IOSTANDARD => "LVDS_33")
+	port map (
+			 O => G0HTX_P,     -- Diff_p output (connect directly to top-level port)
+			 OB => G0HTX_N,    -- Diff_n output (connect directly to top-level port)
+			 I => MSBDAT_OBUFDS -- Buffer input 
+		 );
+
 
 --|---------------|
 --| DESERIALIZERS |
@@ -790,8 +846,8 @@ begin
 		 G_SIMULATION           => false,			-- simulation mode
 		 C_TP                   => x"D3D3D3D3")			-- training pattern
 	port map (
-		 G_INVERT_MSB           => false,			-- invert MSB sensor data
-		 G_INVERT_LSB           => true,			-- invert LSB sensor data
+		 G_INVERT_MSB           => true,			-- invert MSB sensor data
+		 G_INVERT_LSB           => false,			-- invert LSB sensor data
 	 	-- system signals
 		 RESET                  => RESET,  -- async. reset
 		 ENABLE                 => '1',				-- module activation
@@ -823,8 +879,8 @@ begin
 		 G_SIMULATION           => false,			-- simulation mode
 		 C_TP                   => x"D3D3D3D3")			-- training pattern
 	port map (
-		 G_INVERT_MSB           => false,			-- invert MSB sensor data
-		 G_INVERT_LSB           => true,			-- invert LSB sensor data
+		 G_INVERT_MSB           => true,			-- invert MSB sensor data
+		 G_INVERT_LSB           => false,			-- invert LSB sensor data
 	 	-- system signals
 		 RESET                  => RESET,  -- async. reset
 		 ENABLE                 => '1',				-- module activation
@@ -856,8 +912,8 @@ begin
 		 G_SIMULATION           => false,			-- simulation mode
 		 C_TP                   => x"D3D3D3D3")			-- training pattern
 	port map (
-		 G_INVERT_MSB           => true,			-- invert MSB sensor data
-		 G_INVERT_LSB           => false,			-- invert LSB sensor data
+		 G_INVERT_MSB           => false,			-- invert MSB sensor data
+		 G_INVERT_LSB           => true,			-- invert LSB sensor data
 	 	-- system signals
 		 RESET                  => RESET,  -- async. reset
 		 ENABLE                 => '1',				-- module activation
@@ -889,8 +945,8 @@ begin
 		 G_SIMULATION           => false,			-- simulation mode
 		 C_TP                   => x"D3D3D3D3")			-- training pattern
 	port map (
-		 G_INVERT_MSB           => false,			-- invert MSB sensor data
-		 G_INVERT_LSB           => true,			-- invert LSB sensor data
+		 G_INVERT_MSB           => true,			-- invert MSB sensor data
+		 G_INVERT_LSB           => false,			-- invert LSB sensor data
 	 	-- system signals
 		 RESET                  => RESET,  -- async. reset
 		 ENABLE                 => '1',				-- module activation
@@ -922,8 +978,8 @@ begin
 		 G_SIMULATION           => false,			-- simulation mode
 		 C_TP                   => x"D3D3D3D3")			-- training pattern
 	port map (
-		 G_INVERT_MSB           => true,			-- invert MSB sensor data
-		 G_INVERT_LSB           => true,			-- invert LSB sensor data
+		 G_INVERT_MSB           => false,			-- invert MSB sensor data
+		 G_INVERT_LSB           => false,			-- invert LSB sensor data
 	 	-- system signals
 		 RESET                  => RESET,  -- async. reset
 		 ENABLE                 => '1',				-- module activation
@@ -955,8 +1011,8 @@ begin
 		 G_SIMULATION           => false,			-- simulation mode
 		 C_TP                   => x"D3D3D3D3")			-- training pattern
 	port map (
-		 G_INVERT_MSB           => true,			-- invert MSB sensor data
-		 G_INVERT_LSB           => true,			-- invert LSB sensor data
+		 G_INVERT_MSB           => false,			-- invert MSB sensor data
+		 G_INVERT_LSB           => false,			-- invert LSB sensor data
 	 	-- system signals
 		 RESET                  => RESET,  -- async. reset
 		 ENABLE                 => '1',				-- module activation
@@ -988,8 +1044,8 @@ begin
 		 G_SIMULATION           => false,			-- simulation mode
 		 C_TP                   => x"D3D3D3D3")			-- training pattern
 	port map (
-		 G_INVERT_MSB           => false,			-- invert MSB sensor data
-		 G_INVERT_LSB           => true,			-- invert LSB sensor data
+		 G_INVERT_MSB           => true,			-- invert MSB sensor data
+		 G_INVERT_LSB           => false,			-- invert LSB sensor data
 	 	-- system signals
 		 RESET                  => RESET,  -- async. reset
 		 ENABLE                 => '1',				-- module activation
@@ -1021,8 +1077,8 @@ begin
 		 G_SIMULATION           => false,			-- simulation mode
 		 C_TP                   => x"D3D3D3D3")			-- training pattern
 	port map (
-		 G_INVERT_MSB           => true,			-- invert MSB sensor data
-		 G_INVERT_LSB           => true,			-- invert LSB sensor data
+		 G_INVERT_MSB           => false,			-- invert MSB sensor data
+		 G_INVERT_LSB           => false,			-- invert LSB sensor data
 	 	-- system signals
 		 RESET                  => RESET,  -- async. reset
 		 ENABLE                 => '1',				-- module activation

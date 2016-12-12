@@ -295,7 +295,6 @@ NOP 4
 
 MOV ADX 0x01 0		; switch off d_ads
 
-MOV FVAL 0x00 0		; frame off
 
 ;write to memory
 MOV MEM 0x00 0		; write to SRAM
@@ -303,16 +302,19 @@ NOP 8
 MOV MEM 0x00 1		; write to SRAM
 NOP 4
 
-NOP 48
+NOP 56
 
-MOV FVAL 0x00 1		; frame on
-NOP 18
+NOP 12
 
 LOAD PAR
 MOV SER 0x00 0		; start data serialization out
+MOV FVAL 0x00 0
 MOV LVAL 0x00 1		; line trigger pulse on
 SET PAR
 NOP 4
+LOAD PAR
 MOV LVAL 0x00 0		; line trigger pulse off
+MOV FVAL 0x00 1
+SET PAR
 
 NOP 1080		; fill extra ROM /w NOP
