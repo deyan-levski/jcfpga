@@ -753,21 +753,22 @@ begin
 				end if;
 			end if;
 		--	LVAL_SEQ_OLD <= LVAL_SEQ;
-		end if;
-	end process;
-
-	FLVALSYNC: process(RESET, CLOCK_100)
-
-	begin
-		if rising_edge(CLOCK_50) then
 			FVAL_SEQ_SYNC <= FVAL_SEQ;
 			LVAL_SEQ_SYNC <= LVAL_SEQ;
 			LVAL_SEQ_SYNC_OLD <= LVAL_SEQ_SYNC;
 			LVAL_OUT_SYNC <= LVAL_OUT;
-
 		end if;
-
 	end process;
+
+--	FLVALSYNC: process(RESET, CLOCK_100)
+
+--	begin
+--		if rising_edge(CLOCK_50) then
+
+
+--		end if;
+
+--	end process;
 
 
 
