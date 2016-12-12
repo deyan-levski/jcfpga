@@ -321,12 +321,12 @@ begin
 	DATA(14) <= '0';
 	DATA(13) <= '0';
 	DATA(12) <= '0';
-	DATA(11) <= I_DATA(6);
-	DATA(10) <= I_DATA(7);
-	DATA(9)  <= I_DATA(8);
-	DATA(8)  <= I_DATA(9);
-	DATA(7)  <= I_DATA(10);
-	DATA(6)  <= I_DATA(11);
+	DATA(11) <= I_DATA(11);
+	DATA(10) <= I_DATA(10);
+	DATA(9)  <= I_DATA(9);
+	DATA(8)  <= I_DATA(8);
+	DATA(7)  <= I_DATA(7);
+	DATA(6)  <= I_DATA(6);
 	DATA(5)  <= I_DATA(5);
 	DATA(4)  <= I_DATA(4);
 	DATA(3)  <= I_DATA(3);
@@ -335,7 +335,6 @@ begin
 	DATA(0)  <= I_DATA(0);
 
 --	DATA <= I_DATA;
-
 
 --	INV_MSB_DATA <= not I_DATA(11 downto 6) when G_INVERT_MSB else I_DATA(11 downto 6);
 --	INV_LSB_DATA <= not I_DATA(5 downto 0)  when G_INVERT_LSB else I_DATA(5 downto 0);
