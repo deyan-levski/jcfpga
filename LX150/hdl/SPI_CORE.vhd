@@ -40,6 +40,8 @@ architecture Behavioral of SPI_CORE is
 	signal SPI_DATA_TX :std_logic_vector(32 downto 0); --:= "00000001";
 	signal SPI_MASTER_RESET :std_logic;
 	signal SPI_SEN : std_logic;
+	
+	signal SPI_SCK_OLD : std_logic;
 
 begin
 
@@ -126,24 +128,51 @@ end process;
 SPI_MASTER_RESET <= RESET or (not SPI_DATA_LOAD);
 
 
-	spimaster:	process(SPI_SCK, SPI_MASTER_RESET) -- spi master ; data generator
+--	spimaster:	process(SPI_SCK, SPI_MASTER_RESET) -- spi master ; data generator
+--	
+--	--variable SPI_DATA_TX :std_logic_vector(95 downto 0); --:= "00000001";
+--	
+--	begin
+--	
+--	
+--	if SPI_MASTER_RESET = '1' then
+--	
+--		SPI_DATA_TX(32 downto 0) <= '0' & SPI_DATA;
+--	
+--	elsif(SPI_SCK'event AND SPI_SCK = '1') then
+--	
+--		SPI_DATA_TX(32 downto 1) <= SPI_DATA_TX(31 downto 0);
+--	
+--	end if;
+--	
+--	end process;
+
+	spimaster:	process(CLOCK) -- spi master ; data generator
 	
 	--variable SPI_DATA_TX :std_logic_vector(95 downto 0); --:= "00000001";
 	
 	begin
 	
+	if rising_edge(CLOCK) then
+		if SPI_MASTER_RESET = '1' then
 	
-	if SPI_MASTER_RESET = '1' then
+			SPI_DATA_TX(32 downto 0) <= '0' & SPI_DATA;
 	
-		SPI_DATA_TX(32 downto 0) <= '0' & SPI_DATA;
+		elsif(SPI_SCK = '1' AND SPI_SCK_OLD = '0') then
 	
-	elsif(SPI_SCK'event AND SPI_SCK = '1') then
+			SPI_DATA_TX(32 downto 1) <= SPI_DATA_TX(31 downto 0);
 	
-		SPI_DATA_TX(32 downto 1) <= SPI_DATA_TX(31 downto 0);
-	
+		end if;
+
+		SPI_SCK_OLD <= SPI_SCK;
+
 	end if;
 
 end process;
+
+
+
+
 
 SPI_SDA <= SPI_DATA_TX(32);
 
