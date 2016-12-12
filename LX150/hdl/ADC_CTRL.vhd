@@ -744,7 +744,7 @@ begin
 					stflag := 1;
 				end if;
 
-				if skip_clks = ((6*sdrat)+5) then	-- skip 6 words, fill deser + imageout pipeline + offset
+				if skip_clks = ((6*sdrat)+6) then	-- skip 6 words, fill deser + imageout pipeline + offset
 					LVAL_DLY <= (others => '1');
 				else
 				skip_clks := skip_clks + 1;
