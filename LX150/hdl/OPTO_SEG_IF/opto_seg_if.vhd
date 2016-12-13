@@ -321,18 +321,18 @@ begin
 	DATA(14) <= '0';
 	DATA(13) <= '0';
 	DATA(12) <= '0';
-	DATA(11) <= I_DATA(11);
-	DATA(10) <= I_DATA(10);
-	DATA(9)  <= I_DATA(9);
-	DATA(8)  <= I_DATA(8);
-	DATA(7)  <= I_DATA(7);
-	DATA(6)  <= I_DATA(6);
-	DATA(5)  <= I_DATA(5);
-	DATA(4)  <= I_DATA(4);
-	DATA(3)  <= I_DATA(3);
-	DATA(2)  <= I_DATA(2);
-	DATA(1)  <= I_DATA(1);
-	DATA(0)  <= I_DATA(0);
+	DATA(11) <= I_DATA(0);
+	DATA(10) <= I_DATA(1);
+	DATA(9)  <= I_DATA(2);
+	DATA(8)  <= I_DATA(3);
+	DATA(7)  <= I_DATA(4);
+	DATA(6)  <= I_DATA(5);
+	DATA(5)  <= I_DATA(6);
+	DATA(4)  <= I_DATA(7);
+	DATA(3)  <= I_DATA(8);
+	DATA(2)  <= I_DATA(9);
+	DATA(1)  <= I_DATA(10);
+	DATA(0)  <= I_DATA(11);
 
 --	DATA <= I_DATA;
 
