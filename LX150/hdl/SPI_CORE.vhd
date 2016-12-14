@@ -185,9 +185,6 @@ end process;
 --	end process;
 
 
-
-
-
 SPI_SDA <= SPI_DATA_TX(32);
 
 SYNC_DAC_A <= SPI_SEN when CSEL_I = '0' else '1';

@@ -152,7 +152,7 @@ end process;
 		SPI_DATA_TX(96 downto 1) <= SPI_DATA_TX(95 downto 0);
 	
 	end if;
-end process;
+	end process;
 
 --	spimaster:	process(CLOCK, SPI_MASTER_RESET) -- spi master ; data generator
 --	
