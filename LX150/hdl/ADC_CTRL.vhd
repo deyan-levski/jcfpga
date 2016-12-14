@@ -1096,7 +1096,7 @@ begin
 		 -- bitslip
 		 I_BIT_SLIP_AUTO	=> '1',
 		 I_BIT_SLIP_POS		=> "00",
-		 PREAMBLE		=> "101011",
+		 PREAMBLE		=> "110101",
 		 d_digif_serial_rst	=> d_digif_serial_rst,
 		 CLOCK_RSTDLY		=> CLOCK_50,
 	       -- debug
