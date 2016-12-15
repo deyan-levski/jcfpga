@@ -19,12 +19,12 @@ update_progress_bar()
     then
       if [ $1 -ge 0 ];
       then
-        if [ $1 -le 100 ];
+        if [ $1 -le 50 ];
         then
           local val=$1
-          local max=100
+          local max=50
 
-          echo -n "["
+          echo -n "| ["
 
           for j in $(seq $max);
           do
@@ -41,7 +41,7 @@ update_progress_bar()
             fi
           done
 
-          echo -ne "Byte: $2, $3 "$val"%\r"
+          echo -ne "Byte: $2, $3 "$val"%                |\r"
 
           if [ $val -eq $max ];
           then
@@ -60,24 +60,24 @@ word=$1
 rate=$2
 device=$3
 clear
-echo -ne "|----------------------------------------------------|
-| asm2uart2ram (ASM to UART to RAM)                  |
-|----------------------------------------------------|
-| Version A, Deyan Levski, deyan.levski@eng.ox.ac.uk |
-|----------------------------------------------------|
-\n"
+echo -ne "|--------------------------------------------------------------------------------------|
+| asm2uart2ram (ASM to UART to RAM)                                                    |
+|--------------------------------------------------------------------------------------|
+| Version A, Deyan Levski, deyan.levski@eng.ox.ac.uk                                   |
+|--------------------------------------------------------------------------------------|
+"
 
-echo -ne "Port is: $ttyPort, Stop bits: 1, Parity: none, Silence time: $silenceTime, Speed: "
-
+echo -ne "| Loading: $1                                                                     |\n"
+echo -ne "| Port is: $ttyPort, Stop bits: 1, Parity: none, Silence time: $silenceTime, Speed: "
 stty -F $device speed $rate cs8 -echo  ## Set port settings
+echo -ne "|                                                                                      |"
 
 size=`wc -c < $word`
-echo -ne "\nRAM size: $(($size/2)) bytes \n\n"
-
+echo -ne "\n| RAM size: $(($size/2)) bytes                                                                 |\n"
+echo -ne "|                                                                                      |\n"
 start_byte="AE"
 stop_byte="AF"
-
-echo -ne "Start Byte: $start_byte \n"
+echo -ne "| Start Byte: $start_byte                                                                       |\n"
 echo -en "\x$start_byte" > $device
 sleep $silenceTime
 
@@ -88,6 +88,8 @@ ce=`expr $c + 1`
 c2=$(($c / 2))
 cpbar=$(echo "$c/$size*100" | bc -l) # calc %
 cpbar=$(echo "($cpbar+0.5)/1" | bc ) # round to nearest int
+cpbar=$(echo "($cpbar/2)" | bc ) # scale down to 50 for progress bar
+
 
 cutwhat=`echo -c$cb-$ce`
 byte=`cat $word | cut $cutwhat`
@@ -99,10 +101,11 @@ update_progress_bar $cpbar $c2 $byte
 done
 
 c2=$(($c2+1))
-
-echo -ne "\nStop Byte: $c2    , $stop_byte \n"
+echo -ne "| Stop Byte: $c2    , $stop_byte                                                              |\n"
 echo -en "\x$stop_byte" > $device
-echo -ne " \n"
+
+echo -ne "|                                                                                      |\n"
+echo -ne "|--------------------------------------------------------------------------------------|\n"
 
 #update_progress_bar 0
 #update_progress_bar 100

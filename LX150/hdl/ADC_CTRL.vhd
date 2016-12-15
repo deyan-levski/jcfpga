@@ -715,7 +715,7 @@ begin
 --	d_digif_serial_rst <= MEMDATA(6);
 	FVAL_SEQ <= MEMDATA(5);
 	LVAL_SEQ <= MEMDATA(4);
-	d_row_addr(7 downto 0) <= "00000000";
+	d_row_addr(7 downto 0) <= "01111110";
 
 	GENERATE_DIGIF_RST_LVAL_PROC: process(RESET, CLOCK_50)
 		variable digif_rst_cnt: integer range 0 to 511 :=0;
