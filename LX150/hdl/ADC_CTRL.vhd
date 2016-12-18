@@ -378,6 +378,9 @@ architecture Behavioral of ADC_CTRL is
 	signal LSBDAT_OBUFDS : std_logic;
 	signal MSBDAT_OBUFDS : std_logic;
 
+	signal FVAL_CNT_GEN : std_logic;
+	signal ROW_ADDR: std_logic_vector(7 downto 0);
+
 --|--------------------------|
 --| UART Testbench Constants |
 --|--------------------------|
@@ -715,7 +718,7 @@ begin
 --	d_digif_serial_rst <= MEMDATA(6);
 	FVAL_SEQ <= MEMDATA(5);
 	LVAL_SEQ <= MEMDATA(4);
-	d_row_addr(7 downto 0) <= "01111110";
+	--d_row_addr(7 downto 0) <= "01111110";
 
 	GENERATE_DIGIF_RST_LVAL_PROC: process(RESET, CLOCK_50)
 		variable digif_rst_cnt: integer range 0 to 511 :=0;
@@ -757,6 +760,30 @@ begin
 			--LVAL_OUT_SYNC <= LVAL_OUT;
 		end if;
 	end process;
+
+	GEN_FVAL_PROC: process(LVAL_SEQ_SYNC, RESET)
+	begin
+
+		if RESET = '1' then
+		
+			ROW_ADDR <= (others => '0');
+			FVAL_CNT_GEN <= '0';
+		
+		elsif rising_edge(LVAL_SEQ_SYNC) then
+		
+		if ROW_ADDR = "10000000" then
+			ROW_ADDR <= (others => '0');
+			FVAL_CNT_GEN <= '0';
+		else
+			FVAL_CNT_GEN <= '1';
+			ROW_ADDR <= ROW_ADDR + 1;
+		end if;
+
+	d_row_addr <= ROW_ADDR;
+
+		end if;
+	end process;
+
 
 --	FLVALSYNC: process(RESET, CLOCK_100)
 
@@ -1143,7 +1170,7 @@ begin
 			 RESET 			=> RESET,
 			 CLOCK_IMG		=> CLOCK_100, --CLOCK_DESER_WORD,
 			 LED   			=> open,
-			 FVAL_IN 		=> FVAL_SEQ_SYNC,
+			 FVAL_IN 		=> FVAL_CNT_GEN,--FVAL_SEQ_SYNC,
 			 LVAL_IN		=> LVAL_OUT,
 			 DATA_IN		=> IMAGE_DATA_OUT,
 		     -- FX3 GPIFII Interface
