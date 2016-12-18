@@ -718,7 +718,7 @@ begin
 --	d_digif_serial_rst <= MEMDATA(6);
 	FVAL_SEQ <= MEMDATA(5);
 	LVAL_SEQ <= MEMDATA(4);
-	--d_row_addr(7 downto 0) <= "01111110";
+	d_row_addr(7 downto 0) <= "01111101";
 
 	GENERATE_DIGIF_RST_LVAL_PROC: process(RESET, CLOCK_50)
 		variable digif_rst_cnt: integer range 0 to 511 :=0;
@@ -761,29 +761,28 @@ begin
 		end if;
 	end process;
 
-	GEN_FVAL_PROC: process(LVAL_SEQ_SYNC, RESET)
-	begin
-
-		if RESET = '1' then
-		
-			ROW_ADDR <= (others => '0');
-			FVAL_CNT_GEN <= '0';
-		
-		elsif rising_edge(LVAL_SEQ_SYNC) then
-		
-		if ROW_ADDR = "10000000" then
-			ROW_ADDR <= (others => '0');
-			FVAL_CNT_GEN <= '0';
-		else
-			FVAL_CNT_GEN <= '1';
-			ROW_ADDR <= ROW_ADDR + 1;
-		end if;
-
-		end if;
-
-	d_row_addr <= ROW_ADDR;
-
-	end process;
+--	GEN_FVAL_PROC: process(LVAL_SEQ_SYNC, RESET)
+--	begin
+--	
+--		if RESET = '1' then
+--		
+--			ROW_ADDR <= (others => '0');
+--			FVAL_CNT_GEN <= '0';
+--		
+--		elsif rising_edge(LVAL_SEQ_SYNC) then
+--		
+--		if ROW_ADDR = "10000000" then
+--			ROW_ADDR <= (others => '0');
+--			FVAL_CNT_GEN <= '0';
+--		else
+--			FVAL_CNT_GEN <= '1';
+--			ROW_ADDR <= ROW_ADDR + 1;
+--		end if;
+--	
+--	d_row_addr <= ROW_ADDR;
+--	
+--		end if;
+--	end process;
 
 
 --	FLVALSYNC: process(RESET, CLOCK_100)
