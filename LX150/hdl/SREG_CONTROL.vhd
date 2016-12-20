@@ -58,7 +58,8 @@ entity SREG_CONTROL is
     	   INC_MEM_ADD : inout STD_LOGIC;
 
     	   DEBUG_PIN : out STD_LOGIC;
-	   DEBUG_PIN2: out STD_LOGIC
+	   DEBUG_PIN2: out STD_LOGIC;
+	   DEBUG_PIN3: out STD_LOGIC
 );
 end SREG_CONTROL;
 
@@ -296,5 +297,6 @@ begin
 
 DEBUG_PIN <= SPI_DAC_SDA; --SPI_DATA_BUFFER(95);  --INC_MEM_ADD; --RX_ACK;--SPI_FLUSH;
 DEBUG_PIN2 <= SPI_SDA; --SPI_DATA_BUFFER(94); --CSEL_I; --MEM_FLAG;
+DEBUG_PIN3 <= SPI_FLUSH;
 
 end Behavioral;

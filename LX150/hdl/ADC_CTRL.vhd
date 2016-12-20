@@ -209,7 +209,8 @@ architecture Behavioral of ADC_CTRL is
 
 
 			     DEBUG_PIN : out STD_LOGIC;
-			     DEBUG_PIN2: out STD_LOGIC
+			     DEBUG_PIN2: out STD_LOGIC;
+			     DEBUG_PIN3: out STD_LOGIC
 		     );
 	end component;
 
@@ -658,7 +659,8 @@ begin
 			 MEM_DATA => MEM_DINA,
 			 INC_MEM_ADD => INC_MEM_ADD,
 			 DEBUG_PIN => GPIO1,
-			 DEBUG_PIN2 => GPIO2
+			 DEBUG_PIN2 => GPIO2,
+			 DEBUG_PIN3 => GPIO3
 		 );
 
 --|-------------------------|
@@ -761,39 +763,39 @@ begin
 		end if;
 	end process;
 
---	GEN_FVAL_PROC: process(LVAL_SEQ_SYNC, RESET)
---	begin
---	
---		if RESET = '1' then
---		
---			ROW_ADDR <= (others => '0');
---			FVAL_CNT_GEN <= '0';
---		
---		elsif rising_edge(LVAL_SEQ_SYNC) then
---		
---		if ROW_ADDR = "10000000" then
---			ROW_ADDR <= (others => '0');
---			FVAL_CNT_GEN <= '0';
---		else
---			FVAL_CNT_GEN <= '1';
---			ROW_ADDR <= ROW_ADDR + 1;
---		end if;
---	
+	GEN_FVAL_PROC: process(LVAL_SEQ_SYNC, RESET)
+	begin
+	
+		if RESET = '1' then
+		
+			ROW_ADDR <= (others => '0');
+			FVAL_CNT_GEN <= '0';
+		
+		elsif rising_edge(LVAL_SEQ_SYNC) then
+		
+		if ROW_ADDR = "10000000" then
+			ROW_ADDR <= (others => '0');
+			FVAL_CNT_GEN <= '0';
+		else
+			FVAL_CNT_GEN <= '1';
+			ROW_ADDR <= ROW_ADDR + 1;
+		end if;
+	
 --	d_row_addr <= ROW_ADDR;
---	
---		end if;
---	end process;
+	
+		end if;
+	end process;
 
 
---	FLVALSYNC: process(RESET, CLOCK_100)
+	FLVALSYNC: process(RESET, CLOCK_100)
 
---	begin
---		if rising_edge(CLOCK_50) then
+	begin
+		if rising_edge(CLOCK_50) then
 
 
---		end if;
+		end if;
 
---	end process;
+	end process;
 
 
 
@@ -1143,14 +1145,14 @@ begin
           	FIFO_ENABLE		=> '1', -- active when the sensor becomes active
           --
 		WRITE_CLOCK		=> CLOCK_DESER_WORD,
-		DATA_SEG(0)		=> DESER_DATA_G0,
-		DATA_SEG(1)		=> DESER_DATA_G1,
-		DATA_SEG(2)		=> DESER_DATA_G2,
-		DATA_SEG(3)		=> DESER_DATA_G3,
-		DATA_SEG(4)		=> DESER_DATA_G4,
-		DATA_SEG(5)		=> DESER_DATA_G5,
-		DATA_SEG(6)		=> DESER_DATA_G6,
-		DATA_SEG(7)		=> DESER_DATA_G7,
+		DATA_SEG(0)		=> DESER_DATA_G7,
+		DATA_SEG(1)		=> DESER_DATA_G6,
+		DATA_SEG(2)		=> DESER_DATA_G5,
+		DATA_SEG(3)		=> DESER_DATA_G4,
+		DATA_SEG(4)		=> DESER_DATA_G3,
+		DATA_SEG(5)		=> DESER_DATA_G2,
+		DATA_SEG(6)		=> DESER_DATA_G1,
+		DATA_SEG(7)		=> DESER_DATA_G0,
 		LVAL_IN			=> LVAL_DLY,
 	--
 		READ_CLOCK		=> CLOCK_100,
@@ -1214,7 +1216,7 @@ begin
 --|-------------------|
 
 	--GPIO2 <= '0'; --not CLOCK_100; -- scope triggering clock
-	GPIO3 <= '0'; -- LVAL_OUT;
+	--GPIO3 <= '0'; -- LVAL_OUT;
 	--GPIO4 <= '0';
 	SHUTDOWN_VDD <= '1';
 	SHUTDOWN_VDA <= '1';
