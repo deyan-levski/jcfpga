@@ -787,18 +787,6 @@ begin
 	end process;
 
 
-	FLVALSYNC: process(RESET, CLOCK_100)
-
-	begin
-		if rising_edge(CLOCK_50) then
-
-
-		end if;
-
-	end process;
-
-
-
 --|-----------------|
 --| MOCK SERIALIZER |
 --|-----------------|
