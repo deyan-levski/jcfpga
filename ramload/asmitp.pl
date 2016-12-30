@@ -369,7 +369,7 @@ my $ofsuffix = '';
 #| ROM width and depth |
 #|---------------------|
 my $ram_width = 32;
-my $ram_depth = 1080;
+my $ram_depth = 10080;
 #|---------------------|
 #
 # Parse command line arguments
