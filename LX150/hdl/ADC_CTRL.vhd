@@ -53,7 +53,7 @@ entity ADC_CTRL is
 		     GPIO1 : out STD_LOGIC; -- DEBUG_PIN / SREG LOADED
 		     GPIO2 : out STD_LOGIC; -- SYNC_CLOCK / Scope Trigger
 		     GPIO3 : out STD_LOGIC;
-		     GPIO4 : out STD_LOGIC; -- RESET
+		  -- GPIO4 : out STD_LOGIC; -- RESET
 	   	  -- GPIO5 : out STD_LOGIC;
 		  -- GPIO6 : out STD_LOGIC;
 	   -- BOARD CTRL
@@ -326,9 +326,8 @@ architecture Behavioral of ADC_CTRL is
 	signal CLOCK_50_N: std_logic;
 	signal CLOCK_100 : std_logic;
 	signal CLOCK_100_N : std_logic;
-	signal CLOCK_10 : std_logic;
-	signal CLOCK_10_N : std_logic;
-	signal CLOCK_10_O : std_logic;
+	signal CLOCK_200 : std_logic;
+	signal CLOCK_200_N : std_logic;
 	signal CLOCK_250 : std_logic;
 	signal CLOCK_250_N : std_logic;
 	signal CLOCK_100_PCLK : std_logic;
@@ -457,7 +456,7 @@ begin
 	-- Clock out ports
 			 CLK_OUT1          => CLOCK_100,
 			 CLK_OUT2          => CLOCK_250,
-			 CLK_OUT3	   => CLOCK_10,
+			 CLK_OUT3	   => CLOCK_200,
 			 CLK_OUT4	   => CLOCK_50
 		 );
 
@@ -505,7 +504,7 @@ begin
 --|---------------------------------|
 
 	CLOCK_100_N <= not CLOCK_100;
-	CLOCK_10_N <= not CLOCK_10;
+	CLOCK_200_N <= not CLOCK_200;
 	CLOCK_50_N <= not CLOCK_50;
 
 	ODDR2_DIGIF_INST : ODDR2
@@ -1204,25 +1203,9 @@ begin
 --| STATIC SIGNALLING |
 --|-------------------|
 
-	ODDR2_TEST_CLK : ODDR2
-	generic map(
-			   DDR_ALIGNMENT => "C0", -- Sets output alignment to "NONE", "C0", "C1" 
-			   INIT => '0', -- Sets initial state of the Q output to '0' or '1'
-			   SRTYPE => "ASYNC") -- Specifies "SYNC" or "ASYNC" set/reset
-	port map (
-			 Q  => CLOCK_10_O, -- 1-bit output data
-			 C0 => CLOCK_10, -- 1-bit clock input
-			 C1 => CLOCK_10_N, -- 1-bit clock input
-			 CE => '1',   -- 1-bit clock enable input
-			 D0 => '1',   -- 1-bit data input (associated with C0)
-			 D1 => '0',   -- 1-bit data input (associated with C1)
-			 R => '0',  -- 1-bit reset input
-			 S => '0'     -- 1-bit set input
-		 ); 
-
-	--GPIO2 <= CLOCK_10; --'0'; --not CLOCK_100; -- scope triggering clock
+	--GPIO2 <= '0'; --not CLOCK_100; -- scope triggering clock
 	--GPIO3 <= '0'; -- LVAL_OUT;
-	GPIO4 <= CLOCK_10_O;
+	--GPIO4 <= '0';
 	SHUTDOWN_VDD <= '1';
 	SHUTDOWN_VDA <= '1';
 	SPI_ADC_CS   <= '0';

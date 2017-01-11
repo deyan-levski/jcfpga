@@ -1203,11 +1203,22 @@ begin
 --|-------------------|
 --| STATIC SIGNALLING |
 --|-------------------|
-	TEST_CLK_BUFFER : BUFG
+
+	ODDR2_TEST_CLK : ODDR2
+	generic map(
+			   DDR_ALIGNMENT => "C0", -- Sets output alignment to "NONE", "C0", "C1" 
+			   INIT => '0', -- Sets initial state of the Q output to '0' or '1'
+			   SRTYPE => "ASYNC") -- Specifies "SYNC" or "ASYNC" set/reset
 	port map (
-	O => CLOCK_10_O,
-	I => CLOCK_10
-	);
+			 Q  => CLOCK_10_O, -- 1-bit output data
+			 C0 => CLOCK_10, -- 1-bit clock input
+			 C1 => CLOCK_10_N, -- 1-bit clock input
+			 CE => '1',   -- 1-bit clock enable input
+			 D0 => '1',   -- 1-bit data input (associated with C0)
+			 D1 => '0',   -- 1-bit data input (associated with C1)
+			 R => '0',  -- 1-bit reset input
+			 S => '0'     -- 1-bit set input
+		 ); 
 
 	--GPIO2 <= CLOCK_10; --'0'; --not CLOCK_100; -- scope triggering clock
 	--GPIO3 <= '0'; -- LVAL_OUT;
