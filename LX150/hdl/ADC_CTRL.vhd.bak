@@ -53,7 +53,7 @@ entity ADC_CTRL is
 		     GPIO1 : out STD_LOGIC; -- DEBUG_PIN / SREG LOADED
 		     GPIO2 : out STD_LOGIC; -- SYNC_CLOCK / Scope Trigger
 		     GPIO3 : out STD_LOGIC;
-		  -- GPIO4 : out STD_LOGIC; -- RESET
+		     GPIO4 : out STD_LOGIC; -- RESET
 	   	  -- GPIO5 : out STD_LOGIC;
 		  -- GPIO6 : out STD_LOGIC;
 	   -- BOARD CTRL
@@ -326,8 +326,9 @@ architecture Behavioral of ADC_CTRL is
 	signal CLOCK_50_N: std_logic;
 	signal CLOCK_100 : std_logic;
 	signal CLOCK_100_N : std_logic;
-	signal CLOCK_200 : std_logic;
-	signal CLOCK_200_N : std_logic;
+	signal CLOCK_10 : std_logic;
+	signal CLOCK_10_N : std_logic;
+	signal CLOCK_10_O : std_logic;
 	signal CLOCK_250 : std_logic;
 	signal CLOCK_250_N : std_logic;
 	signal CLOCK_100_PCLK : std_logic;
@@ -456,7 +457,7 @@ begin
 	-- Clock out ports
 			 CLK_OUT1          => CLOCK_100,
 			 CLK_OUT2          => CLOCK_250,
-			 CLK_OUT3	   => CLOCK_200,
+			 CLK_OUT3	   => CLOCK_10,
 			 CLK_OUT4	   => CLOCK_50
 		 );
 
@@ -504,7 +505,7 @@ begin
 --|---------------------------------|
 
 	CLOCK_100_N <= not CLOCK_100;
-	CLOCK_200_N <= not CLOCK_200;
+	CLOCK_10_N <= not CLOCK_10;
 	CLOCK_50_N <= not CLOCK_50;
 
 	ODDR2_DIGIF_INST : ODDR2
@@ -1202,10 +1203,15 @@ begin
 --|-------------------|
 --| STATIC SIGNALLING |
 --|-------------------|
+	TEST_CLK_BUFFER : BUFG
+	port map (
+	O => CLOCK_10_O,
+	I => CLOCK_10
+	);
 
-	--GPIO2 <= '0'; --not CLOCK_100; -- scope triggering clock
+	--GPIO2 <= CLOCK_10; --'0'; --not CLOCK_100; -- scope triggering clock
 	--GPIO3 <= '0'; -- LVAL_OUT;
-	--GPIO4 <= '0';
+	GPIO4 <= CLOCK_10_O;
 	SHUTDOWN_VDD <= '1';
 	SHUTDOWN_VDA <= '1';
 	SPI_ADC_CS   <= '0';
