@@ -55,10 +55,10 @@
 -- "Output    Output      Phase     Duty      Pk-to-Pk        Phase"
 -- "Clock    Freq (MHz) (degrees) Cycle (%) Jitter (ps)  Error (ps)"
 ------------------------------------------------------------------------------
--- CLK_OUT1___100.000______0.000______50.0______182.960____167.989
--- CLK_OUT2___300.000______0.000______50.0______148.523____167.989
--- CLK_OUT3____10.000______0.000______50.0______288.290____167.989
--- CLK_OUT4____50.000______0.000______50.0______210.599____167.989
+-- CLK_OUT1___100.000______0.000______50.0______178.597____160.159
+-- CLK_OUT2___250.000______0.000______50.0______150.189____160.159
+-- CLK_OUT3____10.000______0.000______50.0______281.607____160.159
+-- CLK_OUT4____50.000______0.000______50.0______205.388____160.159
 --
 ------------------------------------------------------------------------------
 -- "Input Clock   Freq (MHz)    Input Jitter (UI)"
@@ -124,18 +124,18 @@ begin
     CLK_FEEDBACK         => "CLKFBOUT",
     COMPENSATION         => "SYSTEM_SYNCHRONOUS",
     DIVCLK_DIVIDE        => 1,
-    CLKFBOUT_MULT        => 9,
+    CLKFBOUT_MULT        => 10,
     CLKFBOUT_PHASE       => 0.000,
-    CLKOUT0_DIVIDE       => 9,
+    CLKOUT0_DIVIDE       => 10,
     CLKOUT0_PHASE        => 0.000,
     CLKOUT0_DUTY_CYCLE   => 0.500,
-    CLKOUT1_DIVIDE       => 3,
+    CLKOUT1_DIVIDE       => 4,
     CLKOUT1_PHASE        => 0.000,
     CLKOUT1_DUTY_CYCLE   => 0.500,
-    CLKOUT2_DIVIDE       => 90,
+    CLKOUT2_DIVIDE       => 100,
     CLKOUT2_PHASE        => 0.000,
     CLKOUT2_DUTY_CYCLE   => 0.500,
-    CLKOUT3_DIVIDE       => 18,
+    CLKOUT3_DIVIDE       => 20,
     CLKOUT3_PHASE        => 0.000,
     CLKOUT3_DUTY_CYCLE   => 0.500,
     CLKIN_PERIOD         => 10.000,
