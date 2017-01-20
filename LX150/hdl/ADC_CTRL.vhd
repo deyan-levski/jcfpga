@@ -364,6 +364,7 @@ architecture Behavioral of ADC_CTRL is
 	signal CLOCK_DIGIF_OBUFDS : std_logic;
 	signal FVAL_SEQ  : std_logic;
 	signal FVAL_SEQ_SYNC : std_logic;
+	signal FVAL_SEQ_SYNC_SKIP : std_logic;
 	signal LVAL_SEQ  : std_logic;
 	signal LVAL_SEQ_SYNC :std_logic;
 	signal LVAL_SEQ_SYNC_OLD :std_logic;
@@ -763,6 +764,17 @@ begin
 		end if;
 	end process;
 
+	FVAL_SEQ_SYNC_SKIP_PROC: process(FVAL_SEQ_SYNC, RESET)
+	begin
+		if RESET = '1' then
+			FVAL_SEQ_SYNC_SKIP <= '0';
+
+		elsif rising_edge(FVAL_SEQ_SYNC) then
+			FVAL_SEQ_SYNC_SKIP <= not FVAL_SEQ_SYNC_SKIP;
+		end if;
+	end process;
+
+
 	GEN_FVAL_PROC: process(LVAL_SEQ_SYNC, RESET)
 	begin
 	
@@ -1160,7 +1172,7 @@ begin
 			 RESET 			=> RESET,
 			 CLOCK_IMG		=> CLOCK_100, --CLOCK_DESER_WORD,
 			 LED   			=> open,
-			 FVAL_IN 		=> FVAL_SEQ_SYNC,
+			 FVAL_IN 		=> FVAL_SEQ_SYNC_SKIP, --SKIP
 			 LVAL_IN		=> LVAL_OUT,
 			 DATA_IN		=> IMAGE_DATA_OUT,
 		     -- FX3 GPIFII Interface
