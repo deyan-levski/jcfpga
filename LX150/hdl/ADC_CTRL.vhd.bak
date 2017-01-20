@@ -772,9 +772,9 @@ begin
 			div_cnt := 0;
 
 		elsif rising_edge(FVAL_SEQ_SYNC) then
-			if div_cnt = 5 then
+			if div_cnt = 6 then
 			FVAL_SEQ_SYNC_SKIP <= not FVAL_SEQ_SYNC_SKIP;
-			elsif div_cnt = 6 then
+			elsif div_cnt = 7 then
 			div_cnt := 0;
 			end if;
 			div_cnt := div_cnt + 1;
