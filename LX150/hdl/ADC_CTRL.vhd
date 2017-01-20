@@ -765,12 +765,19 @@ begin
 	end process;
 
 	FVAL_SEQ_SYNC_SKIP_PROC: process(FVAL_SEQ_SYNC, RESET)
+	variable div_cnt: integer range 0 to 7 :=0;
 	begin
 		if RESET = '1' then
 			FVAL_SEQ_SYNC_SKIP <= '0';
+			div_cnt := 0;
 
 		elsif rising_edge(FVAL_SEQ_SYNC) then
+			if div_cnt = 2 then
 			FVAL_SEQ_SYNC_SKIP <= not FVAL_SEQ_SYNC_SKIP;
+			elsif div_cnt = 3 then
+			div_cnt := 0;
+			end if;
+			div_cnt := div_cnt + 1;
 		end if;
 	end process;
 
