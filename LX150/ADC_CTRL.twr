@@ -36,6 +36,14 @@ For more information, see Period Analysis in the Timing Closure User Guide (UG61
 
 Component Switching Limit Checks: TS_CLOCK = PERIOD TIMEGRP "CLOCK" 10 ns HIGH 50%;
 --------------------------------------------------------------------------------
+Slack: 3.075ns (period - min period limit)
+  Period: 4.000ns
+  Min period limit: 0.925ns (1081.081MHz) (Tpllper_CLKOUT(Foutmax))
+  Physical resource: PLL_250_INST/pll_base_inst/PLL_ADV/CLKOUT1
+  Logical resource: PLL_250_INST/pll_base_inst/PLL_ADV/CLKOUT1
+  Location pin: PLL_ADV_X0Y2.CLKOUT1
+  Clock network: PLL_250_INST/clkout1
+--------------------------------------------------------------------------------
 Slack: 6.666ns (period - (min low pulse limit / (low pulse / period)))
   Period: 10.000ns
   Low pulse: 5.000ns
@@ -53,15 +61,6 @@ Slack: 6.666ns (period - (min high pulse limit / (high pulse / period)))
   Logical resource: PLL_250_INST/pll_base_inst/PLL_ADV/CLKIN1
   Location pin: PLL_ADV_X0Y2.CLKIN1
   Clock network: PLL_250_INST/pll_base_inst/PLL_ADV_ML_NEW_DIVCLK
---------------------------------------------------------------------------------
-Slack: 6.666ns (period - (min low pulse limit / (low pulse / period)))
-  Period: 10.000ns
-  Low pulse: 5.000ns
-  Low pulse limit: 1.667ns (Tdcmpw_CLKIN_100_150)
-  Physical resource: PLL_DESER_INST/pll_base_inst/PLL_ADV/CLKIN1
-  Logical resource: PLL_DESER_INST/pll_base_inst/PLL_ADV/CLKIN1
-  Location pin: PLL_ADV_X0Y0.CLKIN2
-  Clock network: PLL_DESER_INST/pll_base_inst/PLL_ADV_ML_NEW_DIVCLK
 --------------------------------------------------------------------------------
 
 ================================================================================
@@ -288,7 +287,7 @@ Slack: 18.361ns (period - min period limit)
 
 ================================================================================
 Timing constraint: TS_PLL_250_INST_clkout1 = PERIOD TIMEGRP 
-"PLL_250_INST_clkout1" TS_CLOCK /         1.25 HIGH 68.8%;
+"PLL_250_INST_clkout1" TS_CLOCK / 2.5         HIGH 75%;
 For more information, see Period Analysis in the Timing Closure User Guide (UG612).
 
  0 paths analyzed, 0 endpoints analyzed, 0 failing endpoints
@@ -296,27 +295,27 @@ For more information, see Period Analysis in the Timing Closure User Guide (UG61
  Minimum period is   1.730ns.
 --------------------------------------------------------------------------------
 
-Component Switching Limit Checks: TS_PLL_250_INST_clkout1 = PERIOD TIMEGRP "PLL_250_INST_clkout1" TS_CLOCK /
-        1.25 HIGH 68.8%;
+Component Switching Limit Checks: TS_PLL_250_INST_clkout1 = PERIOD TIMEGRP "PLL_250_INST_clkout1" TS_CLOCK / 2.5
+        HIGH 75%;
 --------------------------------------------------------------------------------
-Slack: 6.270ns (period - min period limit)
-  Period: 8.000ns
+Slack: 2.270ns (period - min period limit)
+  Period: 4.000ns
   Min period limit: 1.730ns (578.035MHz) (Tbcper_I)
   Physical resource: PLL_250_INST/clkout2_buf/I0
   Logical resource: PLL_250_INST/clkout2_buf/I0
   Location pin: BUFGMUX_X2Y12.I0
   Clock network: PLL_250_INST/clkout1
 --------------------------------------------------------------------------------
-Slack: 6.361ns (period - min period limit)
-  Period: 8.000ns
+Slack: 2.361ns (period - min period limit)
+  Period: 4.000ns
   Min period limit: 1.639ns (610.128MHz) (Tockper)
   Physical resource: CLOCK_COUNT_OBUFDS/CLK0
   Logical resource: ODDR2_LVDS_CLOC_BUFFER_OUT_INST/CK0
   Location pin: OLOGIC_X18Y173.CLK0
   Clock network: CLOCK_250
 --------------------------------------------------------------------------------
-Slack: 6.597ns (period - min period limit)
-  Period: 8.000ns
+Slack: 2.597ns (period - min period limit)
+  Period: 4.000ns
   Min period limit: 1.403ns (712.758MHz) (Tockper)
   Physical resource: CLOCK_COUNT_OBUFDS/CLK1
   Logical resource: ODDR2_LVDS_CLOC_BUFFER_OUT_INST/CK1
@@ -1160,7 +1159,7 @@ Derived Constraints for TS_CLOCK
 +-------------------------------+-------------+-------------+-------------+-------------+-------------+-------------+-------------+
 |TS_CLOCK                       |     10.000ns|      3.334ns|      9.620ns|            0|            0|            0|        72069|
 | TS_PLL_250_INST_clkout3       |     20.000ns|     17.988ns|          N/A|            0|            0|          828|            0|
-| TS_PLL_250_INST_clkout1       |      8.000ns|      1.730ns|          N/A|            0|            0|            0|            0|
+| TS_PLL_250_INST_clkout1       |      4.000ns|      1.730ns|          N/A|            0|            0|            0|            0|
 | TS_PLL_250_INST_clkout0       |     10.000ns|      9.620ns|          N/A|            0|            0|        56493|            0|
 | TS_PLL_DESER_INST_clkout1     |     60.000ns|     40.845ns|          N/A|            0|            0|        14748|            0|
 | TS_CLOCK_DESER_1BIT           |     10.000ns|          N/A|          N/A|            0|            0|            0|            0|
@@ -1196,7 +1195,7 @@ Design statistics:
 ------------------------------------Footnotes-----------------------------------
 1)  The minimum period statistic assumes all single cycle delays.
 
-Analysis completed Wed Jan 25 15:47:55 2017 
+Analysis completed Wed Jan 25 16:43:35 2017 
 --------------------------------------------------------------------------------
 
 Trace Settings:
